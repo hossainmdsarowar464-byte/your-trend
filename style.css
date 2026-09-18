@@ -30,6 +30,17 @@ body{
   background:#ffe4d1;
   padding:20px;
   border-radius:10px;
+  .search-box{
+  padding:12px;
+  background:#fff;
+}
+.search-box input{
+  width:100%;
+  padding:12px;
+  border:2px solid #ff6a00;
+  border-radius:10px;
+  font-size:16px;
+}
 }
 .btn{
   background:#ff6a00;
