@@ -26,13 +26,10 @@ body{
   text-align:center;
 }
 .img{
-  font-size:48px;
-  background:#ffe4d1;
-  padding:20px;
+  width:100%;
+  height:170px;
+  object-fit:cover;
   border-radius:10px;
-  .search-box{
-  padding:12px;
-  background:#fff;
 }
 .search-box input{
   width:100%;
