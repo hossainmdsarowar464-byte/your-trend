@@ -1,5 +1,5 @@
 const list=[
-["Premium T-Shirt",490,"👕"],
+["Premium T-Shirt",490,"1779024969_L_10.jpeg"],
 ["Smart Watch",890,"⌚"],
 ["Bluetooth Earbuds",690,"🎧"],
 ["Travel Bag",790,"👜"]
