@@ -16,4 +16,8 @@ for(let i=1;i<=30;i++){
 function addCart(){
   cart++;
   document.getElementById("count").innerText=cart;
+}function placeOrder(){
+  const n=name.value,p=phone.value,a=address.value;
+  if(!n||!p||!a){msg.innerText="সব তথ্য পূরণ করুন";return;}
+  msg.innerText="✅ অর্ডার সফল!";
 }
