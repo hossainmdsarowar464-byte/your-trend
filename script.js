@@ -1,5 +1,5 @@
 const list = [
-  ["Premium T-Shirt",490,"1779024969_L_1.jpeg"],
+  ["Premium T-Shirt",490,"1783948832_L_1.jpeg"],
   ["Smart Watch",890,"1779024969_L_2.jpeg"],
   ["Earbuds",690,"1779024969_L_3.jpeg"],
   ["Travel Bag",790,"1779024969_L_4.jpeg"]
