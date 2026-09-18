@@ -73,4 +73,16 @@ body{
   border-radius:20px;
   font-weight:bold;
 }
-.hero{position:relative;}
+.hero{position:relative;}.checkout{
+  background:#fff;
+  margin:15px;
+  padding:15px;
+  border-radius:12px;
+}
+.checkout input,.checkout textarea{
+  width:100%;
+  margin:8px 0;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
