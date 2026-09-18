@@ -63,4 +63,14 @@ body{
   padding:8px 14px;
   border-radius:20px;
   white-space:nowrap;
+}.cart{
+  position:absolute;
+  top:15px;
+  right:15px;
+  background:#fff;
+  color:#ff6a00;
+  padding:8px 12px;
+  border-radius:20px;
+  font-weight:bold;
 }
+.hero{position:relative;}
