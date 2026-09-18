@@ -49,4 +49,18 @@ body{
   padding:10px;
   width:100%;
   border-radius:8px;
+}.cats{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding:10px;
+  background:#fff;
+}
+.cats button{
+  border:none;
+  background:#ff6a00;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:20px;
+  white-space:nowrap;
 }
