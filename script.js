@@ -1,31 +1,32 @@
 const list = [
-  ["Premium T-Shirt",490,"1783948832_L_1.jpeg"],
-  ["Smart Watch",890,"https://github.com/hossainmdsarowar464-byte/your-trend/blob/main/1779024969_L_2.jpeg"],
-  ["Earbuds",690,"https://github.com/hossainmdsarowar464-byte/your-trend/blob/main/1779024969_L_3.jpeg"],
-  ["Travel Bag",790,"https://github.com/hossainmdsarowar464-byte/your-trend/blob/main/1779024969_L_4.jpeg"]
+["Premium T-Shirt", 490, "1783948832_L_1.jpeg"],
+["Smart Watch", 890, "1779024969_L_2.jpeg"],
+["Earbuds", 690, "1779024969_L_3.jpeg"],
+["Travel Bag", 790, "1779024969_L_4.jpeg"]
 ];
 
-const box=document.getElementById("products");
-let cart=0;
+const box = document.getElementById("products");
+let cart = 0;
 
-for(let i=0;i<30;i++){
-  let p=list[i%4];
-  box.innerHTML+=`
-  <div class="card">
-    <div class="img">${p[2]}</div>
-    <h3>${p[0]}</h3>
-    <p><b>৳${p[1]}</b></p>
-    <button class="btn" onclick="addCart()">Add to Cart</button>
-  </div>`;
+list.forEach(function(p) {
+box.innerHTML += "<div class="card"> <img class="img" src="images/${p[2]}" alt="${p[0]}"> <h3>${p[0]}</h3> <p><b>৳${p[1]}</b></p> <button class="btn" onclick="addCart()">Add to Cart</button> </div>";
+});
+
+function addCart() {
+cart++;
+document.getElementById("count").innerText = cart;
 }
 
-function addCart(){
-  cart++;
-  document.getElementById("count").innerText=cart;
+function placeOrder() {
+const n = document.getElementById("name").value;
+const ph = document.getElementById("phone").value;
+const a = document.getElementById("address").value;
+const msg = document.getElementById("msg");
+
+if (!n || !ph || !a) {
+msg.innerText = "সব তথ্য পূরণ করুন";
+return;
 }
 
-function placeOrder(){
-  const n=name.value,ph=phone.value,a=address.value;
-  if(!n||!ph||!a){msg.innerText="সব তথ্য পূরণ করুন";return;}
-  msg.innerText="✅ অর্ডার সফল!";
+msg.innerText = "✅ অর্ডার সফল!";
 }
