@@ -26,47 +26,71 @@
 >
 
 
-<header class="hero"><!-- =========================
-     MOBILE MENU
-========================= -->
+<header class="hero">
 
-<div class="menu-wrapper">
+  <!-- MENU -->
+  <div class="menu-wrapper">
 
-  <details class="site-menu">
+    <details class="site-menu">
 
-    <summary>☰</summary>
+      <summary>☰</summary>
 
-    <div class="menu-panel">
+      <div class="menu-panel">
 
-      <a href="index.html">🏠 Home</a>
+        <a href="index.html">🏠 Home</a>
 
-      <a href="#products">🛍️ Products</a>
+        <a href="#products">🛍️ Products</a>
 
-      <a href="#contact">📞 Contact</a>
+        <a href="#contact">📞 Contact</a>
 
-      <a href="#delivery">🚚 Delivery Information</a>
+        <a href="#delivery">🚚 Delivery Information</a>
 
-      <a href="#return">🔄 Return Policy</a>
+        <a href="#return">🔄 Return Policy</a>
 
-      <a
-        href="https://www.facebook.com/share/1C2V1Kxz9f/"
-        target="_blank"
-      >
-        f Facebook
-      </a>
+        <a
+          href="https://www.facebook.com/share/1C2V1Kxz9f/"
+          target="_blank"
+        >
+          f Facebook
+        </a>
 
-      <a
-        href="https://wa.me/8801775628710"
-        target="_blank"
-      >
-        💬 WhatsApp
-      </a>
+        <a
+          href="https://wa.me/8801775628710"
+          target="_blank"
+        >
+          💬 WhatsApp
+        </a>
+
+      </div>
+
+    </details>
+
+  </div>
+
+
+  <!-- SEARCH + CATEGORIES -->
+
+  <div class="search-box">
+
+    <div class="cats">
+
+      <button onclick="filterCategory('fashion')">
+        👕 Fashion
+      </button>
+
+      <button onclick="filterCategory('gadgets')">
+        ⌚ Gadgets
+      </button>
+
+      <button onclick="filterCategory('bags')">
+        🎒 Bags
+      </button>
+
+      <button onclick="filterCategory('all')">
+        🔥 All
+      </button>
 
     </div>
-
-  </details>
-
-</div>
 
     <input
       type="text"
@@ -83,9 +107,7 @@
 
 
   <div class="cart" onclick="openCart()">
-
     🛒 <span id="count">0</span>
-
   </div>
 
 </header>
