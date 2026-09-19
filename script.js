@@ -411,7 +411,16 @@ function showCheckoutSummary() {
   });
 
 
-  totalBox.innerText = total;
+  const deliveryCharge =
+  Number(document.getElementById("deliveryArea").value);
+
+const grandTotal =
+  total + deliveryCharge;
+
+totalBox.innerText =
+  "Product: ৳" + total +
+  " | Delivery: ৳" + deliveryCharge +
+  " | Total: ৳" + grandTotal;
 }
 
 
