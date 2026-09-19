@@ -147,7 +147,7 @@ function addCart(productName) {
 
   }
 
-  updateCart();window.location.href = "checkout.html";
+  updateCart();
 }
 
 
@@ -311,11 +311,15 @@ function removeItem(index) {
 
 function openCart() {
 
-  document.getElementById(
-    "cartBox"
-  ).style.display = "block";
+  if (cartItems.length === 0) {
 
-  showCartItems();
+    alert("⚠️ আগে Cart-এ Product যোগ করুন");
+
+    return;
+  }
+
+  window.location.href = "checkout.html";
+
 }
 
 
