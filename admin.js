@@ -51,9 +51,10 @@ document.getElementById("saveProductBtn").addEventListener("click", async functi
     document.getElementById("productDescription").value = "";
 
   } catch (error) {
-    console.error(error);
-    message.innerText = "❌ Product Save হয়নি";
-    message.style.color = "red";
+  console.error(error);
+  message.innerText =
+    "❌ " + error.code + " — " + error.message;
+  message.style.color = "red";
   }
 
 });
