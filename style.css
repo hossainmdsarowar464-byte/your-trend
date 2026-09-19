@@ -672,4 +672,35 @@ section[style] h2 {
   .menu-panel {
     width: 245px;
   }
+}/* FORCE MENU TO TOP-RIGHT */
+
+header.hero {
+  position: relative !important;
+}
+
+header.hero .menu-wrapper {
+  position: absolute !important;
+  top: 15px !important;
+  right: 15px !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: auto !important;
+  z-index: 999999 !important;
+}
+
+header.hero .site-menu {
+  position: relative !important;
+}
+
+header.hero .menu-panel {
+  position: absolute !important;
+  top: 58px !important;
+  right: 0 !important;
+  left: auto !important;
+  width: 255px !important;
+  background: white !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.22) !important;
+  overflow: hidden !important;
 }
