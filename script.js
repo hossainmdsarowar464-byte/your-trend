@@ -229,4 +229,27 @@ function placeOrder() {
   document.querySelector(".checkout").scrollIntoView({
     behavior: "smooth"
   });
+}function showCheckoutSummary() {
+  const itemsBox = document.getElementById("checkoutItems");
+  const totalBox = document.getElementById("checkoutTotal");
+
+  itemsBox.innerHTML = "";
+
+  let total = 0;
+
+  cartItems.forEach(function (item) {
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+
+    itemsBox.innerHTML += `
+      <div class="summary-item">
+        <span>
+          ${item.name} × ${item.quantity}
+        </span>
+        <b>৳${subtotal}</b>
+      </div>
+    `;
+  });
+
+  totalBox.innerText = total;
 }
