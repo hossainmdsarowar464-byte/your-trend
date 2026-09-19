@@ -194,14 +194,25 @@ function placeOrder() {
   const msg = document.getElementById("msg");
 
   if (!n || !ph || !a) {
-    msg.innerText = "সব তথ্য পূরণ করুন";
+    msg.innerText = "⚠️ সব তথ্য পূরণ করুন";
     return;
   }
 
   if (cartItems.length === 0) {
-    msg.innerText = "আগে Cart-এ Product যোগ করুন";
+    msg.innerText = "⚠️ আগে Cart-এ Product যোগ করুন";
     return;
   }
 
-  msg.innerText = "✅ অর্ডার সফল!";
+  let total = 0;
+
+  cartItems.forEach(function (item) {
+    total += item.price * item.quantity;
+  });
+
+  msg.innerText =
+    "✅ অর্ডার সফল! মোট: ৳" + total;
+
+  // Order হওয়ার পর Cart খালি
+  cartItems = [];
+  updateCart();
 }
