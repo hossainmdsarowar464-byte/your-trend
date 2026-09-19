@@ -420,79 +420,59 @@ function showCheckoutSummary() {
 ========================= */
 
 function placeOrder() {
-
-  const name =
-    document.getElementById(
-      "name"
-    ).value.trim();
-
-
-  const phone =
-    document.getElementById(
-      "phone"
-    ).value.trim();
-
-
-  const address =
-    document.getElementById(
-      "address"
-    ).value.trim();
-
-
-  const msg =
-    document.getElementById(
-      "msg"
-    );
-
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const msg = document.getElementById("msg");
 
   if (!name || !phone || !address) {
-
-    msg.innerText =
-      "⚠️ সব তথ্য পূরণ করুন";
-
+    msg.innerText = "⚠️ সব তথ্য পূরণ করুন";
     return;
   }
-
 
   if (cartItems.length === 0) {
-
-    msg.innerText =
-      "⚠️ আগে Cart-এ Product যোগ করুন";
-
+    msg.innerText = "⚠️ আগে Cart-এ Product যোগ করুন";
     return;
   }
 
-
   let total = 0;
-
+  let orderText = "🛍️ *YOUR TREND ORDER*%0A%0A";
 
   cartItems.forEach(function (item) {
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
 
-    total +=
-      item.price * item.quantity;
-
+    orderText +=
+      "📦 " + item.name +
+      " × " + item.quantity +
+      " = ৳" + subtotal +
+      "%0A";
   });
 
+  orderText +=
+    "%0A💰 *মোট: ৳" + total + "*" +
+    "%0A%0A👤 নাম: " + encodeURIComponent(name) +
+    "%0A📞 ফোন: " + encodeURIComponent(phone) +
+    "%0A📍 ঠিকানা: " + encodeURIComponent(address);
+
+  const whatsappNumber = "8801775628710";
+
+  const whatsappURL =
+    "https://wa.me/" +
+    whatsappNumber +
+    "?text=" +
+    orderText;
+
+  window.open(whatsappURL, "_blank");
 
   msg.innerText =
-    "✅ অর্ডার সফল! মোট: ৳" +
-    total;
-
+    "✅ WhatsApp-এ Order পাঠানোর জন্য প্রস্তুত!";
 
   cartItems = [];
 
-
-  localStorage.removeItem(
-    "yourTrendCart"
-  );
-
+  localStorage.removeItem("yourTrendCart");
 
   updateCart();
 }
 
-
-/* =========================
-   INITIAL CART UPDATE
-========================= */
-
-updateCart();
+ dateCart();
