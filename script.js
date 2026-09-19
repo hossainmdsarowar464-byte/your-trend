@@ -420,6 +420,7 @@ function showCheckoutSummary() {
 ========================= */
 
 function placeOrder() {
+
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const address = document.getElementById("address").value.trim();
@@ -436,24 +437,39 @@ function placeOrder() {
   }
 
   let total = 0;
-  let orderText = "🛍️ *YOUR TREND ORDER*%0A%0A";
 
-  cartItems.forEach(function (item) {
-    const subtotal = item.price * item.quantity;
+  let orderText =
+    "🛍️ YOUR TREND ORDER\n\n";
+
+  cartItems.forEach(function(item) {
+
+    const subtotal =
+      item.price * item.quantity;
+
     total += subtotal;
 
     orderText +=
-      "📦 " + item.name +
-      " × " + item.quantity +
-      " = ৳" + subtotal +
-      "%0A";
+      "📦 " +
+      item.name +
+      " × " +
+      item.quantity +
+      " = ৳" +
+      subtotal +
+      "\n";
   });
 
   orderText +=
-    "%0A💰 *মোট: ৳" + total + "*" +
-    "%0A%0A👤 নাম: " + encodeURIComponent(name) +
-    "%0A📞 ফোন: " + encodeURIComponent(phone) +
-    "%0A📍 ঠিকানা: " + encodeURIComponent(address);
+    "\n💰 মোট: ৳" +
+    total +
+    "\n\n" +
+    "👤 নাম: " +
+    name +
+    "\n" +
+    "📞 ফোন: " +
+    phone +
+    "\n" +
+    "📍 ঠিকানা: " +
+    address;
 
   const whatsappNumber = "8801775628710";
 
@@ -461,18 +477,10 @@ function placeOrder() {
     "https://wa.me/" +
     whatsappNumber +
     "?text=" +
-    orderText;
+    encodeURIComponent(orderText);
 
   window.open(whatsappURL, "_blank");
 
   msg.innerText =
-    "✅ WhatsApp-এ Order পাঠানোর জন্য প্রস্তুত!";
-
-  cartItems = [];
-
-  localStorage.removeItem("yourTrendCart");
-
-  updateCart();
+    "✅ WhatsApp-এ Order পাঠানো হচ্ছে...";
 }
-
- dateCart();
