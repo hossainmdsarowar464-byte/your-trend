@@ -437,7 +437,8 @@ function placeOrder() {
   }
 
   let total = 0;
-const deliveryCharge = 70;
+const deliveryCharge =
+  Number(document.getElementById("deliveryArea").value);
   let orderText =
     "🛍️ YOUR TREND ORDER\n\n";
 
