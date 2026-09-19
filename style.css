@@ -754,4 +754,55 @@ header.hero > .menu-wrapper .menu-panel a {
   color: #222222 !important;
   text-decoration: none !important;
   border-bottom: 1px solid #eeeeee !important;
+}/* FINAL MENU - FIXED CORNER */
+
+header.hero .menu-wrapper {
+  position: fixed !important;
+  top: 15px !important;
+  left: 15px !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 50px !important;
+  height: 50px !important;
+  z-index: 9999999 !important;
+}
+
+header.hero .site-menu {
+  position: relative !important;
+}
+
+header.hero .site-menu summary {
+  width: 50px !important;
+  height: 50px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #fff !important;
+  color: #222 !important;
+  border-radius: 10px !important;
+  font-size: 25px !important;
+  box-shadow: 0 3px 12px rgba(0,0,0,.25) !important;
+}
+
+header.hero .menu-panel {
+  position: absolute !important;
+  top: 55px !important;
+  left: 0 !important;
+  right: auto !important;
+  width: 250px !important;
+  background: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,.25) !important;
+  overflow: hidden !important;
+}
+
+header.hero .menu-panel a {
+  display: block !important;
+  padding: 14px 16px !important;
+  color: #222 !important;
+  background: #fff !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid #eee !important;
 }
