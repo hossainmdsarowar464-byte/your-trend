@@ -107,7 +107,10 @@ function addCart(productName) {
 }
 
 // Cart update
-localStorage.setItem("yourTrendCart", JSON.stringify(cartItems)); {
+function updateCart() {
+  localStorage.setItem("yourTrendCart", JSON.stringify(cartItems));
+
+
   let count = 0;
   let total = 0;
 
