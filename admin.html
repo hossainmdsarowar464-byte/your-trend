@@ -124,59 +124,7 @@
 
   </div>
 
-  <script>
-
-    function saveProduct() {
-
-      const name =
-        document.getElementById("productName").value.trim();
-
-      const price =
-        document.getElementById("productPrice").value;
-
-      const image =
-        document.getElementById("productImage").value.trim();
-
-      const category =
-        document.getElementById("productCategory").value;
-
-      const description =
-        document.getElementById("productDescription").value.trim();
-
-      const message =
-        document.getElementById("message");
-
-      if (!name || !price || !image || !description) {
-
-        message.innerText =
-          "⚠️ সব তথ্য পূরণ করুন";
-
-        message.style.color = "red";
-
-        return;
-      }
-
-      const product = {
-        name: name,
-        price: Number(price),
-        image: image,
-        category: category,
-        description: description
-      };
-
-      localStorage.setItem(
-        "adminProduct",
-        JSON.stringify(product)
-      );
-
-      message.innerText =
-        "✅ Product তথ্য Save হয়েছে";
-
-      message.style.color = "green";
-
-    }
-
-  </script>
+  <script type="module" src="admin.js"></script>
 
 </body>
 </html>
