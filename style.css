@@ -218,7 +218,7 @@ section[style] h2 {
   margin: 20px 15px;
   padding: 20px;
   border-radius: 14px;
-  box-shadow: 0 3px 12px rgba(0,0
+ box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 /* Professional Cart */
 .cart-box {
   top: 80px;
