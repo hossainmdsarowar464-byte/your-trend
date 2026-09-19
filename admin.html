@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>YOUR TREND - Admin</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .admin-box {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      background: #ff6b00;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="admin-box">
+
+    <h1>🛍️ YOUR TREND Admin</h1>
+
+    <label>Product Name</label>
+    <input
+      type="text"
+      id="productName"
+      placeholder="যেমন: Premium T-Shirt"
+    >
+
+    <label>Price</label>
+    <input
+      type="number"
+      id="productPrice"
+      placeholder="যেমন: 490"
+    >
+
+    <label>Image Path</label>
+    <input
+      type="text"
+      id="productImage"
+      placeholder="images/product.jpg"
+    >
+
+    <label>Category</label>
+    <select id="productCategory">
+      <option value="fashion">Fashion</option>
+      <option value="gadgets">Gadgets</option>
+      <option value="bags">Bags</option>
+    </select>
+
+    <label>Description</label>
+    <textarea
+      id="productDescription"
+      placeholder="Product details লিখুন..."
+    ></textarea>
+
+    <button onclick="saveProduct()">
+      ➕ Add Product
+    </button>
+
+    <p id="message"></p>
+
+    <a href="index.html" class="back">
+      ← Back to Website
+    </a>
+
+  </div>
+
+  <script>
+
+    function saveProduct() {
+
+      const name =
+        document.getElementById("productName").value.trim();
+
+      const price =
+        document.getElementById("productPrice").value;
+
+      const image =
+        document.getElementById("productImage").value.trim();
+
+      const category =
+        document.getElementById("productCategory").value;
+
+      const description =
+        document.getElementById("productDescription").value.trim();
+
+      const message =
+        document.getElementById("message");
+
+      if (!name || !price || !image || !description) {
+
+        message.innerText =
+          "⚠️ সব তথ্য পূরণ করুন";
+
+        message.style.color = "red";
+
+        return;
+      }
+
+      const product = {
+        name: name,
+        price: Number(price),
+        image: image,
+        category: category,
+        description: description
+      };
+
+      localStorage.setItem(
+        "adminProduct",
+        JSON.stringify(product)
+      );
+
+      message.innerText =
+        "✅ Product তথ্য Save হয়েছে";
+
+      message.style.color = "green";
+
+    }
+
+  </script>
+
+</body>
+</html>
