@@ -594,4 +594,44 @@ section[style] h2 {
     min-width: 44px;
   }
 
+}/* =========================
+   MAIN MENU
+========================= */
+
+.main-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+  background: #111;
+}
+
+.main-menu a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.main-menu a:hover {
+  background: #ff6a00;
+}
+
+@media (max-width: 600px) {
+
+  .main-menu {
+    gap: 6px;
+    padding: 10px 6px;
+  }
+
+  .main-menu a {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
 }
