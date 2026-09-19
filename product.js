@@ -1,3 +1,4 @@
+
 const product =
   JSON.parse(
     localStorage.getItem("selectedProduct")
@@ -12,7 +13,7 @@ if (!product) {
 }
 
 
-// Product Details দেখানো
+// Product Details
 
 document.getElementById("productImage").src =
   product.image;
@@ -36,14 +37,10 @@ function addSelectedProduct() {
       localStorage.getItem("yourTrendCart")
     ) || [];
 
-
   const existing =
-    cartItems.find(function (item) {
-
+    cartItems.find(function(item) {
       return item.name === product.name;
-
     });
-
 
   if (existing) {
 
@@ -54,26 +51,20 @@ function addSelectedProduct() {
     cartItems.push({
 
       name: product.name,
-
       price: product.price,
-
       image: product.image,
-
       quantity: 1
 
     });
 
   }
 
-
   localStorage.setItem(
     "yourTrendCart",
     JSON.stringify(cartItems)
   );
 
-
   alert("✅ Product Cart-এ যোগ হয়েছে");
-
 }
 
 
@@ -86,16 +77,14 @@ function goCheckout() {
       localStorage.getItem("yourTrendCart")
     ) || [];
 
-
   if (cartItems.length === 0) {
 
     addSelectedProduct();
 
   }
 
-
-  window.location.href = "checkout.html";
-
+  window.location.href =
+    "checkout.html";
 }
 
 
@@ -117,7 +106,6 @@ function orderSelectedProduct() {
       document.getElementById("deliveryArea").value
     );
 
-
   const msg =
     document.getElementById("msg");
 
@@ -132,25 +120,67 @@ function orderSelectedProduct() {
   }
 
 
-  const grandTotal =
-    product.price + deliveryCharge;
+  // Order Number
 
+  let orderNumber =
+    Number(
+      localStorage.getItem(
+        "yourTrendOrderNumber"
+      )
+    ) || 0;
+
+  orderNumber++;
+
+
+  localStorage.setItem(
+    "yourTrendOrderNumber",
+    orderNumber
+  );
+
+
+  const orderId =
+    "YOURTREND-" +
+    String(orderNumber).padStart(4, "0");
+
+
+  const productTotal =
+    product.price;
+
+
+  const grandTotal =
+    productTotal +
+    deliveryCharge;
+
+
+  // WhatsApp Message
 
   const orderText =
 
     "🛍️ YOUR TREND ORDER\n\n" +
 
+    "🧾 Order ID: " +
+    orderId +
+
+    "\n\n" +
+
     "📦 Product: " +
     product.name +
 
-    "\n💰 Product Price: ৳" +
+    " × 1 = ৳" +
     product.price +
 
-    "\n🚚 Delivery: ৳" +
+    "\n\n" +
+
+    "🛍️ Product Total: ৳" +
+    productTotal +
+
+    "\n🚚 Delivery Charge: ৳" +
     deliveryCharge +
 
-    "\n💵 Grand Total: ৳" +
+    "\n💰 Grand Total: ৳" +
     grandTotal +
+
+    "\n💵 Payment: Cash on Delivery" +
 
     "\n\n👤 নাম: " +
     name +
