@@ -585,24 +585,15 @@ function openProduct(productName) {
   );
 
   window.location.href = "product.html";
-
-}function toggleMenu() {
-
+function toggleMenu() {
   const menu = document.getElementById("menuBox");
 
-  if (menu.style.display === "block") {
-    menu.style.display = "none";
-  } else {
-    menu.style.display = "block";
-  }
-
+  menu.classList.toggle("menu-open");
 }
 
-
 function closeMenu() {
-
   const menu = document.getElementById("menuBox");
 
-  menu.style.display = "none";
-
+  menu.classList.remove("menu-open");
+}
 }
