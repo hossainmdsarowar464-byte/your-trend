@@ -3,7 +3,7 @@ const list = [
   {
     name: "Premium T-Shirt",
     price: 490,
-    image: "1779024969_L_9.jpeg",
+    image: "images/1779024969_L_11.jpeg",
     category: "fashion",
     description: "Premium quality comfortable T-Shirt. দৈনন্দিন ব্যবহার ও casual wear-এর জন্য উপযোগী।"
   },
