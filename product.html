@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>YOUR TREND - Product Details</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<header class="hero">
+
+  <h1>YOUR TREND</h1>
+
+  <p>🛍️ Product Details</p>
+
+</header>
+
+
+<section class="product-details">
+
+  <img
+    id="productImage"
+    class="product-details-image"
+    src=""
+    alt="Product"
+  >
+
+
+  <h2 id="productName"></h2>
+
+
+  <h3>
+    ৳<span id="productPrice"></span>
+  </h3>
+
+
+  <p id="productDescription"></p>
+
+
+  <button
+    class="btn"
+    onclick="addSelectedProduct()"
+  >
+    🛒 Add to Cart
+  </button>
+
+
+  <button
+    class="btn"
+    onclick="goCheckout()"
+  >
+    📦 Checkout
+  </button>
+
+
+  <hr>
+
+
+  <h2>📦 Delivery Information</h2>
+
+
+  <input
+    id="name"
+    placeholder="আপনার নাম"
+  >
+
+
+  <input
+    id="phone"
+    placeholder="ফোন নম্বর"
+  >
+
+
+  <select id="deliveryArea">
+
+    <option value="70">
+      🏙️ ঢাকার ভিতরে — ৳70
+    </option>
+
+    <option value="100">
+      🏘️ সাব ঢাকা — ৳100
+    </option>
+
+    <option value="120">
+      🌍 ঢাকার বাইরে — ৳120
+    </option>
+
+  </select>
+
+
+  <textarea
+    id="address"
+    placeholder="সম্পূর্ণ ঠিকানা"
+  ></textarea>
+
+
+  <button
+    class="btn"
+    onclick="orderSelectedProduct()"
+  >
+    📲 WhatsApp-এ অর্ডার করুন
+  </button>
+
+
+  <p id="msg"></p>
+
+</section>
+
+
+<script src="product.js"></script>
+
+</body>
+
+</html>
