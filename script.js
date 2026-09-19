@@ -346,17 +346,8 @@ function goCheckout() {
     return;
   }
 
+  window.location.href = "checkout.html";
 
-  closeCart();
-
-  showCheckoutSummary();
-
-
-  document
-    .querySelector(".checkout")
-    .scrollIntoView({
-      behavior: "smooth"
-    });
 }
 
 
