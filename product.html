@@ -68,47 +68,132 @@
 
   <hr>
 
+<div class="order-form">
 
-  <h2>📦 Delivery Information</h2>
+  <h2>📦 অর্ডার ফর্ম</h2>
 
+  <!-- Name -->
 
-  <input
-    id="name"
-    placeholder="আপনার নাম"
-  >
+  <div class="form-group">
 
+    <label for="name">
+      👤 নাম
+    </label>
 
-  <input
-    id="phone"
-    placeholder="ফোন নম্বর"
-  >
+    <div class="input-box">
 
+      <span>👤</span>
 
-  <select id="deliveryArea">
+      <input
+        id="name"
+        type="text"
+        placeholder="আপনার নাম লিখুন"
+      >
 
-    <option value="70">
-      🏙️ ঢাকার ভিতরে — ৳70
-    </option>
+    </div>
 
-    <option value="100">
-      🏘️ সাব ঢাকা — ৳100
-    </option>
-
-    <option value="120">
-      🌍 ঢাকার বাইরে — ৳120
-    </option>
-
-  </select>
+  </div>
 
 
-  <textarea
-    id="address"
-    placeholder="সম্পূর্ণ ঠিকানা"
-  ></textarea>
+  <!-- Phone -->
 
+  <div class="form-group">
+
+    <label for="phone">
+      📱 মোবাইল নম্বর
+    </label>
+
+    <div class="input-box">
+
+      <span>📞</span>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="01XXXXXXXXX"
+      >
+
+    </div>
+
+  </div>
+
+
+  <!-- Delivery Area -->
+
+  <div class="form-group">
+
+    <label for="deliveryArea">
+      🚚 Delivery Area
+    </label>
+
+    <div class="input-box">
+
+      <span>🚚</span>
+
+      <select id="deliveryArea">
+
+        <option value="70">
+          ঢাকার ভিতরে — ৳70
+        </option>
+
+        <option value="100">
+          সাব ঢাকা — ৳100
+        </option>
+
+        <option value="120">
+          ঢাকার বাইরে — ৳120
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- Payment -->
+
+  <div class="form-group">
+
+    <label>
+      💵 Payment Method
+    </label>
+
+    <div class="payment-box">
+
+      💵 Cash on Delivery
+
+    </div>
+
+  </div>
+
+
+  <!-- Address -->
+
+  <div class="form-group">
+
+    <label for="address">
+      📍 ঠিকানা
+    </label>
+
+    <div class="textarea-box">
+
+      <span>📍</span>
+
+      <textarea
+        id="address"
+        placeholder="সম্পূর্ণ ঠিকানা লিখুন"
+      ></textarea>
+
+    </div>
+
+  </div>
+
+
+  <!-- WhatsApp -->
 
   <button
-    class="btn"
+    class="btn whatsapp-order-btn"
     onclick="orderSelectedProduct()"
   >
     📲 WhatsApp-এ অর্ডার করুন
@@ -116,6 +201,8 @@
 
 
   <p id="msg"></p>
+
+</div>
 
 </section>
 
