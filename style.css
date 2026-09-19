@@ -394,4 +394,31 @@ section[style] h2 {
     grid-template-columns: 1fr;
   }
 
+}.product-details {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.product-details-image {
+  width: 100%;
+  max-width: 350px;
+  height: 350px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.product-details input,
+.product-details select,
+.product-details textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+.product-details textarea {
+  min-height: 100px;
 }
