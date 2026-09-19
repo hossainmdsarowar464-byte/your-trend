@@ -28,7 +28,7 @@ const list = [
 const box = document.getElementById("products");
 const searchInput = document.getElementById("search");
 
-let cartItems = [];
+let cartItems = JSON.parse(localStorage.getItem("yourTrendCart")) || [];
 
 // Products দেখানো
 function showProducts(products) {
@@ -107,7 +107,7 @@ function addCart(productName) {
 }
 
 // Cart update
-function updateCart() {
+localStorage.setItem("yourTrendCart", JSON.stringify(cartItems)); {
   let count = 0;
   let total = 0;
 
