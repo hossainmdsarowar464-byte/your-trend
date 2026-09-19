@@ -1,9 +1,9 @@
 alert("PRODUCT JS কাজ করছে");
+
 const product =
   JSON.parse(
     localStorage.getItem("selectedProduct")
   );
-
 
 if (!product) {
 
@@ -14,21 +14,22 @@ if (!product) {
 }
 
 
+// Product Details দেখানো
+
 document.getElementById("productImage").src =
   product.image;
-
 
 document.getElementById("productName").innerText =
   product.name;
 
-
 document.getElementById("productPrice").innerText =
   product.price;
-
 
 document.getElementById("productDescription").innerText =
   product.description;
 
+
+// Add to Cart
 
 function addSelectedProduct() {
 
@@ -74,5 +75,109 @@ function addSelectedProduct() {
 
 
   alert("✅ Product Cart-এ যোগ হয়েছে");
+
+}
+
+
+// Checkout
+
+function goCheckout() {
+
+  let cartItems =
+    JSON.parse(
+      localStorage.getItem("yourTrendCart")
+    ) || [];
+
+
+  if (cartItems.length === 0) {
+
+    addSelectedProduct();
+
+  }
+
+
+  window.location.href = "checkout.html";
+
+}
+
+
+// WhatsApp Order
+
+function orderSelectedProduct() {
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const address =
+    document.getElementById("address").value.trim();
+
+  const deliveryCharge =
+    Number(
+      document.getElementById("deliveryArea").value
+    );
+
+
+  const msg =
+    document.getElementById("msg");
+
+
+  if (!name || !phone || !address) {
+
+    msg.innerText =
+      "⚠️ নাম, ফোন ও ঠিকানা পূরণ করুন";
+
+    return;
+
+  }
+
+
+  const grandTotal =
+    product.price + deliveryCharge;
+
+
+  const orderText =
+
+    "🛍️ YOUR TREND ORDER\n\n" +
+
+    "📦 Product: " +
+    product.name +
+
+    "\n💰 Product Price: ৳" +
+    product.price +
+
+    "\n🚚 Delivery: ৳" +
+    deliveryCharge +
+
+    "\n💵 Grand Total: ৳" +
+    grandTotal +
+
+    "\n\n👤 নাম: " +
+    name +
+
+    "\n📞 ফোন: " +
+    phone +
+
+    "\n📍 ঠিকানা: " +
+    address;
+
+
+  // YOUR TREND WhatsApp Number
+
+  const whatsappNumber =
+    "8801775628710";
+
+
+  const whatsappURL =
+    "https://wa.me/" +
+    whatsappNumber +
+    "?text=" +
+    encodeURIComponent(orderText);
+
+
+  window.location.href =
+    whatsappURL;
 
 }
