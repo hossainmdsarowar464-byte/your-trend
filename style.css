@@ -219,3 +219,82 @@ section[style] h2 {
   padding: 20px;
   border-radius: 14px;
   box-shadow: 0 3px 12px rgba(0,0
+/* Professional Cart */
+.cart-box {
+  top: 80px;
+  right: 12px;
+  width: 380px;
+  max-width: calc(100% - 24px);
+  max-height: 75vh;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+}
+
+.cart-box h2 {
+  text-align: center;
+  color: #222;
+  margin: 0 0 15px;
+}
+
+#cartItems > div {
+  background: #f8f8f8;
+  padding: 14px !important;
+  margin: 10px 0;
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+
+#cartItems b {
+  display: block;
+  color: #222;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+#cartItems p {
+  color: #555;
+  margin: 5px 0 12px;
+}
+
+#cartItems button {
+  border: none;
+  background: #ff6a00;
+  color: white;
+  min-width: 38px;
+  min-height: 35px;
+  border-radius: 7px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#cartItems button:last-child {
+  background: #ff3b30;
+}
+
+.cart-box h3 {
+  text-align: center;
+  font-size: 21px;
+  color: #ff6a00;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.cart-box .btn {
+  margin-top: 8px;
+}
+
+/* Mobile Cart */
+@media (max-width: 500px) {
+  .cart-box {
+    top: 75px;
+    right: 10px;
+    width: calc(100% - 20px);
+    max-height: 78vh;
+    padding: 16px;
+    border-radius: 18px;
+  }
+}
