@@ -67,20 +67,23 @@ searchInput.addEventListener("input", function () {
 });
 
 function showProducts(products) {
+
   box.innerHTML = "";
 
   products.forEach(function (p) {
+
     box.innerHTML += `
+
       <div
-  class="card"
-  onclick="openProduct('${p.name}')"
->
+        class="card"
+        onclick="openProduct('${p.name}')"
+      >
 
         <img
           class="img"
           src="${p.image}"
           alt="${p.name}"
-          onclick="viewImage('${p.image}')"
+          onclick="event.stopPropagation(); viewImage('${p.image}')"
           style="cursor: zoom-in;"
         >
 
@@ -92,13 +95,15 @@ function showProducts(products) {
 
         <button
           class="btn"
-          onclick="addCart('${p.name}')"
+          onclick="event.stopPropagation(); addCart('${p.name}')"
         >
           Add to Cart
         </button>
 
       </div>
+
     `;
+
   });
 }
 
