@@ -6,28 +6,51 @@ const list = [
 ];
 
 const box = document.getElementById("products");
+const searchInput = document.getElementById("search");
+
 let cart = 0;
 
-list.forEach(function (p) {
-  box.innerHTML += `
-    <div class="card">
-      <img class="img" src="images/${p[2]}" alt="${p[0]}">
-      <h3>${p[0]}</h3>
-      <p><b>৳${p[1]}</b></p>
-      <button class="btn" onclick="addCart()">Add to Cart</button>
-    </div>
-  `;
+// Products দেখানো
+function showProducts(products) {
+  box.innerHTML = "";
+
+  products.forEach(function (p) {
+    box.innerHTML += `
+      <div class="card">
+        <img class="img" src="images/${p[2]}" alt="${p[0]}">
+        <h3>${p[0]}</h3>
+        <p><b>৳${p[1]}</b></p>
+        <button class="btn" onclick="addCart()">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+// প্রথমে সব Product দেখাবে
+showProducts(list);
+
+// Search
+searchInput.addEventListener("input", function () {
+  const keyword = searchInput.value.toLowerCase().trim();
+
+  const results = list.filter(function (p) {
+    return p[0].toLowerCase().includes(keyword);
+  });
+
+  showProducts(results);
 });
 
+// Cart
 function addCart() {
   cart++;
   document.getElementById("count").innerText = cart;
 }
 
+// Order
 function placeOrder() {
-  const n = document.getElementById("name").value;
-  const ph = document.getElementById("phone").value;
-  const a = document.getElementById("address").value;
+  const n = document.getElementById("name").value.trim();
+  const ph = document.getElementById("phone").value.trim();
+  const a = document.getElementById("address").value.trim();
   const msg = document.getElementById("msg");
 
   if (!n || !ph || !a) {
@@ -37,23 +60,3 @@ function placeOrder() {
 
   msg.innerText = "✅ অর্ডার সফল!";
 }
-const searchInput = document.getElementById("search");
-
-searchInput.addEventListener("input", function () {
-  const keyword = searchInput.value.toLowerCase();
-
-  box.innerHTML = "";
-
-  list.forEach(function (p) {
-    if (p[0].toLowerCase().includes(keyword)) {
-      box.innerHTML += `
-        <div class="card">
-          <img class="img" src="images/${p[2]}" alt="${p[0]}">
-          <h3>${p[0]}</h3>
-          <p><b>৳${p[1]}</b></p>
-          <button class="btn" onclick="addCart()">Add to Cart</button>
-        </div>
-      `;
-    }
-  });
-});
