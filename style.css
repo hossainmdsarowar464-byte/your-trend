@@ -597,7 +597,7 @@ section[style] h2 {
 }/* YOUR TREND MENU - FINAL */
 
 #yourTrendMenu {
-  position: absolute;
+  position: fixed;
   top: 15px;
   left: 15px;
   z-index: 999999;
