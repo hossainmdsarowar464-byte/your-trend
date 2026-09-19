@@ -805,4 +805,19 @@ header.hero .menu-panel a {
   background: #fff !important;
   text-decoration: none !important;
   border-bottom: 1px solid #eee !important;
+}/* MENU BOX MOBILE FIX */
+
+header.hero .menu-panel {
+  position: fixed !important;
+  top: 75px !important;
+  left: 15px !important;
+  right: auto !important;
+  width: min(250px, calc(100vw - 30px)) !important;
+  max-width: calc(100vw - 30px) !important;
+  box-sizing: border-box !important;
+  background: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,.25) !important;
+  overflow: hidden !important;
+  z-index: 99999999 !important;
 }
