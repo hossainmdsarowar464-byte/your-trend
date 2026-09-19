@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>YOUR TREND - Checkout</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="hero">
+
+  <h1>YOUR TREND</h1>
+
+  <p>🛍️ Checkout / Order</p>
+
+</header>
+
+
+<section class="checkout">
+
+  <h2>🛒 আপনার Order</h2>
+
+  <div id="checkoutItems"
+       class="order-summary">
+  </div>
+
+
+  <p class="checkout-total">
+
+    মোট: ৳<span id="checkoutTotal">0</span>
+
+  </p>
+
+
+  <h2>📦 Delivery Information</h2>
+
+
+  <input
+    id="name"
+    placeholder="আপনার নাম"
+  >
+
+
+  <input
+    id="phone"
+    placeholder="ফোন নম্বর"
+  >
+
+
+  <select id="deliveryArea">
+
+    <option value="70">
+      🏙️ ঢাকার ভিতরে — ৳70
+    </option>
+
+    <option value="100">
+      🏘️ সাব ঢাকা — ৳100
+    </option>
+
+    <option value="120">
+      🌍 ঢাকার বাইরে — ৳120
+    </option>
+
+  </select>
+
+
+  <select id="paymentMethod">
+
+    <option value="Cash on Delivery">
+      💵 Cash on Delivery
+    </option>
+
+  </select>
+
+
+  <textarea
+    id="address"
+    placeholder="সম্পূর্ণ ঠিকানা"
+  ></textarea>
+
+
+  <button
+    class="btn"
+    onclick="placeOrder()"
+  >
+    📲 WhatsApp-এ অর্ডার করুন
+  </button>
+
+
+  <p id="msg"></p>
+
+</section>
+
+
+<script src="checkout.js"></script>
+
+</body>
+
+</html>
