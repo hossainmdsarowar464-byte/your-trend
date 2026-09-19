@@ -1,73 +1,174 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>YOUR TREND</title>
+
 <link rel="stylesheet" href="style.css">
-</head><body><img src="file_0000000005cc820898bb1cafb31d2296.png" alt="YOUR TREND Banner" style="width:100%;display:block;">
 
-<header class="hero">  <div class="search-box">
+</head>
+
+<body>
+
+
+<img
+  src="file_0000000005cc820898bb1cafb31d2296.png"
+  alt="YOUR TREND Banner"
+  style="width:100%;display:block;"
+>
+
+
+<header class="hero">
+
+  <div class="search-box">
+
     <div class="cats">
-      <button onclick="filterCategory('fashion')">👕 Fashion</button>
-<button onclick="filterCategory('gadgets')">⌚ Gadgets</button>
-<button onclick="filterCategory('bags')">🎒 Bags</button>
-<button onclick="filterCategory('all')">🔥 All</button>
-    </div><input type="text" id="search" placeholder="Search products...">
 
-  </div>  <h1>YOUR TREND</h1>
-  <p>Trusted Fashion & Gadget Store</p>  <div class="cart" onclick="openCart()">
-  🛒 <span id="count">0</span>
-</div>
+      <button onclick="filterCategory('fashion')">
+        👕 Fashion
+      </button>
 
-<div id="cartBox" class="cart-box">
-  <h2>🛒 Your Cart</h2>
-  <div id="cartItems"></div>
-  <h3>Total: ৳<span id="total">0</span></h3>
+      <button onclick="filterCategory('gadgets')">
+        ⌚ Gadgets
+      </button>
 
-<button class="btn" onclick="goCheckout()">
-  🛍️ Checkout / Order Now
-</button>
+      <button onclick="filterCategory('bags')">
+        🎒 Bags
+      </button>
 
-<button class="btn" onclick="closeCart()" style="margin-top:8px;">
-  Close
-</button>
-</div>
-  </div></header><img src="images/1783948832_L_1.jpeg" style="width:300px;"><section style="padding:20px;text-align:center">
+      <button onclick="filterCategory('all')">
+        🔥 All
+      </button>
+
+    </div>
+
+
+    <input
+      type="text"
+      id="search"
+      placeholder="Search products..."
+    >
+
+  </div>
+
+
+  <h1>YOUR TREND</h1>
+
+  <p>Trusted Fashion & Gadget Store</p>
+
+
+  <div class="cart" onclick="openCart()">
+
+    🛒 <span id="count">0</span>
+
+  </div>
+
+
+  <div id="cartBox" class="cart-box">
+
+    <h2>🛒 Your Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <h3>
+      Total: ৳<span id="total">0</span>
+    </h3>
+
+
+    <button
+      class="btn"
+      onclick="goCheckout()"
+    >
+      🛍️ Checkout / Order Now
+    </button>
+
+
+    <button
+      class="btn"
+      onclick="closeCart()"
+      style="margin-top:8px;"
+    >
+      Close
+    </button>
+
+  </div>
+
+</header>
+
+
+<img
+  src="images/1783948832_L_1.jpeg"
+  style="width:300px;"
+>
+
+
+<section
+  style="padding:20px;text-align:center"
+>
+
   <h2>🔥 Trending Collection</h2>
-  <p>Fashion • Gadgets • Lifestyle</p>
-</section><div id="products" class="grid"></div><section class="checkout">
-  <h2>Checkout</h2> <div id="orderSummary" class="order-summary">
-  <h3>🛍️ Order Summary</h3>
-  <div id="checkoutItems"></div>
-  <p class="checkout-total">
-    মোট: ৳<span id="checkoutTotal">0</span>
+
+  <p>
+    Fashion • Gadgets • Lifestyle
   </p>
-  </div> <input id="name" placeholder="আপনার নাম">
-  <input id="phone" placeholder="ফোন নম্বর"> <select id="deliveryArea"><section class="checkout">
+
+</section>
+
+
+<div
+  id="products"
+  class="grid"
+></div>
+
+
+
+<!-- =========================
+     CHECKOUT
+========================= -->
+
+<section class="checkout">
 
   <h2>Checkout</h2>
 
-  <div id="orderSummary" class="order-summary">
+
+  <div
+    id="orderSummary"
+    class="order-summary"
+  >
 
     <h3>🛍️ Order Summary</h3>
 
     <div id="checkoutItems"></div>
 
+
     <p class="checkout-total">
+
       মোট: ৳<span id="checkoutTotal">0</span>
+
     </p>
 
   </div>
+
 
   <input
     id="name"
     placeholder="আপনার নাম"
   >
 
+
   <input
     id="phone"
     placeholder="ফোন নম্বর"
   >
+
 
   <select id="deliveryArea">
 
@@ -85,6 +186,7 @@
 
   </select>
 
+
   <select id="paymentMethod">
 
     <option value="Cash on Delivery">
@@ -93,10 +195,12 @@
 
   </select>
 
+
   <textarea
     id="address"
     placeholder="সম্পূর্ণ ঠিকানা"
   ></textarea>
+
 
   <button
     class="btn"
@@ -105,49 +209,97 @@
     অর্ডার করুন
   </button>
 
+
   <p id="msg"></p>
 
-  </section>
-  </select>
-  <imsgid="msg"></p>
-</section><script src="script.js"></script><footer class="site-footer">
+</section>
+
+
+
+<script src="script.js"></script>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="site-footer">
 
   <div class="footer-content">
 
+
     <div class="footer-box">
+
       <h2>YOUR TREND</h2>
+
       <p>
         Trusted Fashion & Gadget Store
       </p>
+
     </div>
 
+
     <div class="footer-box">
+
       <h3>Quick Links</h3>
+
       <a href="#">Home</a>
+
       <a href="#">Products</a>
+
       <a href="#">About Us</a>
+
       <a href="#">Contact</a>
+
     </div>
 
+
     <div class="footer-box">
+
       <h3>Customer Service</h3>
+
       <a href="#">Delivery Information</a>
+
       <a href="#">Return Policy</a>
+
       <a href="#">Privacy Policy</a>
+
     </div>
 
+
     <div class="footer-box">
+
       <h3>Contact</h3>
-      <p>📞 Phone: 01XXXXXXXXX</p>
-      <p>📍 Bangladesh</p>
-      <p>💬 WhatsApp Support</p>
+
+      <p>
+        📞 Phone: 01XXXXXXXXX
+      </p>
+
+      <p>
+        📍 Bangladesh
+      </p>
+
+      <p>
+        💬 WhatsApp Support
+      </p>
+
     </div>
+
 
   </div>
+
 
   <div class="footer-bottom">
+
     © 2026 YOUR TREND — All Rights Reserved.
+
   </div>
 
-</footer></body>
+</footer>
+
+
+</body>
+
 </html>
+
