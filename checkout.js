@@ -255,4 +255,14 @@ function placeOrder() {
 
 
 
-showCheckout();
+showCheckout();function clearCart() {
+
+  localStorage.removeItem("yourTrendCart");
+
+  cartItems = [];
+
+  showCheckout();
+
+  alert("🗑️ Cart খালি করা হয়েছে");
+
+    }
