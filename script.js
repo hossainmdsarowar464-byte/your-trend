@@ -19,7 +19,7 @@ const list = [
   {
     name: "Earbuds",
     price: 690,
-    image: "1779024969_L_9.jpeg",
+    image: "1789826573511.png",
     category: "gadgets",
     description: "Compact wireless Earbuds with stylish design. Music ও daily use-এর জন্য উপযোগী।"
   },
