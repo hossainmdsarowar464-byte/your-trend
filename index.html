@@ -36,7 +36,13 @@
   <h2>🔥 Trending Collection</h2>
   <p>Fashion • Gadgets • Lifestyle</p>
 </section><div id="products" class="grid"></div><section class="checkout">
-  <h2>Checkout</h2>  <input id="name" placeholder="আপনার নাম">
+  <h2>Checkout</h2> <div id="orderSummary" class="order-summary">
+  <h3>🛍️ Order Summary</h3>
+  <div id="checkoutItems"></div>
+  <p class="checkout-total">
+    মোট: ৳<span id="checkoutTotal">0</span>
+  </p>
+  </div> <input id="name" placeholder="আপনার নাম">
   <input id="phone" placeholder="ফোন নম্বর">  <textarea id="address"
   placeholder="সম্পূর্ণ ঠিকানা"></textarea><button onclick="placeOrder()">অর্ডার করুন</button>
 
