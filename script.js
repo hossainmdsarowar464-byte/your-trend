@@ -427,7 +427,20 @@ totalBox.innerText =
 /* =========================
    PLACE ORDER
 ========================= */
-function placeOrder() {
+function placeOrder() {// Create Order ID
+let orderNumber =
+  Number(localStorage.getItem("yourTrendOrderNumber")) || 0;
+
+orderNumber++;
+
+localStorage.setItem(
+  "yourTrendOrderNumber",
+  orderNumber
+);
+
+const orderId =
+  "YOURTREND-" +
+  String(orderNumber).padStart(4, "0");
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -450,7 +463,10 @@ function placeOrder() {
   let productTotal = 0;
 
   let orderText =
-    "🛍️ YOUR TREND ORDER\n\n";
+  "🛍️ YOUR TREND ORDER\n\n" +
+  "🧾 Order ID: " +
+  orderId +
+  "\n\n";
 
   cartItems.forEach(function(item) {
 
