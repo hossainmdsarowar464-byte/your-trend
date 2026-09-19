@@ -460,8 +460,12 @@ const deliveryCharge =
   });
 
   orderText +=
-    "\n💰 মোট: ৳" +
-    total +
+  "\n🛍️ Product Total: ৳" +
+  total +
+  "\n🚚 Delivery Charge: ৳" +
+  deliveryCharge +
+  "\n💰 Grand Total: ৳" +
+  (total + deliveryCharge) +
     "\n\n" +
     "👤 নাম: " +
     name +
