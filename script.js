@@ -108,6 +108,49 @@ function showProducts(products) {
 }
 
 showProducts(list);
+async function loadFirebaseProducts() {
+  try {
+    const { initializeApp } =
+      await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js");
+
+    const { getFirestore, collection, getDocs } =
+      await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js");
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+      authDomain: "your-trend.firebaseapp.com",
+      projectId: "your-trend",
+      storageBucket: "your-trend.firebasestorage.app",
+      messagingSenderId: "775017944976",
+      appId: "1:775017944976:web:a19b34b89e6a4285148515",
+      measurementId: "G-1T4GM19268"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const snapshot = await getDocs(collection(db, "products"));
+
+    snapshot.forEach(function(doc) {
+      const product = doc.data();
+
+      list.push({
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+        description: product.description
+      });
+    });
+
+    showProducts(list);
+
+  } catch (error) {
+    console.error("Firebase products error:", error);
+  }
+}
+
+loadFirebaseProducts();
 
 
 function viewImage(image) {
