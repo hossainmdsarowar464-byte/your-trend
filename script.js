@@ -588,8 +588,7 @@ function openProduct(productName) {
 
 }function toggleMenu() {
 
-  const menu =
-    document.getElementById("menuBox");
+  const menu = document.getElementById("menuBox");
 
   if (menu.style.display === "block") {
     menu.style.display = "none";
@@ -602,7 +601,8 @@ function openProduct(productName) {
 
 function closeMenu() {
 
-  document.getElementById("menuBox")
-    .style.display = "none";
+  const menu = document.getElementById("menuBox");
+
+  menu.style.display = "none";
 
 }
