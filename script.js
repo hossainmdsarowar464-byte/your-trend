@@ -11,7 +11,7 @@ const list = [
   {
     name: "Smart Watch",
     price: 890,
-    image: "1789826533436.png",
+    image: "images/1789826533436.png",
     category: "gadgets",
     description: "Stylish Smart Watch with modern design. দৈনন্দিন ব্যবহার ও lifestyle-এর জন্য উপযোগী।"
   },
@@ -19,7 +19,7 @@ const list = [
   {
     name: "Earbuds",
     price: 690,
-    image: "1789826573511.png",
+    image: "images/1789826573511.png",
     category: "gadgets",
     description: "Compact wireless Earbuds with stylish design. Music ও daily use-এর জন্য উপযোগী।"
   },
@@ -27,7 +27,7 @@ const list = [
   {
     name: "Travel Bag",
     price: 790,
-    image: "1779024969_L_9.jpeg",
+    image: "images/1789826597035.png",
     category: "bags",
     description: "Durable এবং spacious Travel Bag. ভ্রমণ ও দৈনন্দিন ব্যবহারের জন্য উপযোগী।"
   }
