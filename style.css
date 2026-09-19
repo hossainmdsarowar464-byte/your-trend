@@ -735,4 +735,70 @@ section[style] h2 {
   .menu-box {
     width: 82%;
   }
+}/* =========================
+   NEW SITE MENU
+========================= */
+
+.menu-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 15px;
+  z-index: 99999;
+}
+
+.site-menu {
+  position: relative;
+}
+
+.site-menu summary {
+  list-style: none;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #222;
+  border-radius: 10px;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+.site-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -5px 0 25px rgba(0,0,0,0.20);
+  padding-top: 80px;
+  box-sizing: border-box;
+  z-index: 100000;
+}
+
+.menu-panel a {
+  display: block;
+  padding: 17px 22px;
+  color: #222;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.menu-panel a:hover {
+  background: #f5f5f5;
+}
+
+@media (max-width: 600px) {
+  .menu-panel {
+    width: 82%;
+  }
 }
