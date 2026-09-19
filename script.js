@@ -71,7 +71,10 @@ function showProducts(products) {
 
   products.forEach(function (p) {
     box.innerHTML += `
-      <div class="card">
+      <div
+  class="card"
+  onclick="openProduct('${p.name}')"
+>
 
         <img
           class="img"
