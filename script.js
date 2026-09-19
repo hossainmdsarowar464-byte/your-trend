@@ -147,7 +147,7 @@ function addCart(productName) {
 
   }
 
-  updateCart();
+  updateCart();window.location.href = "checkout.html";
 }
 
 
