@@ -586,4 +586,23 @@ function openProduct(productName) {
 
   window.location.href = "product.html";
 
+}function toggleMenu() {
+
+  const menu =
+    document.getElementById("menuBox");
+
+  if (menu.style.display === "block") {
+    menu.style.display = "none";
+  } else {
+    menu.style.display = "block";
+  }
+
+}
+
+
+function closeMenu() {
+
+  document.getElementById("menuBox")
+    .style.display = "none";
+
 }
