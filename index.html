@@ -43,7 +43,11 @@
     মোট: ৳<span id="checkoutTotal">0</span>
   </p>
   </div> <input id="name" placeholder="আপনার নাম">
-  <input id="phone" placeholder="ফোন নম্বর">  <textarea id="address"
+  <input id="phone" placeholder="ফোন নম্বর"> <select id="deliveryArea">
+  <option value="70">ঢাকার ভিতরে — ৳70</option>
+  <option value="100">সাব ঢাকা — ৳100</option>
+  <option value="120">ঢাকার বাইরে — ৳120</option>
+  </select> <textarea id="address"
   placeholder="সম্পূর্ণ ঠিকানা"></textarea><button onclick="placeOrder()">অর্ডার করুন</button>
 
   <p id="msg"></p>
