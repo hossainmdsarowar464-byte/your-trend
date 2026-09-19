@@ -36,42 +36,7 @@ let cartItems =
    PRODUCTS
 ========================= */
 
-function showProducts(products) {
-  box.innerHTML = "";
 
-  products.forEach(function (p) {
-    box.innerHTML += `
-      <div class="card">
-        <img
-  class="img"
-  src="${p.image}"
-  alt="${p.name}"
-  onclick="viewImage('${p.image}')"
-  style="cursor:zoom-in;"
->
-
-        <h3>${p.name}</h3>
-
-        <p>
-          <b>৳${p.price}</b>
-        </p>
-
-        <button
-          class="btn"
-          onclick="addCart('${p.name}')"
-        >
-          Add to Cart
-        </button>
-      </div>
-    `;
-  });
-}
-
-showProducts(list);function viewImage(image) {
-
-  window.open(image, "_blank");
-
-}
 
 
 /* =========================
@@ -94,7 +59,47 @@ searchInput.addEventListener("input", function () {
   showProducts(results);
 });
 
+function showProducts(products) {
+  box.innerHTML = "";
 
+  products.forEach(function (p) {
+    box.innerHTML += `
+      <div class="card">
+
+        <img
+          class="img"
+          src="${p.image}"
+          alt="${p.name}"
+          onclick="viewImage('${p.image}')"
+          style="cursor: zoom-in;"
+        >
+
+        <h3>${p.name}</h3>
+
+        <p>
+          <b>৳${p.price}</b>
+        </p>
+
+        <button
+          class="btn"
+          onclick="addCart('${p.name}')"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+    `;
+  });
+}
+
+showProducts(list);
+
+
+function viewImage(image) {
+
+  window.open(image, "_blank");
+
+}
 /* =========================
    CATEGORY
 ========================= */
