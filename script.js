@@ -67,7 +67,11 @@ function showProducts(products) {
   });
 }
 
-showProducts(list);
+showProducts(list);function viewImage(image) {
+
+  window.open(image, "_blank");
+
+}
 
 
 /* =========================
