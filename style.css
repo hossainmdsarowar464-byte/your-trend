@@ -657,7 +657,7 @@ section[style] h2 {
 }
 
 .menu-box {
-  display: none !important;
+  display: none;
   position: absolute;
   top: 65px;
   right: 15px;
