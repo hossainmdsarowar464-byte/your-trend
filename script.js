@@ -552,6 +552,7 @@ function placeOrder() {
     whatsappNumber +
     "?text=" +
     encodeURIComponent(orderText);
+  
 
 
   window.open(
@@ -562,4 +563,22 @@ function placeOrder() {
 
   msg.innerText =
     "✅ WhatsApp-এ Order পাঠানো হচ্ছে...";
+}
+function openProduct(productName) {
+
+  const product = list.find(function (p) {
+
+    return p.name === productName;
+
+  });
+
+  if (!product) return;
+
+  localStorage.setItem(
+    "selectedProduct",
+    JSON.stringify(product)
+  );
+
+  window.location.href = "product.html";
+
 }
