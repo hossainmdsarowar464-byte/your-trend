@@ -28,24 +28,36 @@ const list = [
 const box = document.getElementById("products");
 const searchInput = document.getElementById("search");
 
-let cartItems = JSON.parse(localStorage.getItem("yourTrendCart")) || [];
+let cartItems =
+  JSON.parse(localStorage.getItem("yourTrendCart")) || [];
 
-// Products দেখানো
+
+/* =========================
+   PRODUCTS
+========================= */
+
 function showProducts(products) {
   box.innerHTML = "";
-
-  if (products.length === 0) {
-    box.innerHTML = "<p style='text-align:center;'>কোনো Product পাওয়া যায়নি</p>";
-    return;
-  }
 
   products.forEach(function (p) {
     box.innerHTML += `
       <div class="card">
-        <img class="img" src="${p.image}" alt="${p.name}">
+        <img
+          class="img"
+          src="${p.image}"
+          alt="${p.name}"
+        >
+
         <h3>${p.name}</h3>
-        <p><b>৳${p.price}</b></p>
-        <button class="btn" onclick="addCart('${p.name}')">
+
+        <p>
+          <b>৳${p.price}</b>
+        </p>
+
+        <button
+          class="btn"
+          onclick="addCart('${p.name}')"
+        >
           Add to Cart
         </button>
       </div>
@@ -55,209 +67,432 @@ function showProducts(products) {
 
 showProducts(list);
 
-// Search
+
+/* =========================
+   SEARCH
+========================= */
+
 searchInput.addEventListener("input", function () {
-  const keyword = searchInput.value.toLowerCase().trim();
+
+  const keyword =
+    searchInput.value.toLowerCase().trim();
 
   const results = list.filter(function (p) {
-    return p.name.toLowerCase().includes(keyword);
+
+    return p.name
+      .toLowerCase()
+      .includes(keyword);
+
   });
 
   showProducts(results);
 });
 
-// Category
+
+/* =========================
+   CATEGORY
+========================= */
+
 function filterCategory(category) {
+
   if (category === "all") {
     showProducts(list);
     return;
   }
 
   const results = list.filter(function (p) {
+
     return p.category === category;
+
   });
 
   showProducts(results);
 }
 
-// Add to Cart
+
+/* =========================
+   ADD CART
+========================= */
+
 function addCart(productName) {
+
   const product = list.find(function (p) {
+
     return p.name === productName;
+
   });
 
   if (!product) return;
 
+
   const existing = cartItems.find(function (item) {
+
     return item.name === productName;
+
   });
 
+
   if (existing) {
+
     existing.quantity++;
+
   } else {
+
     cartItems.push({
       name: product.name,
       price: product.price,
       image: product.image,
       quantity: 1
     });
+
   }
 
   updateCart();
 }
 
-// Cart update
+
+/* =========================
+   UPDATE CART
+========================= */
+
 function updateCart() {
-  localStorage.setItem("yourTrendCart", JSON.stringify(cartItems));
+
+  localStorage.setItem(
+    "yourTrendCart",
+    JSON.stringify(cartItems)
+  );
 
 
   let count = 0;
   let total = 0;
 
+
   cartItems.forEach(function (item) {
+
     count += item.quantity;
-    total += item.price * item.quantity;
+
+    total +=
+      item.price * item.quantity;
+
   });
 
-  document.getElementById("count").innerText = count;
-  document.getElementById("total").innerText = total;
+
+  document.getElementById("count").innerText =
+    count;
+
+  document.getElementById("total").innerText =
+    total;
+
 
   showCartItems();
 }
 
-// Cart items দেখানো
+
+/* =========================
+   SHOW CART
+========================= */
+
 function showCartItems() {
-  const cartBox = document.getElementById("cartItems");
+
+  const cartBox =
+    document.getElementById("cartItems");
 
   cartBox.innerHTML = "";
 
+
   if (cartItems.length === 0) {
-    cartBox.innerHTML = "<p>Cart এখন খালি</p>";
+
+    cartBox.innerHTML =
+      "<p>Cart এখন খালি</p>";
+
     return;
   }
 
+
   cartItems.forEach(function (item, index) {
+
     cartBox.innerHTML += `
-      <div style="border-bottom:1px solid #ddd;padding:10px 0;">
+
+      <div
+        style="
+          border-bottom:1px solid #ddd;
+          padding:10px 0;
+        "
+      >
+
         <b>${item.name}</b>
-        <p>৳${item.price} × ${item.quantity}</p>
 
-        <button onclick="decreaseItem(${index})">−</button>
-        <span style="margin:0 10px;">${item.quantity}</span>
-        <button onclick="increaseItem(${index})">+</button>
+        <p>
+          ৳${item.price} × ${item.quantity}
+        </p>
 
-        <button onclick="removeItem(${index})"
-          style="margin-left:10px;">
+
+        <button
+          onclick="decreaseItem(${index})"
+        >
+          −
+        </button>
+
+
+        <span style="margin:0 10px;">
+          ${item.quantity}
+        </span>
+
+
+        <button
+          onclick="increaseItem(${index})"
+        >
+          +
+        </button>
+
+
+        <button
+          onclick="removeItem(${index})"
+          style="margin-left:10px;"
+        >
           ❌
         </button>
+
       </div>
+
     `;
+
   });
 }
 
-// Quantity বাড়ানো
+
+/* =========================
+   INCREASE
+========================= */
+
 function increaseItem(index) {
+
   cartItems[index].quantity++;
+
   updateCart();
 }
 
-// Quantity কমানো
+
+/* =========================
+   DECREASE
+========================= */
+
 function decreaseItem(index) {
+
   cartItems[index].quantity--;
 
+
   if (cartItems[index].quantity <= 0) {
+
     cartItems.splice(index, 1);
+
   }
 
+
   updateCart();
 }
 
-// Product remove
+
+/* =========================
+   REMOVE
+========================= */
+
 function removeItem(index) {
+
   cartItems.splice(index, 1);
+
   updateCart();
 }
 
-// Cart open
+
+/* =========================
+   OPEN CART
+========================= */
+
 function openCart() {
-  document.getElementById("cartBox").style.display = "block";
+
+  document.getElementById(
+    "cartBox"
+  ).style.display = "block";
+
   showCartItems();
 }
 
-// Cart close
+
+/* =========================
+   CLOSE CART
+========================= */
+
 function closeCart() {
-  document.getElementById("cartBox").style.display = "none";
-}
 
-// Order
-function placeOrder() {
-  const n = document.getElementById("name").value.trim();
-  const ph = document.getElementById("phone").value.trim();
-  const a = document.getElementById("address").value.trim();
-  const msg = document.getElementById("msg");
-
-  if (!n || !ph || !a) {
-    msg.innerText = "⚠️ সব তথ্য পূরণ করুন";
-    return;
-  }
-
-  if (cartItems.length === 0) {
-    msg.innerText = "⚠️ আগে Cart-এ Product যোগ করুন";
-    return;
-  }
-
-  let total = 0;
-
-  cartItems.forEach(function (item) {
-    total += item.price * item.quantity;
-  });
-
-  msg.innerText =
-    "✅ অর্ডার সফল! মোট: ৳" + total;
-
-  cartItems = [];
-  localStorage.removeItem("yourTrendCart");
-  updateCart();
+  document.getElementById(
+    "cartBox"
+  ).style.display = "none";
 }
 
 
-// Checkout
+/* =========================
+   CHECKOUT
+========================= */
+
 function goCheckout() {
+
   if (cartItems.length === 0) {
-    alert("⚠️ আগে Cart-এ Product যোগ করুন");
+
+    alert(
+      "⚠️ আগে Cart-এ Product যোগ করুন"
+    );
+
     return;
   }
+
 
   closeCart();
 
   showCheckoutSummary();
 
-  document.querySelector(".checkout").scrollIntoView({
-    behavior: "smooth"
-  });
+
+  document
+    .querySelector(".checkout")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
 }
 
 
-// Checkout Summary
+/* =========================
+   CHECKOUT SUMMARY
+========================= */
+
 function showCheckoutSummary() {
-  const itemsBox = document.getElementById("checkoutItems");
-  const totalBox = document.getElementById("checkoutTotal");
+
+  const itemsBox =
+    document.getElementById(
+      "checkoutItems"
+    );
+
+  const totalBox =
+    document.getElementById(
+      "checkoutTotal"
+    );
+
 
   itemsBox.innerHTML = "";
 
+
   let total = 0;
 
+
   cartItems.forEach(function (item) {
-    const subtotal = item.price * item.quantity;
+
+    const subtotal =
+      item.price * item.quantity;
+
     total += subtotal;
 
+
     itemsBox.innerHTML += `
+
       <div class="summary-item">
-        <span>${item.name} × ${item.quantity}</span>
-        <b>৳${subtotal}</b>
+
+        <span>
+          ${item.name}
+          × ${item.quantity}
+        </span>
+
+        <b>
+          ৳${subtotal}
+        </b>
+
       </div>
+
     `;
+
   });
+
 
   totalBox.innerText = total;
 }
+
+
+/* =========================
+   PLACE ORDER
+========================= */
+
+function placeOrder() {
+
+  const name =
+    document.getElementById(
+      "name"
+    ).value.trim();
+
+
+  const phone =
+    document.getElementById(
+      "phone"
+    ).value.trim();
+
+
+  const address =
+    document.getElementById(
+      "address"
+    ).value.trim();
+
+
+  const msg =
+    document.getElementById(
+      "msg"
+    );
+
+
+  if (!name || !phone || !address) {
+
+    msg.innerText =
+      "⚠️ সব তথ্য পূরণ করুন";
+
+    return;
+  }
+
+
+  if (cartItems.length === 0) {
+
+    msg.innerText =
+      "⚠️ আগে Cart-এ Product যোগ করুন";
+
+    return;
+  }
+
+
+  let total = 0;
+
+
+  cartItems.forEach(function (item) {
+
+    total +=
+      item.price * item.quantity;
+
+  });
+
+
+  msg.innerText =
+    "✅ অর্ডার সফল! মোট: ৳" +
+    total;
+
+
+  cartItems = [];
+
+
+  localStorage.removeItem(
+    "yourTrendCart"
+  );
+
+
+  updateCart();
+}
+
+
+/* =========================
+   INITIAL CART UPDATE
+========================= */
+
+updateCart();
