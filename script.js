@@ -195,7 +195,7 @@ function updateCart() {
     total;
 
 
-  showCartItems();
+
 }
 
 
