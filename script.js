@@ -226,9 +226,12 @@ function placeOrder() {
 
   closeCart();
 
+  showCheckoutSummary();
+
   document.querySelector(".checkout").scrollIntoView({
     behavior: "smooth"
   });
+}
 }function showCheckoutSummary() {
   const itemsBox = document.getElementById("checkoutItems");
   const totalBox = document.getElementById("checkoutTotal");
