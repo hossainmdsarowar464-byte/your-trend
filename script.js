@@ -427,28 +427,19 @@ totalBox.innerText =
 /* =========================
    PLACE ORDER
 ========================= */
-function placeOrder() {// Create Order ID
-let orderNumber =
-  Number(localStorage.getItem("yourTrendOrderNumber")) || 0;
-
-orderNumber++;
-
-localStorage.setItem(
-  "yourTrendOrderNumber",
-  orderNumber
-);
-
-const orderId =
-  "YOURTREND-" +
-  String(orderNumber).padStart(4, "0");
+function placeOrder() {
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const address = document.getElementById("address").value.trim();
-  const msg = document.getElementById("msg");
 
   const deliveryCharge =
     Number(document.getElementById("deliveryArea").value);
+
+  const paymentMethod =
+    document.getElementById("paymentMethod").value;
+
+  const msg = document.getElementById("msg");
 
   if (!name || !phone || !address) {
     msg.innerText = "⚠️ সব তথ্য পূরণ করুন";
@@ -460,13 +451,33 @@ const orderId =
     return;
   }
 
+  /* Order ID */
+
+  let orderNumber =
+    Number(localStorage.getItem("yourTrendOrderNumber")) || 0;
+
+  orderNumber++;
+
+  localStorage.setItem(
+    "yourTrendOrderNumber",
+    orderNumber
+  );
+
+  const orderId =
+    "YOURTREND-" +
+    String(orderNumber).padStart(4, "0");
+
+
+  /* Product Total */
+
   let productTotal = 0;
 
   let orderText =
-  "🛍️ YOUR TREND ORDER\n\n" +
-  "🧾 Order ID: " +
-  orderId +
-  "\n\n";
+    "🛍️ YOUR TREND ORDER\n\n" +
+    "🧾 Order ID: " +
+    orderId +
+    "\n\n";
+
 
   cartItems.forEach(function(item) {
 
@@ -485,24 +496,40 @@ const orderId =
       "\n";
   });
 
+
+  /* Grand Total */
+
   const grandTotal =
     productTotal + deliveryCharge;
+
 
   orderText +=
     "\n🛍️ Product Total: ৳" +
     productTotal +
+
     "\n🚚 Delivery Charge: ৳" +
     deliveryCharge +
+
     "\n💰 Grand Total: ৳" +
     grandTotal +
+
+    "\n💵 Payment: " +
+    paymentMethod +
+
     "\n\n👤 নাম: " +
     name +
+
     "\n📞 ফোন: " +
     phone +
+
     "\n📍 ঠিকানা: " +
     address;
 
-  const whatsappNumber = "8801775628710";
+
+  /* WhatsApp */
+
+  const whatsappNumber =
+    "8801775628710";
 
   const whatsappURL =
     "https://wa.me/" +
@@ -510,7 +537,12 @@ const orderId =
     "?text=" +
     encodeURIComponent(orderText);
 
-  window.open(whatsappURL, "_blank");
+
+  window.open(
+    whatsappURL,
+    "_blank"
+  );
+
 
   msg.innerText =
     "✅ WhatsApp-এ Order পাঠানো হচ্ছে...";
