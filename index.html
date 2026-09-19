@@ -26,29 +26,45 @@
 >
 
 
-<header class="hero"><nav class="main-menu">
+<header class="hero"><!-- =========================
+     MOBILE MENU
+========================= -->
 
-  <a href="index.html">🏠 Home</a>
+<div class="menu-wrapper">
 
-  <a href="#products">🛍️ Products</a>
+  <button class="menu-button" onclick="toggleMenu()">
+    ☰
+  </button>
 
-  <a href="#contact">📞 Contact</a>
+  <div id="menuBox" class="menu-box">
 
-  <a
-    href="https://www.facebook.com/share/1C2V1Kxz9f/"
-    target="_blank"
-  >
-    f Facebook
-  </a>
+    <a href="index.html">🏠 Home</a>
 
-  <a
-    href="https://wa.me/8801775628710"
-    target="_blank"
-  >
-    💬 WhatsApp
-  </a>
+    <a href="#products" onclick="closeMenu()">🛍️ Products</a>
 
-</nav>
+    <a href="#contact" onclick="closeMenu()">📞 Contact</a>
+
+    <a href="#delivery" onclick="closeMenu()">🚚 Delivery Information</a>
+
+    <a href="#return" onclick="closeMenu()">🔄 Return Policy</a>
+
+    <a
+      href="https://www.facebook.com/share/1C2V1Kxz9f/"
+      target="_blank"
+    >
+      f Facebook
+    </a>
+
+    <a
+      href="https://wa.me/8801775628710"
+      target="_blank"
+    >
+      💬 WhatsApp
+    </a>
+
+  </div>
+
+</div>
 
   <div class="search-box">
 
