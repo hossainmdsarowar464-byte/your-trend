@@ -37,3 +37,23 @@ function placeOrder() {
 
   msg.innerText = "✅ অর্ডার সফল!";
 }
+const searchInput = document.getElementById("search");
+
+searchInput.addEventListener("input", function () {
+  const keyword = searchInput.value.toLowerCase();
+
+  box.innerHTML = "";
+
+  list.forEach(function (p) {
+    if (p[0].toLowerCase().includes(keyword)) {
+      box.innerHTML += `
+        <div class="card">
+          <img class="img" src="images/${p[2]}" alt="${p[0]}">
+          <h3>${p[0]}</h3>
+          <p><b>৳${p[1]}</b></p>
+          <button class="btn" onclick="addCart()">Add to Cart</button>
+        </div>
+      `;
+    }
+  });
+});
