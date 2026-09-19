@@ -422,3 +422,176 @@ section[style] h2 {
 .product-details textarea {
   min-height: 100px;
 }
+/* =========================
+   PROFESSIONAL ORDER FORM
+========================= */
+
+.order-form {
+  margin-top: 25px;
+  padding: 22px 18px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 18px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+
+.order-form h2 {
+  text-align: center;
+  margin: 0 0 25px;
+  font-size: 25px;
+}
+
+
+/* Form Group */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+}
+
+
+/* Input Box */
+
+.input-box,
+.textarea-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d5d5d5;
+  border-radius: 12px;
+  background: #f9fafb;
+  overflow: hidden;
+  transition: 0.2s ease;
+}
+
+.input-box:focus-within,
+.textarea-box:focus-within {
+  border-color: #ff6a00;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255,106,0,0.10);
+}
+
+
+/* Icon */
+
+.input-box span,
+.textarea-box span {
+  width: 48px;
+  min-width: 48px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f2f4;
+  font-size: 20px;
+  border-right: 1px solid #ddd;
+}
+
+
+/* Input */
+
+.input-box input,
+.input-box select {
+  flex: 1;
+  width: 100%;
+  height: 52px;
+  border: 0 !important;
+  outline: 0 !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+
+/* Address */
+
+.textarea-box {
+  align-items: stretch;
+}
+
+.textarea-box span {
+  height: auto;
+  min-height: 120px;
+}
+
+.textarea-box textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 120px;
+  border: 0 !important;
+  outline: 0 !important;
+  margin: 0 !important;
+  padding: 14px !important;
+  resize: vertical;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+
+/* Payment */
+
+.payment-box {
+  padding: 15px;
+  border: 1px solid #d5d5d5;
+  border-radius: 12px;
+  background: #f9fafb;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+/* WhatsApp Button */
+
+.whatsapp-order-btn {
+  width: 100%;
+  margin-top: 8px !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .order-form {
+    margin-top: 20px;
+    padding: 20px 14px;
+    border-radius: 16px;
+  }
+
+  .order-form h2 {
+    font-size: 23px;
+    margin-bottom: 22px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    font-size: 15px;
+  }
+
+  .input-box span,
+  .textarea-box span {
+    width: 44px;
+    min-width: 44px;
+  }
+
+}
