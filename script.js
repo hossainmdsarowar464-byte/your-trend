@@ -427,13 +427,15 @@ totalBox.innerText =
 /* =========================
    PLACE ORDER
 ========================= */
-
 function placeOrder() {
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const address = document.getElementById("address").value.trim();
   const msg = document.getElementById("msg");
+
+  const deliveryCharge =
+    Number(document.getElementById("deliveryArea").value);
 
   if (!name || !phone || !address) {
     msg.innerText = "⚠️ সব তথ্য পূরণ করুন";
@@ -445,9 +447,8 @@ function placeOrder() {
     return;
   }
 
-  let total = 0;
-const deliveryCharge =
-  Number(document.getElementById("deliveryArea").value);
+  let productTotal = 0;
+
   let orderText =
     "🛍️ YOUR TREND ORDER\n\n";
 
@@ -456,7 +457,7 @@ const deliveryCharge =
     const subtotal =
       item.price * item.quantity;
 
-    total += subtotal;
+    productTotal += subtotal;
 
     orderText +=
       "📦 " +
@@ -468,21 +469,21 @@ const deliveryCharge =
       "\n";
   });
 
+  const grandTotal =
+    productTotal + deliveryCharge;
+
   orderText +=
-  "\n🛍️ Product Total: ৳" +
-  total +
-  "\n🚚 Delivery Charge: ৳" +
-  deliveryCharge +
-  "\n💰 Grand Total: ৳" +
-  (total + deliveryCharge) +
-    "\n\n" +
-    "👤 নাম: " +
+    "\n🛍️ Product Total: ৳" +
+    productTotal +
+    "\n🚚 Delivery Charge: ৳" +
+    deliveryCharge +
+    "\n💰 Grand Total: ৳" +
+    grandTotal +
+    "\n\n👤 নাম: " +
     name +
-    "\n" +
-    "📞 ফোন: " +
+    "\n📞 ফোন: " +
     phone +
-    "\n" +
-    "📍 ঠিকানা: " +
+    "\n📍 ঠিকানা: " +
     address;
 
   const whatsappNumber = "8801775628710";
