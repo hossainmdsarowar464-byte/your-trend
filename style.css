@@ -594,5 +594,62 @@ section[style] h2 {
     min-width: 44px;
   }
 
+}/* YOUR TREND MENU - CLEAN VERSION */
+
+.menu-wrapper {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 999999;
+}
+
+.site-menu {
+  position: relative;
+}
+
+.site-menu summary {
+  list-style: none;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+}
+
+.site-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.menu-panel {
+  position: absolute;
+  top: 58px;
+  left: 0;
+  width: 250px;
+  max-width: calc(100vw - 30px);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.menu-panel a {
+  display: block;
+  padding: 14px 16px;
+  color: #222;
+  background: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-panel a:last-child {
+  border-bottom: none;
 }
 
