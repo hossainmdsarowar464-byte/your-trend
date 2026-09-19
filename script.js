@@ -28,9 +28,9 @@ const list = [
 const box = document.getElementById("products");
 const searchInput = document.getElementById("search");
 
-let cart = 0;
+let cartItems = [];
 
-// Product দেখানো
+// Products দেখানো
 function showProducts(products) {
   box.innerHTML = "";
 
@@ -45,13 +45,14 @@ function showProducts(products) {
         <img class="img" src="images/${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
         <p><b>৳${p.price}</b></p>
-        <button class="btn" onclick="addCart()">Add to Cart</button>
+        <button class="btn" onclick="addCart('${p.name}')">
+          Add to Cart
+        </button>
       </div>
     `;
   });
 }
 
-// প্রথমে সব Product
 showProducts(list);
 
 // Search
@@ -65,7 +66,7 @@ searchInput.addEventListener("input", function () {
   showProducts(results);
 });
 
-// Category filter
+// Category
 function filterCategory(category) {
   if (category === "all") {
     showProducts(list);
@@ -79,10 +80,110 @@ function filterCategory(category) {
   showProducts(results);
 }
 
-// Cart
-function addCart() {
-  cart++;
-  document.getElementById("count").innerText = cart;
+// Add to Cart
+function addCart(productName) {
+  const product = list.find(function (p) {
+    return p.name === productName;
+  });
+
+  if (!product) return;
+
+  const existing = cartItems.find(function (item) {
+    return item.name === productName;
+  });
+
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cartItems.push({
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1
+    });
+  }
+
+  updateCart();
+}
+
+// Cart update
+function updateCart() {
+  let count = 0;
+  let total = 0;
+
+  cartItems.forEach(function (item) {
+    count += item.quantity;
+    total += item.price * item.quantity;
+  });
+
+  document.getElementById("count").innerText = count;
+  document.getElementById("total").innerText = total;
+
+  showCartItems();
+}
+
+// Cart items দেখানো
+function showCartItems() {
+  const cartBox = document.getElementById("cartItems");
+
+  cartBox.innerHTML = "";
+
+  if (cartItems.length === 0) {
+    cartBox.innerHTML = "<p>Cart এখন খালি</p>";
+    return;
+  }
+
+  cartItems.forEach(function (item, index) {
+    cartBox.innerHTML += `
+      <div style="border-bottom:1px solid #ddd;padding:10px 0;">
+        <b>${item.name}</b>
+        <p>৳${item.price} × ${item.quantity}</p>
+
+        <button onclick="decreaseItem(${index})">−</button>
+        <span style="margin:0 10px;">${item.quantity}</span>
+        <button onclick="increaseItem(${index})">+</button>
+
+        <button onclick="removeItem(${index})"
+          style="margin-left:10px;">
+          ❌
+        </button>
+      </div>
+    `;
+  });
+}
+
+// Quantity বাড়ানো
+function increaseItem(index) {
+  cartItems[index].quantity++;
+  updateCart();
+}
+
+// Quantity কমানো
+function decreaseItem(index) {
+  cartItems[index].quantity--;
+
+  if (cartItems[index].quantity <= 0) {
+    cartItems.splice(index, 1);
+  }
+
+  updateCart();
+}
+
+// Product remove
+function removeItem(index) {
+  cartItems.splice(index, 1);
+  updateCart();
+}
+
+// Cart open
+function openCart() {
+  document.getElementById("cartBox").style.display = "block";
+  showCartItems();
+}
+
+// Cart close
+function closeCart() {
+  document.getElementById("cartBox").style.display = "none";
 }
 
 // Order
@@ -94,6 +195,11 @@ function placeOrder() {
 
   if (!n || !ph || !a) {
     msg.innerText = "সব তথ্য পূরণ করুন";
+    return;
+  }
+
+  if (cartItems.length === 0) {
+    msg.innerText = "আগে Cart-এ Product যোগ করুন";
     return;
   }
 
