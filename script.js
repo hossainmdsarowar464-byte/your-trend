@@ -2,25 +2,25 @@ const list = [
   {
     name: "Premium T-Shirt",
     price: 490,
-    image: "1783948832_L_9.jpeg",
+    image: "1779024969_L_9.jpeg",
     category: "fashion"
   },
   {
     name: "Smart Watch",
     price: 890,
-    image: "1783948832_L_10.jpeg",
+    image: "1779024969_L_10.jpeg",
     category: "gadgets"
   },
   {
     name: "Earbuds",
     price: 690,
-    image: "1783948832_L_11.jpeg",
+    image: "1779024969_L_11.jpeg",
     category: "gadgets"
   },
   {
     name: "Travel Bag",
     price: 790,
-    image: "1783948832_L_12.jpeg",
+    image: "1779024969_L_12.jpeg",
     category: "bags"
   }
 ];
