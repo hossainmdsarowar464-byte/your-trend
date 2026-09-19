@@ -736,14 +736,17 @@ section[style] h2 {
     width: 82%;
   }
 }/* =========================
-   NEW SITE MENU
+   CORNER MENU
 ========================= */
 
-.menu-wrapper {
+.hero {
   position: relative;
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 15px;
+}
+
+.menu-wrapper {
+  position: absolute;
+  top: 15px;
+  right: 15px;
   z-index: 99999;
 }
 
@@ -761,9 +764,9 @@ section[style] h2 {
   background: #ffffff;
   color: #222;
   border-radius: 10px;
-  font-size: 26px;
+  font-size: 25px;
   cursor: pointer;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.18);
 }
 
 .site-menu summary::-webkit-details-marker {
@@ -771,26 +774,32 @@ section[style] h2 {
 }
 
 .menu-panel {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 58px;
   right: 0;
-  width: 280px;
-  height: 100vh;
+  width: 255px;
   background: #ffffff;
-  box-shadow: -5px 0 25px rgba(0,0,0,0.20);
-  padding-top: 80px;
-  box-sizing: border-box;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.22);
+  overflow: hidden;
   z-index: 100000;
 }
 
 .menu-panel a {
   display: block;
-  padding: 17px 22px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 18px;
   color: #222;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   border-bottom: 1px solid #eeeeee;
+  background: #ffffff;
+}
+
+.menu-panel a:last-child {
+  border-bottom: none;
 }
 
 .menu-panel a:hover {
@@ -798,7 +807,14 @@ section[style] h2 {
 }
 
 @media (max-width: 600px) {
-  .menu-panel {
-    width: 82%;
+
+  .menu-wrapper {
+    top: 12px;
+    right: 12px;
   }
+
+  .menu-panel {
+    width: 245px;
+  }
+
 }
