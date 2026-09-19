@@ -572,9 +572,7 @@ function placeOrder() {
 function openProduct(productName) {
 
   const product = list.find(function (p) {
-
     return p.name === productName;
-
   });
 
   if (!product) return;
@@ -585,15 +583,4 @@ function openProduct(productName) {
   );
 
   window.location.href = "product.html";
-function toggleMenu() {
-  const menu = document.getElementById("menuBox");
-
-  menu.classList.toggle("menu-open");
-}
-
-function closeMenu() {
-  const menu = document.getElementById("menuBox");
-
-  menu.classList.remove("menu-open");
-}
 }
