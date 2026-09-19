@@ -43,10 +43,12 @@ function showProducts(products) {
     box.innerHTML += `
       <div class="card">
         <img
-          class="img"
-          src="${p.image}"
-          alt="${p.name}"
-        >
+  class="img"
+  src="${p.image}"
+  alt="${p.name}"
+  onclick="viewImage('${p.image}')"
+  style="cursor:zoom-in;"
+>
 
         <h3>${p.name}</h3>
 
