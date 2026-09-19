@@ -215,10 +215,14 @@ function placeOrder() {
   msg.innerText =
     "✅ অর্ডার সফল! মোট: ৳" + total;
 
-  // Order হওয়ার পর Cart খালি
   cartItems = [];
+  localStorage.removeItem("yourTrendCart");
   updateCart();
-}function goCheckout() {
+}
+
+
+// Checkout
+function goCheckout() {
   if (cartItems.length === 0) {
     alert("⚠️ আগে Cart-এ Product যোগ করুন");
     return;
@@ -232,7 +236,10 @@ function placeOrder() {
     behavior: "smooth"
   });
 }
-}function showCheckoutSummary() {
+
+
+// Checkout Summary
+function showCheckoutSummary() {
   const itemsBox = document.getElementById("checkoutItems");
   const totalBox = document.getElementById("checkoutTotal");
 
@@ -246,9 +253,7 @@ function placeOrder() {
 
     itemsBox.innerHTML += `
       <div class="summary-item">
-        <span>
-          ${item.name} × ${item.quantity}
-        </span>
+        <span>${item.name} × ${item.quantity}</span>
         <b>৳${subtotal}</b>
       </div>
     `;
