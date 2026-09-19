@@ -218,4 +218,15 @@ function placeOrder() {
   // Order হওয়ার পর Cart খালি
   cartItems = [];
   updateCart();
+}function goCheckout() {
+  if (cartItems.length === 0) {
+    alert("⚠️ আগে Cart-এ Product যোগ করুন");
+    return;
+  }
+
+  closeCart();
+
+  document.querySelector(".checkout").scrollIntoView({
+    behavior: "smooth"
+  });
 }
