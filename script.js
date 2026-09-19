@@ -2,7 +2,7 @@ const list = [
   {
     name: "Premium T-Shirt",
     price: 490,
-    image: "1779024969_L_9.jpeg",
+    image: "1780321645_L_9.jpeg",
     category: "fashion"
   },
   {
