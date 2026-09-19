@@ -1,30 +1,37 @@
+
 const list = [
   {
     name: "Premium T-Shirt",
     price: 490,
     image: "1779024969_L_9.jpeg",
-    category: "fashion"
+    category: "fashion",
+    description: "Premium quality comfortable T-Shirt. দৈনন্দিন ব্যবহার ও casual wear-এর জন্য উপযোগী।"
   },
+
   {
     name: "Smart Watch",
     price: 890,
     image: "1779024969_L_9.jpeg",
-    category: "gadgets"
+    category: "gadgets",
+    description: "Stylish Smart Watch with modern design. দৈনন্দিন ব্যবহার ও lifestyle-এর জন্য উপযোগী।"
   },
+
   {
     name: "Earbuds",
     price: 690,
     image: "1779024969_L_9.jpeg",
-    category: "gadgets"
+    category: "gadgets",
+    description: "Compact wireless Earbuds with stylish design. Music ও daily use-এর জন্য উপযোগী।"
   },
+
   {
     name: "Travel Bag",
     price: 790,
     image: "1779024969_L_9.jpeg",
-    category: "bags"
+    category: "bags",
+    description: "Durable এবং spacious Travel Bag. ভ্রমণ ও দৈনন্দিন ব্যবহারের জন্য উপযোগী।"
   }
 ];
-
 const box = document.getElementById("products");
 const searchInput = document.getElementById("search");
 
