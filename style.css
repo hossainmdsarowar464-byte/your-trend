@@ -594,62 +594,69 @@ section[style] h2 {
     min-width: 44px;
   }
 
-}/* YOUR TREND MENU - CLEAN VERSION */
+}/* YOUR TREND MENU - FINAL */
 
-.menu-wrapper {
-  position: fixed;
+#yourTrendMenu {
+  position: absolute;
   top: 15px;
   left: 15px;
   z-index: 999999;
 }
 
-.site-menu {
+#yourTrendMenu details {
   position: relative;
 }
 
-.site-menu summary {
+#yourTrendMenu summary {
   list-style: none;
   width: 50px;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  color: #222;
+  background: #ffffff;
+  color: #222222;
   border-radius: 10px;
   font-size: 26px;
   cursor: pointer;
   box-shadow: 0 3px 12px rgba(0,0,0,0.25);
 }
 
-.site-menu summary::-webkit-details-marker {
+#yourTrendMenu summary::-webkit-details-marker {
   display: none;
 }
 
-.menu-panel {
+#yourTrendMenuBox {
+  display: none;
+}
+
+#yourTrendMenu details[open] .yourTrendMenuBox {
+  display: block;
+}
+
+#yourTrendMenu .yourTrendMenuBox {
   position: absolute;
   top: 58px;
   left: 0;
   width: 250px;
   max-width: calc(100vw - 30px);
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
   overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
 }
 
-.menu-panel a {
+#yourTrendMenu .yourTrendMenuBox a {
   display: block;
   padding: 14px 16px;
-  color: #222;
-  background: #fff;
+  color: #222222;
+  background: #ffffff;
   text-decoration: none;
   font-size: 15px;
   font-weight: 600;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eeeeee;
 }
 
-.menu-panel a:last-child {
+#yourTrendMenu .yourTrendMenuBox a:last-child {
   border-bottom: none;
 }
-
