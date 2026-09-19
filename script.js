@@ -1,5 +1,5 @@
 
-const list = [
+let list = [
   {
     name: "Premium T-Shirt",
     price: 490,
