@@ -1,5 +1,3 @@
-alert("PRODUCT JS কাজ করছে");
-
 const product =
   JSON.parse(
     localStorage.getItem("selectedProduct")
