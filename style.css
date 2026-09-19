@@ -331,4 +331,67 @@ section[style] h2 {
   font-weight: bold;
   color: #ff6a00;
   margin-bottom: 0;
+}/* Professional Footer */
+
+.site-footer {
+  background: #202020;
+  color: #fff;
+  margin-top: 40px;
+  padding-top: 35px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px 30px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.footer-box h2,
+.footer-box h3 {
+  margin-top: 0;
+}
+
+.footer-box p {
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.footer-box a {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.footer-box a:hover {
+  color: #ff6a00;
+}
+
+.footer-bottom {
+  border-top: 1px solid #444;
+  text-align: center;
+  padding: 18px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+}
+
+@media (max-width: 450px) {
+
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+
 }
