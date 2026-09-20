@@ -26,7 +26,7 @@ import {
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
+  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
 
   authDomain:
     "your-trend.firebaseapp.com",
