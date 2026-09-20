@@ -135,12 +135,14 @@ async function loadFirebaseProducts() {
       const product = doc.data();
 
       list.push({
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        category: product.category,
-        description: product.description
-      });
+  name: product.name,
+  price: product.price,
+  image: product.image,
+  category: product.category,
+  description: product.description,
+  stock: Number(product.stock) || 0,
+  sizes: product.sizes || []
+});
     });
 
     showProducts(list);
