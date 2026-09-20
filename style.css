@@ -132,41 +132,55 @@ section[style] h2 {
   margin: auto;
 }
 
-/* Product card */
+/* =========================
+   PROFESSIONAL PRODUCT CARD
+========================= */
+
 .card {
-  background: #fff;
-  border-radius: 14px;
+  background: #ffffff;
+  border-radius: 18px;
   padding: 10px;
-  text-align: center;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  text-align: left;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid #eeeeee;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 7px 20px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.13);
 }
+
+/* Product Image */
 
 .img {
   width: 100%;
-  height: 170px;
+  height: 190px;
   object-fit: cover;
-  border-radius: 10px;
-  background: #f0f0f0;
+  display: block;
+  border-radius: 14px;
+  background: #f3f3f3;
 }
+
+/* Product Name */
 
 .card h3 {
   font-size: 16px;
-  margin: 10px 0 6px;
+  font-weight: 700;
+  color: #222;
+  margin: 12px 4px 6px;
+  line-height: 1.35;
 }
+
+/* Product Price / Info */
 
 .card p {
-  margin: 5px 0 10px;
+  margin: 5px 4px 12px;
   color: #ff6a00;
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 800;
 }
-
 /* Buttons */
 .btn {
   background: #ff6a00;
