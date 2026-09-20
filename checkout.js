@@ -657,7 +657,7 @@ async function placeOrder() {
 
         orderId:
           orderId,
-
+trackingToken: trackingToken,
         customerName:
           name,
 
