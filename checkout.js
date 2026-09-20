@@ -572,6 +572,8 @@ async function placeOrder() {
         4,
         "0"
       );
+  const trackingToken =
+  crypto.randomUUID();
 
 
   /* ======================================
