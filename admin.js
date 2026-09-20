@@ -1283,17 +1283,17 @@ whatsappBtn.addEventListener(
   orderDoc.id;
 
 const message =
-  "Hello " + customerName + "!%0A%0A" +
-  "🛍️ YOUR TREND%0A" +
-  "📋 Order ID: #" + orderNumber + "%0A" +
-  "📦 Order Status: " + status + "%0A%0A" +
+  "Hello " + customerName + "!\n\n" +
+  "🛍️ YOUR TREND\n" +
+  "📋 Order ID: " + orderNumber + "\n" +
+  "📦 Order Status: " + status + "\n\n" +
   "Thank you for shopping with us! ❤️";
 
-    const whatsappURL =
-      "https://wa.me/" +
-      whatsappPhone +
-      "?text=" +
-      message;
+const whatsappURL =
+  "https://wa.me/" +
+  whatsappPhone +
+  "?text=" +
+  encodeURIComponent(message);
 
     window.open(
       whatsappURL,
