@@ -849,20 +849,7 @@ document
                 description
 
             }
-          );await setDoc(
-  doc(db, "orderTracking", order.trackingToken),
-  {
-    orderNumber:
-      order.orderNumber || orderDoc.id,
-
-    status:
-      statusSelect.value
-  },
-  {
-    merge: true
-  }
-);
-
+          );
 
           message.innerText =
             "✅ Product সফলভাবে Update হয়েছে!";
@@ -1364,7 +1351,23 @@ item
                 status:
                   statusSelect.value
               }
-            );
+            );await setDoc(
+  doc(
+    db,
+    "orderTracking",
+    order.trackingToken
+  ),
+  {
+    orderNumber:
+      order.orderNumber || orderDoc.id,
+
+    status:
+      statusSelect.value
+  },
+  {
+    merge: true
+  }
+);
 
             alert(
               "✅ Order Status Update হয়েছে!"
