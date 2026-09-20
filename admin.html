@@ -64,6 +64,32 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #logoutBtn {
+      background: #d32f2f;
+    }
+
+    #imagePreview {
+      display: none;
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.5;
+    }
+
     .back {
       display: block;
       text-align: center;
@@ -79,9 +105,11 @@
   <div class="admin-box">
 
     <h1>🛍️ YOUR TREND Admin</h1>
-<button id="logoutBtn" style="background:#d32f2f;">
-  🚪 Logout
-</button>
+
+    <button id="logoutBtn">
+      🚪 Logout
+    </button>
+
     <label>Product Name</label>
     <input
       type="text"
@@ -96,14 +124,18 @@
       placeholder="যেমন: 490"
     >
 
-    <label>Image Path</label>
+    <label>Product Image</label>
+
     <input
-      type="text"
+      type="file"
       id="productImage"
-      placeholder="images/product.jpg"
+      accept="image/*"
     >
 
+    <img id="imagePreview" alt="Product Preview">
+
     <label>Category</label>
+
     <select id="productCategory">
       <option value="fashion">Fashion</option>
       <option value="gadgets">Gadgets</option>
@@ -111,12 +143,15 @@
     </select>
 
     <label>Description</label>
+
     <textarea
       id="productDescription"
       placeholder="Product details লিখুন..."
     ></textarea>
 
-    <button id="saveProductBtn">➕ Add Product</button>
+    <button id="saveProductBtn">
+      ➕ Add Product
+    </button>
 
     <p id="message"></p>
 
@@ -127,30 +162,6 @@
   </div>
 
   <script type="module" src="admin.js"></script>
-<script type="module">
-  import { getAuth, signOut }
-    from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
-    authDomain: "your-trend.firebaseapp.com",
-    projectId: "your-trend",
-    storageBucket: "your-trend.firebasestorage.app",
-    messagingSenderId: "775017944976",
-    appId: "1:775017944976:web:a19b34b89e6a4285148515",
-    measurementId: "G-1T4GM19268"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  document.getElementById("logoutBtn").addEventListener("click", async function () {
-    await signOut(auth);
-    window.location.href = "admin-login.html";
-  });
-</script>
 </body>
 </html>
