@@ -15,7 +15,8 @@ import {
   getDocs,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
@@ -848,7 +849,19 @@ document
                 description
 
             }
-          );
+          );await setDoc(
+  doc(db, "orderTracking", order.trackingToken),
+  {
+    orderNumber:
+      order.orderNumber || orderDoc.id,
+
+    status:
+      statusSelect.value
+  },
+  {
+    merge: true
+  }
+);
 
 
           message.innerText =
