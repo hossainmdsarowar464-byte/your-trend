@@ -1,11 +1,12 @@
-
 let list = [
   {
     name: "Premium T-Shirt",
     price: 490,
     image: "images/1779024969_L_11.jpeg",
     category: "fashion",
-    description: "Premium quality comfortable T-Shirt. দৈনন্দিন ব্যবহার ও casual wear-এর জন্য উপযোগী।"
+    description: "Premium quality comfortable T-Shirt. দৈনন্দিন ব্যবহার ও casual wear-এর জন্য উপযোগী।",
+    stock: 10,
+    sizes: ["S", "M", "L", "XL"]
   },
 
   {
@@ -13,7 +14,9 @@ let list = [
     price: 890,
     image: "images/1789826533436.png",
     category: "gadgets",
-    description: "Stylish Smart Watch with modern design. দৈনন্দিন ব্যবহার ও lifestyle-এর জন্য উপযোগী।"
+    description: "Stylish Smart Watch with modern design. দৈনন্দিন ব্যবহার ও lifestyle-এর জন্য উপযোগী।",
+    stock: 10,
+    sizes: []
   },
 
   {
@@ -21,7 +24,9 @@ let list = [
     price: 690,
     image: "images/1789826573511.png",
     category: "gadgets",
-    description: "Compact wireless Earbuds with stylish design. Music ও daily use-এর জন্য উপযোগী।"
+    description: "Compact wireless Earbuds with stylish design. Music ও daily use-এর জন্য উপযোগী।",
+    stock: 10,
+    sizes: []
   },
 
   {
@@ -29,48 +34,120 @@ let list = [
     price: 790,
     image: "images/1789826597035.png",
     category: "bags",
-    description: "Durable এবং spacious Travel Bag. ভ্রমণ ও দৈনন্দিন ব্যবহারের জন্য উপযোগী।"
+    description: "Durable এবং spacious Travel Bag. ভ্রমণ ও দৈনন্দিন ব্যবহারের জন্য উপযোগী।",
+    stock: 10,
+    sizes: []
   }
 ];
-const box = document.getElementById("products");
-const searchInput = document.getElementById("search");
+
+
+const box =
+  document.getElementById("products");
+
+
+const searchInput =
+  document.getElementById("search");
+
 
 let cartItems =
-  JSON.parse(localStorage.getItem("yourTrendCart")) || [];
+  JSON.parse(
+    localStorage.getItem("yourTrendCart")
+  ) || [];
 
 
-/* =========================
-   PRODUCTS
-========================= */
+// =========================
+// SEARCH
+// =========================
+
+searchInput.addEventListener(
+  "input",
+  function () {
+
+    const keyword =
+      searchInput.value
+        .toLowerCase()
+        .trim();
 
 
+    const results =
+      list.filter(function (p) {
+
+        return p.name
+          .toLowerCase()
+          .includes(keyword);
+
+      });
 
 
-/* =========================
-   SEARCH
-========================= */
+    showProducts(results);
 
-searchInput.addEventListener("input", function () {
+  }
+);
 
-  const keyword =
-    searchInput.value.toLowerCase().trim();
 
-  const results = list.filter(function (p) {
-
-    return p.name
-      .toLowerCase()
-      .includes(keyword);
-
-  });
-
-  showProducts(results);
-});
+// =========================
+// SHOW PRODUCTS
+// =========================
 
 function showProducts(products) {
 
   box.innerHTML = "";
 
+
   products.forEach(function (p) {
+
+    const stock =
+      Number(p.stock) || 0;
+
+
+    let stockHTML = "";
+
+
+    let buttonHTML = "";
+
+
+    if (stock > 0) {
+
+      stockHTML = `
+        <p style="color:green;font-weight:bold;">
+          📦 Stock: ${stock}
+        </p>
+      `;
+
+
+      buttonHTML = `
+        <button
+          class="btn"
+          onclick="event.stopPropagation(); addCart('${p.name}')"
+        >
+          🛒 Add to Cart
+        </button>
+      `;
+
+    } else {
+
+      stockHTML = `
+        <p style="color:red;font-weight:bold;">
+          ❌ Out of Stock
+        </p>
+      `;
+
+
+      buttonHTML = `
+        <button
+          class="btn"
+          disabled
+          style="
+            background:#999;
+            cursor:not-allowed;
+          "
+        >
+          ❌ Out of Stock
+        </button>
+      `;
+
+    }
+
 
     box.innerHTML += `
 
@@ -84,351 +161,622 @@ function showProducts(products) {
           src="${p.image}"
           alt="${p.name}"
           onclick="event.stopPropagation(); viewImage('${p.image}')"
-          style="cursor: zoom-in;"
+          style="cursor:zoom-in;"
         >
 
-        <h3>${p.name}</h3>
+
+        <h3>
+          ${p.name}
+        </h3>
+
 
         <p>
           <b>৳${p.price}</b>
         </p>
 
-        <button
-          class="btn"
-          onclick="event.stopPropagation(); addCart('${p.name}')"
-        >
-          Add to Cart
-        </button>
+
+        ${stockHTML}
+
+
+        ${buttonHTML}
 
       </div>
 
     `;
 
   });
+
 }
 
-showProducts(list);
-async function loadFirebaseProducts() {
-  try {
-    const { initializeApp } =
-      await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js");
 
-    const { getFirestore, collection, getDocs } =
-      await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js");
+// =========================
+// FIREBASE PRODUCTS
+// =========================
+
+async function loadFirebaseProducts() {
+
+  try {
+
+    const {
+      initializeApp
+    } =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
+      );
+
+
+    const {
+      getFirestore,
+      collection,
+      getDocs
+    } =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+      );
+
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
-      authDomain: "your-trend.firebaseapp.com",
-      projectId: "your-trend",
-      storageBucket: "your-trend.firebasestorage.app",
-      messagingSenderId: "775017944976",
-      appId: "1:775017944976:web:a19b34b89e6a4285148515",
-      measurementId: "G-1T4GM19268"
+
+      apiKey:
+        "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+
+      authDomain:
+        "your-trend.firebaseapp.com",
+
+      projectId:
+        "your-trend",
+
+      storageBucket:
+        "your-trend.firebasestorage.app",
+
+      messagingSenderId:
+        "775017944976",
+
+      appId:
+        "1:775017944976:web:a19b34b89e6a4285148515",
+
+      measurementId:
+        "G-1T4GM19268"
+
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
 
-    const snapshot = await getDocs(collection(db, "products"));
+    const app =
+      initializeApp(
+        firebaseConfig
+      );
 
-    snapshot.forEach(function(doc) {
-      const product = doc.data();
 
-      list.push({
-  name: product.name,
-  price: product.price,
-  image: product.image,
-  category: product.category,
-  description: product.description,
-  stock: Number(product.stock) || 0,
-  sizes: product.sizes || []
-});
-    });
+    const db =
+      getFirestore(app);
+
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "products"
+        )
+      );
+
+
+    snapshot.forEach(
+      function (doc) {
+
+        const product =
+          doc.data();
+
+
+        list.push({
+
+          name:
+            product.name,
+
+          price:
+            product.price,
+
+          image:
+            product.image,
+
+          category:
+            product.category,
+
+          description:
+            product.description,
+
+          stock:
+            Number(product.stock) || 0,
+
+          sizes:
+            product.sizes || []
+
+        });
+
+      }
+    );
+
 
     showProducts(list);
 
+
   } catch (error) {
-    console.error("Firebase products error:", error);
+
+    console.error(
+      "Firebase products error:",
+      error
+    );
+
   }
+
 }
+
 
 loadFirebaseProducts();
 
 
+// =========================
+// VIEW IMAGE
+// =========================
+
 function viewImage(image) {
 
-  window.open(image, "_blank");
+  window.open(
+    image,
+    "_blank"
+  );
 
 }
-/* =========================
-   CATEGORY
-========================= */
+
+
+// =========================
+// CATEGORY
+// =========================
 
 function filterCategory(category) {
 
   if (category === "all") {
+
     showProducts(list);
+
     return;
+
   }
 
-  const results = list.filter(function (p) {
 
-    return p.category === category;
+  const results =
+    list.filter(
+      function (p) {
 
-  });
+        return p.category ===
+          category;
+
+      }
+    );
+
 
   showProducts(results);
+
 }
 
 
-/* =========================
-   ADD CART
-========================= */
+// =========================
+// ADD CART
+// =========================
 
 function addCart(productName) {
 
-  const product = list.find(function (p) {
+  const product =
+    list.find(
+      function (p) {
 
-    return p.name === productName;
+        return p.name ===
+          productName;
 
-  });
+      }
+    );
+
 
   if (!product) return;
 
 
-  const existing = cartItems.find(function (item) {
+  const stock =
+    Number(product.stock) || 0;
 
-    return item.name === productName;
 
-  });
+  // Stock check
+
+  if (stock <= 0) {
+
+    alert(
+      "❌ এই Product বর্তমানে Out of Stock"
+    );
+
+    return;
+
+  }
+
+
+  const existing =
+    cartItems.find(
+      function (item) {
+
+        return item.name ===
+          productName;
+
+      }
+    );
 
 
   if (existing) {
+
+    // Stock limit
+
+    if (
+      existing.quantity >=
+      stock
+    ) {
+
+      alert(
+        "⚠️ এই Product-এর যতগুলো Stock আছে তার বেশি নিতে পারবেন না।"
+      );
+
+      return;
+
+    }
+
 
     existing.quantity++;
 
   } else {
 
     cartItems.push({
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      quantity: 1
+
+      name:
+        product.name,
+
+      price:
+        product.price,
+
+      image:
+        product.image,
+
+      quantity:
+        1,
+
+      stock:
+        stock,
+
+      sizes:
+        product.sizes || []
+
     });
 
   }
 
+
   updateCart();
+
 }
 
 
-/* =========================
-   UPDATE CART
-========================= */
+// =========================
+// UPDATE CART
+// =========================
 
 function updateCart() {
 
   localStorage.setItem(
+
     "yourTrendCart",
-    JSON.stringify(cartItems)
+
+    JSON.stringify(
+      cartItems
+    )
+
   );
 
 
   let count = 0;
+
   let total = 0;
 
 
-  cartItems.forEach(function (item) {
+  cartItems.forEach(
+    function (item) {
 
-    count += item.quantity;
-
-    total +=
-      item.price * item.quantity;
-
-  });
+      count +=
+        item.quantity;
 
 
-  document.getElementById("count").innerText =
-    count;
+      total +=
+        item.price *
+        item.quantity;
 
-  document.getElementById("total").innerText =
-    total;
+    }
+  );
 
 
+  const countBox =
+    document.getElementById(
+      "count"
+    );
+
+
+  if (countBox) {
+
+    countBox.innerText =
+      count;
+
+  }
+
+
+  const totalBox =
+    document.getElementById(
+      "total"
+    );
+
+
+  if (totalBox) {
+
+    totalBox.innerText =
+      total;
+
+  }
 
 }
 
 
-/* =========================
-   SHOW CART
-========================= */
+// =========================
+// SHOW CART ITEMS
+// =========================
 
 function showCartItems() {
 
   const cartBox =
-    document.getElementById("cartItems");
+    document.getElementById(
+      "cartItems"
+    );
+
+
+  if (!cartBox) return;
+
 
   cartBox.innerHTML = "";
 
 
-  if (cartItems.length === 0) {
+  if (
+    cartItems.length === 0
+  ) {
 
     cartBox.innerHTML =
       "<p>Cart এখন খালি</p>";
 
     return;
+
   }
 
 
-  cartItems.forEach(function (item, index) {
+  cartItems.forEach(
+    function (
+      item,
+      index
+    ) {
 
-    cartBox.innerHTML += `
+      cartBox.innerHTML += `
 
-      <div
-        style="
-          border-bottom:1px solid #ddd;
-          padding:10px 0;
-        "
-      >
-
-        <b>${item.name}</b>
-
-        <p>
-          ৳${item.price} × ${item.quantity}
-        </p>
-
-
-        <button
-          onclick="decreaseItem(${index})"
+        <div
+          style="
+            border-bottom:1px solid #ddd;
+            padding:10px 0;
+          "
         >
-          −
-        </button>
+
+          <b>
+            ${item.name}
+          </b>
+
+          <p>
+            ৳${item.price}
+            × ${item.quantity}
+          </p>
 
 
-        <span style="margin:0 10px;">
-          ${item.quantity}
-        </span>
+          <button
+            onclick="decreaseItem(${index})"
+          >
+            −
+          </button>
 
 
-        <button
-          onclick="increaseItem(${index})"
-        >
-          +
-        </button>
+          <span
+            style="margin:0 10px;"
+          >
+            ${item.quantity}
+          </span>
 
 
-        <button
-          onclick="removeItem(${index})"
-          style="margin-left:10px;"
-        >
-          ❌
-        </button>
+          <button
+            onclick="increaseItem(${index})"
+          >
+            +
+          </button>
 
-      </div>
 
-    `;
+          <button
+            onclick="removeItem(${index})"
+            style="margin-left:10px;"
+          >
+            ❌
+          </button>
 
-  });
+        </div>
+
+      `;
+
+    }
+  );
+
 }
 
 
-/* =========================
-   INCREASE
-========================= */
+// =========================
+// INCREASE
+// =========================
 
 function increaseItem(index) {
 
-  cartItems[index].quantity++;
+  const item =
+    cartItems[index];
+
+
+  if (!item) return;
+
+
+  const stock =
+    Number(item.stock) || 0;
+
+
+  if (
+    item.quantity >=
+    stock
+  ) {
+
+    alert(
+      "⚠️ Stock সীমার বেশি নেওয়া যাবে না।"
+    );
+
+    return;
+
+  }
+
+
+  item.quantity++;
+
 
   updateCart();
+
 }
 
 
-/* =========================
-   DECREASE
-========================= */
+// =========================
+// DECREASE
+// =========================
 
 function decreaseItem(index) {
 
   cartItems[index].quantity--;
 
 
-  if (cartItems[index].quantity <= 0) {
+  if (
+    cartItems[index].quantity <=
+    0
+  ) {
 
-    cartItems.splice(index, 1);
+    cartItems.splice(
+      index,
+      1
+    );
 
   }
 
 
   updateCart();
+
 }
 
 
-/* =========================
-   REMOVE
-========================= */
+// =========================
+// REMOVE
+// =========================
 
 function removeItem(index) {
 
-  cartItems.splice(index, 1);
+  cartItems.splice(
+    index,
+    1
+  );
+
 
   updateCart();
+
 }
 
 
-/* =========================
-   OPEN CART
-========================= */
+// =========================
+// OPEN CART
+// =========================
 
 function openCart() {
 
-  if (cartItems.length === 0) {
-
-    alert("⚠️ আগে Cart-এ Product যোগ করুন");
-
-    return;
-  }
-
-  window.location.href = "checkout.html";
-
-}
-
-
-/* =========================
-   CLOSE CART
-========================= */
-
-function closeCart() {
-
-  document.getElementById(
-    "cartBox"
-  ).style.display = "none";
-}
-
-
-/* =========================
-   CHECKOUT
-========================= */
-
-function goCheckout() {
-
-  if (cartItems.length === 0) {
+  if (
+    cartItems.length === 0
+  ) {
 
     alert(
       "⚠️ আগে Cart-এ Product যোগ করুন"
     );
 
     return;
+
   }
 
-  window.location.href = "checkout.html";
+
+  window.location.href =
+    "checkout.html";
 
 }
 
 
-/* =========================
-   CHECKOUT SUMMARY
-========================= */
+// =========================
+// CLOSE CART
+// =========================
+
+function closeCart() {
+
+  const cartBox =
+    document.getElementById(
+      "cartBox"
+    );
+
+
+  if (cartBox) {
+
+    cartBox.style.display =
+      "none";
+
+  }
+
+}
+
+
+// =========================
+// CHECKOUT
+// =========================
+
+function goCheckout() {
+
+  if (
+    cartItems.length === 0
+  ) {
+
+    alert(
+      "⚠️ আগে Cart-এ Product যোগ করুন"
+    );
+
+    return;
+
+  }
+
+
+  window.location.href =
+    "checkout.html";
+
+}
+
+
+// =========================
+// CHECKOUT SUMMARY
+// =========================
 
 function showCheckoutSummary() {
 
@@ -437,10 +785,17 @@ function showCheckoutSummary() {
       "checkoutItems"
     );
 
+
   const totalBox =
     document.getElementById(
       "checkoutTotal"
     );
+
+
+  if (
+    !itemsBox ||
+    !totalBox
+  ) return;
 
 
   itemsBox.innerHTML = "";
@@ -449,127 +804,234 @@ function showCheckoutSummary() {
   let total = 0;
 
 
-  cartItems.forEach(function (item) {
+  cartItems.forEach(
+    function (item) {
 
-    const subtotal =
-      item.price * item.quantity;
+      const subtotal =
+        item.price *
+        item.quantity;
 
-    total += subtotal;
+
+      total +=
+        subtotal;
 
 
-    itemsBox.innerHTML += `
+      itemsBox.innerHTML += `
 
-      <div class="summary-item">
+        <div
+          class="summary-item"
+        >
 
-        <span>
-          ${item.name}
-          × ${item.quantity}
-        </span>
+          <span>
 
-        <b>
-          ৳${subtotal}
-        </b>
+            ${item.name}
+            × ${item.quantity}
 
-      </div>
+          </span>
 
-    `;
 
-  });
+          <b>
+
+            ৳${subtotal}
+
+          </b>
+
+        </div>
+
+      `;
+
+    }
+  );
+
+
+  const deliveryElement =
+    document.getElementById(
+      "deliveryArea"
+    );
+
+
+  if (!deliveryElement)
+    return;
 
 
   const deliveryCharge =
-  Number(document.getElementById("deliveryArea").value);
+    Number(
+      deliveryElement.value
+    );
 
-const grandTotal =
-  total + deliveryCharge;
 
-totalBox.innerText =
-  "Product: ৳" + total +
-  " | Delivery: ৳" + deliveryCharge +
-  " | Total: ৳" + grandTotal;
+  const grandTotal =
+    total +
+    deliveryCharge;
+
+
+  totalBox.innerText =
+    "Product: ৳" +
+    total +
+    " | Delivery: ৳" +
+    deliveryCharge +
+    " | Total: ৳" +
+    grandTotal;
+
 }
 
 
-/* =========================
-   PLACE ORDER
-========================= */
+// =========================
+// PLACE ORDER
+// =========================
+
 function placeOrder() {
 
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const address = document.getElementById("address").value.trim();
+  const name =
+    document
+      .getElementById(
+        "name"
+      )
+      .value
+      .trim();
+
+
+  const phone =
+    document
+      .getElementById(
+        "phone"
+      )
+      .value
+      .trim();
+
+
+  const address =
+    document
+      .getElementById(
+        "address"
+      )
+      .value
+      .trim();
+
 
   const deliveryCharge =
-    Number(document.getElementById("deliveryArea").value);
+    Number(
+      document
+        .getElementById(
+          "deliveryArea"
+        )
+        .value
+    );
+
 
   const paymentMethod =
-    document.getElementById("paymentMethod").value;
+    document
+      .getElementById(
+        "paymentMethod"
+      )
+      .value;
 
-  const msg = document.getElementById("msg");
 
-  if (!name || !phone || !address) {
-    msg.innerText = "⚠️ সব তথ্য পূরণ করুন";
+  const msg =
+    document.getElementById(
+      "msg"
+    );
+
+
+  if (
+    !name ||
+    !phone ||
+    !address
+  ) {
+
+    msg.innerText =
+      "⚠️ সব তথ্য পূরণ করুন";
+
     return;
+
   }
 
-  if (cartItems.length === 0) {
-    msg.innerText = "⚠️ আগে Cart-এ Product যোগ করুন";
+
+  if (
+    cartItems.length === 0
+  ) {
+
+    msg.innerText =
+      "⚠️ আপনার Cart খালি";
+
     return;
+
   }
 
-  /* Order ID */
 
   let orderNumber =
-    Number(localStorage.getItem("yourTrendOrderNumber")) || 0;
+    Number(
+      localStorage.getItem(
+        "yourTrendOrderNumber"
+      )
+    ) || 0;
+
 
   orderNumber++;
+
 
   localStorage.setItem(
     "yourTrendOrderNumber",
     orderNumber
   );
 
+
   const orderId =
     "YOURTREND-" +
-    String(orderNumber).padStart(4, "0");
+    String(
+      orderNumber
+    ).padStart(
+      4,
+      "0"
+    );
 
 
-  /* Product Total */
+  let productTotal =
+    0;
 
-  let productTotal = 0;
 
   let orderText =
+
     "🛍️ YOUR TREND ORDER\n\n" +
+
     "🧾 Order ID: " +
     orderId +
     "\n\n";
 
 
-  cartItems.forEach(function(item) {
+  cartItems.forEach(
+    function (item) {
 
-    const subtotal =
-      item.price * item.quantity;
-
-    productTotal += subtotal;
-
-    orderText +=
-      "📦 " +
-      item.name +
-      " × " +
-      item.quantity +
-      " = ৳" +
-      subtotal +
-      "\n";
-  });
+      const subtotal =
+        item.price *
+        item.quantity;
 
 
-  /* Grand Total */
+      productTotal +=
+        subtotal;
+
+
+      orderText +=
+
+        "📦 " +
+        item.name +
+        " × " +
+        item.quantity +
+        " = ৳" +
+        subtotal +
+        "\n";
+
+    }
+  );
+
 
   const grandTotal =
-    productTotal + deliveryCharge;
+    productTotal +
+    deliveryCharge;
 
 
   orderText +=
+
     "\n🛍️ Product Total: ৳" +
     productTotal +
 
@@ -592,17 +1054,17 @@ function placeOrder() {
     address;
 
 
-  /* WhatsApp */
-
   const whatsappNumber =
     "8801775628710";
+
 
   const whatsappURL =
     "https://wa.me/" +
     whatsappNumber +
     "?text=" +
-    encodeURIComponent(orderText);
-  
+    encodeURIComponent(
+      orderText
+    );
 
 
   window.open(
@@ -613,19 +1075,48 @@ function placeOrder() {
 
   msg.innerText =
     "✅ WhatsApp-এ Order পাঠানো হচ্ছে...";
-}
-function openProduct(productName) {
 
-  const product = list.find(function (p) {
-    return p.name === productName;
-  });
+}
+
+
+// =========================
+// OPEN PRODUCT
+// =========================
+
+function openProduct(
+  productName
+) {
+
+  const product =
+    list.find(
+      function (p) {
+
+        return p.name ===
+          productName;
+
+      }
+    );
+
 
   if (!product) return;
 
+
   localStorage.setItem(
     "selectedProduct",
-    JSON.stringify(product)
+    JSON.stringify(
+      product
+    )
   );
 
-  window.location.href = "product.html";
+
+  window.location.href =
+    "product.html";
+
 }
+
+
+// =========================
+// INITIAL DISPLAY
+// =========================
+
+showProducts(list);
