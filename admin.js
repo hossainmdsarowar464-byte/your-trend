@@ -1228,11 +1228,18 @@ async function loadOrders() {
 
       statusSelect.value =
         order.status || "Pending";
+/* =========================
+   WHATSAPP CUSTOMER
+========================= */
+
 const whatsappBtn =
   document.createElement("button");
 
 whatsappBtn.innerText =
   "💬 WhatsApp Customer";
+
+whatsappBtn.type =
+  "button";
 
 whatsappBtn.style.background =
   "#25D366";
@@ -1258,7 +1265,8 @@ whatsappBtn.addEventListener(
 
     }
 
-    let whatsappPhone = phone;
+    let whatsappPhone =
+      phone;
 
     if (
       whatsappPhone.startsWith("01")
@@ -1271,29 +1279,48 @@ whatsappBtn.addEventListener(
     }
 
     const customerName =
-      order.customerName ||
-      "Customer";
+      String(
+        order.customerName ||
+        "Customer"
+      );
+
+    const orderId =
+      String(
+        order.orderNumber ||
+        order.orderId ||
+        orderDoc.id ||
+        "UNKNOWN"
+      );
 
     const status =
-      statusSelect.value;
+      String(
+        statusSelect.value ||
+        order.status ||
+        "Pending"
+      );
 
-    const orderNumber =
-  order.orderNumber ||
-  order.orderId ||
-  orderDoc.id;
+    const message =
+      "Hello " +
+      customerName +
+      "!\n\n" +
 
-const message =
-  "Hello " + customerName + "!\n\n" +
-  "🛍️ YOUR TREND\n" +
-  "📋 Order ID: " + orderNumber + "\n" +
-  "📦 Order Status: " + status + "\n\n" +
-  "Thank you for shopping with us! ❤️";
+      "🛍️ YOUR TREND\n" +
 
-const whatsappURL =
-  "https://wa.me/" +
-  whatsappPhone +
-  "?text=" +
-  encodeURIComponent(message);
+      "📋 Order ID: " +
+      orderId +
+      "\n" +
+
+      "📦 Order Status: " +
+      status +
+      "\n\n" +
+
+      "Thank you for shopping with us! ❤️";
+
+    const whatsappURL =
+      "https://wa.me/" +
+      whatsappPhone +
+      "?text=" +
+      encodeURIComponent(message);
 
     window.open(
       whatsappURL,
@@ -1305,7 +1332,9 @@ const whatsappURL =
 
 item
   .querySelector(".product-info")
-  .appendChild(whatsappBtn);
+  .appendChild(
+    whatsappBtn
+  );
       statusSelect.addEventListener(
         "change",
         async function() {
