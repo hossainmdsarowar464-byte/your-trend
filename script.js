@@ -155,7 +155,17 @@ function showProducts(products) {
         class="card"
         onclick="openProduct('${p.name}')"
       >
-
+<span class="product-badge">
+  ${
+    p.category === "fashion"
+      ? "👕 FASHION"
+      : p.category === "gadgets"
+      ? "⌚ GADGETS"
+      : p.category === "bags"
+      ? "🎒 BAGS"
+      : "✨ PRODUCT"
+  }
+</span>
         <img
           class="img"
           src="${p.image}"
