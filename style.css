@@ -721,3 +721,26 @@ section[style] h2 {
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(255,106,0,0.25);
 }
+/* PROFESSIONAL STOCK BADGE */
+
+.card p[style*="color:green"] {
+  display: inline-block;
+  margin: 4px;
+  padding: 5px 9px;
+  background: #e8f8ee;
+  color: #16833b !important;
+  border-radius: 20px;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+.card p[style*="color:red"] {
+  display: inline-block;
+  margin: 4px;
+  padding: 5px 9px;
+  background: #ffebee;
+  color: #d32f2f !important;
+  border-radius: 20px;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
