@@ -193,7 +193,7 @@ function showProducts(products) {
 // FIREBASE PRODUCTS
 // =========================
 
-async async function loadFirebaseProducts() {
+async function loadFirebaseProducts() {
 
   try {
 
