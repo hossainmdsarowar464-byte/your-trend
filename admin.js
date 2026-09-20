@@ -14,7 +14,8 @@ import {
   addDoc,
   getDocs,
   doc,
-  updateDoc
+  updateDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
@@ -407,6 +408,13 @@ async function loadProducts() {
             ✏️ Edit
           </button>
 
+          <button
+            class="delete-btn"
+            type="button"
+          >
+            🗑️ Delete
+          </button>
+
         `;
 
 
@@ -414,6 +422,10 @@ async function loadProducts() {
           item
         );
 
+
+        /* =================
+           EDIT BUTTON
+        ================= */
 
         item
           .querySelector(
@@ -424,6 +436,27 @@ async function loadProducts() {
             function() {
 
               editProduct(
+                productDoc.id,
+                product
+              );
+
+            }
+          );
+
+
+        /* =================
+           DELETE BUTTON
+        ================= */
+
+        item
+          .querySelector(
+            ".delete-btn"
+          )
+          .addEventListener(
+            "click",
+            function() {
+
+              deleteProduct(
                 productDoc.id,
                 product
               );
@@ -454,6 +487,76 @@ async function loadProducts() {
       </p>
 
     `;
+
+  }
+
+}
+
+
+/* =========================
+   DELETE PRODUCT
+========================= */
+
+async function deleteProduct(
+  productId,
+  product
+) {
+
+  const productName =
+    product.name ||
+    "এই Product";
+
+
+  const confirmed =
+    confirm(
+      "⚠️ আপনি কি এই Product টি Delete করতে চান?\n\n" +
+      productName +
+      "\n\nএই কাজটি Undo করা যাবে না।"
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const productRef =
+      doc(
+        db,
+        "products",
+        productId
+      );
+
+
+    await deleteDoc(
+      productRef
+    );
+
+
+    alert(
+      "✅ Product সফলভাবে Delete হয়েছে।"
+    );
+
+
+    await loadProducts();
+
+
+  } catch (error) {
+
+    console.error(
+      "Delete error:",
+      error
+    );
+
+
+    alert(
+      "❌ Product Delete করতে সমস্যা হয়েছে:\n" +
+      error.message
+    );
 
   }
 
@@ -520,10 +623,6 @@ function editProduct(
     .value =
       product.description || "";
 
-
-  /*
-    পুরোনো Image রাখা হবে
-  */
 
   uploadedImageURL =
     product.image || "";
@@ -803,12 +902,8 @@ document
           "green";
 
 
-        /* FORM RESET */
-
         resetForm();
 
-
-        /* PRODUCT LIST REFRESH */
 
         await loadProducts();
 
