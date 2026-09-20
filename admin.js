@@ -98,7 +98,7 @@ onAuthStateChanged(
     }
 
     loadProducts();
-
+loadOrders();
   }
 );
 
@@ -1058,4 +1058,234 @@ function resetForm() {
     .style.display =
       "none";
 
-}
+}/* =========================
+   LOAD CUSTOMER ORDERS
+========================= */
+
+async function loadOrders() {
+
+  const ordersList =
+    document.getElementById("ordersList");
+
+  ordersList.innerHTML =
+    "⏳ Orders loading...";
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(db, "orders")
+      );
+
+    ordersList.innerHTML = "";
+
+    if (snapshot.empty) {
+
+      ordersList.innerHTML =
+        "<p>📭 এখনো কোনো Customer Order নেই।</p>";
+
+      return;
+    }
+
+    snapshot.forEach(function(orderDoc) {
+
+      const order =
+        orderDoc.data();
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "product-item";
+
+      let orderItems = "";
+
+      if (
+        Array.isArray(order.items)
+      ) {
+
+        order.items.forEach(function(product) {
+
+          orderItems += `
+            <div style="
+              margin-top:6px;
+              padding:6px;
+              background:white;
+              border-radius:6px;
+            ">
+              ${product.name || "Product"}
+              × ${product.quantity || 1}
+              ${
+                product.size &&
+                product.size !== "প্রযোজ্য নয়"
+                  ? " | Size: " + product.size
+                  : ""
+              }
+            </div>
+          `;
+
+        });
+
+      }
+
+      let orderTime =
+        "সময় পাওয়া যায়নি";
+
+      if (
+        order.createdAt &&
+        typeof order.createdAt.toDate ===
+          "function"
+      ) {
+
+        orderTime =
+          order.createdAt
+            .toDate()
+            .toLocaleString("bn-BD");
+
+      }
+
+      item.innerHTML = `
+
+        <div class="product-info">
+
+          <b>
+            🧾 Order #${order.orderNumber || orderDoc.id}
+          </b>
+
+          <span>
+            👤 Customer:
+            ${order.customerName || "নাম নেই"}
+          </span>
+
+          <span>
+            📞 Phone:
+            ${order.phone || "নেই"}
+          </span>
+
+          <span>
+            📍 Address:
+            ${order.address || "নেই"}
+          </span>
+
+          <span>
+            💰 Total:
+            ৳${order.total || 0}
+          </span>
+
+          <span>
+            🕐 ${orderTime}
+          </span>
+
+          <div style="margin-top:10px;">
+            <b>🛍️ Products:</b>
+            ${orderItems}
+          </div>
+
+          <label style="
+            margin-top:12px;
+            display:block;
+          ">
+            Order Status
+          </label>
+
+          <select
+            class="order-status"
+            style="margin-top:5px;"
+          >
+
+            <option value="Pending">
+              Pending
+            </option>
+
+            <option value="Confirmed">
+              Confirmed
+            </option>
+
+            <option value="Shipped">
+              Shipped
+            </option>
+
+            <option value="Delivered">
+              Delivered
+            </option>
+
+            <option value="Cancelled">
+              Cancelled
+            </option>
+
+          </select>
+
+        </div>
+
+      `;
+
+      ordersList.appendChild(item);
+
+      const statusSelect =
+        item.querySelector(
+          ".order-status"
+        );
+
+      statusSelect.value =
+        order.status || "Pending";
+
+      statusSelect.addEventListener(
+        "change",
+        async function() {
+
+          try {
+
+            await updateDoc(
+              doc(
+                db,
+                "orders",
+                orderDoc.id
+              ),
+              {
+                status:
+                  statusSelect.value
+              }
+            );
+
+            alert(
+              "✅ Order Status Update হয়েছে!"
+            );
+
+          } catch (error) {
+
+            console.error(error);
+
+            alert(
+              "❌ Status Update করতে সমস্যা হয়েছে:\n" +
+              error.message
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Orders load error:",
+      error
+    );
+
+    ordersList.innerHTML = `
+
+      <p style="color:red;">
+        ❌ Orders load করতে সমস্যা হয়েছে।
+      </p>
+
+      <p style="color:#777;font-size:13px;">
+        ${error.message}
+      </p>
+
+    `;
+
+  }
+
+    }
