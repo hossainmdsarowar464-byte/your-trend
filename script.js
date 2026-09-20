@@ -1120,3 +1120,306 @@ function openProduct(
 // =========================
 
 showProducts(list);
+/* =========================
+   TRACK ORDER
+========================= */
+
+document
+  .getElementById("trackOrderBtn")
+  .addEventListener(
+    "click",
+    async function() {
+
+      const orderId =
+        document
+          .getElementById("trackOrderId")
+          .value
+          .trim();
+
+      const result =
+        document.getElementById(
+          "trackOrderResult"
+        );
+
+      if (!orderId) {
+
+        result.innerHTML = `
+          <div style="
+            padding:15px;
+            background:#ffebee;
+            border-radius:10px;
+            color:#d32f2f;
+            font-weight:bold;
+          ">
+            ⚠️ আপনার Order ID লিখুন।
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      result.innerHTML = `
+        <p>
+          ⏳ Order খোঁজা হচ্ছে...
+        </p>
+      `;
+
+
+      try {
+
+        const {
+          getApp
+        } =
+          await import(
+            "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
+          );
+
+
+        const {
+          getFirestore,
+          collection,
+          getDocs
+        } =
+          await import(
+            "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+          );
+
+
+        const db =
+          getFirestore(
+            getApp()
+          );
+
+
+        const snapshot =
+          await getDocs(
+            collection(
+              db,
+              "orders"
+            )
+          );
+
+
+        let foundOrder =
+          null;
+
+        let foundDocumentId =
+          "";
+
+
+        snapshot.forEach(
+          function(orderDoc) {
+
+            const order =
+              orderDoc.data();
+
+
+            const savedOrderNumber =
+              String(
+                order.orderNumber ||
+                ""
+              ).trim();
+
+
+            const savedOrderId =
+              String(
+                order.orderId ||
+                ""
+              ).trim();
+
+
+            const firestoreId =
+              String(
+                orderDoc.id
+              ).trim();
+
+
+            if (
+              savedOrderNumber ===
+                orderId ||
+              savedOrderId ===
+                orderId ||
+              firestoreId ===
+                orderId
+            ) {
+
+              foundOrder =
+                order;
+
+              foundDocumentId =
+                firestoreId;
+
+            }
+
+          }
+        );
+
+
+        if (!foundOrder) {
+
+          result.innerHTML = `
+            <div style="
+              padding:15px;
+              background:#ffebee;
+              border-radius:10px;
+              color:#d32f2f;
+              font-weight:bold;
+            ">
+              ❌ এই Order ID পাওয়া যায়নি।
+            </div>
+          `;
+
+          return;
+
+        }
+
+
+        const status =
+          foundOrder.status ||
+          "Pending";
+
+
+        let statusEmoji =
+          "🟡";
+
+
+        if (
+          status ===
+          "Confirmed"
+        ) {
+
+          statusEmoji =
+            "🟢";
+
+        }
+
+
+        if (
+          status ===
+          "Shipped"
+        ) {
+
+          statusEmoji =
+            "🚚";
+
+        }
+
+
+        if (
+          status ===
+          "Delivered"
+        ) {
+
+          statusEmoji =
+            "✅";
+
+        }
+
+
+        if (
+          status ===
+          "Cancelled"
+        ) {
+
+          statusEmoji =
+            "❌";
+
+        }
+
+
+        result.innerHTML = `
+
+          <div style="
+            padding:18px;
+            margin-top:15px;
+            background:#f8f8f8;
+            border:1px solid #ddd;
+            border-radius:12px;
+            text-align:left;
+          ">
+
+            <h3 style="
+              margin-top:0;
+            ">
+              🧾 Order Found
+            </h3>
+
+
+            <p>
+              <b>📋 Order ID:</b>
+              ${
+                foundOrder.orderNumber ||
+                foundDocumentId
+              }
+            </p>
+
+
+            <p>
+              <b>👤 Customer:</b>
+              ${
+                foundOrder.customerName ||
+                "Customer"
+              }
+            </p>
+
+
+            <p>
+              <b>💰 Total:</b>
+              ৳${foundOrder.total || 0}
+            </p>
+
+
+            <div style="
+              margin-top:15px;
+              padding:15px;
+              background:white;
+              border-radius:10px;
+              text-align:center;
+            ">
+
+              <div style="
+                font-size:28px;
+              ">
+                ${statusEmoji}
+              </div>
+
+              <div style="
+                margin-top:8px;
+                font-size:20px;
+                font-weight:bold;
+              ">
+                ${status}
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+
+      } catch (error) {
+
+        console.error(
+          "Track Order Error:",
+          error
+        );
+
+
+        result.innerHTML = `
+          <div style="
+            padding:15px;
+            background:#ffebee;
+            border-radius:10px;
+            color:#d32f2f;
+          ">
+            ❌ Order খুঁজতে সমস্যা হয়েছে।
+          </div>
+        `;
+
+      }
+
+    }
+  );
