@@ -1278,15 +1278,16 @@ whatsappBtn.addEventListener(
       statusSelect.value;
 
     const orderNumber =
-      order.orderNumber ||
-      orderDoc.id;
+  order.orderNumber ||
+  order.orderId ||
+  orderDoc.id;
 
-    const message =
-      `Hello ${customerName}!%0A%0A` +
-      `🛍️ YOUR TREND%0A` +
-      `Order: #${orderNumber}%0A` +
-      `📦 Status: ${status}%0A%0A` +
-      `Thank you for shopping with us! ❤️`;
+const message =
+  "Hello " + customerName + "!%0A%0A" +
+  "🛍️ YOUR TREND%0A" +
+  "📋 Order ID: #" + orderNumber + "%0A" +
+  "📦 Order Status: " + status + "%0A%0A" +
+  "Thank you for shopping with us! ❤️";
 
     const whatsappURL =
       "https://wa.me/" +
