@@ -690,7 +690,13 @@ trackingToken: trackingToken,
 
       }
     );
-
+await setDoc(
+  doc(db, "orderTracking", trackingToken),
+  {
+    orderNumber: orderId,
+    status: "Pending"
+  }
+);
 
     /* ======================================
        WHATSAPP MESSAGE
