@@ -1228,7 +1228,83 @@ async function loadOrders() {
 
       statusSelect.value =
         order.status || "Pending";
+const whatsappBtn =
+  document.createElement("button");
 
+whatsappBtn.innerText =
+  "💬 WhatsApp Customer";
+
+whatsappBtn.style.background =
+  "#25D366";
+
+whatsappBtn.style.marginTop =
+  "10px";
+
+whatsappBtn.addEventListener(
+  "click",
+  function() {
+
+    const phone =
+      String(order.phone || "")
+        .replace(/\D/g, "");
+
+    if (!phone) {
+
+      alert(
+        "❌ Customer phone number পাওয়া যায়নি।"
+      );
+
+      return;
+
+    }
+
+    let whatsappPhone = phone;
+
+    if (
+      whatsappPhone.startsWith("01")
+    ) {
+
+      whatsappPhone =
+        "880" +
+        whatsappPhone.substring(1);
+
+    }
+
+    const customerName =
+      order.customerName ||
+      "Customer";
+
+    const status =
+      statusSelect.value;
+
+    const orderNumber =
+      order.orderNumber ||
+      orderDoc.id;
+
+    const message =
+      `Hello ${customerName}!%0A%0A` +
+      `🛍️ YOUR TREND%0A` +
+      `Order: #${orderNumber}%0A` +
+      `📦 Status: ${status}%0A%0A` +
+      `Thank you for shopping with us! ❤️`;
+
+    const whatsappURL =
+      "https://wa.me/" +
+      whatsappPhone +
+      "?text=" +
+      message;
+
+    window.open(
+      whatsappURL,
+      "_blank"
+    );
+
+  }
+);
+
+item
+  .querySelector(".product-info")
+  .appendChild(whatsappBtn);
       statusSelect.addEventListener(
         "change",
         async function() {
