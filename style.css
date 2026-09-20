@@ -707,3 +707,17 @@ section[style] h2 {
   font-weight: 800;
   letter-spacing: 0.4px;
 }
+/* PROFESSIONAL PRODUCT BUTTON */
+
+.card .btn {
+  margin-top: 6px;
+  font-size: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255,106,0,0.18);
+}
+
+.card .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(255,106,0,0.25);
+}
