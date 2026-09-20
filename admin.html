@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>YOUR TREND - Admin</title>
 
   <style>
+
     body {
       font-family: Arial, sans-serif;
       background: #f5f6f8;
@@ -100,6 +107,12 @@
       line-height: 1.5;
     }
 
+    .hint {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
+    }
+
     .back {
       display: block;
       text-align: center;
@@ -107,8 +120,11 @@
       color: #333;
       text-decoration: none;
     }
+
   </style>
+
 </head>
+
 
 <body>
 
@@ -116,11 +132,19 @@
 
     <h1>🛍️ YOUR TREND Admin</h1>
 
+
+    <!-- Logout -->
+
     <button id="logoutBtn">
       🚪 Logout
     </button>
 
-    <label>Product Name</label>
+
+    <!-- Product Name -->
+
+    <label>
+      Product Name
+    </label>
 
     <input
       type="text"
@@ -128,7 +152,12 @@
       placeholder="যেমন: Premium T-Shirt"
     >
 
-    <label>Price</label>
+
+    <!-- Price -->
+
+    <label>
+      Price
+    </label>
 
     <input
       type="number"
@@ -136,9 +165,17 @@
       placeholder="যেমন: 490"
     >
 
-    <label>Product Image</label>
 
-    <button type="button" id="selectImageBtn">
+    <!-- Product Image -->
+
+    <label>
+      Product Image
+    </label>
+
+    <button
+      type="button"
+      id="selectImageBtn"
+    >
       📷 Select Product Image
     </button>
 
@@ -151,7 +188,12 @@
       alt="Product Preview"
     >
 
-    <label>Category</label>
+
+    <!-- Category -->
+
+    <label>
+      Category
+    </label>
 
     <select id="productCategory">
 
@@ -169,20 +211,69 @@
 
     </select>
 
-    <label>Description</label>
+
+    <!-- Stock -->
+
+    <label>
+      📦 Stock Quantity
+    </label>
+
+    <input
+      type="number"
+      id="productStock"
+      min="0"
+      value="0"
+      placeholder="যেমন: 20"
+    >
+
+    <p class="hint">
+      এই Product-এর মোট কতটি পণ্য আছে তা লিখুন।
+    </p>
+
+
+    <!-- Sizes -->
+
+    <label>
+      📏 Available Sizes
+    </label>
+
+    <input
+      type="text"
+      id="productSizes"
+      placeholder="যেমন: S, M, L, XL"
+    >
+
+    <p class="hint">
+      একাধিক Size হলে কমা দিয়ে লিখুন। যেমন: S, M, L, XL
+    </p>
+
+
+    <!-- Description -->
+
+    <label>
+      Description
+    </label>
 
     <textarea
       id="productDescription"
       placeholder="Product details লিখুন..."
     ></textarea>
 
+
+    <!-- Save -->
+
     <button id="saveProductBtn">
       ➕ Add Product
     </button>
 
+
     <p id="message"></p>
 
-    <a href="index.html" class="back">
+
+    <a
+      href="index.html"
+      class="back"
+    >
       ← Back to Website
     </a>
 
@@ -190,13 +281,18 @@
 
 
   <!-- Cloudinary Upload Widget -->
+
   <script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script>
 
+
   <!-- YOUR TREND Admin JavaScript -->
+
   <script
     type="module"
-    src="admin.js">
-  </script>
+    src="admin.js"
+  ></script>
+
 
 </body>
+
 </html>
