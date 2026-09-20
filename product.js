@@ -11,6 +11,8 @@ if (!product) {
   window.location.href =
     "index.html";
 
+  throw new Error("Product পাওয়া যায়নি");
+
 }
 
 
@@ -45,20 +47,30 @@ document
 let selectedQuantity = 1;
 
 
-// Increase
-
 function increaseProductQuantity() {
+
+  const stock =
+    Number(product.stock) || 999999;
+
+  if (selectedQuantity >= stock) {
+
+    alert(
+      "⚠️ এই Product-এর Stock সীমার বেশি নিতে পারবেন না।"
+    );
+
+    return;
+
+  }
 
   selectedQuantity++;
 
   document
     .getElementById("productQuantity")
-    .innerText = selectedQuantity;
+    .innerText =
+      selectedQuantity;
 
 }
 
-
-// Decrease
 
 function decreaseProductQuantity() {
 
@@ -68,10 +80,10 @@ function decreaseProductQuantity() {
 
   }
 
-
   document
     .getElementById("productQuantity")
-    .innerText = selectedQuantity;
+    .innerText =
+      selectedQuantity;
 
 }
 
@@ -82,19 +94,29 @@ function decreaseProductQuantity() {
 
 function getSelectedSize() {
 
-  return document
-    .getElementById("productSize")
-    .value;
+  const sizeElement =
+    document.getElementById("productSize");
+
+  // Product-এ Size না থাকলে
+  if (
+    !product.sizes ||
+    product.sizes.length === 0
+  ) {
+
+    return "প্রযোজ্য নয়";
+
+  }
+
+  return sizeElement.value;
 
 }
 
 
 // ======================================
-// Add to Cart
+// Add Product To Cart
 // ======================================
 
 function addSelectedProduct() {
-
 
   const size =
     getSelectedSize();
@@ -117,6 +139,10 @@ function addSelectedProduct() {
     ) || [];
 
 
+  const stock =
+    Number(product.stock) || 999999;
+
+
   const existing =
     cartItems.find(function(item) {
 
@@ -130,22 +156,50 @@ function addSelectedProduct() {
 
   if (existing) {
 
-    existing.quantity +=
+    if (
+      Number(existing.quantity) +
+      selectedQuantity >
+      stock
+    ) {
+
+      alert(
+        "⚠️ এই Product-এর Stock সীমার বেশি নিতে পারবেন না।"
+      );
+
+      return;
+
+    }
+
+
+    existing.quantity =
+      Number(existing.quantity) +
       selectedQuantity;
+
 
   } else {
 
     cartItems.push({
 
-      name: product.name,
+      name:
+        product.name,
 
-      price: product.price,
+      price:
+        Number(product.price),
 
-      image: product.image,
+      image:
+        product.image,
 
-      quantity: selectedQuantity,
+      quantity:
+        selectedQuantity,
 
-      size: size
+      stock:
+        stock,
+
+      size:
+        size,
+
+      sizes:
+        product.sizes || []
 
     });
 
@@ -171,7 +225,6 @@ function addSelectedProduct() {
 
 function goCheckout() {
 
-
   const size =
     getSelectedSize();
 
@@ -193,6 +246,10 @@ function goCheckout() {
     ) || [];
 
 
+  const stock =
+    Number(product.stock) || 999999;
+
+
   const existing =
     cartItems.find(function(item) {
 
@@ -206,22 +263,50 @@ function goCheckout() {
 
   if (existing) {
 
-    existing.quantity +=
+    if (
+      Number(existing.quantity) +
+      selectedQuantity >
+      stock
+    ) {
+
+      alert(
+        "⚠️ এই Product-এর Stock সীমার বেশি নিতে পারবেন না।"
+      );
+
+      return;
+
+    }
+
+
+    existing.quantity =
+      Number(existing.quantity) +
       selectedQuantity;
+
 
   } else {
 
     cartItems.push({
 
-      name: product.name,
+      name:
+        product.name,
 
-      price: product.price,
+      price:
+        Number(product.price),
 
-      image: product.image,
+      image:
+        product.image,
 
-      quantity: selectedQuantity,
+      quantity:
+        selectedQuantity,
 
-      size: size
+      stock:
+        stock,
+
+      size:
+        size,
+
+      sizes:
+        product.sizes || []
 
     });
 
@@ -245,7 +330,6 @@ function goCheckout() {
 // ======================================
 
 function orderSelectedProduct() {
-
 
   const name =
     document
@@ -284,10 +368,6 @@ function orderSelectedProduct() {
     document.getElementById("msg");
 
 
-  // ======================================
-  // Validation
-  // ======================================
-
   if (
     !name ||
     !phone ||
@@ -318,10 +398,6 @@ function orderSelectedProduct() {
   }
 
 
-  // ======================================
-  // Order Number
-  // ======================================
-
   let orderNumber =
     Number(
       localStorage.getItem(
@@ -345,10 +421,6 @@ function orderSelectedProduct() {
       .padStart(4, "0");
 
 
-  // ======================================
-  // Product Total
-  // ======================================
-
   const productTotal =
     Number(product.price) *
     selectedQuantity;
@@ -358,10 +430,6 @@ function orderSelectedProduct() {
     productTotal +
     deliveryCharge;
 
-
-  // ======================================
-  // WhatsApp Message
-  // ======================================
 
   const orderText =
 
@@ -410,10 +478,6 @@ function orderSelectedProduct() {
     address;
 
 
-  // ======================================
-  // WhatsApp Number
-  // ======================================
-
   const whatsappNumber =
     "8801775628710";
 
@@ -430,4 +494,4 @@ function orderSelectedProduct() {
   window.location.href =
     whatsappURL;
 
-    }
+}
