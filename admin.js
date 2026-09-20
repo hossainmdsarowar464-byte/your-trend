@@ -2,29 +2,28 @@ import {
   initializeApp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-
 import {
   getAuth,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-
 import {
   getFirestore,
   collection,
-  addDoc
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-// ===============================
-// Firebase Configuration
-// ===============================
+/* FIREBASE */
 
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+    "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
 
   authDomain:
     "your-trend.firebaseapp.com",
@@ -47,69 +46,60 @@ const firebaseConfig = {
 };
 
 
-// ===============================
-// Firebase Start
-// ===============================
-
 const app =
   initializeApp(firebaseConfig);
 
-
 const auth =
   getAuth(app);
-
 
 const db =
   getFirestore(app);
 
 
-// ===============================
-// Cloudinary
-// ===============================
+/* CLOUDINARY */
 
 const CLOUDINARY_CLOUD_NAME =
   "fq6ele9x";
-
 
 const CLOUDINARY_UPLOAD_PRESET =
   "your_trend_products";
 
 
-// ===============================
-// Variables
-// ===============================
-
 let uploadedImageURL = "";
 
+let editingProductId = null;
 
-// ===============================
-// Admin Login Protection
-// ===============================
+let uploadWidget = null;
+
+
+/* AUTH */
 
 onAuthStateChanged(
   auth,
-  function (user) {
+  function(user) {
 
     if (!user) {
 
       window.location.href =
         "admin-login.html";
 
+      return;
+
     }
+
+    loadProducts();
 
   }
 );
 
 
-// ===============================
-// Logout
-// ===============================
+/* LOGOUT */
 
 document
   .getElementById("logoutBtn")
   .addEventListener(
     "click",
-    async function () {
+    async function() {
 
       try {
 
@@ -128,12 +118,7 @@ document
   );
 
 
-// ===============================
-// Cloudinary Upload Widget
-// ===============================
-
-let uploadWidget = null;
-
+/* CLOUDINARY WIDGET */
 
 function setupCloudinaryWidget() {
 
@@ -146,20 +131,10 @@ function setupCloudinaryWidget() {
       "Cloudinary Widget load হয়নি।"
     );
 
-
-    const imageStatus =
-      document.getElementById(
-        "imageStatus"
-      );
-
-
-    imageStatus.innerText =
-      "❌ Cloudinary Widget load হয়নি";
-
-
-    imageStatus.style.color =
-      "red";
-
+    document
+      .getElementById("imageStatus")
+      .innerText =
+        "❌ Cloudinary Widget load হয়নি";
 
     return;
 
@@ -177,9 +152,8 @@ function setupCloudinaryWidget() {
         uploadPreset:
           CLOUDINARY_UPLOAD_PRESET,
 
-        sources: [
-          "local"
-        ],
+        sources:
+          ["local"],
 
         multiple:
           false,
@@ -190,23 +164,20 @@ function setupCloudinaryWidget() {
         resourceType:
           "image",
 
-        clientAllowedFormats: [
-          "jpg",
-          "jpeg",
-          "png",
-          "webp"
-        ],
+        clientAllowedFormats:
+          [
+            "jpg",
+            "jpeg",
+            "png",
+            "webp"
+          ],
 
         maxFileSize:
           5000000
 
       },
 
-
-      function (
-        error,
-        result
-      ) {
+      function(error, result) {
 
         if (error) {
 
@@ -215,20 +186,12 @@ function setupCloudinaryWidget() {
             error
           );
 
-
-          const imageStatus =
-            document.getElementById(
+          document
+            .getElementById(
               "imageStatus"
-            );
-
-
-          imageStatus.innerText =
-            "❌ Image upload failed";
-
-
-          imageStatus.style.color =
-            "red";
-
+            )
+            .innerText =
+              "❌ Image upload failed";
 
           return;
 
@@ -238,7 +201,7 @@ function setupCloudinaryWidget() {
         if (
           result &&
           result.event ===
-          "success"
+            "success"
         ) {
 
           uploadedImageURL =
@@ -250,10 +213,8 @@ function setupCloudinaryWidget() {
               "imagePreview"
             );
 
-
           preview.src =
             uploadedImageURL;
-
 
           preview.style.display =
             "block";
@@ -264,19 +225,11 @@ function setupCloudinaryWidget() {
               "imageStatus"
             );
 
-
           imageStatus.innerText =
-            "✅ Image successfully uploaded";
-
+            "✅ নতুন Image নির্বাচন করা হয়েছে";
 
           imageStatus.style.color =
             "green";
-
-
-          console.log(
-            "Uploaded Image:",
-            uploadedImageURL
-          );
 
         }
 
@@ -287,19 +240,13 @@ function setupCloudinaryWidget() {
 }
 
 
-// ===============================
-// Page Load
-// ===============================
-
 window.addEventListener(
   "load",
   setupCloudinaryWidget
 );
 
 
-// ===============================
-// Select Product Image
-// ===============================
+/* SELECT IMAGE */
 
 document
   .getElementById(
@@ -307,22 +254,19 @@ document
   )
   .addEventListener(
     "click",
-    function () {
+    function() {
 
       if (!uploadWidget) {
 
         alert(
-          "Cloudinary এখনও প্রস্তুত হয়নি। ২-৩ সেকেন্ড পরে আবার চাপুন।"
+          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চাপুন।"
         );
 
-
         setupCloudinaryWidget();
-
 
         return;
 
       }
-
 
       uploadWidget.open();
 
@@ -330,9 +274,280 @@ document
   );
 
 
-// ===============================
-// Add Product
-// ===============================
+/* LOAD ALL PRODUCTS */
+
+async function loadProducts() {
+
+  const productList =
+    document.getElementById(
+      "productList"
+    );
+
+  productList.innerHTML =
+    "⏳ Products loading...";
+
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "products"
+        )
+      );
+
+
+    productList.innerHTML = "";
+
+
+    if (snapshot.empty) {
+
+      productList.innerHTML =
+        "<p>কোনো Product নেই।</p>";
+
+      return;
+
+    }
+
+
+    snapshot.forEach(
+      function(productDoc) {
+
+        const product =
+          productDoc.data();
+
+        const stock =
+          product.stock !== undefined
+            ? Number(product.stock)
+            : 0;
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+        item.className =
+          "product-item";
+
+
+        item.innerHTML = `
+
+          <img
+            src="${product.image || ""}"
+            alt="${product.name || "Product"}"
+          >
+
+          <div class="product-info">
+
+            <b>
+              ${product.name || "Unnamed Product"}
+            </b>
+
+            <span>
+              💰 Price: ৳${product.price || 0}
+            </span>
+
+            <span>
+              📦 Stock: ${stock}
+            </span>
+
+            <span>
+              🏷️ ${product.category || ""}
+            </span>
+
+          </div>
+
+          <button
+            class="edit-btn"
+            data-id="${productDoc.id}"
+          >
+            ✏️ Edit
+          </button>
+
+        `;
+
+
+        productList.appendChild(
+          item
+        );
+
+
+        item
+          .querySelector(
+            ".edit-btn"
+          )
+          .addEventListener(
+            "click",
+            function() {
+
+              editProduct(
+                productDoc.id,
+                product
+              );
+
+            }
+          );
+
+      }
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    productList.innerHTML =
+      "❌ Product load করতে সমস্যা হয়েছে: " +
+      error.message;
+
+  }
+
+}
+
+
+/* EDIT PRODUCT */
+
+function editProduct(
+  productId,
+  product
+) {
+
+  editingProductId =
+    productId;
+
+
+  document
+    .getElementById(
+      "editMode"
+    )
+    .style.display =
+      "block";
+
+
+  document
+    .getElementById(
+      "productName"
+    )
+    .value =
+      product.name || "";
+
+
+  document
+    .getElementById(
+      "productPrice"
+    )
+    .value =
+      product.price || "";
+
+
+  document
+    .getElementById(
+      "productStock"
+    )
+    .value =
+      product.stock !== undefined
+        ? product.stock
+        : 0;
+
+
+  document
+    .getElementById(
+      "productCategory"
+    )
+    .value =
+      product.category || "fashion";
+
+
+  document
+    .getElementById(
+      "productDescription"
+    )
+    .value =
+      product.description || "";
+
+
+  /*
+    IMPORTANT:
+
+    Edit করার সময় আগের Image
+    automatically রাখা হচ্ছে।
+  */
+
+  uploadedImageURL =
+    product.image || "";
+
+
+  const preview =
+    document.getElementById(
+      "imagePreview"
+    );
+
+
+  if (uploadedImageURL) {
+
+    preview.src =
+      uploadedImageURL;
+
+    preview.style.display =
+      "block";
+
+  } else {
+
+    preview.src = "";
+
+    preview.style.display =
+      "none";
+
+  }
+
+
+  document
+    .getElementById(
+      "imageStatus"
+    )
+    .innerText =
+      "✅ আগের Image ব্যবহার হবে";
+
+
+  document
+    .getElementById(
+      "imageStatus"
+    )
+    .style.color =
+      "green";
+
+
+  document
+    .getElementById(
+      "saveProductBtn"
+    )
+    .innerText =
+      "💾 Save Changes";
+
+
+  document
+    .getElementById(
+      "cancelEditBtn"
+    )
+    .style.display =
+      "block";
+
+
+  /*
+    Form-এর কাছে নিয়ে যাবে
+  */
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* SAVE PRODUCT */
 
 document
   .getElementById(
@@ -340,8 +555,7 @@ document
   )
   .addEventListener(
     "click",
-    async function () {
-
+    async function() {
 
       const name =
         document
@@ -356,6 +570,14 @@ document
         document
           .getElementById(
             "productPrice"
+          )
+          .value;
+
+
+      const stockValue =
+        document
+          .getElementById(
+            "productStock"
           )
           .value;
 
@@ -377,25 +599,6 @@ document
           .trim();
 
 
-      const stock =
-        Number(
-          document
-            .getElementById(
-              "productStock"
-            )
-            .value
-        );
-
-
-      const sizesText =
-        document
-          .getElementById(
-            "productSizes"
-          )
-          .value
-          .trim();
-
-
       const message =
         document.getElementById(
           "message"
@@ -408,74 +611,28 @@ document
         );
 
 
-      // ===============================
-      // Validation
-      // ===============================
+      const stock =
+        Number(stockValue);
+
+
+      /* VALIDATION */
 
       if (
         !name ||
         !price ||
+        stockValue === "" ||
+        stock < 0 ||
         !uploadedImageURL ||
         !description
       ) {
 
         message.innerText =
-          "⚠️ সব তথ্য পূরণ করুন এবং একটি ছবি নির্বাচন করুন।";
-
-
-        message.style.color =
-          "red";
-
-
-        return;
-
-      }
-
-
-      if (
-        isNaN(stock) ||
-        stock < 0
-      ) {
-
-        message.innerText =
-          "⚠️ Stock Quantity সঠিকভাবে লিখুন।";
-
+          "⚠️ সব তথ্য পূরণ করুন। Stock 0 বা তার বেশি হতে হবে।";
 
         message.style.color =
           "red";
 
-
         return;
-
-      }
-
-
-      // ===============================
-      // Convert Sizes to Array
-      // ===============================
-
-      let sizes = [];
-
-
-      if (sizesText) {
-
-        sizes =
-          sizesText
-            .split(",")
-            .map(
-              function (size) {
-
-                return size.trim();
-
-              }
-            )
-            .filter(
-              function (size) {
-
-                return size !== "";
-
-              }
-            );
 
       }
 
@@ -487,165 +644,175 @@ document
 
 
         saveButton.innerText =
-          "⏳ Product Save হচ্ছে...";
+          "⏳ Save হচ্ছে...";
 
 
         message.innerText =
-          "💾 Firebase-এ Product Save হচ্ছে...";
-
+          "💾 Firebase-এ Save হচ্ছে...";
 
         message.style.color =
           "#ff6b00";
 
 
-        // ===============================
-        // Save Product
-        // ===============================
+        /* EDIT */
 
-        await addDoc(
-          collection(
-            db,
-            "products"
-          ),
-          {
+        if (editingProductId) {
 
-            name:
-              name,
-
-            price:
-              Number(price),
-
-            image:
-              uploadedImageURL,
-
-            category:
-              category,
-
-            description:
-              description,
-
-            stock:
-              stock,
-
-            sizes:
-              sizes
-
-          }
-        );
+          const productRef =
+            doc(
+              db,
+              "products",
+              editingProductId
+            );
 
 
-        // ===============================
-        // Success
-        // ===============================
+          await updateDoc(
+            productRef,
+            {
 
-        message.innerText =
-          "✅ Product, Stock এবং Size সফলভাবে Save হয়েছে!";
+              name:
+                name,
 
+              price:
+                Number(price),
 
-        message.style.color =
-          "green";
+              stock:
+                stock,
 
+              image:
+                uploadedImageURL,
 
-        // ===============================
-        // Clear Form
-        // ===============================
+              category:
+                category,
 
-        document
-          .getElementById(
-            "productName"
-          )
-          .value = "";
+              description:
+                description
 
-
-        document
-          .getElementById(
-            "productPrice"
-          )
-          .value = "";
+            }
+          );
 
 
-        document
-          .getElementById(
-            "productStock"
-          )
-          .value = "0";
+          message.innerText =
+            "✅ Product সফলভাবে Update হয়েছে!";
+
+          message.style.color =
+            "green";
+
+        }
 
 
-        document
-          .getElementById(
-            "productSizes"
-          )
-          .value = "";
+        /* NEW PRODUCT */
+
+        else {
+
+          await addDoc(
+            collection(
+              db,
+              "products"
+            ),
+            {
+
+              name:
+                name,
+
+              price:
+                Number(price),
+
+              stock:
+                stock,
+
+              image:
+                uploadedImageURL,
+
+              category:
+                category,
+
+              description:
+                description
+
+            }
+          );
 
 
-        document
-          .getElementById(
-            "productDescription"
-          )
-          .value = "";
+          message.innerText =
+            "✅ নতুন Product সফলভাবে Add হয়েছে!";
+
+          message.style.color =
+            "green";
+
+        }
 
 
-        uploadedImageURL =
-          "";
+        /* RESET FORM */
+
+        resetForm();
 
 
-        document
-          .getElementById(
-            "imagePreview"
-          )
-          .src = "";
+        /* RELOAD PRODUCT LIST */
 
-
-        document
-          .getElementById(
-            "imagePreview"
-          )
-          .style.display =
-          "none";
-
-
-        document
-          .getElementById(
-            "imageStatus"
-          )
-          .innerText =
-          "কোনো ছবি নির্বাচন করা হয়নি";
-
-
-        document
-          .getElementById(
-            "imageStatus"
-          )
-          .style.color =
-          "black";
+        await loadProducts();
 
 
       } catch (error) {
 
-        console.error(
-          error
-        );
-
+        console.error(error);
 
         message.innerText =
           "❌ Error: " +
           error.message;
 
-
         message.style.color =
           "red";
-
 
       } finally {
 
         saveButton.disabled =
           false;
 
-
-        saveButton.innerText =
-          "➕ Add Product";
-
       }
 
     }
   );
+
+
+/* CANCEL EDIT */
+
+document
+  .getElementById(
+    "cancelEditBtn"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      resetForm();
+
+    }
+  );
+
+
+/* RESET FORM */
+
+function resetForm() {
+
+  editingProductId =
+    null;
+
+  uploadedImageURL =
+    "";
+
+
+  document
+    .getElementById(
+      "productName"
+    )
+    .value =
+      "";
+
+
+  document
+    .getElementById(
+      "productPrice"
+    )
+    .value =
+      "";
