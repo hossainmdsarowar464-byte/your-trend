@@ -13,6 +13,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+// ===============================
+// Firebase Configuration
+// ===============================
+
 const firebaseConfig = {
   apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
   authDomain: "your-trend.firebaseapp.com",
@@ -24,7 +28,10 @@ const firebaseConfig = {
 };
 
 
-// Firebase
+// ===============================
+// Firebase Start
+// ===============================
+
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
@@ -32,244 +39,342 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 
+// ===============================
 // Cloudinary
+// ===============================
+
 const CLOUDINARY_CLOUD_NAME = "fq6ele9x";
 
 const CLOUDINARY_UPLOAD_PRESET = "your_trend_products";
 
 
-// Login ছাড়া Admin Panel-এ ঢুকতে দেওয়া হবে না
+// ===============================
+// Variables
+// ===============================
+
+let uploadedImageURL = "";
+
+
+// ===============================
+// Admin Login Protection
+// ===============================
+
 onAuthStateChanged(auth, function (user) {
 
   if (!user) {
+
     window.location.href = "admin-login.html";
+
   }
 
 });
 
 
+// ===============================
 // Logout
-document.getElementById("logoutBtn").addEventListener("click", async function () {
+// ===============================
 
-  try {
+document
+  .getElementById("logoutBtn")
+  .addEventListener("click", async function () {
 
-    await signOut(auth);
+    try {
 
-    window.location.href = "admin-login.html";
+      await signOut(auth);
 
-  } catch (error) {
+      window.location.href = "admin-login.html";
 
-    console.error(error);
+    } catch (error) {
 
-  }
+      console.error(error);
 
-});
+    }
 
+  });
 
-// Image preview
-document.getElementById("productImage").addEventListener("change", function () {
 
-  const file = this.files[0];
+// ===============================
+// Cloudinary Upload Widget
+// ===============================
 
-  const preview = document.getElementById("imagePreview");
+const uploadWidget = cloudinary.createUploadWidget(
 
-  if (!file) {
+  {
+    cloudName: CLOUDINARY_CLOUD_NAME,
 
-    preview.style.display = "none";
-    preview.src = "";
+    uploadPreset: CLOUDINARY_UPLOAD_PRESET,
 
-    return;
+    sources: [
+      "local"
+    ],
 
-  }
+    multiple: false,
 
+    maxFiles: 1,
 
-  if (!file.type.startsWith("image/")) {
+    resourceType: "image",
 
-    alert("শুধু image file নির্বাচন করুন।");
+    clientAllowedFormats: [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
 
-    this.value = "";
+    maxFileSize: 5000000
+  },
 
-    preview.style.display = "none";
+  function (error, result) {
 
-    return;
+    if (error) {
 
-  }
+      console.error("Cloudinary Error:", error);
 
+      document.getElementById("imageStatus").innerText =
+        "❌ Image upload failed";
 
-  // 5 MB limit
-  if (file.size > 5 * 1024 * 1024) {
+      document.getElementById("imageStatus").style.color =
+        "red";
 
-    alert("ছবির size সর্বোচ্চ 5 MB হতে হবে।");
-
-    this.value = "";
-
-    preview.style.display = "none";
-
-    return;
-
-  }
-
-
-  const imageURL = URL.createObjectURL(file);
-
-  preview.src = imageURL;
-
-  preview.style.display = "block";
-
-});
-
-
-// Add Product
-document.getElementById("saveProductBtn").addEventListener("click", async function () {
-
-  const name =
-    document.getElementById("productName").value.trim();
-
-  const price =
-    document.getElementById("productPrice").value;
-
-  const imageFile =
-    document.getElementById("productImage").files[0];
-
-  const category =
-    document.getElementById("productCategory").value;
-
-  const description =
-    document.getElementById("productDescription").value.trim();
-
-  const message =
-    document.getElementById("message");
-
-  const saveButton =
-    document.getElementById("saveProductBtn");
-
-
-  // Validation
-  if (!name || !price || !imageFile || !description) {
-
-    message.innerText = "⚠️ সব তথ্য পূরণ করুন এবং একটি ছবি নির্বাচন করুন।";
-
-    message.style.color = "red";
-
-    return;
-
-  }
-
-
-  if (imageFile.size > 5 * 1024 * 1024) {
-
-    message.innerText = "⚠️ ছবির size সর্বোচ্চ 5 MB হতে হবে।";
-
-    message.style.color = "red";
-
-    return;
-
-  }
-
-
-  try {
-
-    saveButton.disabled = true;
-
-    saveButton.innerText = "⏳ Image Upload হচ্ছে...";
-
-    message.innerText = "📤 ছবি Upload হচ্ছে...";
-
-    message.style.color = "#ff6b00";
-
-
-    // Cloudinary upload
-    const formData = new FormData();
-
-    formData.append("file", imageFile);
-
-    formData.append(
-      "upload_preset",
-      CLOUDINARY_UPLOAD_PRESET
-    );
-
-
-    const cloudinaryResponse = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-      {
-        method: "POST",
-        body: formData
-      }
-    );
-
-
-    if (!cloudinaryResponse.ok) {
-
-      throw new Error("Cloudinary image upload failed.");
+      return;
 
     }
 
 
-    const cloudinaryData =
-      await cloudinaryResponse.json();
+    // Upload successful
+    if (
+      result &&
+      result.event === "success"
+    ) {
+
+      uploadedImageURL =
+        result.info.secure_url;
 
 
-    const imageURL =
-      cloudinaryData.secure_url;
+      // Preview image
+      const preview =
+        document.getElementById("imagePreview");
+
+      preview.src =
+        uploadedImageURL;
+
+      preview.style.display =
+        "block";
 
 
-    // Save product to Firestore
-    saveButton.innerText = "💾 Product Save হচ্ছে...";
+      // Status
+      const imageStatus =
+        document.getElementById("imageStatus");
 
-    message.innerText = "💾 Firebase-এ Product Save হচ্ছে...";
+      imageStatus.innerText =
+        "✅ Image successfully uploaded";
 
-
-    await addDoc(collection(db, "products"), {
-
-      name: name,
-
-      price: Number(price),
-
-      image: imageURL,
-
-      category: category,
-
-      description: description
-
-    });
+      imageStatus.style.color =
+        "green";
 
 
-    message.innerText =
-      "✅ Product এবং Image সফলভাবে Save হয়েছে!";
+      console.log(
+        "Cloudinary Image URL:",
+        uploadedImageURL
+      );
 
-    message.style.color = "green";
-
-
-    // Clear form
-    document.getElementById("productName").value = "";
-
-    document.getElementById("productPrice").value = "";
-
-    document.getElementById("productImage").value = "";
-
-    document.getElementById("productDescription").value = "";
-
-    document.getElementById("imagePreview").style.display = "none";
-
-    document.getElementById("imagePreview").src = "";
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    message.innerText =
-      "❌ Error: " + error.message;
-
-    message.style.color = "red";
-
-
-  } finally {
-
-    saveButton.disabled = false;
-
-    saveButton.innerText = "➕ Add Product";
+    }
 
   }
 
-});
+);
+
+
+// ===============================
+// Select Product Image
+// ===============================
+
+document
+  .getElementById("selectImageBtn")
+  .addEventListener("click", function () {
+
+    uploadWidget.open();
+
+  });
+
+
+// ===============================
+// Add Product
+// ===============================
+
+document
+  .getElementById("saveProductBtn")
+  .addEventListener("click", async function () {
+
+
+    const name =
+      document
+        .getElementById("productName")
+        .value
+        .trim();
+
+
+    const price =
+      document
+        .getElementById("productPrice")
+        .value;
+
+
+    const category =
+      document
+        .getElementById("productCategory")
+        .value;
+
+
+    const description =
+      document
+        .getElementById("productDescription")
+        .value
+        .trim();
+
+
+    const message =
+      document.getElementById("message");
+
+
+    const saveButton =
+      document.getElementById("saveProductBtn");
+
+
+    // ===============================
+    // Validation
+    // ===============================
+
+    if (
+      !name ||
+      !price ||
+      !uploadedImageURL ||
+      !description
+    ) {
+
+      message.innerText =
+        "⚠️ সব তথ্য পূরণ করুন এবং একটি ছবি নির্বাচন করুন।";
+
+      message.style.color =
+        "red";
+
+      return;
+
+    }
+
+
+    try {
+
+      saveButton.disabled = true;
+
+      saveButton.innerText =
+        "⏳ Product Save হচ্ছে...";
+
+
+      message.innerText =
+        "💾 Firebase-এ Product Save হচ্ছে...";
+
+      message.style.color =
+        "#ff6b00";
+
+
+      // ===============================
+      // Save Product to Firestore
+      // ===============================
+
+      await addDoc(
+        collection(db, "products"),
+        {
+
+          name: name,
+
+          price: Number(price),
+
+          image: uploadedImageURL,
+
+          category: category,
+
+          description: description
+
+        }
+      );
+
+
+      // ===============================
+      // Success
+      // ===============================
+
+      message.innerText =
+        "✅ Product এবং Image সফলভাবে Save হয়েছে!";
+
+      message.style.color =
+        "green";
+
+
+      // Clear Product Name
+      document
+        .getElementById("productName")
+        .value = "";
+
+
+      // Clear Price
+      document
+        .getElementById("productPrice")
+        .value = "";
+
+
+      // Clear Description
+      document
+        .getElementById("productDescription")
+        .value = "";
+
+
+      // Clear Image
+      uploadedImageURL = "";
+
+
+      document
+        .getElementById("imagePreview")
+        .src = "";
+
+
+      document
+        .getElementById("imagePreview")
+        .style.display = "none";
+
+
+      document
+        .getElementById("imageStatus")
+        .innerText =
+        "কোনো ছবি নির্বাচন করা হয়নি";
+
+
+      document
+        .getElementById("imageStatus")
+        .style.color =
+        "black";
+
+
+    } catch (error) {
+
+      console.error(error);
+
+
+      message.innerText =
+        "❌ Error: " + error.message;
+
+
+      message.style.color =
+        "red";
+
+
+    } finally {
+
+      saveButton.disabled = false;
+
+      saveButton.innerText =
+        "➕ Add Product";
+
+    }
+
+  });
