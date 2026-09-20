@@ -1353,10 +1353,10 @@ item
               }
             );await setDoc(
   doc(
-    db,
-    "orderTracking",
-    order.trackingToken
-  ),
+  db,
+  "orderTracking",
+  order.orderNumber || orderDoc.id
+),
   {
     orderNumber:
       order.orderNumber || orderDoc.id,
