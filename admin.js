@@ -1,10 +1,14 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 
 import {
   getAuth,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 import {
   getFirestore,
@@ -18,13 +22,28 @@ import {
 // ===============================
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
-  authDomain: "your-trend.firebaseapp.com",
-  projectId: "your-trend",
-  storageBucket: "your-trend.firebasestorage.app",
-  messagingSenderId: "775017944976",
-  appId: "1:775017944976:web:a19b34b89e6a4285148515",
-  measurementId: "G-1T4GM19268"
+
+  apiKey:
+    "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+
+  authDomain:
+    "your-trend.firebaseapp.com",
+
+  projectId:
+    "your-trend",
+
+  storageBucket:
+    "your-trend.firebasestorage.app",
+
+  messagingSenderId:
+    "775017944976",
+
+  appId:
+    "1:775017944976:web:a19b34b89e6a4285148515",
+
+  measurementId:
+    "G-1T4GM19268"
+
 };
 
 
@@ -32,20 +51,28 @@ const firebaseConfig = {
 // Firebase Start
 // ===============================
 
-const app = initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
 
-const db = getFirestore(app);
+const auth =
+  getAuth(app);
+
+
+const db =
+  getFirestore(app);
 
 
 // ===============================
 // Cloudinary
 // ===============================
 
-const CLOUDINARY_CLOUD_NAME = "fq6ele9x";
+const CLOUDINARY_CLOUD_NAME =
+  "fq6ele9x";
 
-const CLOUDINARY_UPLOAD_PRESET = "your_trend_products";
+
+const CLOUDINARY_UPLOAD_PRESET =
+  "your_trend_products";
 
 
 // ===============================
@@ -59,15 +86,19 @@ let uploadedImageURL = "";
 // Admin Login Protection
 // ===============================
 
-onAuthStateChanged(auth, function (user) {
+onAuthStateChanged(
+  auth,
+  function (user) {
 
-  if (!user) {
+    if (!user) {
 
-    window.location.href = "admin-login.html";
+      window.location.href =
+        "admin-login.html";
+
+    }
 
   }
-
-});
+);
 
 
 // ===============================
@@ -76,21 +107,25 @@ onAuthStateChanged(auth, function (user) {
 
 document
   .getElementById("logoutBtn")
-  .addEventListener("click", async function () {
+  .addEventListener(
+    "click",
+    async function () {
 
-    try {
+      try {
 
-      await signOut(auth);
+        await signOut(auth);
 
-      window.location.href = "admin-login.html";
+        window.location.href =
+          "admin-login.html";
 
-    } catch (error) {
+      } catch (error) {
 
-      console.error(error);
+        console.error(error);
+
+      }
 
     }
-
-  });
+  );
 
 
 // ===============================
@@ -99,108 +134,163 @@ document
 
 let uploadWidget = null;
 
+
 function setupCloudinaryWidget() {
 
-  if (typeof cloudinary === "undefined") {
+  if (
+    typeof cloudinary ===
+    "undefined"
+  ) {
 
-    console.error("Cloudinary Widget load হয়নি।");
+    console.error(
+      "Cloudinary Widget load হয়নি।"
+    );
 
-    document.getElementById("imageStatus").innerText =
+
+    const imageStatus =
+      document.getElementById(
+        "imageStatus"
+      );
+
+
+    imageStatus.innerText =
       "❌ Cloudinary Widget load হয়নি";
 
-    document.getElementById("imageStatus").style.color =
+
+    imageStatus.style.color =
       "red";
+
 
     return;
 
   }
 
 
-  uploadWidget = cloudinary.createUploadWidget(
+  uploadWidget =
+    cloudinary.createUploadWidget(
 
-    {
-      cloudName: CLOUDINARY_CLOUD_NAME,
+      {
 
-      uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+        cloudName:
+          CLOUDINARY_CLOUD_NAME,
 
-      sources: ["local"],
+        uploadPreset:
+          CLOUDINARY_UPLOAD_PRESET,
 
-      multiple: false,
+        sources: [
+          "local"
+        ],
 
-      maxFiles: 1,
+        multiple:
+          false,
 
-      resourceType: "image",
+        maxFiles:
+          1,
 
-      clientAllowedFormats: [
-        "jpg",
-        "jpeg",
-        "png",
-        "webp"
-      ],
+        resourceType:
+          "image",
 
-      maxFileSize: 5000000
-    },
+        clientAllowedFormats: [
+          "jpg",
+          "jpeg",
+          "png",
+          "webp"
+        ],
 
-    function (error, result) {
+        maxFileSize:
+          5000000
 
-      if (error) {
-
-        console.error("Cloudinary Error:", error);
-
-        document.getElementById("imageStatus").innerText =
-          "❌ Image upload failed";
-
-        document.getElementById("imageStatus").style.color =
-          "red";
-
-        return;
-      }
+      },
 
 
-      if (
-        result &&
-        result.event === "success"
+      function (
+        error,
+        result
       ) {
 
-        uploadedImageURL =
-          result.info.secure_url;
+        if (error) {
+
+          console.error(
+            "Cloudinary Error:",
+            error
+          );
 
 
-        const preview =
-          document.getElementById("imagePreview");
-
-        preview.src =
-          uploadedImageURL;
-
-        preview.style.display =
-          "block";
+          const imageStatus =
+            document.getElementById(
+              "imageStatus"
+            );
 
 
-        const imageStatus =
-          document.getElementById("imageStatus");
-
-        imageStatus.innerText =
-          "✅ Image successfully uploaded";
-
-        imageStatus.style.color =
-          "green";
+          imageStatus.innerText =
+            "❌ Image upload failed";
 
 
-        console.log(
-          "Uploaded Image:",
-          uploadedImageURL
-        );
+          imageStatus.style.color =
+            "red";
+
+
+          return;
+
+        }
+
+
+        if (
+          result &&
+          result.event ===
+          "success"
+        ) {
+
+          uploadedImageURL =
+            result.info.secure_url;
+
+
+          const preview =
+            document.getElementById(
+              "imagePreview"
+            );
+
+
+          preview.src =
+            uploadedImageURL;
+
+
+          preview.style.display =
+            "block";
+
+
+          const imageStatus =
+            document.getElementById(
+              "imageStatus"
+            );
+
+
+          imageStatus.innerText =
+            "✅ Image successfully uploaded";
+
+
+          imageStatus.style.color =
+            "green";
+
+
+          console.log(
+            "Uploaded Image:",
+            uploadedImageURL
+          );
+
+        }
 
       }
 
-    }
-
-  );
+    );
 
 }
 
 
-// Wait until page is ready
+// ===============================
+// Page Load
+// ===============================
+
 window.addEventListener(
   "load",
   setupCloudinaryWidget
@@ -212,24 +302,32 @@ window.addEventListener(
 // ===============================
 
 document
-  .getElementById("selectImageBtn")
-  .addEventListener("click", function () {
+  .getElementById(
+    "selectImageBtn"
+  )
+  .addEventListener(
+    "click",
+    function () {
 
-    if (!uploadWidget) {
+      if (!uploadWidget) {
 
-      alert(
-        "Cloudinary এখনও প্রস্তুত হয়নি। ২-৩ সেকেন্ড পরে আবার চাপুন।"
-      );
+        alert(
+          "Cloudinary এখনও প্রস্তুত হয়নি। ২-৩ সেকেন্ড পরে আবার চাপুন।"
+        );
 
-      setupCloudinaryWidget();
 
-      return;
+        setupCloudinaryWidget();
+
+
+        return;
+
+      }
+
+
+      uploadWidget.open();
 
     }
-
-    uploadWidget.open();
-
-  });
+  );
 
 
 // ===============================
@@ -237,178 +335,317 @@ document
 // ===============================
 
 document
-  .getElementById("saveProductBtn")
-  .addEventListener("click", async function () {
+  .getElementById(
+    "saveProductBtn"
+  )
+  .addEventListener(
+    "click",
+    async function () {
 
 
-    const name =
-      document
-        .getElementById("productName")
-        .value
-        .trim();
+      const name =
+        document
+          .getElementById(
+            "productName"
+          )
+          .value
+          .trim();
 
 
-    const price =
-      document
-        .getElementById("productPrice")
-        .value;
+      const price =
+        document
+          .getElementById(
+            "productPrice"
+          )
+          .value;
 
 
-    const category =
-      document
-        .getElementById("productCategory")
-        .value;
+      const category =
+        document
+          .getElementById(
+            "productCategory"
+          )
+          .value;
 
 
-    const description =
-      document
-        .getElementById("productDescription")
-        .value
-        .trim();
+      const description =
+        document
+          .getElementById(
+            "productDescription"
+          )
+          .value
+          .trim();
 
 
-    const message =
-      document.getElementById("message");
+      const stock =
+        Number(
+          document
+            .getElementById(
+              "productStock"
+            )
+            .value
+        );
 
 
-    const saveButton =
-      document.getElementById("saveProductBtn");
+      const sizesText =
+        document
+          .getElementById(
+            "productSizes"
+          )
+          .value
+          .trim();
 
 
-    // ===============================
-    // Validation
-    // ===============================
+      const message =
+        document.getElementById(
+          "message"
+        );
 
-    if (
-      !name ||
-      !price ||
-      !uploadedImageURL ||
-      !description
-    ) {
 
-      message.innerText =
-        "⚠️ সব তথ্য পূরণ করুন এবং একটি ছবি নির্বাচন করুন।";
+      const saveButton =
+        document.getElementById(
+          "saveProductBtn"
+        );
 
-      message.style.color =
-        "red";
 
-      return;
+      // ===============================
+      // Validation
+      // ===============================
+
+      if (
+        !name ||
+        !price ||
+        !uploadedImageURL ||
+        !description
+      ) {
+
+        message.innerText =
+          "⚠️ সব তথ্য পূরণ করুন এবং একটি ছবি নির্বাচন করুন।";
+
+
+        message.style.color =
+          "red";
+
+
+        return;
+
+      }
+
+
+      if (
+        isNaN(stock) ||
+        stock < 0
+      ) {
+
+        message.innerText =
+          "⚠️ Stock Quantity সঠিকভাবে লিখুন।";
+
+
+        message.style.color =
+          "red";
+
+
+        return;
+
+      }
+
+
+      // ===============================
+      // Convert Sizes to Array
+      // ===============================
+
+      let sizes = [];
+
+
+      if (sizesText) {
+
+        sizes =
+          sizesText
+            .split(",")
+            .map(
+              function (size) {
+
+                return size.trim();
+
+              }
+            )
+            .filter(
+              function (size) {
+
+                return size !== "";
+
+              }
+            );
+
+      }
+
+
+      try {
+
+        saveButton.disabled =
+          true;
+
+
+        saveButton.innerText =
+          "⏳ Product Save হচ্ছে...";
+
+
+        message.innerText =
+          "💾 Firebase-এ Product Save হচ্ছে...";
+
+
+        message.style.color =
+          "#ff6b00";
+
+
+        // ===============================
+        // Save Product
+        // ===============================
+
+        await addDoc(
+          collection(
+            db,
+            "products"
+          ),
+          {
+
+            name:
+              name,
+
+            price:
+              Number(price),
+
+            image:
+              uploadedImageURL,
+
+            category:
+              category,
+
+            description:
+              description,
+
+            stock:
+              stock,
+
+            sizes:
+              sizes
+
+          }
+        );
+
+
+        // ===============================
+        // Success
+        // ===============================
+
+        message.innerText =
+          "✅ Product, Stock এবং Size সফলভাবে Save হয়েছে!";
+
+
+        message.style.color =
+          "green";
+
+
+        // ===============================
+        // Clear Form
+        // ===============================
+
+        document
+          .getElementById(
+            "productName"
+          )
+          .value = "";
+
+
+        document
+          .getElementById(
+            "productPrice"
+          )
+          .value = "";
+
+
+        document
+          .getElementById(
+            "productStock"
+          )
+          .value = "0";
+
+
+        document
+          .getElementById(
+            "productSizes"
+          )
+          .value = "";
+
+
+        document
+          .getElementById(
+            "productDescription"
+          )
+          .value = "";
+
+
+        uploadedImageURL =
+          "";
+
+
+        document
+          .getElementById(
+            "imagePreview"
+          )
+          .src = "";
+
+
+        document
+          .getElementById(
+            "imagePreview"
+          )
+          .style.display =
+          "none";
+
+
+        document
+          .getElementById(
+            "imageStatus"
+          )
+          .innerText =
+          "কোনো ছবি নির্বাচন করা হয়নি";
+
+
+        document
+          .getElementById(
+            "imageStatus"
+          )
+          .style.color =
+          "black";
+
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        message.innerText =
+          "❌ Error: " +
+          error.message;
+
+
+        message.style.color =
+          "red";
+
+
+      } finally {
+
+        saveButton.disabled =
+          false;
+
+
+        saveButton.innerText =
+          "➕ Add Product";
+
+      }
 
     }
-
-
-    try {
-
-      saveButton.disabled = true;
-
-      saveButton.innerText =
-        "⏳ Product Save হচ্ছে...";
-
-
-      message.innerText =
-        "💾 Firebase-এ Product Save হচ্ছে...";
-
-      message.style.color =
-        "#ff6b00";
-
-
-      // ===============================
-      // Save Product to Firestore
-      // ===============================
-
-      await addDoc(
-        collection(db, "products"),
-        {
-
-          name: name,
-
-          price: Number(price),
-
-          image: uploadedImageURL,
-
-          category: category,
-
-          description: description
-
-        }
-      );
-
-
-      // ===============================
-      // Success
-      // ===============================
-
-      message.innerText =
-        "✅ Product এবং Image সফলভাবে Save হয়েছে!";
-
-      message.style.color =
-        "green";
-
-
-      // Clear Product Name
-      document
-        .getElementById("productName")
-        .value = "";
-
-
-      // Clear Price
-      document
-        .getElementById("productPrice")
-        .value = "";
-
-
-      // Clear Description
-      document
-        .getElementById("productDescription")
-        .value = "";
-
-
-      // Clear Image
-      uploadedImageURL = "";
-
-
-      document
-        .getElementById("imagePreview")
-        .src = "";
-
-
-      document
-        .getElementById("imagePreview")
-        .style.display = "none";
-
-
-      document
-        .getElementById("imageStatus")
-        .innerText =
-        "কোনো ছবি নির্বাচন করা হয়নি";
-
-
-      document
-        .getElementById("imageStatus")
-        .style.color =
-        "black";
-
-
-    } catch (error) {
-
-      console.error(error);
-
-
-      message.innerText =
-        "❌ Error: " + error.message;
-
-
-      message.style.color =
-        "red";
-
-
-    } finally {
-
-      saveButton.disabled = false;
-
-      saveButton.innerText =
-        "➕ Add Product";
-
-    }
-
-  });
+  );
