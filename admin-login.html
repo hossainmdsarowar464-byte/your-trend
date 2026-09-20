@@ -78,6 +78,78 @@
 
     <p id="message"></p>
   </div>
+<script type="module">
 
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+  authDomain: "your-trend.firebaseapp.com",
+  projectId: "your-trend",
+  storageBucket: "your-trend.firebasestorage.app",
+  messagingSenderId: "775017944976",
+  appId: "1:775017944976:web:a19b34b89e6a4285148515",
+  measurementId: "G-1T4GM19268"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+document.getElementById("loginBtn").addEventListener("click", async function () {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const message =
+    document.getElementById("message");
+
+
+  if (!email || !password) {
+    message.innerText = "⚠️ Email ও Password দিন";
+    message.style.color = "red";
+    return;
+  }
+
+
+  try {
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    message.innerText = "✅ Login সফল হচ্ছে...";
+    message.style.color = "green";
+
+    setTimeout(function () {
+      window.location.href = "admin.html";
+    }, 800);
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.innerText =
+      "❌ Login হয়নি: " + error.code;
+
+    message.style.color = "red";
+  }
+
+});
+
+</script>
 </body>
 </html>
