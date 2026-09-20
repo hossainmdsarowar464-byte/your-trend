@@ -250,51 +250,42 @@ async function loadFirebaseProducts() {
     const db =
       getFirestore(app);
 
+const trackingRef =
+  doc(
+    db,
+    "orderTracking",
+    orderId
+  );
 
-    const snapshot =
-      await getDocs(
-        collection(
-          db,
-          "products"
-        )
-      );
+const trackingSnap =
+  await getDoc(
+    trackingRef
+  );
 
+if (!trackingSnap.exists()) {
 
-    snapshot.forEach(
-      function (doc) {
+  result.innerHTML = `
+    <div style="
+      padding:15px;
+      background:#ffebee;
+      border-radius:10px;
+      color:#d32f2f;
+      font-weight:bold;
+    ">
+      ❌ এই Order ID পাওয়া যায়নি।
+    </div>
+  `;
 
-        const product =
-          doc.data();
+  return;
+}
 
+const tracking =
+  trackingSnap.data();
 
-        list.push({
-
-          name:
-            product.name,
-
-          price:
-            product.price,
-
-          image:
-            product.image,
-
-          category:
-            product.category,
-
-          description:
-            product.description,
-
-          stock:
-            Number(product.stock) || 0,
-
-          sizes:
-            product.sizes || []
-
-        });
-
-      }
-    );
-
+const status =
+  tracking.status ||
+  "Pending";
+  
 
     showProducts(list);
 
