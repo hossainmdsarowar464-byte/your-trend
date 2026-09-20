@@ -14,10 +14,69 @@
 
   <link rel="stylesheet" href="style.css">
 
+
+  <style>
+
+    .product-option-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+
+    .option-title {
+      font-weight: bold;
+      margin-top: 12px;
+      margin-bottom: 7px;
+    }
+
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 7px;
+    }
+
+
+    .quantity-control button {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 8px;
+      background: #ff6b00;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+
+    .quantity-number {
+      min-width: 35px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+
+    .size-select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+  </style>
+
 </head>
 
 
 <body>
+
 
 <header class="hero">
 
@@ -30,13 +89,21 @@
 
 <section class="product-details">
 
+
   <img
-  id="productImage"
-  class="product-details-image"
-  src=""
-  alt="Product"
-  style="width:350px; max-width:100%; height:350px; object-fit:contain; display:block; margin:0 auto 20px;"
->
+    id="productImage"
+    class="product-details-image"
+    src=""
+    alt="Product"
+    style="
+      width:350px;
+      max-width:100%;
+      height:350px;
+      object-fit:contain;
+      display:block;
+      margin:0 auto 20px;
+    "
+  >
 
 
   <h2 id="productName"></h2>
@@ -48,6 +115,94 @@
 
 
   <p id="productDescription"></p>
+
+
+  <!-- Product Quantity + Size -->
+
+  <div class="product-option-box">
+
+
+    <div class="option-title">
+
+      🔢 কত পিস নেবেন?
+
+    </div>
+
+
+    <div class="quantity-control">
+
+
+      <button
+        type="button"
+        onclick="decreaseProductQuantity()"
+      >
+        −
+      </button>
+
+
+      <span
+        id="productQuantity"
+        class="quantity-number"
+      >
+        1
+      </span>
+
+
+      <button
+        type="button"
+        onclick="increaseProductQuantity()"
+      >
+        +
+      </button>
+
+
+    </div>
+
+
+    <div class="option-title">
+
+      📏 Size নির্বাচন করুন
+
+    </div>
+
+
+    <select
+      id="productSize"
+      class="size-select"
+    >
+
+      <option value="">
+        Size নির্বাচন করুন
+      </option>
+
+      <option value="S">
+        S
+      </option>
+
+      <option value="M">
+        M
+      </option>
+
+      <option value="L">
+        L
+      </option>
+
+      <option value="XL">
+        XL
+      </option>
+
+      <option value="XXL">
+        XXL
+      </option>
+
+      <option value="প্রযোজ্য নয়">
+        প্রযোজ্য নয়
+      </option>
+
+    </select>
+
+
+  </div>
 
 
   <button
@@ -68,146 +223,159 @@
 
   <hr>
 
-<div class="order-form">
 
-  <h2>📦 অর্ডার ফর্ম</h2>
-
-  <!-- Name -->
-
-  <div class="form-group">
-
-    <label for="name">
-      👤 নাম
-    </label>
-
-    <div class="input-box">
-
-      <span>👤</span>
-
-      <input
-        id="name"
-        type="text"
-        placeholder="আপনার নাম লিখুন"
-      >
-
-    </div>
-
-  </div>
+  <div class="order-form">
 
 
-  <!-- Phone -->
+    <h2>📦 অর্ডার ফর্ম</h2>
 
-  <div class="form-group">
 
-    <label for="phone">
-      📱 মোবাইল নম্বর
-    </label>
+    <!-- Name -->
 
-    <div class="input-box">
+    <div class="form-group">
 
-      <span>📞</span>
+      <label for="name">
+        👤 নাম
+      </label>
 
-      <input
-        id="phone"
-        type="tel"
-        placeholder="01XXXXXXXXX"
-      >
+
+      <div class="input-box">
+
+        <span>👤</span>
+
+        <input
+          id="name"
+          type="text"
+          placeholder="আপনার নাম লিখুন"
+        >
+
+      </div>
 
     </div>
 
-  </div>
+
+    <!-- Phone -->
+
+    <div class="form-group">
+
+      <label for="phone">
+        📱 মোবাইল নম্বর
+      </label>
 
 
-  <!-- Delivery Area -->
+      <div class="input-box">
 
-  <div class="form-group">
+        <span>📞</span>
 
-    <label for="deliveryArea">
-      🚚 Delivery Area
-    </label>
+        <input
+          id="phone"
+          type="tel"
+          placeholder="01XXXXXXXXX"
+        >
 
-    <div class="input-box">
-
-      <span>🚚</span>
-
-      <select id="deliveryArea">
-
-        <option value="70">
-          ঢাকার ভিতরে — ৳70
-        </option>
-
-        <option value="100">
-          সাব ঢাকা — ৳100
-        </option>
-
-        <option value="120">
-          ঢাকার বাইরে — ৳120
-        </option>
-
-      </select>
+      </div>
 
     </div>
 
-  </div>
+
+    <!-- Delivery Area -->
+
+    <div class="form-group">
+
+      <label for="deliveryArea">
+        🚚 Delivery Area
+      </label>
 
 
-  <!-- Payment -->
+      <div class="input-box">
 
-  <div class="form-group">
-
-    <label>
-      💵 Payment Method
-    </label>
-
-    <div class="payment-box">
-
-      💵 Cash on Delivery
-
-    </div>
-
-  </div>
+        <span>🚚</span>
 
 
-  <!-- Address -->
+        <select id="deliveryArea">
 
-  <div class="form-group">
+          <option value="70">
+            ঢাকার ভিতরে — ৳70
+          </option>
 
-    <label for="address">
-      📍 ঠিকানা
-    </label>
+          <option value="100">
+            সাব ঢাকা — ৳100
+          </option>
 
-    <div class="textarea-box">
+          <option value="120">
+            ঢাকার বাইরে — ৳120
+          </option>
 
-      <span>📍</span>
+        </select>
 
-      <textarea
-        id="address"
-        placeholder="সম্পূর্ণ ঠিকানা লিখুন"
-      ></textarea>
+      </div>
 
     </div>
 
+
+    <!-- Payment -->
+
+    <div class="form-group">
+
+      <label>
+        💵 Payment Method
+      </label>
+
+
+      <div class="payment-box">
+
+        💵 Cash on Delivery
+
+      </div>
+
+    </div>
+
+
+    <!-- Address -->
+
+    <div class="form-group">
+
+      <label for="address">
+        📍 ঠিকানা
+      </label>
+
+
+      <div class="textarea-box">
+
+        <span>📍</span>
+
+
+        <textarea
+          id="address"
+          placeholder="সম্পূর্ণ ঠিকানা লিখুন"
+        ></textarea>
+
+      </div>
+
+    </div>
+
+
+    <!-- WhatsApp -->
+
+    <button
+      class="btn whatsapp-order-btn"
+      onclick="orderSelectedProduct()"
+    >
+      📲 WhatsApp-এ অর্ডার করুন
+    </button>
+
+
+    <p id="msg"></p>
+
+
   </div>
 
-
-  <!-- WhatsApp -->
-
-  <button
-    class="btn whatsapp-order-btn"
-    onclick="orderSelectedProduct()"
-  >
-    📲 WhatsApp-এ অর্ডার করুন
-  </button>
-
-
-  <p id="msg"></p>
-
-</div>
 
 </section>
 
 
-<script src="./product.js?v=2"></script>
+<script src="./product.js?v=3"></script>
+
 
 </body>
 
