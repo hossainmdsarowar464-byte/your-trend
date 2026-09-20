@@ -22,7 +22,7 @@
     }
 
     .admin-box {
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
       background: white;
       padding: 20px;
@@ -33,6 +33,10 @@
     h1 {
       text-align: center;
       margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 30px;
     }
 
     label {
@@ -61,7 +65,7 @@
     button {
       width: 100%;
       padding: 13px;
-      margin-top: 20px;
+      margin-top: 15px;
       border: none;
       border-radius: 8px;
       background: #ff6b00;
@@ -82,6 +86,10 @@
 
     #selectImageBtn {
       background: #1976d2;
+    }
+
+    #cancelEditBtn {
+      background: #777;
     }
 
     #imagePreview {
@@ -107,12 +115,6 @@
       line-height: 1.5;
     }
 
-    .hint {
-      font-size: 13px;
-      color: #666;
-      margin-top: 5px;
-    }
-
     .back {
       display: block;
       text-align: center;
@@ -121,177 +123,212 @@
       text-decoration: none;
     }
 
+    /* PRODUCT LIST */
+
+    .product-list {
+      margin-top: 15px;
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    .product-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-info b {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .product-info span {
+      display: block;
+      font-size: 14px;
+      color: #555;
+      margin-top: 3px;
+    }
+
+    .edit-btn {
+      width: auto;
+      margin: 0;
+      padding: 9px 14px;
+      background: #1976d2;
+      font-size: 14px;
+    }
+
+    .section-title {
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+    }
+
+    #editMode {
+      display: none;
+      background: #fff8e1;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
   </style>
 
 </head>
 
-
 <body>
 
-  <div class="admin-box">
+<div class="admin-box">
 
-    <h1>🛍️ YOUR TREND Admin</h1>
+  <h1>🛍️ YOUR TREND Admin</h1>
 
-
-    <!-- Logout -->
-
-    <button id="logoutBtn">
-      🚪 Logout
-    </button>
+  <button id="logoutBtn">
+    🚪 Logout
+  </button>
 
 
-    <!-- Product Name -->
+  <!-- PRODUCT LIST -->
 
-    <label>
-      Product Name
-    </label>
+  <h2>📦 Your Products</h2>
 
-    <input
-      type="text"
-      id="productName"
-      placeholder="যেমন: Premium T-Shirt"
-    >
-
-
-    <!-- Price -->
-
-    <label>
-      Price
-    </label>
-
-    <input
-      type="number"
-      id="productPrice"
-      placeholder="যেমন: 490"
-    >
-
-
-    <!-- Product Image -->
-
-    <label>
-      Product Image
-    </label>
-
-    <button
-      type="button"
-      id="selectImageBtn"
-    >
-      📷 Select Product Image
-    </button>
-
-    <p id="imageStatus">
-      কোনো ছবি নির্বাচন করা হয়নি
-    </p>
-
-    <img
-      id="imagePreview"
-      alt="Product Preview"
-    >
-
-
-    <!-- Category -->
-
-    <label>
-      Category
-    </label>
-
-    <select id="productCategory">
-
-      <option value="fashion">
-        Fashion
-      </option>
-
-      <option value="gadgets">
-        Gadgets
-      </option>
-
-      <option value="bags">
-        Bags
-      </option>
-
-    </select>
-
-
-    <!-- Stock -->
-
-    <label>
-      📦 Stock Quantity
-    </label>
-
-    <input
-      type="number"
-      id="productStock"
-      min="0"
-      value="0"
-      placeholder="যেমন: 20"
-    >
-
-    <p class="hint">
-      এই Product-এর মোট কতটি পণ্য আছে তা লিখুন।
-    </p>
-
-
-    <!-- Sizes -->
-
-    <label>
-      📏 Available Sizes
-    </label>
-
-    <input
-      type="text"
-      id="productSizes"
-      placeholder="যেমন: S, M, L, XL"
-    >
-
-    <p class="hint">
-      একাধিক Size হলে কমা দিয়ে লিখুন। যেমন: S, M, L, XL
-    </p>
-
-
-    <!-- Description -->
-
-    <label>
-      Description
-    </label>
-
-    <textarea
-      id="productDescription"
-      placeholder="Product details লিখুন..."
-    ></textarea>
-
-
-    <!-- Save -->
-
-    <button id="saveProductBtn">
-      ➕ Add Product
-    </button>
-
-
-    <p id="message"></p>
-
-
-    <a
-      href="index.html"
-      class="back"
-    >
-      ← Back to Website
-    </a>
-
+  <div id="productList" class="product-list">
+    ⏳ Products loading...
   </div>
 
 
-  <!-- Cloudinary Upload Widget -->
+  <!-- ADD / EDIT FORM -->
 
-  <script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script>
+  <h2 class="section-title">
+    ➕ Add / ✏️ Edit Product
+  </h2>
+
+  <div id="editMode">
+    ✏️ আপনি এখন Product Edit করছেন
+  </div>
 
 
-  <!-- YOUR TREND Admin JavaScript -->
+  <label>Product Name</label>
 
-  <script
-    type="module"
-    src="admin.js"
-  ></script>
+  <input
+    type="text"
+    id="productName"
+    placeholder="যেমন: Premium T-Shirt"
+  >
 
+
+  <label>Price</label>
+
+  <input
+    type="number"
+    id="productPrice"
+    placeholder="যেমন: 490"
+  >
+
+
+  <label>Stock</label>
+
+  <input
+    type="number"
+    id="productStock"
+    min="0"
+    placeholder="যেমন: 10"
+  >
+
+
+  <label>Product Image</label>
+
+  <button
+    type="button"
+    id="selectImageBtn"
+  >
+    📷 Select Product Image
+  </button>
+
+  <p id="imageStatus">
+    আগের ছবি ব্যবহার করা হবে
+  </p>
+
+  <img
+    id="imagePreview"
+    alt="Product Preview"
+  >
+
+
+  <label>Category</label>
+
+  <select id="productCategory">
+
+    <option value="fashion">
+      Fashion
+    </option>
+
+    <option value="gadgets">
+      Gadgets
+    </option>
+
+    <option value="bags">
+      Bags
+    </option>
+
+  </select>
+
+
+  <label>Description</label>
+
+  <textarea
+    id="productDescription"
+    placeholder="Product details লিখুন..."
+  ></textarea>
+
+
+  <button id="saveProductBtn">
+    ➕ Add Product
+  </button>
+
+
+  <button
+    id="cancelEditBtn"
+    style="display:none;"
+  >
+    ❌ Cancel Edit
+  </button>
+
+
+  <p id="message"></p>
+
+  <a
+    href="index.html"
+    class="back"
+  >
+    ← Back to Website
+  </a>
+
+</div>
+
+
+<script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script>
+
+<script
+  type="module"
+  src="admin.js"
+></script>
 
 </body>
 
