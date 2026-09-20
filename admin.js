@@ -18,16 +18,32 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* FIREBASE */
+/* =========================
+   FIREBASE
+========================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
-  authDomain: "your-trend.firebaseapp.com",
-  projectId: "your-trend",
-  storageBucket: "your-trend.firebasestorage.app",
-  messagingSenderId: "775017944976",
-  appId: "1:775017944976:web:a19b34b89e6a4285148515",
-  measurementId: "G-1T4GM19268"
+
+  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
+
+  authDomain:
+    "your-trend.firebaseapp.com",
+
+  projectId:
+    "your-trend",
+
+  storageBucket:
+    "your-trend.firebasestorage.app",
+
+  messagingSenderId:
+    "775017944976",
+
+  appId:
+    "1:775017944976:web:a19b34b89e6a4285148515",
+
+  measurementId:
+    "G-1T4GM19268"
+
 };
 
 
@@ -41,7 +57,9 @@ const db =
   getFirestore(app);
 
 
-/* CLOUDINARY */
+/* =========================
+   CLOUDINARY
+========================= */
 
 const CLOUDINARY_CLOUD_NAME =
   "fq6ele9x";
@@ -50,6 +68,10 @@ const CLOUDINARY_UPLOAD_PRESET =
   "your_trend_products";
 
 
+/* =========================
+   VARIABLES
+========================= */
+
 let uploadedImageURL = "";
 
 let editingProductId = null;
@@ -57,7 +79,9 @@ let editingProductId = null;
 let uploadWidget = null;
 
 
-/* AUTH */
+/* =========================
+   AUTH CHECK
+========================= */
 
 onAuthStateChanged(
   auth,
@@ -78,7 +102,9 @@ onAuthStateChanged(
 );
 
 
-/* LOGOUT */
+/* =========================
+   LOGOUT
+========================= */
 
 document
   .getElementById("logoutBtn")
@@ -97,13 +123,20 @@ document
 
         console.error(error);
 
+        alert(
+          "Logout করতে সমস্যা হয়েছে: " +
+          error.message
+        );
+
       }
 
     }
   );
 
 
-/* CLOUDINARY WIDGET */
+/* =========================
+   CLOUDINARY WIDGET
+========================= */
 
 function setupCloudinaryWidget() {
 
@@ -113,13 +146,15 @@ function setupCloudinaryWidget() {
   ) {
 
     console.error(
-      "Cloudinary Widget load হয়নি।"
+      "Cloudinary Widget load হয়নি"
     );
 
     document
-      .getElementById("imageStatus")
+      .getElementById(
+        "imageStatus"
+      )
       .innerText =
-        "❌ Cloudinary Widget load হয়নি";
+        "❌ Cloudinary load হয়নি";
 
     return;
 
@@ -205,15 +240,15 @@ function setupCloudinaryWidget() {
             "block";
 
 
-          const imageStatus =
+          const status =
             document.getElementById(
               "imageStatus"
             );
 
-          imageStatus.innerText =
+          status.innerText =
             "✅ নতুন Image নির্বাচন করা হয়েছে";
 
-          imageStatus.style.color =
+          status.style.color =
             "green";
 
         }
@@ -231,7 +266,9 @@ window.addEventListener(
 );
 
 
-/* SELECT IMAGE */
+/* =========================
+   SELECT IMAGE
+========================= */
 
 document
   .getElementById(
@@ -244,7 +281,7 @@ document
       if (!uploadWidget) {
 
         alert(
-          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চাপুন।"
+          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চেষ্টা করুন।"
         );
 
         setupCloudinaryWidget();
@@ -259,7 +296,9 @@ document
   );
 
 
-/* LOAD ALL PRODUCTS */
+/* =========================
+   LOAD PRODUCTS
+========================= */
 
 async function loadProducts() {
 
@@ -267,6 +306,7 @@ async function loadProducts() {
     document.getElementById(
       "productList"
     );
+
 
   productList.innerHTML =
     "⏳ Products loading...";
@@ -283,13 +323,14 @@ async function loadProducts() {
       );
 
 
-    productList.innerHTML = "";
+    productList.innerHTML =
+      "";
 
 
     if (snapshot.empty) {
 
       productList.innerHTML =
-        "<p>কোনো Product নেই।</p>";
+        "<p>কোনো Product পাওয়া যায়নি।</p>";
 
       return;
 
@@ -302,16 +343,24 @@ async function loadProducts() {
         const product =
           productDoc.data();
 
+
+        const hasStock =
+          product.stock !== undefined &&
+          product.stock !== null &&
+          product.stock !== "";
+
+
         const stock =
-          product.stock !== undefined
+          hasStock
             ? Number(product.stock)
-            : 0;
+            : null;
 
 
         const item =
           document.createElement(
             "div"
           );
+
 
         item.className =
           "product-item";
@@ -331,22 +380,29 @@ async function loadProducts() {
             </b>
 
             <span>
-              💰 Price: ৳${product.price || 0}
+              💰 Price:
+              ৳${product.price || 0}
             </span>
 
             <span>
-              📦 Stock: ${stock}
+              📦 Stock:
+              ${
+                stock === null
+                  ? "Not set"
+                  : stock
+              }
             </span>
 
             <span>
-              🏷️ ${product.category || ""}
+              🏷️ Category:
+              ${product.category || ""}
             </span>
 
           </div>
 
           <button
             class="edit-btn"
-            data-id="${productDoc.id}"
+            type="button"
           >
             ✏️ Edit
           </button>
@@ -381,18 +437,32 @@ async function loadProducts() {
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Product load error:",
+      error
+    );
 
-    productList.innerHTML =
-      "❌ Product load করতে সমস্যা হয়েছে: " +
-      error.message;
+
+    productList.innerHTML = `
+
+      <p style="color:red;">
+        ❌ Product load করতে সমস্যা হয়েছে।
+      </p>
+
+      <p style="color:#777;font-size:13px;">
+        ${error.message}
+      </p>
+
+    `;
 
   }
 
 }
 
 
-/* EDIT PRODUCT */
+/* =========================
+   EDIT PRODUCT
+========================= */
 
 function editProduct(
   productId,
@@ -424,7 +494,7 @@ function editProduct(
       "productPrice"
     )
     .value =
-      product.price || "";
+      product.price ?? "";
 
 
   document
@@ -432,9 +502,7 @@ function editProduct(
       "productStock"
     )
     .value =
-      product.stock !== undefined
-        ? product.stock
-        : 0;
+      product.stock ?? "";
 
 
   document
@@ -454,10 +522,7 @@ function editProduct(
 
 
   /*
-    IMPORTANT:
-
-    Edit করার সময় আগের Image
-    automatically রাখা হচ্ছে।
+    পুরোনো Image রাখা হবে
   */
 
   uploadedImageURL =
@@ -493,7 +558,7 @@ function editProduct(
       "imageStatus"
     )
     .innerText =
-      "✅ আগের Image ব্যবহার হবে";
+      "✅ আগের Image ব্যবহার করা হবে";
 
 
   document
@@ -520,10 +585,6 @@ function editProduct(
       "block";
 
 
-  /*
-    Form-এর কাছে নিয়ে যাবে
-  */
-
   window.scrollTo({
     top: 0,
     behavior: "smooth"
@@ -532,7 +593,9 @@ function editProduct(
 }
 
 
-/* SAVE PRODUCT */
+/* =========================
+   ADD / UPDATE PRODUCT
+========================= */
 
 document
   .getElementById(
@@ -551,7 +614,7 @@ document
           .trim();
 
 
-      const price =
+      const priceValue =
         document
           .getElementById(
             "productPrice"
@@ -596,6 +659,10 @@ document
         );
 
 
+      const price =
+        Number(priceValue);
+
+
       const stock =
         Number(stockValue);
 
@@ -604,8 +671,11 @@ document
 
       if (
         !name ||
-        !price ||
+        priceValue === "" ||
+        !Number.isFinite(price) ||
+        price < 0 ||
         stockValue === "" ||
+        !Number.isInteger(stock) ||
         stock < 0 ||
         !uploadedImageURL ||
         !description
@@ -629,17 +699,22 @@ document
 
 
         saveButton.innerText =
-          "⏳ Save হচ্ছে...";
+          editingProductId
+            ? "⏳ Update হচ্ছে..."
+            : "⏳ Save হচ্ছে...";
 
 
         message.innerText =
           "💾 Firebase-এ Save হচ্ছে...";
 
+
         message.style.color =
           "#ff6b00";
 
 
-        /* EDIT */
+        /* =================
+           EDIT EXISTING
+        ================= */
 
         if (editingProductId) {
 
@@ -659,7 +734,7 @@ document
                 name,
 
               price:
-                Number(price),
+                price,
 
               stock:
                 stock,
@@ -680,13 +755,12 @@ document
           message.innerText =
             "✅ Product সফলভাবে Update হয়েছে!";
 
-          message.style.color =
-            "green";
-
         }
 
 
-        /* NEW PRODUCT */
+        /* =================
+           ADD NEW
+        ================= */
 
         else {
 
@@ -701,7 +775,7 @@ document
                 name,
 
               price:
-                Number(price),
+                price,
 
               stock:
                 stock,
@@ -720,31 +794,37 @@ document
 
 
           message.innerText =
-            "✅ নতুন Product সফলভাবে Add হয়েছে!";
-
-          message.style.color =
-            "green";
+            "✅ Product এবং Image সফলভাবে Save হয়েছে!";
 
         }
 
 
-        /* RESET FORM */
+        message.style.color =
+          "green";
+
+
+        /* FORM RESET */
 
         resetForm();
 
 
-        /* RELOAD PRODUCT LIST */
+        /* PRODUCT LIST REFRESH */
 
         await loadProducts();
 
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "Save/Update error:",
+          error
+        );
+
 
         message.innerText =
           "❌ Error: " +
           error.message;
+
 
         message.style.color =
           "red";
@@ -760,7 +840,9 @@ document
   );
 
 
-/* CANCEL EDIT */
+/* =========================
+   CANCEL EDIT
+========================= */
 
 document
   .getElementById(
@@ -776,12 +858,15 @@ document
   );
 
 
-/* RESET FORM */
+/* =========================
+   RESET FORM
+========================= */
 
 function resetForm() {
 
   editingProductId =
     null;
+
 
   uploadedImageURL =
     "";
@@ -801,3 +886,81 @@ function resetForm() {
     )
     .value =
       "";
+
+
+  document
+    .getElementById(
+      "productStock"
+    )
+    .value =
+      "";
+
+
+  document
+    .getElementById(
+      "productDescription"
+    )
+    .value =
+      "";
+
+
+  document
+    .getElementById(
+      "productCategory"
+    )
+    .value =
+      "fashion";
+
+
+  const preview =
+    document.getElementById(
+      "imagePreview"
+    );
+
+
+  preview.src = "";
+
+  preview.style.display =
+    "none";
+
+
+  document
+    .getElementById(
+      "imageStatus"
+    )
+    .innerText =
+      "কোনো নতুন ছবি নির্বাচন করা হয়নি";
+
+
+  document
+    .getElementById(
+      "imageStatus"
+    )
+    .style.color =
+      "black";
+
+
+  document
+    .getElementById(
+      "editMode"
+    )
+    .style.display =
+      "none";
+
+
+  document
+    .getElementById(
+      "saveProductBtn"
+    )
+    .innerText =
+      "➕ Add Product";
+
+
+  document
+    .getElementById(
+      "cancelEditBtn"
+    )
+    .style.display =
+      "none";
+
+}
