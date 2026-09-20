@@ -89,7 +89,11 @@ onAuthStateChanged(
   auth,
   function(user) {
 
+    console.log("AUTH USER:", user);
+
     if (!user) {
+
+      alert("❌ Firebase বলছে আপনি Login করা নেই।");
 
       window.location.href =
         "admin-login.html";
@@ -98,11 +102,13 @@ onAuthStateChanged(
 
     }
 
+    console.log("✅ Admin Login detected:", user.email);
+
     loadProducts();
-loadOrders();
+    loadOrders();
+
   }
 );
-
 
 /* =========================
    LOGOUT
