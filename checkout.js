@@ -847,5 +847,11 @@ function clearCart() {
 /* ======================================
    START
 ====================================== */
+window.increaseQuantity = increaseQuantity;
+window.decreaseQuantity = decreaseQuantity;
+window.changeSize = changeSize;
+window.placeOrder = placeOrder;
+window.clearCart = clearCart;
 
 showCheckout();
+
