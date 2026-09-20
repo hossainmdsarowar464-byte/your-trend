@@ -193,7 +193,7 @@ function showProducts(products) {
 // FIREBASE PRODUCTS
 // =========================
 
-async function loadFirebaseProducts() {
+async async function loadFirebaseProducts() {
 
   try {
 
@@ -206,13 +206,13 @@ async function loadFirebaseProducts() {
 
 
     const {
-  getFirestore,
-  doc,
-  getDoc
-} =
-  await import(
-    "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
-  );
+      getFirestore,
+      collection,
+      getDocs
+    } =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+      );
 
 
     const firebaseConfig = {
@@ -250,42 +250,54 @@ async function loadFirebaseProducts() {
     const db =
       getFirestore(app);
 
-const trackingRef =
-  doc(
-    db,
-    "orderTracking",
-    orderId
-  );
 
-const trackingSnap =
-  await getDoc(
-    trackingRef
-  );
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "products"
+        )
+      );
 
-if (!trackingSnap.exists()) {
 
-  result.innerHTML = `
-    <div style="
-      padding:15px;
-      background:#ffebee;
-      border-radius:10px;
-      color:#d32f2f;
-      font-weight:bold;
-    ">
-      ❌ এই Order ID পাওয়া যায়নি।
-    </div>
-  `;
+    list = [];
 
-  return;
-}
 
-const tracking =
-  trackingSnap.data();
+    snapshot.forEach(
+      function(productDoc) {
 
-const status =
-  tracking.status ||
-  "Pending";
-  
+        const product =
+          productDoc.data();
+
+
+        list.push({
+
+          name:
+            product.name,
+
+          price:
+            product.price,
+
+          image:
+            product.image,
+
+          category:
+            product.category,
+
+          description:
+            product.description,
+
+          stock:
+            Number(product.stock) || 0,
+
+          sizes:
+            product.sizes || []
+
+        });
+
+      }
+    );
+
 
     showProducts(list);
 
@@ -300,7 +312,6 @@ const status =
   }
 
 }
-
 
 loadFirebaseProducts();
 
@@ -1115,22 +1126,32 @@ showProducts(list);
    TRACK ORDER
 ========================= */
 
-document
-  .getElementById("trackOrderBtn")
-  .addEventListener(
+const trackOrderBtn =
+  document.getElementById(
+    "trackOrderBtn"
+  );
+
+
+if (trackOrderBtn) {
+
+  trackOrderBtn.addEventListener(
     "click",
     async function() {
 
       const orderId =
         document
-          .getElementById("trackOrderId")
+          .getElementById(
+            "trackOrderId"
+          )
           .value
           .trim();
+
 
       const result =
         document.getElementById(
           "trackOrderResult"
         );
+
 
       if (!orderId) {
 
@@ -1170,8 +1191,8 @@ document
 
         const {
           getFirestore,
-          collection,
-          getDocs
+          doc,
+          getDoc
         } =
           await import(
             "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
@@ -1184,71 +1205,21 @@ document
           );
 
 
-        const snapshot =
-          await getDocs(
-            collection(
-              db,
-              "orders"
-            )
+        const trackingRef =
+          doc(
+            db,
+            "orderTracking",
+            orderId
           );
 
 
-        let foundOrder =
-          null;
-
-        let foundDocumentId =
-          "";
-
-
-        snapshot.forEach(
-          function(orderDoc) {
-
-            const order =
-              orderDoc.data();
+        const trackingSnap =
+          await getDoc(
+            trackingRef
+          );
 
 
-            const savedOrderNumber =
-              String(
-                order.orderNumber ||
-                ""
-              ).trim();
-
-
-            const savedOrderId =
-              String(
-                order.orderId ||
-                ""
-              ).trim();
-
-
-            const firestoreId =
-              String(
-                orderDoc.id
-              ).trim();
-
-
-            if (
-              savedOrderNumber ===
-                orderId ||
-              savedOrderId ===
-                orderId ||
-              firestoreId ===
-                orderId
-            ) {
-
-              foundOrder =
-                order;
-
-              foundDocumentId =
-                firestoreId;
-
-            }
-
-          }
-        );
-
-
-        if (!foundOrder) {
+        if (!trackingSnap.exists()) {
 
           result.innerHTML = `
             <div style="
@@ -1267,8 +1238,12 @@ document
         }
 
 
+        const tracking =
+          trackingSnap.data();
+
+
         const status =
-          foundOrder.status ||
+          tracking.status ||
           "Pending";
 
 
@@ -1277,8 +1252,7 @@ document
 
 
         if (
-          status ===
-          "Confirmed"
+          status === "Confirmed"
         ) {
 
           statusEmoji =
@@ -1288,8 +1262,7 @@ document
 
 
         if (
-          status ===
-          "Shipped"
+          status === "Shipped"
         ) {
 
           statusEmoji =
@@ -1299,8 +1272,7 @@ document
 
 
         if (
-          status ===
-          "Delivered"
+          status === "Delivered"
         ) {
 
           statusEmoji =
@@ -1310,8 +1282,7 @@ document
 
 
         if (
-          status ===
-          "Cancelled"
+          status === "Cancelled"
         ) {
 
           statusEmoji =
@@ -1341,24 +1312,9 @@ document
             <p>
               <b>📋 Order ID:</b>
               ${
-                foundOrder.orderNumber ||
-                foundDocumentId
+                tracking.orderNumber ||
+                orderId
               }
-            </p>
-
-
-            <p>
-              <b>👤 Customer:</b>
-              ${
-                foundOrder.customerName ||
-                "Customer"
-              }
-            </p>
-
-
-            <p>
-              <b>💰 Total:</b>
-              ৳${foundOrder.total || 0}
             </p>
 
 
@@ -1375,6 +1331,7 @@ document
               ">
                 ${statusEmoji}
               </div>
+
 
               <div style="
                 margin-top:8px;
@@ -1414,3 +1371,5 @@ document
 
     }
   );
+
+}
