@@ -693,4 +693,17 @@ section[style] h2 {
   top: 58px !important;
   left: 0 !important;
   right: auto !important;
+}/* PRODUCT CATEGORY BADGE */
+
+.product-badge {
+  display: inline-block;
+  margin: 8px 4px 0;
+  padding: 5px 9px;
+  background: #fff3e8;
+  color: #ff6a00;
+  border: 1px solid #ffd7b5;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
 }
