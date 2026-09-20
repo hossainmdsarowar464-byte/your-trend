@@ -14,9 +14,87 @@
 
 <link rel="stylesheet" href="style.css">
 
+
+<style>
+
+.checkout-item-box {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+}
+
+.checkout-product-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkout-product-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.checkout-subtotal {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.quantity-title {
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 7px;
+}
+
+.quantity-control button {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 8px;
+  background: #ff6b00;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.quantity-number {
+  min-width: 35px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.size-title {
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.size-select {
+  width: 100%;
+  padding: 11px;
+  margin-top: 6px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+</style>
+
 </head>
 
+
 <body>
+
 
 <header class="hero">
 
@@ -31,20 +109,26 @@
 
   <h2>🛒 আপনার Order</h2>
 
-  <div id="checkoutItems"
-       class="order-summary">
-  </div><button
-  class="btn"
-  onclick="clearCart()"
-  style="margin-top:10px;"
->
-  🗑️ Cart খালি করুন
-</button>
+
+  <div
+    id="checkoutItems"
+    class="order-summary">
+  </div>
+
+
+  <button
+    class="btn"
+    onclick="clearCart()"
+    style="margin-top:10px;"
+  >
+    🗑️ Cart খালি করুন
+  </button>
 
 
   <p class="checkout-total">
 
-    মোট: ৳<span id="checkoutTotal">0</span>
+    মোট:
+    ৳<span id="checkoutTotal">0</span>
 
   </p>
 
