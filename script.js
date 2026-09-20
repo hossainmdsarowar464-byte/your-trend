@@ -218,7 +218,7 @@ async async function loadFirebaseProducts() {
     const firebaseConfig = {
 
       apiKey:
-        "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+        "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
 
       authDomain:
         "your-trend.firebaseapp.com",
