@@ -97,91 +97,113 @@ document
 // Cloudinary Upload Widget
 // ===============================
 
-const uploadWidget = cloudinary.createUploadWidget(
+let uploadWidget = null;
 
-  {
-    cloudName: CLOUDINARY_CLOUD_NAME,
+function setupCloudinaryWidget() {
 
-    uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+  if (typeof cloudinary === "undefined") {
 
-    sources: [
-      "local"
-    ],
+    console.error("Cloudinary Widget load হয়নি।");
 
-    multiple: false,
+    document.getElementById("imageStatus").innerText =
+      "❌ Cloudinary Widget load হয়নি";
 
-    maxFiles: 1,
+    document.getElementById("imageStatus").style.color =
+      "red";
 
-    resourceType: "image",
-
-    clientAllowedFormats: [
-      "jpg",
-      "jpeg",
-      "png",
-      "webp"
-    ],
-
-    maxFileSize: 5000000
-  },
-
-  function (error, result) {
-
-    if (error) {
-
-      console.error("Cloudinary Error:", error);
-
-      document.getElementById("imageStatus").innerText =
-        "❌ Image upload failed";
-
-      document.getElementById("imageStatus").style.color =
-        "red";
-
-      return;
-
-    }
-
-
-    // Upload successful
-    if (
-      result &&
-      result.event === "success"
-    ) {
-
-      uploadedImageURL =
-        result.info.secure_url;
-
-
-      // Preview image
-      const preview =
-        document.getElementById("imagePreview");
-
-      preview.src =
-        uploadedImageURL;
-
-      preview.style.display =
-        "block";
-
-
-      // Status
-      const imageStatus =
-        document.getElementById("imageStatus");
-
-      imageStatus.innerText =
-        "✅ Image successfully uploaded";
-
-      imageStatus.style.color =
-        "green";
-
-
-      console.log(
-        "Cloudinary Image URL:",
-        uploadedImageURL
-      );
-
-    }
+    return;
 
   }
 
+
+  uploadWidget = cloudinary.createUploadWidget(
+
+    {
+      cloudName: CLOUDINARY_CLOUD_NAME,
+
+      uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+
+      sources: ["local"],
+
+      multiple: false,
+
+      maxFiles: 1,
+
+      resourceType: "image",
+
+      clientAllowedFormats: [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+
+      maxFileSize: 5000000
+    },
+
+    function (error, result) {
+
+      if (error) {
+
+        console.error("Cloudinary Error:", error);
+
+        document.getElementById("imageStatus").innerText =
+          "❌ Image upload failed";
+
+        document.getElementById("imageStatus").style.color =
+          "red";
+
+        return;
+      }
+
+
+      if (
+        result &&
+        result.event === "success"
+      ) {
+
+        uploadedImageURL =
+          result.info.secure_url;
+
+
+        const preview =
+          document.getElementById("imagePreview");
+
+        preview.src =
+          uploadedImageURL;
+
+        preview.style.display =
+          "block";
+
+
+        const imageStatus =
+          document.getElementById("imageStatus");
+
+        imageStatus.innerText =
+          "✅ Image successfully uploaded";
+
+        imageStatus.style.color =
+          "green";
+
+
+        console.log(
+          "Uploaded Image:",
+          uploadedImageURL
+        );
+
+      }
+
+    }
+
+  );
+
+}
+
+
+// Wait until page is ready
+window.addEventListener(
+  "load",
+  setupCloudinaryWidget
 );
 
 
@@ -192,6 +214,18 @@ const uploadWidget = cloudinary.createUploadWidget(
 document
   .getElementById("selectImageBtn")
   .addEventListener("click", function () {
+
+    if (!uploadWidget) {
+
+      alert(
+        "Cloudinary এখনও প্রস্তুত হয়নি। ২-৩ সেকেন্ড পরে আবার চাপুন।"
+      );
+
+      setupCloudinaryWidget();
+
+      return;
+
+    }
 
     uploadWidget.open();
 
