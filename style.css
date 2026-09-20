@@ -744,3 +744,12 @@ section[style] h2 {
   font-size: 12px !important;
   font-weight: 800 !important;
 }
+/* PREMIUM PRODUCT IMAGE */
+
+.card .img {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .img {
+  transform: scale(1.03);
+  }
