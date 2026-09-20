@@ -206,13 +206,13 @@ async function loadFirebaseProducts() {
 
 
     const {
-      getFirestore,
-      collection,
-      getDocs
-    } =
-      await import(
-        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
-      );
+  getFirestore,
+  doc,
+  getDoc
+} =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+  );
 
 
     const firebaseConfig = {
