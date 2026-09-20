@@ -1,9 +1,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 import {
   getFirestore,
   collection,
   addDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
@@ -15,46 +22,89 @@ const firebaseConfig = {
   measurementId: "G-1T4GM19268"
 };
 
+
 const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
 const db = getFirestore(app);
+
+
+// Login ছাড়া Admin Panel-এ ঢুকতে দেওয়া হবে না
+onAuthStateChanged(auth, function (user) {
+
+  if (!user) {
+    window.location.href = "admin-login.html";
+  }
+
+});
+
 
 document.getElementById("saveProductBtn").addEventListener("click", async function () {
 
-  const name = document.getElementById("productName").value.trim();
-  const price = document.getElementById("productPrice").value;
-  const image = document.getElementById("productImage").value.trim();
-  const category = document.getElementById("productCategory").value;
-  const description = document.getElementById("productDescription").value.trim();
-  const message = document.getElementById("message");
+  const name =
+    document.getElementById("productName").value.trim();
+
+  const price =
+    document.getElementById("productPrice").value;
+
+  const image =
+    document.getElementById("productImage").value.trim();
+
+  const category =
+    document.getElementById("productCategory").value;
+
+  const description =
+    document.getElementById("productDescription").value.trim();
+
+  const message =
+    document.getElementById("message");
+
 
   if (!name || !price || !image || !description) {
+
     message.innerText = "⚠️ সব তথ্য পূরণ করুন";
     message.style.color = "red";
+
     return;
+
   }
 
+
   try {
+
     await addDoc(collection(db, "products"), {
+
       name: name,
       price: Number(price),
       image: image,
       category: category,
       description: description
+
     });
 
-    message.innerText = "✅ Product Firebase-এ Save হয়েছে";
+
+    message.innerText =
+      "✅ Product Firebase-এ Save হয়েছে";
+
     message.style.color = "green";
+
 
     document.getElementById("productName").value = "";
     document.getElementById("productPrice").value = "";
     document.getElementById("productImage").value = "";
     document.getElementById("productDescription").value = "";
 
+
   } catch (error) {
-  console.error(error);
-  message.innerText =
-    "❌ " + error.code + " — " + error.message;
-  message.style.color = "red";
+
+    console.error(error);
+
+    message.innerText =
+      "❌ " + error.code + " — " + error.message;
+
+    message.style.color = "red";
+
   }
 
 });
