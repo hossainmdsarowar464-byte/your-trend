@@ -691,7 +691,7 @@ trackingToken: trackingToken,
       }
     );
 await setDoc(
-  doc(db, "orderTracking", trackingToken),
+  doc(db, "orderTracking", orderId),
   {
     orderNumber: orderId,
     status: "Pending"
