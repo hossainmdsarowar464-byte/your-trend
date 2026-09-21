@@ -109,7 +109,7 @@ onAuthStateChanged(
 
     loadProducts();
     loadOrders();
-
+loadCurrentBanner();
   }
 );
 
@@ -305,7 +305,99 @@ document
     }
   );
 
+/* =========================
+   LOAD CURRENT WEBSITE BANNER
+========================= */
 
+async function loadCurrentBanner() {
+
+  const bannerStatus =
+    document.getElementById(
+      "bannerStatus"
+    );
+
+  const currentBannerPreview =
+    document.getElementById(
+      "currentBannerPreview"
+    );
+
+  try {
+
+    bannerStatus.innerText =
+      "⏳ Banner loading...";
+
+    const bannerRef =
+      doc(
+        db,
+        "siteSettings",
+        "banner"
+      );
+
+    const bannerSnap =
+      await getDoc(
+        bannerRef
+      );
+
+    if (
+      bannerSnap.exists()
+    ) {
+
+      const data =
+        bannerSnap.data();
+
+      const bannerURL =
+        data.image || "";
+
+      if (bannerURL) {
+
+        currentBannerPreview.src =
+          bannerURL;
+
+        currentBannerPreview.style.display =
+          "block";
+
+        bannerStatus.innerText =
+          "✅ Current Website Banner";
+
+        bannerStatus.style.color =
+          "green";
+
+      } else {
+
+        bannerStatus.innerText =
+          "⚠️ এখনো কোনো Banner Save করা হয়নি";
+
+        bannerStatus.style.color =
+          "#64748b";
+
+      }
+
+    } else {
+
+      bannerStatus.innerText =
+        "⚠️ এখনো কোনো Banner Save করা হয়নি";
+
+      bannerStatus.style.color =
+        "#64748b";
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Banner load error:",
+      error
+    );
+
+    bannerStatus.innerText =
+      "❌ Banner load করতে সমস্যা হয়েছে";
+
+    bannerStatus.style.color =
+      "red";
+
+  }
+
+}
 /* =========================
    LOAD PRODUCTS
 ========================= */
