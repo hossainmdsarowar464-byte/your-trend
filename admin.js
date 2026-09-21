@@ -127,7 +127,8 @@ onAuthStateChanged(
 );
 
 
-/* =========================
+
+  /* =========================
    DOM READY
 ========================= */
 
@@ -144,7 +145,12 @@ document.addEventListener(
     setupSelectBannerButton();
 
     setupProductButtons();
-    /* =========================
+
+  }
+);
+
+
+/* =========================
    SELECT BANNER
 ========================= */
 
@@ -155,7 +161,6 @@ function setupSelectBannerButton() {
       "selectBannerBtn"
     );
 
-
   if (!selectBannerBtn) {
 
     console.error(
@@ -163,13 +168,34 @@ function setupSelectBannerButton() {
     );
 
     return;
-
   }
 
 
   selectBannerBtn.addEventListener(
     "click",
     function() {
+
+      console.log(
+        "✅ Select New Banner clicked"
+      );
+
+
+      if (
+        typeof cloudinary ===
+        "undefined"
+      ) {
+
+        alert(
+          "❌ Cloudinary Widget load হয়নি।"
+        );
+
+        console.error(
+          "Cloudinary is undefined"
+        );
+
+        return;
+      }
+
 
       if (!bannerUploadWidget) {
 
@@ -181,11 +207,10 @@ function setupSelectBannerButton() {
       if (!bannerUploadWidget) {
 
         alert(
-          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চেষ্টা করুন।"
+          "❌ Banner upload widget তৈরি হয়নি।"
         );
 
         return;
-
       }
 
 
@@ -195,114 +220,6 @@ function setupSelectBannerButton() {
   );
 
 }
-
-  }
-);function setupSelectBannerButton() {
-
-  const selectBannerBtn =
-    document.getElementById("selectBannerBtn");
-
-  if (!selectBannerBtn) {
-    console.error("selectBannerBtn পাওয়া যায়নি");
-    return;
-  }
-
-  selectBannerBtn.addEventListener(
-    "click",
-    function() {
-
-      if (!bannerUploadWidget) {
-
-        if (typeof cloudinary === "undefined") {
-          alert("Cloudinary এখনও প্রস্তুত হয়নি।");
-          return;
-        }
-
-        bannerUploadWidget =
-          cloudinary.createUploadWidget(
-
-            {
-              cloudName:
-                CLOUDINARY_CLOUD_NAME,
-
-              uploadPreset:
-                CLOUDINARY_UPLOAD_PRESET,
-
-              sources:
-                ["local"],
-
-              multiple:
-                false,
-
-              maxFiles:
-                1,
-
-              resourceType:
-                "image"
-            },
-
-            function(error, result) {
-
-              if (error) {
-                console.error(
-                  "Banner upload error:",
-                  error
-                );
-                return;
-              }
-
-              if (
-                result &&
-                result.event === "success"
-              ) {
-
-                uploadedBannerURL =
-                  result.info.secure_url;
-
-                const preview =
-                  document.getElementById(
-                    "bannerPreview"
-                  );
-
-                if (preview) {
-                  preview.src =
-                    uploadedBannerURL;
-
-                  preview.style.display =
-                    "block";
-                }
-
-                const status =
-                  document.getElementById(
-                    "bannerImageStatus"
-                  );
-
-                if (status) {
-                  status.innerText =
-                    "✅ নতুন Banner নির্বাচন করা হয়েছে";
-
-                  status.style.color =
-                    "green";
-                }
-
-                const updateButton =
-                  document.getElementById(
-                    "updateBannerBtn"
-                  );
-
-                if (updateButton) {
-                  updateButton.style.display =
-                    "block";
-                }
-              }
-            }
-          );
-      }
-
-      bannerUploadWidget.open();
-    }
-  );
-  }
 
 
 /* =========================
