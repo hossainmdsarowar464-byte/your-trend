@@ -13,6 +13,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   doc,
   updateDoc,
   deleteDoc,
@@ -79,7 +80,13 @@ let uploadedImageURL = "";
 let editingProductId = null;
 
 let uploadWidget = null;
+/* =========================
+   WEBSITE BANNER
+========================= */
 
+let uploadedBannerURL = "";
+
+let bannerUploadWidget = null;
 
 /* =========================
    AUTH CHECK
