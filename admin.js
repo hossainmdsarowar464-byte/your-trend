@@ -390,7 +390,8 @@ async function loadCurrentBanner() {
     );
 
     bannerStatus.innerText =
-      "❌ Banner load করতে সমস্যা হয়েছে";
+  "❌ Banner load করতে সমস্যা হয়েছে: " +
+  error.message;
 
     bannerStatus.style.color =
       "red";
