@@ -1496,4 +1496,26 @@ textarea:focus {
 
 .hero{
   display:none;
+}.headerTop{
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+
+#yourTrendMenu{
+  width:48px;
+}
+
+.cart{
+  position:static;
+  margin-left:auto;
+}
+
+.yourTrendBrand{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
