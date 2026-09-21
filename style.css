@@ -1509,3 +1509,46 @@ body{
 }
 
 body{ padding-top:120px; }
+.yourTrendHeader{
+  position:sticky;
+  top:0;
+  background:#fff;
+  z-index:9999;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.headerTop{
+  display:flex;
+  align-items:center;
+  padding:10px;
+}
+
+.yourTrendBrand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.yourTrendBrand img{
+  width:42px;
+  height:42px;
+}
+
+.yourTrendBrand h2{
+  margin:0;
+  font-size:18px;
+}
+
+.yourTrendBrand small{
+  color:#666;
+}
+
+.search-box{
+  padding:8px 10px 12px;
+  background:#fff;
+}
+
+.mainBanner{
+  width:100%;
+  display:block;
+}
