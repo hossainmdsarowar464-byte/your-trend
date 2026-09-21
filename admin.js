@@ -284,7 +284,6 @@ window.addEventListener(
   "load",
   setupCloudinaryWidget
 );
-
 /* =========================
    SELECT IMAGE
 ========================= */
@@ -293,6 +292,26 @@ document
   .getElementById(
     "selectImageBtn"
   )
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!uploadWidget) {
+
+        alert(
+          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চেষ্টা করুন।"
+        );
+
+        setupCloudinaryWidget();
+
+        return;
+
+      }
+
+      uploadWidget.open();
+
+    }
+  );
 /* =========================
    LOAD CURRENT WEBSITE BANNER
 ========================= */
@@ -388,7 +407,6 @@ async function loadCurrentBanner() {
 
   }
 
-}
 /* =========================
    LOAD PRODUCTS
 ========================= */
