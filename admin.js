@@ -278,6 +278,9 @@ function setupCloudinaryWidget() {
 window.addEventListener(
   "load",
   setupCloudinaryWidget
+);window.addEventListener(
+  "load",
+  setupBannerUploadWidget
 );
 /* =========================
    BANNER CLOUDINARY WIDGET
