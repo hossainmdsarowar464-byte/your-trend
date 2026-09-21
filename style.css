@@ -1105,20 +1105,6 @@ section[style] h2 {
    MENU
    ========================================================= */
 
-#yourTrendMenu {
-  position: fixed !important;
-
-  top: 15px !important;
-
-  left: 15px !important;
-
-  right: auto !important;
-
-  bottom: auto !important;
-
-  z-index: 9999999 !important;
-}
-
 #yourTrendMenu details {
   position: relative !important;
 }
@@ -1491,4 +1477,18 @@ textarea:focus {
 .mainBanner{
   width: 100%;
   display: block;
+}#yourTrendMenu{
+  position: static;
+}
+
+.cats button{
+  background:#f1f5f9;
+  color:#0f172a;
+  border:1px solid #dbe1e8;
+}
+
+.brandText p{
+  margin:0;
+  font-size:11px;
+  color:#64748b;
 }
