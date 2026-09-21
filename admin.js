@@ -27,7 +27,8 @@ import {
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+  apiKey:
+    "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
 
   authDomain:
     "your-trend.firebaseapp.com",
@@ -82,17 +83,6 @@ let editingProductId = null;
 let uploadWidget = null;
 
 
-
-/* =========================
-   BANNER CLOUDINARY WIDGET
-========================= */
-
-
-        
-/* =========================
-   WEBSITE BANNER
-========================= */
-
 /* =========================
    AUTH CHECK
 ========================= */
@@ -101,34 +91,84 @@ onAuthStateChanged(
   auth,
   function(user) {
 
-    console.log("AUTH USER:", user);
+    console.log(
+      "AUTH USER:",
+      user
+    );
 
     if (!user) {
 
-      alert("❌ Firebase বলছে আপনি Login করা নেই।");
+      alert(
+        "❌ Firebase বলছে আপনি Login করা নেই।"
+      );
 
       window.location.href =
         "admin-login.html";
 
       return;
-
     }
 
-    console.log("✅ Admin Login detected:", user.email);
+
+    console.log(
+      "✅ Admin Login detected:",
+      user.email
+    );
+
 
     loadProducts();
+
     loadOrders();
-loadCurrentBanner();
+
+    loadCurrentBanner();
+
   }
 );
+
+
+/* =========================
+   DOM READY
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    setupLogout();
+
+    setupCloudinaryWidget();
+
+    setupSelectImageButton();
+
+    setupProductButtons();
+
+  }
+);
+
 
 /* =========================
    LOGOUT
 ========================= */
 
-document
-  .getElementById("logoutBtn")
-  .addEventListener(
+function setupLogout() {
+
+  const logoutBtn =
+    document.getElementById(
+      "logoutBtn"
+    );
+
+
+  if (!logoutBtn) {
+
+    console.error(
+      "logoutBtn পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
+
+  logoutBtn.addEventListener(
     "click",
     async function() {
 
@@ -141,7 +181,9 @@ document
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
 
         alert(
           "Logout করতে সমস্যা হয়েছে: " +
@@ -153,9 +195,11 @@ document
     }
   );
 
+}
+
 
 /* =========================
-   CLOUDINARY WIDGET
+   CLOUDINARY PRODUCT WIDGET
 ========================= */
 
 function setupCloudinaryWidget() {
@@ -169,12 +213,17 @@ function setupCloudinaryWidget() {
       "Cloudinary Widget load হয়নি"
     );
 
-    document
-      .getElementById(
+    const status =
+      document.getElementById(
         "imageStatus"
-      )
-      .innerText =
+      );
+
+    if (status) {
+
+      status.innerText =
         "❌ Cloudinary load হয়নি";
+
+    }
 
     return;
 
@@ -226,12 +275,17 @@ function setupCloudinaryWidget() {
             error
           );
 
-          document
-            .getElementById(
+          const status =
+            document.getElementById(
               "imageStatus"
-            )
-            .innerText =
+            );
+
+          if (status) {
+
+            status.innerText =
               "❌ Image upload failed";
+
+          }
 
           return;
 
@@ -253,11 +307,16 @@ function setupCloudinaryWidget() {
               "imagePreview"
             );
 
-          preview.src =
-            uploadedImageURL;
 
-          preview.style.display =
-            "block";
+          if (preview) {
+
+            preview.src =
+              uploadedImageURL;
+
+            preview.style.display =
+              "block";
+
+          }
 
 
           const status =
@@ -265,11 +324,16 @@ function setupCloudinaryWidget() {
               "imageStatus"
             );
 
-          status.innerText =
-            "✅ নতুন Image নির্বাচন করা হয়েছে";
 
-          status.style.color =
-            "green";
+          if (status) {
+
+            status.innerText =
+              "✅ নতুন Image নির্বাচন করা হয়েছে";
+
+            status.style.color =
+              "green";
+
+          }
 
         }
 
@@ -280,19 +344,30 @@ function setupCloudinaryWidget() {
 }
 
 
-window.addEventListener(
-  "load",
-  setupCloudinaryWidget
-);
 /* =========================
-   SELECT IMAGE
+   SELECT PRODUCT IMAGE
 ========================= */
 
-document
-  .getElementById(
-    "selectImageBtn"
-  )
-  .addEventListener(
+function setupSelectImageButton() {
+
+  const selectImageBtn =
+    document.getElementById(
+      "selectImageBtn"
+    );
+
+
+  if (!selectImageBtn) {
+
+    console.error(
+      "selectImageBtn পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
+
+  selectImageBtn.addEventListener(
     "click",
     function() {
 
@@ -308,10 +383,15 @@ document
 
       }
 
+
       uploadWidget.open();
 
     }
- );
+  );
+
+}
+
+
 /* =========================
    LOAD CURRENT WEBSITE BANNER
 ========================= */
@@ -328,10 +408,26 @@ async function loadCurrentBanner() {
       "currentBannerPreview"
     );
 
+
+  if (
+    !bannerStatus ||
+    !currentBannerPreview
+  ) {
+
+    console.warn(
+      "Banner elements পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
+
   try {
 
     bannerStatus.innerText =
       "⏳ Banner loading...";
+
 
     const bannerRef =
       doc(
@@ -340,10 +436,12 @@ async function loadCurrentBanner() {
         "banner"
       );
 
+
     const bannerSnap =
       await getDoc(
         bannerRef
       );
+
 
     if (
       bannerSnap.exists()
@@ -352,8 +450,10 @@ async function loadCurrentBanner() {
       const data =
         bannerSnap.data();
 
+
       const bannerURL =
         data.image || "";
+
 
       if (bannerURL) {
 
@@ -363,8 +463,10 @@ async function loadCurrentBanner() {
         currentBannerPreview.style.display =
           "block";
 
+
         bannerStatus.innerText =
           "✅ Current Website Banner";
+
 
         bannerStatus.style.color =
           "green";
@@ -389,23 +491,26 @@ async function loadCurrentBanner() {
 
     }
 
-  }  catch (error) {
+  } catch (error) {
 
-  console.error(
-    "Banner load error:",
-    error
-  );
+    console.error(
+      "Banner load error:",
+      error
+    );
 
-  bannerStatus.innerText =
-    "❌ Banner load করতে সমস্যা হয়েছে: " +
-    String(error);
 
-  bannerStatus.style.color =
-    "red";
+    bannerStatus.innerText =
+      "❌ Banner load করতে সমস্যা হয়েছে: " +
+      error.message;
+
+
+    bannerStatus.style.color =
+      "red";
+
+  }
 
 }
 
-  }
 
 /* =========================
    LOAD PRODUCTS
@@ -417,6 +522,17 @@ async function loadProducts() {
     document.getElementById(
       "productList"
     );
+
+
+  if (!productList) {
+
+    console.error(
+      "productList পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
 
 
   productList.innerHTML =
@@ -533,10 +649,6 @@ async function loadProducts() {
         );
 
 
-        /* =================
-           EDIT BUTTON
-        ================= */
-
         item
           .querySelector(
             ".edit-btn"
@@ -553,10 +665,6 @@ async function loadProducts() {
             }
           );
 
-
-        /* =================
-           DELETE BUTTON
-        ================= */
 
         item
           .querySelector(
@@ -686,12 +794,17 @@ function editProduct(
     productId;
 
 
-  document
-    .getElementById(
+  const editMode =
+    document.getElementById(
       "editMode"
-    )
-    .style.display =
+    );
+
+  if (editMode) {
+
+    editMode.style.display =
       "block";
+
+  }
 
 
   document
@@ -762,20 +875,18 @@ function editProduct(
   }
 
 
-  document
-    .getElementById(
+  const imageStatus =
+    document.getElementById(
       "imageStatus"
-    )
-    .innerText =
-      "✅ আগের Image ব্যবহার করা হবে";
+    );
 
 
-  document
-    .getElementById(
-      "imageStatus"
-    )
-    .style.color =
-      "green";
+  imageStatus.innerText =
+    "✅ আগের Image ব্যবহার করা হবে";
+
+
+  imageStatus.style.color =
+    "green";
 
 
   document
@@ -803,263 +914,271 @@ function editProduct(
 
 
 /* =========================
-   ADD / UPDATE PRODUCT
+   PRODUCT BUTTONS
 ========================= */
 
-document
-  .getElementById(
-    "saveProductBtn"
-  )
-  .addEventListener(
-    "click",
-    async function() {
+function setupProductButtons() {
 
-      const name =
-        document
-          .getElementById(
-            "productName"
-          )
-          .value
-          .trim();
+  const saveProductBtn =
+    document.getElementById(
+      "saveProductBtn"
+    );
 
 
-      const priceValue =
-        document
-          .getElementById(
-            "productPrice"
-          )
-          .value;
+  if (saveProductBtn) {
 
+    saveProductBtn.addEventListener(
+      "click",
+      saveProduct
+    );
 
-      const stockValue =
-        document
-          .getElementById(
-            "productStock"
-          )
-          .value;
+  }
 
 
-      const category =
-        document
-          .getElementById(
-            "productCategory"
-          )
-          .value;
+  const cancelEditBtn =
+    document.getElementById(
+      "cancelEditBtn"
+    );
 
 
-      const description =
-        document
-          .getElementById(
-            "productDescription"
-          )
-          .value
-          .trim();
+  if (cancelEditBtn) {
 
-
-      const message =
-        document.getElementById(
-          "message"
-        );
-
-
-      const saveButton =
-        document.getElementById(
-          "saveProductBtn"
-        );
-
-
-      const price =
-        Number(priceValue);
-
-
-      const stock =
-        Number(stockValue);
-
-
-      /* VALIDATION */
-
-      if (
-        !name ||
-        priceValue === "" ||
-        !Number.isFinite(price) ||
-        price < 0 ||
-        stockValue === "" ||
-        !Number.isInteger(stock) ||
-        stock < 0 ||
-        !uploadedImageURL ||
-        !description
-      ) {
-
-        message.innerText =
-          "⚠️ সব তথ্য পূরণ করুন। Stock 0 বা তার বেশি হতে হবে।";
-
-        message.style.color =
-          "red";
-
-        return;
-
-      }
-
-
-      try {
-
-        saveButton.disabled =
-          true;
-
-
-        saveButton.innerText =
-          editingProductId
-            ? "⏳ Update হচ্ছে..."
-            : "⏳ Save হচ্ছে...";
-
-
-        message.innerText =
-          "💾 Firebase-এ Save হচ্ছে...";
-
-
-        message.style.color =
-          "#ff6b00";
-
-
-        /* =================
-           EDIT EXISTING
-        ================= */
-
-        if (editingProductId) {
-
-          const productRef =
-            doc(
-              db,
-              "products",
-              editingProductId
-            );
-
-
-          await updateDoc(
-            productRef,
-            {
-
-              name:
-                name,
-
-              price:
-                price,
-
-              stock:
-                stock,
-
-              image:
-                uploadedImageURL,
-
-              category:
-                category,
-
-              description:
-                description
-
-            }
-          );
-
-          message.innerText =
-            "✅ Product সফলভাবে Update হয়েছে!";
-
-        }
-
-
-        /* =================
-           ADD NEW
-        ================= */
-
-        else {
-
-          await addDoc(
-            collection(
-              db,
-              "products"
-            ),
-            {
-
-              name:
-                name,
-
-              price:
-                price,
-
-              stock:
-                stock,
-
-              image:
-                uploadedImageURL,
-
-              category:
-                category,
-
-              description:
-                description
-
-            }
-          );
-
-
-          message.innerText =
-            "✅ Product এবং Image সফলভাবে Save হয়েছে!";
-
-        }
-
-
-        message.style.color =
-          "green";
-
+    cancelEditBtn.addEventListener(
+      "click",
+      function() {
 
         resetForm();
 
-
-        await loadProducts();
-
-
-      } catch (error) {
-
-        console.error(
-          "Save/Update error:",
-          error
-        );
-
-
-        message.innerText =
-          "❌ Error: " +
-          error.message;
-
-
-        message.style.color =
-          "red";
-
-      } finally {
-
-        saveButton.disabled =
-          false;
-
       }
+    );
 
-    }
-  );
+  }
+
+}
 
 
 /* =========================
-   CANCEL EDIT
+   ADD / UPDATE PRODUCT
 ========================= */
 
-document
-  .getElementById(
-    "cancelEditBtn"
-  )
-  .addEventListener(
-    "click",
-    function() {
+async function saveProduct() {
 
-      resetForm();
+  const name =
+    document
+      .getElementById(
+        "productName"
+      )
+      .value
+      .trim();
+
+
+  const priceValue =
+    document
+      .getElementById(
+        "productPrice"
+      )
+      .value;
+
+
+  const stockValue =
+    document
+      .getElementById(
+        "productStock"
+      )
+      .value;
+
+
+  const category =
+    document
+      .getElementById(
+        "productCategory"
+      )
+      .value;
+
+
+  const description =
+    document
+      .getElementById(
+        "productDescription"
+      )
+      .value
+      .trim();
+
+
+  const message =
+    document.getElementById(
+      "message"
+    );
+
+
+  const saveButton =
+    document.getElementById(
+      "saveProductBtn"
+    );
+
+
+  const price =
+    Number(priceValue);
+
+
+  const stock =
+    Number(stockValue);
+
+
+  if (
+    !name ||
+    priceValue === "" ||
+    !Number.isFinite(price) ||
+    price < 0 ||
+    stockValue === "" ||
+    !Number.isInteger(stock) ||
+    stock < 0 ||
+    !uploadedImageURL ||
+    !description
+  ) {
+
+    message.innerText =
+      "⚠️ সব তথ্য পূরণ করুন। Stock 0 বা তার বেশি হতে হবে।";
+
+    message.style.color =
+      "red";
+
+    return;
+
+  }
+
+
+  try {
+
+    saveButton.disabled =
+      true;
+
+
+    saveButton.innerText =
+      editingProductId
+        ? "⏳ Update হচ্ছে..."
+        : "⏳ Save হচ্ছে...";
+
+
+    message.innerText =
+      "💾 Firebase-এ Save হচ্ছে...";
+
+
+    message.style.color =
+      "#ff6b00";
+
+
+    if (editingProductId) {
+
+      const productRef =
+        doc(
+          db,
+          "products",
+          editingProductId
+        );
+
+
+      await updateDoc(
+        productRef,
+        {
+
+          name:
+            name,
+
+          price:
+            price,
+
+          stock:
+            stock,
+
+          image:
+            uploadedImageURL,
+
+          category:
+            category,
+
+          description:
+            description
+
+        }
+      );
+
+
+      message.innerText =
+        "✅ Product সফলভাবে Update হয়েছে!";
+
+    } else {
+
+      await addDoc(
+        collection(
+          db,
+          "products"
+        ),
+        {
+
+          name:
+            name,
+
+          price:
+            price,
+
+          stock:
+            stock,
+
+          image:
+            uploadedImageURL,
+
+          category:
+            category,
+
+          description:
+            description
+
+        }
+      );
+
+
+      message.innerText =
+        "✅ Product এবং Image সফলভাবে Save হয়েছে!";
 
     }
-  );
+
+
+    message.style.color =
+      "green";
+
+
+    resetForm();
+
+
+    await loadProducts();
+
+
+  } catch (error) {
+
+    console.error(
+      "Save/Update error:",
+      error
+    );
+
+
+    message.innerText =
+      "❌ Error: " +
+      error.message;
+
+
+    message.style.color =
+      "red";
+
+
+  } finally {
+
+    saveButton.disabled =
+      false;
+
+  }
+
+}
 
 
 /* =========================
@@ -1128,28 +1247,32 @@ function resetForm() {
     "none";
 
 
-  document
-    .getElementById(
+  const imageStatus =
+    document.getElementById(
       "imageStatus"
-    )
-    .innerText =
-      "কোনো নতুন ছবি নির্বাচন করা হয়নি";
+    );
 
 
-  document
-    .getElementById(
-      "imageStatus"
-    )
-    .style.color =
-      "black";
+  imageStatus.innerText =
+    "কোনো নতুন ছবি নির্বাচন করা হয়নি";
 
 
-  document
-    .getElementById(
+  imageStatus.style.color =
+    "black";
+
+
+  const editMode =
+    document.getElementById(
       "editMode"
-    )
-    .style.display =
+    );
+
+
+  if (editMode) {
+
+    editMode.style.display =
       "none";
+
+  }
 
 
   document
@@ -1167,26 +1290,50 @@ function resetForm() {
     .style.display =
       "none";
 
-}/* =========================
+}
+
+
+/* =========================
    LOAD CUSTOMER ORDERS
 ========================= */
 
 async function loadOrders() {
 
   const ordersList =
-    document.getElementById("ordersList");
+    document.getElementById(
+      "ordersList"
+    );
+
+
+  if (!ordersList) {
+
+    console.error(
+      "ordersList পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
 
   ordersList.innerHTML =
     "⏳ Orders loading...";
+
 
   try {
 
     const snapshot =
       await getDocs(
-        collection(db, "orders")
+        collection(
+          db,
+          "orders"
+        )
       );
 
-    ordersList.innerHTML = "";
+
+    ordersList.innerHTML =
+      "";
+
 
     if (snapshot.empty) {
 
@@ -1194,309 +1341,412 @@ async function loadOrders() {
         "<p>📭 এখনো কোনো Customer Order নেই।</p>";
 
       return;
+
     }
 
-    snapshot.forEach(function(orderDoc) {
 
-      const order =
-        orderDoc.data();
+    snapshot.forEach(
+      function(orderDoc) {
 
-      const item =
-        document.createElement("div");
+        const order =
+          orderDoc.data();
 
-      item.className =
-        "product-item";
 
-      let orderItems = "";
+        const item =
+          document.createElement(
+            "div"
+          );
 
-      if (
-        Array.isArray(order.items)
-      ) {
 
-        order.items.forEach(function(product) {
+        item.className =
+          "product-item";
 
-          orderItems += `
-            <div style="
-              margin-top:6px;
-              padding:6px;
-              background:white;
-              border-radius:6px;
-            ">
-              ${product.name || "Product"}
-              × ${product.quantity || 1}
-              ${
-                product.size &&
-                product.size !== "প্রযোজ্য নয়"
-                  ? " | Size: " + product.size
-                  : ""
+
+        let orderItems =
+          "";
+
+
+        if (
+          Array.isArray(
+            order.items
+          )
+        ) {
+
+          order.items.forEach(
+            function(product) {
+
+              orderItems += `
+
+                <div style="
+                  margin-top:6px;
+                  padding:6px;
+                  background:white;
+                  border-radius:6px;
+                ">
+
+                  ${product.name || "Product"}
+
+                  × ${product.quantity || 1}
+
+                  ${
+                    product.size &&
+                    product.size !== "প্রযোজ্য নয়"
+                      ? " | Size: " +
+                        product.size
+                      : ""
+                  }
+
+                </div>
+
+              `;
+
+            }
+          );
+
+        }
+
+
+        let orderTime =
+          "সময় পাওয়া যায়নি";
+
+
+        if (
+          order.createdAt &&
+          typeof order.createdAt.toDate ===
+            "function"
+        ) {
+
+          orderTime =
+            order.createdAt
+              .toDate()
+              .toLocaleString("bn-BD");
+
+        }
+
+
+        item.innerHTML = `
+
+          <div class="product-info">
+
+            <b>
+              🧾 Order #${
+                order.orderNumber ||
+                orderDoc.id
               }
+            </b>
+
+            <span>
+              👤 Customer:
+              ${
+                order.customerName ||
+                "নাম নেই"
+              }
+            </span>
+
+            <span>
+              📞 Phone:
+              ${
+                order.phone ||
+                "নেই"
+              }
+            </span>
+
+            <span>
+              📍 Address:
+              ${
+                order.address ||
+                "নেই"
+              }
+            </span>
+
+            <span>
+              💰 Total:
+              ৳${order.total || 0}
+            </span>
+
+            <span>
+              🕐 ${orderTime}
+            </span>
+
+            <div style="margin-top:10px;">
+
+              <b>
+                🛍️ Products:
+              </b>
+
+              ${orderItems}
+
             </div>
-          `;
 
-        });
+            <label style="
+              margin-top:12px;
+              display:block;
+            ">
 
-      }
+              Order Status
 
-      let orderTime =
-        "সময় পাওয়া যায়নি";
+            </label>
 
-      if (
-        order.createdAt &&
-        typeof order.createdAt.toDate ===
-          "function"
-      ) {
+            <select
+              class="order-status"
+              style="margin-top:5px;"
+            >
 
-        orderTime =
-          order.createdAt
-            .toDate()
-            .toLocaleString("bn-BD");
+              <option value="Pending">
+                Pending
+              </option>
 
-      }
+              <option value="Confirmed">
+                Confirmed
+              </option>
 
-      item.innerHTML = `
+              <option value="Shipped">
+                Shipped
+              </option>
 
-        <div class="product-info">
+              <option value="Delivered">
+                Delivered
+              </option>
 
-          <b>
-            🧾 Order #${order.orderNumber || orderDoc.id}
-          </b>
+              <option value="Cancelled">
+                Cancelled
+              </option>
 
-          <span>
-            👤 Customer:
-            ${order.customerName || "নাম নেই"}
-          </span>
+            </select>
 
-          <span>
-            📞 Phone:
-            ${order.phone || "নেই"}
-          </span>
-
-          <span>
-            📍 Address:
-            ${order.address || "নেই"}
-          </span>
-
-          <span>
-            💰 Total:
-            ৳${order.total || 0}
-          </span>
-
-          <span>
-            🕐 ${orderTime}
-          </span>
-
-          <div style="margin-top:10px;">
-            <b>🛍️ Products:</b>
-            ${orderItems}
           </div>
 
-          <label style="
-            margin-top:12px;
-            display:block;
-          ">
-            Order Status
-          </label>
+        `;
 
-          <select
-            class="order-status"
-            style="margin-top:5px;"
-          >
 
-            <option value="Pending">
-              Pending
-            </option>
-
-            <option value="Confirmed">
-              Confirmed
-            </option>
-
-            <option value="Shipped">
-              Shipped
-            </option>
-
-            <option value="Delivered">
-              Delivered
-            </option>
-
-            <option value="Cancelled">
-              Cancelled
-            </option>
-
-          </select>
-
-        </div>
-
-      `;
-
-      ordersList.appendChild(item);
-
-      const statusSelect =
-        item.querySelector(
-          ".order-status"
+        ordersList.appendChild(
+          item
         );
 
-      statusSelect.value =
-        order.status || "Pending";
-/* =========================
-   WHATSAPP CUSTOMER
-========================= */
 
-const whatsappBtn =
-  document.createElement("button");
+        const statusSelect =
+          item.querySelector(
+            ".order-status"
+          );
 
-whatsappBtn.innerText =
-  "💬 WhatsApp Customer";
 
-whatsappBtn.type =
-  "button";
+        statusSelect.value =
+          order.status ||
+          "Pending";
 
-whatsappBtn.style.background =
-  "#25D366";
 
-whatsappBtn.style.marginTop =
-  "10px";
+        /* =========================
+           WHATSAPP CUSTOMER
+        ========================= */
 
-whatsappBtn.addEventListener(
-  "click",
-  function() {
+        const whatsappBtn =
+          document.createElement(
+            "button"
+          );
 
-    const phone =
-      String(order.phone || "")
-        .replace(/\D/g, "");
 
-    if (!phone) {
+        whatsappBtn.innerText =
+          "💬 WhatsApp Customer";
 
-      alert(
-        "❌ Customer phone number পাওয়া যায়নি।"
-      );
 
-      return;
+        whatsappBtn.type =
+          "button";
 
-    }
 
-    let whatsappPhone =
-      phone;
+        whatsappBtn.style.background =
+          "#25D366";
 
-    if (
-      whatsappPhone.startsWith("01")
-    ) {
 
-      whatsappPhone =
-        "880" +
-        whatsappPhone.substring(1);
+        whatsappBtn.style.marginTop =
+          "10px";
 
-    }
 
-    const customerName =
-      String(
-        order.customerName ||
-        "Customer"
-      );
+        whatsappBtn.addEventListener(
+          "click",
+          function() {
 
-    const orderId =
-      String(
-        order.orderNumber ||
-        order.orderId ||
-        orderDoc.id ||
-        "UNKNOWN"
-      );
+            const phone =
+              String(
+                order.phone ||
+                ""
+              )
+                .replace(
+                  /\D/g,
+                  ""
+                );
 
-    const status =
-      String(
-        statusSelect.value ||
-        order.status ||
-        "Pending"
-      );
 
-    const message =
-      "Hello " +
-      customerName +
-      "!\n\n" +
+            if (!phone) {
 
-      "🛍️ YOUR TREND\n" +
+              alert(
+                "❌ Customer phone number পাওয়া যায়নি।"
+              );
 
-      "📋 Order ID: " +
-      orderId +
-      "\n" +
+              return;
 
-      "📦 Order Status: " +
-      status +
-      "\n\n" +
+            }
 
-      "Thank you for shopping with us! ❤️";
 
-    const whatsappURL =
-      "https://wa.me/" +
-      whatsappPhone +
-      "?text=" +
-      encodeURIComponent(message);
+            let whatsappPhone =
+              phone;
 
-    window.open(
-      whatsappURL,
-      "_blank"
-    );
 
-  }
-);
+            if (
+              whatsappPhone.startsWith(
+                "01"
+              )
+            ) {
 
-item
-  .querySelector(".product-info")
-  .appendChild(
-    whatsappBtn
-  );
-      statusSelect.addEventListener(
-        "change",
-        async function() {
+              whatsappPhone =
+                "880" +
+                whatsappPhone.substring(
+                  1
+                );
 
-          try {
+            }
 
-            await updateDoc(
-              doc(
-                db,
-                "orders",
-                orderDoc.id
-              ),
-              {
-                status:
-                  statusSelect.value
-              }
-            );await setDoc(
-  doc(
-  db,
-  "orderTracking",
-  order.orderNumber || orderDoc.id
-),
-  {
-    orderNumber:
-      order.orderNumber || orderDoc.id,
 
-    status:
-      statusSelect.value
-  },
-  {
-    merge: true
-  }
-);
+            const customerName =
+              String(
+                order.customerName ||
+                "Customer"
+              );
 
-            alert(
-              "✅ Order Status Update হয়েছে!"
-            );
 
-          } catch (error) {
+            const orderId =
+              String(
+                order.orderNumber ||
+                order.orderId ||
+                orderDoc.id ||
+                "UNKNOWN"
+              );
 
-            console.error(error);
 
-            alert(
-              "❌ Status Update করতে সমস্যা হয়েছে:\n" +
-              error.message
+            const status =
+              String(
+                statusSelect.value ||
+                order.status ||
+                "Pending"
+              );
+
+
+            const message =
+              "Hello " +
+              customerName +
+              "!\n\n" +
+
+              "🛍️ YOUR TREND\n" +
+
+              "📋 Order ID: " +
+              orderId +
+              "\n" +
+
+              "📦 Order Status: " +
+              status +
+              "\n\n" +
+
+              "Thank you for shopping with us! ❤️";
+
+
+            const whatsappURL =
+              "https://wa.me/" +
+              whatsappPhone +
+              "?text=" +
+              encodeURIComponent(
+                message
+              );
+
+
+            window.open(
+              whatsappURL,
+              "_blank"
             );
 
           }
+        );
 
-        }
-      );
 
-    });
+        item
+          .querySelector(
+            ".product-info"
+          )
+          .appendChild(
+            whatsappBtn
+          );
+
+
+        /* =========================
+           ORDER STATUS
+        ========================= */
+
+        statusSelect.addEventListener(
+          "change",
+          async function() {
+
+            try {
+
+              await updateDoc(
+                doc(
+                  db,
+                  "orders",
+                  orderDoc.id
+                ),
+                {
+                  status:
+                    statusSelect.value
+                }
+              );
+
+
+              await setDoc(
+                doc(
+                  db,
+                  "orderTracking",
+                  order.orderNumber ||
+                    orderDoc.id
+                ),
+                {
+
+                  orderNumber:
+                    order.orderNumber ||
+                    orderDoc.id,
+
+                  status:
+                    statusSelect.value
+
+                },
+                {
+                  merge:
+                    true
+                }
+              );
+
+
+              alert(
+                "✅ Order Status Update হয়েছে!"
+              );
+
+
+            } catch (error) {
+
+              console.error(
+                error
+              );
+
+
+              alert(
+                "❌ Status Update করতে সমস্যা হয়েছে:\n" +
+                error.message
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
 
   } catch (error) {
 
@@ -1504,6 +1754,7 @@ item
       "Orders load error:",
       error
     );
+
 
     ordersList.innerHTML = `
 
@@ -1519,4 +1770,4 @@ item
 
   }
 
-    }
+          }
