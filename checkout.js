@@ -444,7 +444,22 @@ async function placeOrder() {
         "phone"
       )
       .value
-      .trim();
+      .trim();const district =
+  document
+    .getElementById(
+      "district"
+    )
+    .value
+    .trim();
+
+
+const upazila =
+  document
+    .getElementById(
+      "upazila"
+    )
+    .value
+    .trim();
 
 
   const address =
