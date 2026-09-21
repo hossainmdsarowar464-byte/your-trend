@@ -1551,4 +1551,44 @@ body{ padding-top:120px; }
 .mainBanner{
   width:100%;
   display:block;
+}.yourTrendHeader{
+  background:#fff;
+  padding:10px 12px;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+.headerTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.yourTrendBrand{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.yourTrendBrand img{
+  width:42px;
+  height:42px;
+}
+.brandText h2{
+  margin:0;
+  font-size:18px;
+}
+.brandText p{
+  margin:0;
+  font-size:11px;
+  color:#666;
+}
+.searchWrap{
+  margin:10px 0;
+}
+.searchWrap input{
+  width:100%;
+  padding:12px 16px;
+  border-radius:25px;
+  border:1px solid #ddd;
+}
+.mainBanner{
+  width:100%;
+  display:block;
 }
