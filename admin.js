@@ -278,9 +278,6 @@ function setupCloudinaryWidget() {
 window.addEventListener(
   "load",
   setupCloudinaryWidget
-);window.addEventListener(
-  "load",
-  setupBannerUploadWidget
 );
 /* =========================
    BANNER CLOUDINARY WIDGET
@@ -288,30 +285,25 @@ window.addEventListener(
 
 function setupBannerUploadWidget() {
 
-  if (
-    typeof cloudinary ===
-    "undefined"
-  ) {
+  if (typeof cloudinary === "undefined") {
 
-    console.error(
-      "Cloudinary Widget load হয়নি"
-    );
+    console.error("Cloudinary Widget load হয়নি");
 
-    document
-      .getElementById("bannerStatus")
-      .innerText =
+    const status =
+      document.getElementById("bannerStatus");
+
+    if (status) {
+      status.innerText =
         "❌ Cloudinary load হয়নি";
+    }
 
     return;
 
   }
 
-
   bannerUploadWidget =
     cloudinary.createUploadWidget(
-
       {
-
         cloudName:
           CLOUDINARY_CLOUD_NAME,
 
@@ -340,7 +332,6 @@ function setupBannerUploadWidget() {
 
         maxFileSize:
           10000000
-
       },
 
       function(error, result) {
@@ -352,102 +343,114 @@ function setupBannerUploadWidget() {
             error
           );
 
-          document
-            .getElementById(
+          const status =
+            document.getElementById(
               "bannerImageStatus"
-            )
-            .innerText =
+            );
+
+          if (status) {
+            status.innerText =
               "❌ Banner upload failed";
+          }
 
           return;
-
         }
-
 
         if (
           result &&
-          result.event ===
-            "success"
+          result.event === "success"
         ) {
 
           uploadedBannerURL =
             result.info.secure_url;
-
 
           const preview =
             document.getElementById(
               "bannerPreview"
             );
 
+          if (preview) {
 
-          preview.src =
-            uploadedBannerURL;
+            preview.src =
+              uploadedBannerURL;
 
-          preview.style.display =
-            "block";
+            preview.style.display =
+              "block";
+          }
 
-
-          document
-            .getElementById(
+          const status =
+            document.getElementById(
               "bannerImageStatus"
-            )
-            .innerText =
+            );
+
+          if (status) {
+
+            status.innerText =
               "✅ নতুন Banner নির্বাচন করা হয়েছে";
 
-
-          document
-            .getElementById(
-              "bannerImageStatus"
-            )
-            .style.color =
+            status.style.color =
               "green";
+          }
 
-
-          document
-            .getElementById(
+          const updateButton =
+            document.getElementById(
               "updateBannerBtn"
-            )
-            .style.display =
+            );
+
+          if (updateButton) {
+
+            updateButton.style.display =
               "block";
+          }
 
         }
 
       }
-
     );
 
 }
 
 
 /* =========================
-   BANNER SELECT BUTTON
+   BANNER SELECT
 ========================= */
 
-document
-  .getElementById(
+const selectBannerButton =
+  document.getElementById(
     "selectBannerBtn"
-  )
-  .addEventListener(
+  );
+
+if (selectBannerButton) {
+
+  selectBannerButton.addEventListener(
     "click",
     function() {
 
-      if (!bannerUploadWidget) {
+      console.log(
+        "Banner button clicked"
+      );
 
-        alert(
-          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চেষ্টা করুন।"
-        );
+      if (!bannerUploadWidget) {
 
         setupBannerUploadWidget();
 
-        return;
+      }
+
+      if (bannerUploadWidget) {
+
+        bannerUploadWidget.open();
+
+      } else {
+
+        alert(
+          "❌ Banner Upload প্রস্তুত হয়নি।"
+        );
 
       }
 
-
-      bannerUploadWidget.open();
-
     }
-  );
+  )
+
 
 /* =========================
    SELECT IMAGE
