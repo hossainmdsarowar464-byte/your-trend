@@ -80,116 +80,15 @@ let uploadedImageURL = "";
 let editingProductId = null;
 
 let uploadWidget = null;
-let uploadedBannerURL = "";
-let bannerUploadWidget = null;
+
 
 
 /* =========================
    BANNER CLOUDINARY WIDGET
 ========================= */
 
-function setupBannerUploadWidget() {
 
-  if (typeof cloudinary === "undefined") {
-    console.error("Cloudinary Widget load হয়নি");
-    return;
-  }
-
-  bannerUploadWidget =
-    cloudinary.createUploadWidget({
-
-      cloudName:
-        CLOUDINARY_CLOUD_NAME,
-
-      uploadPreset:
-        CLOUDINARY_UPLOAD_PRESET,
-
-      sources:
-        ["local"],
-
-      multiple:
-        false,
-
-      maxFiles:
-        1,
-
-      resourceType:
-        "image",
-
-      clientAllowedFormats:
-        [
-          "jpg",
-          "jpeg",
-          "png",
-          "webp"
-        ],
-
-      maxFileSize:
-        5000000
-
-    }, function(error, result) {
-
-      if (error) {
-
-        console.error(
-          "Banner Cloudinary Error:",
-          error
-        );
-
-        document
-          .getElementById(
-            "bannerImageStatus"
-          )
-          .innerText =
-            "❌ Banner upload failed";
-
-        return;
-      }
-
-      if (
-        result &&
-        result.event === "success"
-      ) {
-
-        uploadedBannerURL =
-          result.info.secure_url;
-
-        const preview =
-          document.getElementById(
-            "bannerPreview"
-          );
-
-        preview.src =
-          uploadedBannerURL;
-
-        preview.style.display =
-          "block";
-
-        document
-          .getElementById(
-            "bannerImageStatus"
-          )
-          .innerText =
-            "✅ নতুন Banner নির্বাচন করা হয়েছে";
-
-        document
-          .getElementById(
-            "bannerImageStatus"
-          )
-          .style.color =
-            "green";
-
-        document
-          .getElementById(
-            "updateBannerBtn"
-          )
-          .style.display =
-            "block";
-      }
-
-    });
-
-}
+        
 /* =========================
    WEBSITE BANNER
 ========================= */
@@ -393,59 +292,7 @@ window.addEventListener(
 document
   .getElementById(
     "selectImageBtn"
-  )/* =========================
-   SELECT BANNER
-========================= */
-
-document
-  .getElementById(
-    "selectBannerBtn"
   )
-  .addEventListener(
-    "click",
-    function() {
-
-      if (!bannerUploadWidget) {
-
-        setupBannerUploadWidget();
-
-        if (!bannerUploadWidget) {
-
-          alert(
-            "Cloudinary এখনও প্রস্তুত হয়নি।"
-          );
-
-          return;
-
-        }
-
-      }
-
-      bannerUploadWidget.open();
-
-    }
-  );
-  .addEventListener(
-    "click",
-    function() {
-
-      if (!uploadWidget) {
-
-        alert(
-          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চেষ্টা করুন।"
-        );
-
-        setupCloudinaryWidget();
-
-        return;
-
-      }
-
-      uploadWidget.open();
-
-    }
-  );
-
 /* =========================
    LOAD CURRENT WEBSITE BANNER
 ========================= */
