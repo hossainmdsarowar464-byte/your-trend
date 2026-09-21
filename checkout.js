@@ -775,13 +775,19 @@ await setDoc(
       paymentMethod +
 
       "\n\n👤 নাম: " +
-      name +
+name +
 
-      "\n📞 ফোন: " +
-      phone +
+"\n📞 ফোন: " +
+phone +
 
-      "\n📍 ঠিকানা: " +
-      address;
+"\n🏙️ জেলা: " +
+district +
+
+"\n🏘️ উপজেলা: " +
+upazila +
+
+"\n📍 ঠিকানা: " +
+address;
 
 
     /* ======================================
