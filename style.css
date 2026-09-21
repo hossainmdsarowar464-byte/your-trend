@@ -1491,4 +1491,6 @@ textarea:focus {
   margin:0;
   font-size:11px;
   color:#64748b;
+}.hero{
+  display:none;
 }
