@@ -31,34 +31,39 @@
           <a href="#products">🛍️ Products</a>
           <a href="#contact">📞 Contact</a>
           <a href="#delivery">🚚 Delivery</a>
-          <a href="#return">🔄 Return</a>
+          <a href="#return">🔄 Return Policy</a>
         </div>
       </details>
     </div>
 
     <div class="yourTrendBrand">
-      <img src="images/your-trend-logo.png" alt="Logo">
-      <div>
+      <img src="images/your-trend-logo.png" alt="YOUR TREND">
+      <div class="brandText">
         <h2>YOUR TREND</h2>
-        <small>Fashion • Gadgets</small>
+        <p>Fashion • Gadgets</p>
       </div>
+    </div>
+
+    <div class="cart" onclick="openCart()">
+      🛒 <span id="count">0</span>
     </div>
 
   </div>
 
-  <div class="search-box">
+  <div class="searchWrap">
     <input type="text" id="search" placeholder="🔍 Search products...">
+  </div>
 
-    <div class="cats">
-      <button onclick="filterCategory('all')">All</button>
-      <button onclick="filterCategory('fashion')">Fashion</button>
-      <button onclick="filterCategory('gadgets')">Gadgets</button>
-      <button onclick="filterCategory('bags')">Bags</button>
-    </div>
+  <div class="cats">
+    <button onclick="filterCategory('all')">🔥</button>
+    <button onclick="filterCategory('fashion')">👕</button>
+    <button onclick="filterCategory('gadgets')">⌚</button>
+    <button onclick="filterCategory('bags')">🎒</button>
   </div>
 
 </div>
 
+<!-- YOUR TREND BANNER -->
 <img src="images/banner.png" class="mainBanner" alt="Banner">
 <!-- YOUR TREND BANNER -->
 
