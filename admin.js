@@ -393,7 +393,38 @@ window.addEventListener(
 document
   .getElementById(
     "selectImageBtn"
+  )/* =========================
+   SELECT BANNER
+========================= */
+
+document
+  .getElementById(
+    "selectBannerBtn"
   )
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!bannerUploadWidget) {
+
+        setupBannerUploadWidget();
+
+        if (!bannerUploadWidget) {
+
+          alert(
+            "Cloudinary এখনও প্রস্তুত হয়নি।"
+          );
+
+          return;
+
+        }
+
+      }
+
+      bannerUploadWidget.open();
+
+    }
+  );
   .addEventListener(
     "click",
     function() {
