@@ -500,18 +500,20 @@ const upazila =
   ====================================== */
 
   if (
-    !name ||
-    !phone ||
-    !address
-  ) {
+  !name ||
+  !phone ||
+  !district ||
+  !upazila ||
+  !address
+) {
 
-    msg.innerText =
-      "⚠️ সব তথ্য পূরণ করুন";
+  msg.innerText =
+    "⚠️ সব তথ্য পূরণ করুন";
 
-    msg.style.color =
-      "red";
+  msg.style.color =
+    "red";
 
-    return;
+  return;
 
   }
 
