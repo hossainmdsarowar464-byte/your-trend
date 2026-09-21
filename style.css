@@ -1431,4 +1431,20 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  }
+  }.yourTrendHeader{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 16px;
+}
+
+.yourTrendBrand img{
+  height:38px;
+  width:auto;
+}
+
+#yourTrendMenu summary{
+  font-size:28px;
+  list-style:none;
+  cursor:pointer;
+}
