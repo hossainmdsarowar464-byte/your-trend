@@ -891,4 +891,123 @@ section[style] h2 {
 
 #checkoutItems button:hover {
     transform: translateY(-2px);
+}/* =========================================
+   YOUR TREND — PROFESSIONAL COLOR THEME
+========================================= */
+
+:root {
+  --primary: #0F172A;
+  --primary-light: #1E293B;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+
+  --background: #F8FAFC;
+  --card: #FFFFFF;
+
+  --text: #0F172A;
+  --text-light: #64748B;
+
+  --border: #E2E8F0;
+
+  --success: #16A34A;
+  --danger: #DC2626;
+}
+
+/* Main Website */
+body {
+  background: var(--background);
+  color: var(--text);
+}
+
+/* Header / Hero */
+header,
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+  color: white;
+}
+
+/* Main Buttons */
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
+
+/* Category Buttons */
+.category-btn {
+  background: white;
+  color: var(--primary);
+  border: 1px solid var(--border);
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* Product Cards */
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+/* Product Price */
+.price {
+  color: var(--accent);
+}
+
+/* Links */
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* Cart */
+.cart {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+/* Sections */
+section {
+  background: var(--background);
+}
+
+/* Input Fields */
+input,
+select,
+textarea {
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Success */
+.success {
+  color: var(--success);
+}
+
+/* Danger */
+.danger {
+  color: var(--danger);
 }
