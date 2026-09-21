@@ -1460,9 +1460,16 @@ textarea:focus {
 }
 
 .headerTop{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display:grid;
+  grid-template-columns:48px 1fr 48px;
+  align-items:center;
+}
+
+.yourTrendBrand{
+  justify-self:center;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
 .search-box{
