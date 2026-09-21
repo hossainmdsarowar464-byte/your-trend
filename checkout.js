@@ -676,13 +676,19 @@ const upazila =
           orderId,
 trackingToken: trackingToken,
         customerName:
-          name,
+  name,
 
-        phone:
-          phone,
+phone:
+  phone,
 
-        address:
-          address,
+district:
+  district,
+
+upazila:
+  upazila,
+
+address:
+  address,
 
         items:
           orderItems,
