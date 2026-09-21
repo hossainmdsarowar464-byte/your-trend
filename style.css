@@ -819,4 +819,76 @@ section[style] h2 {
   .trust-grid {
     grid-template-columns: 1fr;
   }
+}/* ================================
+   PROFESSIONAL CHECKOUT FORM
+================================ */
+
+#checkoutItems {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+#checkoutItems input,
+#checkoutItems select,
+#checkoutItems textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d7dee8;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 13px 15px;
+    margin: 6px 0;
+    font-size: 16px;
+    color: #1e293b;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+/* Input focus */
+#checkoutItems input:focus,
+#checkoutItems select:focus,
+#checkoutItems textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Address box */
+#checkoutItems textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* Placeholder */
+#checkoutItems input::placeholder,
+#checkoutItems textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Select arrow area */
+#checkoutItems select {
+    cursor: pointer;
+    appearance: auto;
+}
+
+/* Delivery information heading */
+#checkoutItems h2,
+#checkoutItems h3 {
+    color: #0f172a;
+}
+
+/* WhatsApp order button */
+#checkoutItems button {
+    border: none;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#checkoutItems button:hover {
+    transform: translateY(-2px);
 }
