@@ -82,7 +82,9 @@ let editingProductId = null;
 
 let uploadWidget = null;
 
+let uploadedBannerURL = "";
 
+let bannerUploadWidget = null;
 /* =========================
    AUTH CHECK
 ========================= */
@@ -139,7 +141,59 @@ document.addEventListener(
 
     setupSelectImageButton();
 
-    setupProductButtons();
+    setupSelectBannerButton();
+
+    setupProductButtons();/* =========================
+   SELECT BANNER
+========================= */
+
+function setupSelectBannerButton() {
+
+  const selectBannerBtn =
+    document.getElementById(
+      "selectBannerBtn"
+    );
+
+
+  if (!selectBannerBtn) {
+
+    console.error(
+      "selectBannerBtn পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
+
+  selectBannerBtn.addEventListener(
+    "click",
+    function() {
+
+      if (!bannerUploadWidget) {
+
+        setupBannerUploadWidget();
+
+      }
+
+
+      if (!bannerUploadWidget) {
+
+        alert(
+          "Cloudinary এখনও প্রস্তুত হয়নি। একটু পরে আবার চেষ্টা করুন।"
+        );
+
+        return;
+
+      }
+
+
+      bannerUploadWidget.open();
+
+    }
+  );
+
+}
 
   }
 );
@@ -342,7 +396,155 @@ function setupCloudinaryWidget() {
     );
 
 }
+/* =========================
+   BANNER CLOUDINARY WIDGET
+========================= */
 
+function setupBannerUploadWidget() {
+
+  if (
+    typeof cloudinary ===
+    "undefined"
+  ) {
+
+    console.error(
+      "Cloudinary Widget load হয়নি"
+    );
+
+    return;
+
+  }
+
+
+  bannerUploadWidget =
+    cloudinary.createUploadWidget(
+
+      {
+
+        cloudName:
+          CLOUDINARY_CLOUD_NAME,
+
+        uploadPreset:
+          CLOUDINARY_UPLOAD_PRESET,
+
+        sources:
+          ["local"],
+
+        multiple:
+          false,
+
+        maxFiles:
+          1,
+
+        resourceType:
+          "image",
+
+        clientAllowedFormats:
+          [
+            "jpg",
+            "jpeg",
+            "png",
+            "webp"
+          ],
+
+        maxFileSize:
+          10000000
+
+      },
+
+      function(error, result) {
+
+        if (error) {
+
+          console.error(
+            "Banner Cloudinary Error:",
+            error
+          );
+
+          const status =
+            document.getElementById(
+              "bannerImageStatus"
+            );
+
+          if (status) {
+
+            status.innerText =
+              "❌ Banner upload failed";
+
+            status.style.color =
+              "red";
+
+          }
+
+          return;
+
+        }
+
+
+        if (
+          result &&
+          result.event ===
+            "success"
+        ) {
+
+          uploadedBannerURL =
+            result.info.secure_url;
+
+
+          const preview =
+            document.getElementById(
+              "bannerPreview"
+            );
+
+
+          if (preview) {
+
+            preview.src =
+              uploadedBannerURL;
+
+            preview.style.display =
+              "block";
+
+          }
+
+
+          const status =
+            document.getElementById(
+              "bannerImageStatus"
+            );
+
+
+          if (status) {
+
+            status.innerText =
+              "✅ নতুন Banner নির্বাচন করা হয়েছে";
+
+            status.style.color =
+              "green";
+
+          }
+
+
+          const updateButton =
+            document.getElementById(
+              "updateBannerBtn"
+            );
+
+
+          if (updateButton) {
+
+            updateButton.style.display =
+              "block";
+
+          }
+
+        }
+
+      }
+
+    );
+
+          }
 
 /* =========================
    SELECT PRODUCT IMAGE
