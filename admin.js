@@ -311,7 +311,7 @@ document
       uploadWidget.open();
 
     }
-  );
+ );
 /* =========================
    LOAD CURRENT WEBSITE BANNER
 ========================= */
