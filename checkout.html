@@ -135,63 +135,65 @@
 
   <h2>📦 Delivery Information</h2>
 
+<input
+  id="name"
+  placeholder="আপনার নাম"
+>
 
-  <input
-    id="name"
-    placeholder="আপনার নাম"
-  >
+<input
+  id="phone"
+  placeholder="ফোন নম্বর"
+>
 
+<input
+  id="district"
+  placeholder="জেলা"
+>
 
-  <input
-    id="phone"
-    placeholder="ফোন নম্বর"
-  >
+<input
+  id="upazila"
+  placeholder="উপজেলা"
+>
 
+<select id="deliveryArea">
 
-  <select id="deliveryArea">
+  <option value="70">
+    🏙️ ঢাকার ভিতরে — ৳70
+  </option>
 
-    <option value="70">
-      🏙️ ঢাকার ভিতরে — ৳70
-    </option>
+  <option value="100">
+    🏘️ সাব ঢাকা — ৳100
+  </option>
 
-    <option value="100">
-      🏘️ সাব ঢাকা — ৳100
-    </option>
+  <option value="120">
+    🌍 ঢাকার বাইরে — ৳120
+  </option>
 
-    <option value="120">
-      🌍 ঢাকার বাইরে — ৳120
-    </option>
+</select>
 
-  </select>
+<select id="paymentMethod">
 
+  <option value="Cash on Delivery">
+    💵 Cash on Delivery
+  </option>
 
-  <select id="paymentMethod">
+</select>
 
-    <option value="Cash on Delivery">
-      💵 Cash on Delivery
-    </option>
+<textarea
+  id="address"
+  placeholder="সম্পূর্ণ ঠিকানা"
+></textarea>
 
-  </select>
+<button
+  class="btn"
+  onclick="placeOrder()"
+>
+  📲 WhatsApp-এ অর্ডার করুন
+</button>
 
-
-  <textarea
-    id="address"
-    placeholder="সম্পূর্ণ ঠিকানা"
-  ></textarea>
-
-
-  <button
-    class="btn"
-    onclick="placeOrder()"
-  >
-    📲 WhatsApp-এ অর্ডার করুন
-  </button>
-
-
-  <p id="msg"></p>
+<p id="msg"></p>
 
 </section>
-
 
 <script type="module" src="checkout.js"></script>
 
