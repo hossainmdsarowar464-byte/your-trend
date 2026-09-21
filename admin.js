@@ -450,7 +450,7 @@ if (selectBannerButton) {
 
     }
   )
-
+}
 
 /* =========================
    SELECT IMAGE
