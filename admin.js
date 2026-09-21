@@ -382,19 +382,21 @@ async function loadCurrentBanner() {
 
     }
 
-  } catch (error) {
+  }  catch (error) {
 
-    console.error(
-      "Banner load error:",
-      error
-    );
+  console.error(
+    "Banner load error:",
+    error
+  );
 
-    bannerStatus.innerText =
-  "❌ Banner load করতে সমস্যা হয়েছে: " +
-  error.message;
+  bannerStatus.innerText =
+    "❌ Banner load করতে সমস্যা হয়েছে: " +
+    String(error);
 
-    bannerStatus.style.color =
-      "red";
+  bannerStatus.style.color =
+    "red";
+
+}
 
   }
 
