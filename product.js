@@ -609,7 +609,8 @@ window.onload = function () {
       style="width:70px;height:70px;border-radius:8px;object-fit:cover"
       onclick="document.getElementById('productImage').src='${img}'">`;
   });
-
+districtSelect.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';
+upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
   // District
   Object.keys(districts).sort().forEach(d => {
     districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
