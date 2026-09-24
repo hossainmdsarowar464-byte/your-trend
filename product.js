@@ -541,29 +541,15 @@ const upazila = document.getElementById("upazila").value;
 };const districtSelect = document.getElementById("district");
 const upazilaSelect = document.getElementById("upazila");
 
+// জেলা লোড
 Object.keys(districts).sort().forEach(d => {
   districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
 });
 
-districtSelect.addEventListener("change", () => {
-  upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
-
-  const list = districts[districtSelect.value] || [];
-
-  list.forEach(u => {
-    upazilaSelect.innerHTML += `<option value="${u}">${u}</option>`;
-  });
-});
-
-const districtSelect = document.getElementById("district");
-const upazilaSelect = document.getElementById("upazila");
-
-Object.keys(districts).sort().forEach(d => {
-  districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
-});
-
+// উপজেলা লোড
 function loadUpazilas() {
-  upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+  upazilaSelect.innerHTML =
+    '<option value="">উপজেলা নির্বাচন করুন</option>';
 
   (districts[districtSelect.value] || []).forEach(u => {
     upazilaSelect.innerHTML += `<option value="${u}">${u}</option>`;
@@ -571,3 +557,4 @@ function loadUpazilas() {
 }
 
 districtSelect.addEventListener("change", loadUpazilas);
+
