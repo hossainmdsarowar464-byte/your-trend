@@ -1455,8 +1455,8 @@ textarea:focus {
   top: 0;
   background: #fff;
   z-index: 9999;
-  padding: 10px 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  padding: 6px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
 .headerTop{
@@ -1508,7 +1508,8 @@ textarea:focus {
 
 .cart{
   position:static;
-  margin-left:auto;
+  justify-self:end;
+  margin-right:2px;
 }
 
 .yourTrendBrand{
@@ -1518,6 +1519,9 @@ textarea:focus {
   display:flex;
   align-items:center;
   gap:6px;
-}.headerTop{display:grid;grid-template-columns:60px 1fr 60px;align-items:center}
-.yourTrendBrand{justify-content:center}
-.cart{position:static}
+}.headerTop{
+  display:grid;
+  grid-template-columns:52px 1fr 52px;
+  align-items:center;
+  min-height:46px;
+}
