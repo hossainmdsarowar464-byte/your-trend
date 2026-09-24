@@ -499,4 +499,21 @@ function orderSelectedProduct() {
   window.location.href =
     whatsappURL;
 
+}const bd = {
+  "পঞ্চগড়":["পঞ্চগড় সদর","বোদা","দেবীগঞ্জ","আটোয়ারী","তেঁতুলিয়া"],
+  "ঢাকা":["ধানমন্ডি","মিরপুর","গুলশান"],
+  "চট্টগ্রাম":["কোতোয়ালী","পটিয়া","সীতাকুণ্ড"]
+};
+
+const district = document.getElementById("district");
+Object.keys(bd).forEach(d=>{
+  district.innerHTML += `<option value="${d}">${d}</option>`;
+});
+
+function loadUpazilas(){
+  const up = document.getElementById("upazila");
+  up.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+  (bd[district.value]||[]).forEach(u=>{
+    up.innerHTML += `<option value="${u}">${u}</option>`;
+  });
 }
