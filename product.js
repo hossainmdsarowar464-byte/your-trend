@@ -529,3 +529,28 @@ if (districtSelect && upazilaSelect) {
     });
   });
 }
+window.onload = function () {
+  // Product Details
+  document.getElementById("productImage").src =
+    product.images?.[0] || product.image;
+
+  document.getElementById("productName").innerText = product.name;
+  document.getElementById("productPrice").innerText = product.price;
+  document.getElementById("productDescription").innerText = product.description;
+
+  // Gallery
+  const gallery = document.getElementById("imageGallery");
+  gallery.innerHTML = "";
+
+  (product.images || [product.image]).forEach(img => {
+    gallery.innerHTML += `
+      <img src="${img}"
+      style="width:70px;height:70px;border-radius:8px;object-fit:cover"
+      onclick="document.getElementById('productImage').src='${img}'">`;
+  });
+
+  // District
+  Object.keys(districts).sort().forEach(d => {
+    districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
+  });
+};
