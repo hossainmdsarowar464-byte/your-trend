@@ -1079,8 +1079,7 @@ function editProduct(
 
   if (uploadedImageURL) {
 
-    preview.src =
-      uploadedImageURL;
+    preview.src = uploadedImages[0];
 
     preview.style.display =
       "block";
@@ -1253,7 +1252,7 @@ async function saveProduct() {
     stockValue === "" ||
     !Number.isInteger(stock) ||
     stock < 0 ||
-    !uploadedImageURL ||
+    uploadedImages.length === 0 ||
     !description
   ) {
 
@@ -1345,8 +1344,8 @@ images: uploadedImages,
           stock:
             stock,
 
-          image:
-            uploadedImageURL,
+          image: uploadedImages[0],
+images: uploadedImages,
 
           category:
             category,
@@ -1411,8 +1410,7 @@ function resetForm() {
     null;
 
 
-  uploadedImageURL =
-    "";
+  uploadedImages = [];
 
 
   document
