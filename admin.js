@@ -817,7 +817,7 @@ async function loadProducts() {
         item.innerHTML = `
 
           <img
-            src="${product.image || ""}"
+            src="${product.images?.[0] || product.image || ""}"
             alt="${product.name || "Product"}"
           >
 
@@ -1068,8 +1068,7 @@ function editProduct(
       product.description || "";
 
 
-  uploadedImageURL =
-    product.image || "";
+  uploadedImages = product.images || [product.image];
 
 
   const preview =
