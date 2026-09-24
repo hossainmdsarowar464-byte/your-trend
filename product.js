@@ -20,7 +20,6 @@ if (!product) {
 // Product Details
 // ======================================
 
-document.getElementById("productImage").src = product.images?.[0] || product.image;
 document.getElementById("productImage").src = (product.images?.[0] || product.image);
 const gallery = document.getElementById("imageGallery");
 gallery.innerHTML = "";
@@ -500,7 +499,11 @@ const upazila = document.getElementById("upazila").value;
   window.location.href =
     whatsappURL;
 
-}const districts = {"পঞ্চগড়":["পঞ্চগড় সদর","বোদা","দেবীগঞ্জ","আটোয়ারী","তেঁতুলিয়া"],
+}const districtSelect = document.getElementById("district");
+const upazilaSelect = document.getElementById("upazila");
+
+if (districtSelect && upazilaSelect){
+const districts = {"পঞ্চগড়":["পঞ্চগড় সদর","বোদা","দেবীগঞ্জ","আটোয়ারী","তেঁতুলিয়া"],
   "ঢাকা":["ধানমন্ডি","মিরপুর","গুলশান","মোহাম্মদপুর","সাভার","দোহার","কেরানীগঞ্জ"],
   "চট্টগ্রাম":["কোতোয়ালী","পটিয়া","সীতাকুণ্ড","রাউজান","হাটহাজারী"],
   "রংপুর":["রংপুর সদর","বদরগঞ্জ","গঙ্গাচড়া","কাউনিয়া","মিঠাপুকুর","পীরগঞ্জ","পীরগাছা","তারাগঞ্জ"],
@@ -556,5 +559,9 @@ function loadUpazilas() {
   });
 }
 
-districtSelect.addEventListener("change", loadUpazilas);
+districtSelect.addEventListener("change", loadUpazilas);}
+
+if (!product.image && (!product.images || product.images.length === 0)) {
+  document.getElementById("productImage").style.display = "none";
+}
 
