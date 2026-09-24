@@ -555,4 +555,19 @@ districtSelect.addEventListener("change", () => {
   });
 });
 
+const districtSelect = document.getElementById("district");
+const upazilaSelect = document.getElementById("upazila");
 
+Object.keys(districts).sort().forEach(d => {
+  districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
+});
+
+function loadUpazilas() {
+  upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+
+  (districts[districtSelect.value] || []).forEach(u => {
+    upazilaSelect.innerHTML += `<option value="${u}">${u}</option>`;
+  });
+}
+
+districtSelect.addEventListener("change", loadUpazilas);
