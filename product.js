@@ -356,7 +356,8 @@ function orderSelectedProduct() {
       .value
       .trim();
 
-
+const district = document.getElementById("district").value;
+const upazila = document.getElementById("upazila").value;
   const deliveryCharge =
     Number(
       document
