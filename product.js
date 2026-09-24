@@ -20,9 +20,14 @@ if (!product) {
 // Product Details
 // ======================================
 
-document
-  .getElementById("productImage")
-  .src = product.image;
+document.getElementById("productImage").src = product.images?.[0] || product.image;
+
+const gallery = document.getElementById("imageGallery");
+gallery.innerHTML = "";
+
+(product.images || [product.image]).forEach(img => {
+  gallery.innerHTML += `<img src="${img}" style="width:70px;height:70px;border-radius:8px;object-fit:cover" onclick="document.getElementById('productImage').src='${img}'">`;
+});
 
 
 document
