@@ -297,8 +297,8 @@ function goCheckout() {
       price:
         Number(product.price),
 
-      image:
-        product.image,
+      image: product.images?.[0] || product.image,
+images: product.images || [product.image],
 
       quantity:
         selectedQuantity,
