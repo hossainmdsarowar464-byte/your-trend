@@ -500,40 +500,7 @@ const upazila = document.getElementById("upazila").value;
   window.location.href =
     whatsappURL;
 
-}const districts = {
-  "ঢাকা":["ধামরাই","দোহার","কেরানীগঞ্জ","নবাবগঞ্জ","সাভার"],
-  "চট্টগ্রাম":["আনোয়ারা","বাঁশখালী","বোয়ালখালী","চন্দনাইশ","ফটিকছড়ি","হাটহাজারী","লোহাগাড়া","মীরসরাই","পটিয়া","রাউজান","রাঙ্গুনিয়া","সন্দ্বীপ","সীতাকুণ্ড"],
-  "রাজশাহী":["বাগমারা","চারঘাট","দুর্গাপুর","গোদাগাড়ী","মোহনপুর","পবা","পুঠিয়া","তানোর"],
-  "খুলনা":["বটিয়াঘাটা","দাকোপ","ডুমুরিয়া","দিঘলিয়া","কয়রা","পাইকগাছা","ফুলতলা","রূপসা","তেরখাদা"],
-  "বরিশাল":["আগৈলঝাড়া","বাবুগঞ্জ","বাকেরগঞ্জ","বানারীপাড়া","গৌরনদী","হিজলা","মেহেন্দিগঞ্জ","মুলাদী","উজিরপুর"],
-  "সিলেট":["বালাগঞ্জ","বিয়ানীবাজার","বিশ্বনাথ","কোম্পানীগঞ্জ","ফেঞ্চুগঞ্জ","গোলাপগঞ্জ","গোয়াইনঘাট","জৈন্তাপুর","কানাইঘাট","দক্ষিণ সুরমা","জকিগঞ্জ"],
-  "রংপুর":["বদরগঞ্জ","গঙ্গাচড়া","কাউনিয়া","মিঠাপুকুর","পীরগঞ্জ","পীরগাছা","তারাগঞ্জ"],
-  "ময়মনসিংহ":["ভালুকা","ধোবাউড়া","ফুলবাড়ীয়া","গফরগাঁও","গৌরীপুর","হালুয়াঘাট","ঈশ্বরগঞ্জ","মুক্তাগাছা","নান্দাইল","ত্রিশাল"],
-  "পঞ্চগড়":["পঞ্চগড় সদর","আটোয়ারী","বোদা","দেবীগঞ্জ","তেঁতুলিয়া"]
-};const districtSelect = document.getElementById("district");
-const upazilaSelect = document.getElementById("upazila");
-
-Object.keys(districts).sort().forEach(d => {
-  districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
-});
-
-districtSelect.addEventListener("change", () => {
-  upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
-
-  const list = districts[districtSelect.value] || [];
-
-  list.forEach(u => {
-    upazilaSelect.innerHTML += `<option value="${u}">${u}</option>`;
-  });
-});
-
-const districtSelect = document.getElementById("district");
-
-districts.forEach(d=>{
-  districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
-});
-const upazilas = {
-  "পঞ্চগড়":["পঞ্চগড় সদর","বোদা","দেবীগঞ্জ","আটোয়ারী","তেঁতুলিয়া"],
+}const districts = {"পঞ্চগড়":["পঞ্চগড় সদর","বোদা","দেবীগঞ্জ","আটোয়ারী","তেঁতুলিয়া"],
   "ঢাকা":["ধানমন্ডি","মিরপুর","গুলশান","মোহাম্মদপুর","সাভার","দোহার","কেরানীগঞ্জ"],
   "চট্টগ্রাম":["কোতোয়ালী","পটিয়া","সীতাকুণ্ড","রাউজান","হাটহাজারী"],
   "রংপুর":["রংপুর সদর","বদরগঞ্জ","গঙ্গাচড়া","কাউনিয়া","মিঠাপুকুর","পীরগঞ্জ","পীরগাছা","তারাগঞ্জ"],
@@ -571,17 +538,35 @@ const upazilas = {
 "খাগড়াছড়ি":["খাগড়াছড়ি সদর","দীঘিনালা","গুইমারা","লক্ষ্মীছড়ি","মহালছড়ি","মানিকছড়ি","মাটিরাঙ্গা","পানছড়ি","রামগড়"],
 "রাঙ্গামাটি":["রাঙ্গামাটি সদর","বাঘাইছড়ি","বরকল","বিলাইছড়ি","জুরাছড়ি","কাপ্তাই","কাউখালী","লংগদু","নানিয়ারচর","রাজস্থলী"],
 "বান্দরবান":["বান্দরবান সদর","আলীকদম","লামা","নাইক্ষ্যংছড়ি","রুমা","রোয়াংছড়ি","থানচি"]
-};
+};const districtSelect = document.getElementById("district");
+const upazilaSelect = document.getElementById("upazila");
 
-function loadUpazilas(){
-  const d = districtSelect.value;
-  const u = document.getElementById("upazila");
+Object.keys(districts).sort().forEach(d => {
+  districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
+});
 
-  u.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+districtSelect.addEventListener("change", () => {
+  upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
 
-  (upazilas[d] || []).forEach(x=>{
-    u.innerHTML += `<option value="${x}">${x}</option>`;
+  const list = districts[districtSelect.value] || [];
+
+  list.forEach(u => {
+    upazilaSelect.innerHTML += `<option value="${u}">${u}</option>`;
   });
-}
+});
+const districtSelect = document.getElementById("district");
+const upazilaSelect = document.getElementById("upazila");
 
-districtSelect.addEventListener("change", loadUpazilas);
+Object.keys(districts).sort().forEach(d => {
+  districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
+});
+
+districtSelect.addEventListener("change", () => {
+  upazilaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+
+  (districts[districtSelect.value] || []).forEach(u => {
+    upazilaSelect.innerHTML += `<option value="${u}">${u}</option>`;
+  });
+});
+
+
