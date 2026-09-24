@@ -1077,7 +1077,7 @@ function editProduct(
     );
 
 
-  if (uploadedImageURL) {
+  if (uploadedImages.length > 0) {
 
     preview.src = uploadedImages[0];
 
