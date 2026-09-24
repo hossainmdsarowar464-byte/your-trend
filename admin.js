@@ -76,7 +76,7 @@ const CLOUDINARY_UPLOAD_PRESET =
    VARIABLES
 ========================= */
 
-let uploadedImageURL = "";
+let uploadedImages = [];
 
 let editingProductId = null;
 
@@ -321,11 +321,8 @@ function setupCloudinaryWidget() {
         sources:
           ["local"],
 
-        multiple:
-          false,
-
-        maxFiles:
-          1,
+        multiple: true,
+maxFiles: 12,
 
         resourceType:
           "image",
@@ -375,8 +372,7 @@ function setupCloudinaryWidget() {
             "success"
         ) {
 
-          uploadedImageURL =
-            result.info.secure_url;
+          uploadedImages.push(result.info.secure_url);
 
 
           const preview =
@@ -1316,8 +1312,8 @@ async function saveProduct() {
           stock:
             stock,
 
-          image:
-            uploadedImageURL,
+          image: uploadedImages[0],
+images: uploadedImages,
 
           category:
             category,
