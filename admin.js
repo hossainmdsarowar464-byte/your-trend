@@ -1245,16 +1245,16 @@ async function saveProduct() {
 
 
   if (
-    !name ||
-    priceValue === "" ||
-    !Number.isFinite(price) ||
-    price < 0 ||
-    stockValue === "" ||
-    !Number.isInteger(stock) ||
-    stock < 0 ||
-    uploadedImages.length === 0 ||
-    !description
-  ) {
+  !name ||
+  priceValue === "" ||
+  !Number.isFinite(price) ||
+  price < 0 ||
+  stockValue === "" ||
+  !Number.isInteger(stock) ||
+  stock < 0 ||
+  uploadedImages.length === 0 ||
+  !description
+) {
 
     message.innerText =
       "⚠️ সব তথ্য পূরণ করুন। Stock 0 বা তার বেশি হতে হবে।";
