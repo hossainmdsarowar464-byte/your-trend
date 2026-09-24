@@ -515,3 +515,22 @@ const districtSelect = document.getElementById("district");
 districts.forEach(d=>{
   districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
 });
+const upazilas = {
+  "পঞ্চগড়":["পঞ্চগড় সদর","বোদা","দেবীগঞ্জ","আটোয়ারী","তেঁতুলিয়া"],
+  "ঢাকা":["ধানমন্ডি","মিরপুর","গুলশান","মোহাম্মদপুর","সাভার","দোহার","কেরানীগঞ্জ"],
+  "চট্টগ্রাম":["কোতোয়ালী","পটিয়া","সীতাকুণ্ড","রাউজান","হাটহাজারী"],
+  "রংপুর":["রংপুর সদর","বদরগঞ্জ","গঙ্গাচড়া","কাউনিয়া","মিঠাপুকুর","পীরগঞ্জ","পীরগাছা","তারাগঞ্জ"]
+};
+
+function loadUpazilas(){
+  const d = districtSelect.value;
+  const u = document.getElementById("upazila");
+
+  u.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+
+  (upazilas[d] || []).forEach(x=>{
+    u.innerHTML += `<option value="${x}">${x}</option>`;
+  });
+}
+
+districtSelect.addEventListener("change", loadUpazilas);
