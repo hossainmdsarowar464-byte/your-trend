@@ -383,8 +383,7 @@ maxFiles: 12,
 
           if (preview) {
 
-            preview.src =
-              uploadedImageURL;
+            preview.src = uploadedImages[0];
 
             preview.style.display =
               "block";
