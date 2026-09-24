@@ -21,7 +21,7 @@ if (!product) {
 // ======================================
 
 document.getElementById("productImage").src = product.images?.[0] || product.image;
-
+document.getElementById("productImage").src = (product.images?.[0] || product.image);
 const gallery = document.getElementById("imageGallery");
 gallery.innerHTML = "";
 
