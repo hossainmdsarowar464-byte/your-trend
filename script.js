@@ -281,29 +281,15 @@ async function loadFirebaseProducts() {
 
 
         list.push({
-
-          name:
-            product.name,
-
-          price:
-            product.price,
-
-          image:
-            product.image,
-
-          category:
-            product.category,
-
-          description:
-            product.description,
-
-          stock:
-            Number(product.stock) || 0,
-
-          sizes:
-            product.sizes || []
-
-        });
+  name: product.name,
+  price: product.price,
+  image: product.images?.[0] || product.image,
+  images: product.images || [product.image],
+  category: product.category,
+  description: product.description,
+  stock: Number(product.stock) || 0,
+  sizes: product.sizes || []
+});
 
       }
     );
