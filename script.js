@@ -1019,9 +1019,9 @@ cartItems.forEach(
       subtotal +
       "\n" +
 
-      "🖼️ Product Image: " +
-      item.image +
-      "\n\n";
+      "🖼️ Product Image: https://hossainmdsarowar464-byte.github.io/your-trend/" +
+item.image +
+"\n\n";
 
   }
 );
