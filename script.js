@@ -990,37 +990,41 @@ function placeOrder() {
 
   let orderText =
 
-    "🛍️ YOUR TREND ORDER\n\n" +
+  "🛍️ YOUR TREND ORDER\n\n" +
 
-    "🧾 Order ID: " +
-    orderId +
-    "\n\n";
-
-
-  cartItems.forEach(
-    function (item) {
-
-      const subtotal =
-        item.price *
-        item.quantity;
+  "🧾 Order ID: " +
+  orderId +
+  "\n\n";
 
 
-      productTotal +=
-        subtotal;
+cartItems.forEach(
+  function (item) {
+
+    const subtotal =
+      item.price *
+      item.quantity;
 
 
-      orderText +=
+    productTotal +=
+      subtotal;
 
-        "📦 " +
-        item.name +
-        " × " +
-        item.quantity +
-        " = ৳" +
-        subtotal +
-        "\n";
 
-    }
-  );
+    orderText +=
+
+      "📦 " +
+      item.name +
+      " × " +
+      item.quantity +
+      " = ৳" +
+      subtotal +
+      "\n" +
+
+      "🖼️ Product Image: " +
+      item.image +
+      "\n\n";
+
+  }
+);
 
 
   const grandTotal =
