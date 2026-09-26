@@ -189,7 +189,13 @@ function showProducts(products) {
 
 
         ${buttonHTML}
-
+<button
+  class="btn"
+  onclick="event.stopPropagation(); shareProduct('${p.name}')"
+  style="background:#1877f2;margin-top:8px;"
+>
+  📤 Share
+</button>
       </div>
 
     `;
@@ -1370,6 +1376,18 @@ if (trackOrderBtn) {
       }
 
     }
+  );
+
+}function shareProduct(productName) {
+
+  const url =
+    "https://hossainmdsarowar464-byte.github.io/your-trend/product.html?id=" +
+    encodeURIComponent(productName);
+
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u=" +
+    encodeURIComponent(url),
+    "_blank"
   );
 
 }
