@@ -96,7 +96,7 @@ function showProducts(products) {
 
   products.forEach(function (p) {
 
-    const stock = p.stock;
+    const stock = String(p.stock);
 
 let stockHTML = "";
 let buttonHTML = "";
