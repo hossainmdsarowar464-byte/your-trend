@@ -90,70 +90,39 @@ searchInput.addEventListener(
 // =========================
 
 function showProducts(products) {
-
   box.innerHTML = "";
 
-
   products.forEach(function (p) {
+    const stock = String(p.stock);
 
-  const stock = String(p.stock);
+    const stockHTML =
+      (stock === "নেই" || stock === "0")
+        ? `<p style="color:red;font-weight:bold;">❌ Out of Stock</p>`
+        : `<p style="color:green;font-weight:bold;">📦 Stock: ${stock}</p>`;
 
-let stockHTML = "";
-let buttonHTML = "";
+    const buttonHTML =
+      (stock === "নেই" || stock === "0")
+        ? `<button class="btn" disabled style="background:#999;">❌ Out of Stock</button>`
+        : `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">🛒 Add to Cart</button>`;
 
-if (stock === "নেই" || stock === "0") {
-  stockHTML = `<p style="color:red;font-weight:bold;">❌ Out of Stock</p>`;
-  buttonHTML = `<button class="btn" disabled style="background:#999;">❌ Out of Stock</button>`;
-} else {
-  stockHTML = `<p style="color:green;font-weight:bold;">📦 Stock: ${stock}</p>`;
-  buttonHTML = `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">🛒 Add to Cart</button>`;
-}
     box.innerHTML += `
+      <div class="card" onclick="openProduct('${p.name}')">
+        <span class="product-badge">${
+          p.category === "fashion" ? "👕 FASHION" :
+          p.category === "gadgets" ? "⌚ GADGETS" :
+          p.category === "bags" ? "🎒 BAGS" : "✨ PRODUCT"
+        }</span>
 
-      <div
-        class="card"
-        onclick="openProduct('${p.name}')"
-      >
-<span class="product-badge">
-  ${
-    p.category === "fashion"
-      ? "👕 FASHION"
-      : p.category === "gadgets"
-      ? "⌚ GADGETS"
-      : p.category === "bags"
-      ? "🎒 BAGS"
-      : "✨ PRODUCT"
-  }
-</span>
-        <img
-          class="img"
-          src="${p.image}"
-          alt="${p.name}"
-          onclick="openProduct('${p.name}')"
-style="cursor:pointer;">
+        <img class="img" src="${p.image}" alt="${p.name}" style="cursor:pointer;">
 
-
-        <h3>
-          ${p.name}
-        </h3>
-
-
-        <p>
-          <b>৳${p.price}</b>
-        </p>
-
+        <h3>${p.name}</h3>
+        <p><b>৳${p.price}</b></p>
 
         ${stockHTML}
-
-
         ${buttonHTML}
-
       </div>
-
     `;
-
   });
-
 }
 
 
