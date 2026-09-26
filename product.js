@@ -831,3 +831,9 @@ upazilaSelect.innerHTML = '<option value="">উপজেলা নির্ব�
 };window.orderSelectedProduct = orderSelectedProduct;
 document.getElementById("directOrderBtn")
   .addEventListener("click", orderSelectedProduct);
+window.increaseProductQuantity = increaseProductQuantity;
+window.decreaseProductQuantity = decreaseProductQuantity;
+window.addSelectedProduct = addSelectedProduct;
+window.goCheckout = goCheckout;
+document.getElementById("directOrderBtn")
+  .addEventListener("click", orderSelectedProduct);
