@@ -1206,87 +1206,73 @@ if (trackOrderBtn) {
     "_blank"
   );
 
-}/* =========================================================
-   YOUR TREND — BANNER SLIDER
-   ========================================================= */
+}/* YOUR TREND BANNER SLIDER */
 
-const bannerSlides =
-  document.querySelector(".bannerSlides");
+const slider = document.querySelector(".bannerSlider");
+const slides = document.querySelector(".bannerSlides");
 
-const bannerSlider =
-  document.querySelector(".bannerSlider");
+let bannerIndex = 0;
+let touchStartX = 0;
+let touchEndX = 0;
 
-let currentBanner = 0;
-
-let startX = 0;
-let endX = 0;
-
-function showBanner(index) {
-
-  if (index >= 5) {
-    currentBanner = 0;
-  }
-
-  if (index < 0) {
-    currentBanner = 4;
-  }
-
-  bannerSlides.style.transform =
-    `translateX(-${currentBanner * 20}%)`;
+function moveBanner() {
+  slides.style.transform =
+    "translateX(-" + (bannerIndex * 20) + "%)";
 }
 
-
-/* AUTO SLIDE */
+/* Auto Slide */
 
 setInterval(function () {
 
-  currentBanner++;
+  bannerIndex++;
 
-  showBanner(currentBanner);
+  if (bannerIndex >= 5) {
+    bannerIndex = 0;
+  }
+
+  moveBanner();
 
 }, 5000);
 
 
-/* SWIPE */
+/* Swipe */
 
-bannerSlider.addEventListener(
-  "touchstart",
-  function (e) {
+slider.addEventListener("touchstart", function(e) {
 
-    startX = e.touches[0].clientX;
+  touchStartX = e.touches[0].clientX;
 
-  },
-  { passive: true }
-);
+});
 
 
-bannerSlider.addEventListener(
-  "touchend",
-  function (e) {
+slider.addEventListener("touchend", function(e) {
 
-    endX = e.changedTouches[0].clientX;
+  touchEndX = e.changedTouches[0].clientX;
 
-    const difference =
-      startX - endX;
+  let distance =
+    touchStartX - touchEndX;
 
-    if (Math.abs(difference) < 50) {
-      return;
+  if (distance > 50) {
+
+    bannerIndex++;
+
+    if (bannerIndex >= 5) {
+      bannerIndex = 0;
     }
 
-    if (difference > 0) {
+    moveBanner();
 
-      // Swipe left
-      currentBanner++;
-      showBanner(currentBanner);
+  }
 
-    } else {
+  if (distance < -50) {
 
-      // Swipe right
-      currentBanner--;
-      showBanner(currentBanner);
+    bannerIndex--;
 
+    if (bannerIndex < 0) {
+      bannerIndex = 4;
     }
 
-  },
-  { passive: true }
-);
+    moveBanner();
+
+  }
+
+});
