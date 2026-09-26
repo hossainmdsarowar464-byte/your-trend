@@ -1751,7 +1751,17 @@ async function loadOrders() {
           order.status ||
           "Pending";
 
+const deleteBtn = document.createElement("button");
+deleteBtn.innerText = "🗑️ Delete Order";
+deleteBtn.type = "button";
+deleteBtn.style.background = "#d32f2f";
+deleteBtn.style.marginTop = "10px";
 
+deleteBtn.addEventListener("click", function () {
+  deleteOrder(orderDoc.id, order.orderNumber || orderDoc.id);
+});
+
+item.querySelector(".product-info").appendChild(deleteBtn);
         /* =========================
            WHATSAPP CUSTOMER
         ========================= */
@@ -1987,4 +1997,20 @@ async function loadOrders() {
 
   }
 
-          }
+          }async function deleteOrder(orderId, orderNumber) {
+
+  const ok = confirm("এই Order ডিলিট করবেন?");
+
+  if (!ok) return;
+
+  try {
+    await deleteDoc(doc(db, "orders", orderId));
+    await deleteDoc(doc(db, "orderTracking", orderNumber));
+
+    alert("✅ Order Delete হয়েছে");
+    loadOrders();
+
+  } catch (e) {
+    alert("❌ Delete হয়নি: " + e.message);
+  }
+}
