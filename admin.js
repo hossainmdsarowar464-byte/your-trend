@@ -1893,13 +1893,26 @@ item.querySelector(".product-info").appendChild(deleteBtn);
         );
 
 
-        item
-          .querySelector(
-            ".product-info"
-          )
-          .appendChild(
-            whatsappBtn
-          );
+        const info = item.querySelector(".product-info");
+
+info.appendChild(whatsappBtn);
+
+const deleteBtn = document.createElement("button");
+deleteBtn.innerText = "🗑 Delete Order";
+deleteBtn.type = "button";
+deleteBtn.style.background = "#d32f2f";
+deleteBtn.style.marginTop = "10px";
+
+deleteBtn.onclick = async () => {
+  if (!confirm("Delete this order?")) return;
+
+  await deleteDoc(doc(db, "orders", orderDoc.id));
+  await deleteDoc(doc(db, "orderTracking", order.orderNumber || orderDoc.id));
+
+  loadOrders();
+};
+
+info.appendChild(deleteBtn);
 
 
         /* =========================
