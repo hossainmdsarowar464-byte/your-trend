@@ -378,62 +378,55 @@ images: product.images || [product.image],
 
 }
 
-
 // ======================================
-// Direct WhatsApp Order
+// Direct Product Order
 // ======================================
 
-function orderSelectedProduct() {
+async function orderSelectedProduct() {
 
   const name =
-    document
-      .getElementById("name")
-      .value
-      .trim();
-
+    document.getElementById("name").value.trim();
 
   const phone =
-    document
-      .getElementById("phone")
-      .value
-      .trim();
+    document.getElementById("phone").value.trim();
 
+  const district =
+    document.getElementById("district").value.trim();
+
+  const upazila =
+    document.getElementById("upazila").value.trim();
 
   const address =
-    document
-      .getElementById("address")
-      .value
-      .trim();
+    document.getElementById("address").value.trim();
 
-const district = document.getElementById("district").value;
-const upazila = document.getElementById("upazila").value;
   const deliveryCharge =
     Number(
-      document
-        .getElementById("deliveryArea")
-        .value
+      document.getElementById("deliveryArea").value
     );
-
 
   const size =
     getSelectedSize();
-
 
   const msg =
     document.getElementById("msg");
 
 
+  // ==============================
+  // VALIDATION
+  // ==============================
+
   if (
     !name ||
     !phone ||
+    !district ||
+    !upazila ||
     !address
   ) {
 
     msg.innerText =
-      "⚠️ নাম, ফোন ও ঠিকানা পূরণ করুন";
+      "⚠️ সব তথ্য পূরণ করুন";
 
-    msg.style.color =
-      "red";
+    msg.style.color = "red";
 
     return;
 
@@ -445,13 +438,16 @@ const upazila = document.getElementById("upazila").value;
     msg.innerText =
       "⚠️ Product-এর Size নির্বাচন করুন";
 
-    msg.style.color =
-      "red";
+    msg.style.color = "red";
 
     return;
 
   }
 
+
+  // ==============================
+  // ORDER NUMBER
+  // ==============================
 
   let orderNumber =
     Number(
@@ -459,7 +455,6 @@ const upazila = document.getElementById("upazila").value;
         "yourTrendOrderNumber"
       )
     ) || 0;
-
 
   orderNumber++;
 
@@ -472,13 +467,24 @@ const upazila = document.getElementById("upazila").value;
 
   const orderId =
     "YOURTREND-" +
-    String(orderNumber)
-      .padStart(4, "0");
+    String(orderNumber).padStart(4, "0");
 
+
+  // ==============================
+  // TRACKING TOKEN
+  // ==============================
+
+  const trackingToken =
+    crypto.randomUUID();
+
+
+  // ==============================
+  // PRODUCT TOTAL
+  // ==============================
 
   const productTotal =
     Number(product.price) *
-    selectedQuantity;
+    Number(selectedQuantity);
 
 
   const grandTotal =
@@ -486,69 +492,227 @@ const upazila = document.getElementById("upazila").value;
     deliveryCharge;
 
 
-  const orderText =
+  // ==============================
+  // ORDER ITEM
+  // ==============================
 
-    "🛍️ YOUR TREND ORDER\n\n" +
+  const orderItems = [
 
-    "🧾 Order ID: " +
-    orderId +
+    {
 
-    "\n\n" +
+      name:
+        product.name,
 
-    "📦 Product: " +
-    product.name +
+      price:
+        Number(product.price),
 
-    "\n🔢 Quantity: " +
-    selectedQuantity +
+      quantity:
+        Number(selectedQuantity),
 
-    "\n📏 Size: " +
-    size +
+      size:
+        size,
 
-    "\n💰 Price: ৳" +
-    product.price +
+      subtotal:
+        productTotal,
 
-    "\n💵 Subtotal: ৳" +
-    productTotal +
+      image:
+        product.images?.[0] ||
+        product.image ||
+        ""
 
-    "\n\n" +
+    }
 
-    "🛍️ Product Total: ৳" +
-    productTotal +
-
-    "\n🚚 Delivery Charge: ৳" +
-    deliveryCharge +
-
-    "\n💰 Grand Total: ৳" +
-    grandTotal +
-
-    "\n💵 Payment: Cash on Delivery" +
-
-    "\n\n👤 নাম: " +
-    name +
-
-    "\n📞 ফোন: " +
-    phone +
-
-    "\n🏙️ জেলা: " + district +
-"\n📍 উপজেলা: " + upazila +
-"\n🏠 ঠিকানা: " + address;
+  ];
 
 
-  const whatsappNumber =
-    "8801775628710";
+  // ==============================
+  // SAVE TO FIREBASE
+  // ==============================
+
+  try {
+
+    msg.innerText =
+      "⏳ Order Save হচ্ছে...";
+
+    msg.style.color =
+      "#ff6b00";
 
 
-  const whatsappURL =
-    "https://wa.me/" +
-    whatsappNumber +
-    "?text=" +
-    encodeURIComponent(
-      orderText
+    await addDoc(
+      collection(
+        db,
+        "orders"
+      ),
+      {
+
+        orderId:
+          orderId,
+
+        trackingToken:
+          trackingToken,
+
+        customerName:
+          name,
+
+        phone:
+          phone,
+
+        district:
+          district,
+
+        upazila:
+          upazila,
+
+        address:
+          address,
+
+        items:
+          orderItems,
+
+        productTotal:
+          productTotal,
+
+        deliveryCharge:
+          deliveryCharge,
+
+        grandTotal:
+          grandTotal,
+
+        paymentMethod:
+          "Cash on Delivery",
+
+        status:
+          "Pending",
+
+        createdAt:
+          serverTimestamp()
+
+      }
     );
 
 
-  window.location.href =
-    whatsappURL;
+    // ==============================
+    // ORDER TRACKING
+    // ==============================
+
+    await setDoc(
+      doc(
+        db,
+        "orderTracking",
+        orderId
+      ),
+      {
+
+        orderNumber:
+          orderId,
+
+        status:
+          "Pending"
+
+      }
+    );
+
+
+    // ==============================
+    // WHATSAPP MESSAGE
+    // ==============================
+
+    const orderText =
+
+      "🛍️ YOUR TREND ORDER\n\n" +
+
+      "🧾 Order ID: " +
+      orderId +
+
+      "\n\n📦 Product: " +
+      product.name +
+
+      "\n🔢 Quantity: " +
+      selectedQuantity +
+
+      "\n📏 Size: " +
+      size +
+
+      "\n💰 Price: ৳" +
+      product.price +
+
+      "\n💵 Subtotal: ৳" +
+      productTotal +
+
+      "\n\n🛍️ Product Total: ৳" +
+      productTotal +
+
+      "\n🚚 Delivery Charge: ৳" +
+      deliveryCharge +
+
+      "\n💰 Grand Total: ৳" +
+      grandTotal +
+
+      "\n💵 Payment: Cash on Delivery" +
+
+      "\n\n👤 নাম: " +
+      name +
+
+      "\n📞 ফোন: " +
+      phone +
+
+      "\n🏙️ জেলা: " +
+      district +
+
+      "\n🏘️ উপজেলা: " +
+      upazila +
+
+      "\n📍 ঠিকানা: " +
+      address;
+
+
+    const whatsappNumber =
+      "8801775628710";
+
+
+    const whatsappURL =
+      "https://wa.me/" +
+      whatsappNumber +
+      "?text=" +
+      encodeURIComponent(
+        orderText
+      );
+
+
+    msg.innerText =
+      "✅ Order Save হয়েছে। WhatsApp খোলা হচ্ছে...";
+
+    msg.style.color =
+      "green";
+
+
+    setTimeout(
+      function() {
+
+        window.location.href =
+          whatsappURL;
+
+      },
+      500
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Direct Order save error:",
+      error
+    );
+
+
+    msg.innerText =
+      "❌ Order Save হয়নি: " +
+      error.message;
+
+    msg.style.color =
+      "red";
+
+  }
 
 }
 
