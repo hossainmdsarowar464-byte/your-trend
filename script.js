@@ -279,96 +279,37 @@ function filterCategory(category) {
 
 function addCart(productName) {
 
-  const product =
-    list.find(
-      function (p) {
-
-        return p.name ===
-          productName;
-
-      }
-    );
-
-
+  const product = list.find(p => p.name === productName);
   if (!product) return;
-
 
   const stock = String(product.stock).trim();
 
-if (stock === "নেই" || stock === "0") {
-  alert("Out of Stock");
-  return;
-} {
-
-    alert(
-      "❌ এই Product বর্তমানে Out of Stock"
-    );
-
+  // শুধু "নেই" বা "0" হলে বন্ধ
+  if (stock === "নেই" || stock === "0") {
+    alert("❌ এই Product বর্তমানে Out of Stock");
     return;
-
   }
 
-
-  const existing =
-    cartItems.find(
-      function (item) {
-
-        return item.name ===
-          productName;
-
-      }
-    );
-
+  const existing = cartItems.find(item => item.name === productName);
 
   if (existing) {
-
-    // Stock limit
-
-    if (
-      existing.quantity >=
-      stock
-    ) {
-
-      alert(
-        "⚠️ এই Product-এর যতগুলো Stock আছে তার বেশি নিতে পারবেন না।"
-      );
-
+    if (!isNaN(Number(stock)) && existing.quantity >= Number(stock)) {
+      alert("⚠️ স্টকের বেশি নিতে পারবেন না।");
       return;
-
     }
-
-
     existing.quantity++;
-
   } else {
-
     cartItems.push({
-
-      name:
-        product.name,
-
-      price:
-        product.price,
-
-      image:
-        product.image,
-
-      quantity:
-        1,
-
-      stock:
-        stock,
-
-      sizes:
-        product.sizes || []
-
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+      stock: stock,
+      sizes: product.sizes || []
     });
-
   }
 
-
   updateCart();
-
 }
 
 
