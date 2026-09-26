@@ -170,9 +170,8 @@ function showProducts(products) {
           class="img"
           src="${p.image}"
           alt="${p.name}"
-          onclick="event.stopPropagation(); viewImage('${p.image}')"
-          style="cursor:zoom-in;"
-        >
+          onclick="openProduct('${p.name}')"
+style="cursor:pointer;"
 
 
         <h3>
