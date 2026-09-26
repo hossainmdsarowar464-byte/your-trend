@@ -1112,7 +1112,7 @@ function openProduct(
 
 
   window.location.href =
-    "product.html";
+  "product.html?id=" + encodeURIComponent(product.name);
 
 }
 
