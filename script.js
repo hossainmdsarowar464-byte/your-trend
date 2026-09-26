@@ -93,10 +93,13 @@ function showProducts(products) {
   box.innerHTML = "";
 
   products.forEach(function (p) {
-    const stock = String(p.stock);
+    const stock = String(p.stock).trim();
 
-    const stockHTML =
-      (stock === "নেই" || stock === "0")
+    if (stock === "নেই" || stock === "0") {
+  // Out of Stock
+} else {
+  // Stock: আছে / 5 / 10
+    }
         ? `<p style="color:red;font-weight:bold;">❌ Out of Stock</p>`
         : `<p style="color:green;font-weight:bold;">📦 Stock: ${stock}</p>`;
 
