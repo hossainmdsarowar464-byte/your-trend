@@ -904,7 +904,11 @@ async function loadProducts() {
               );
 
             }
-          );
+          );item
+  .querySelector(".share-btn")
+  .addEventListener("click", function () {
+    shareProduct(productDoc.id);
+  });
 
       }
     );
