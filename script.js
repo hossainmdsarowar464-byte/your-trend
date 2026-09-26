@@ -1207,4 +1207,229 @@ if (trackOrderBtn) {
   );
 
 }
+/* =====================================================
+   YOUR TREND — AUTO + SWIPE BANNER
+   ===================================================== */
 
+const bannerSlider =
+  document.querySelector(".bannerSlider");
+
+const bannerSlides =
+  document.querySelector(".bannerSlides");
+
+if (bannerSlider && bannerSlides) {
+
+  const originalBanners =
+    Array.from(
+      bannerSlides.querySelectorAll("img")
+    );
+
+  const totalBanners =
+    originalBanners.length;
+
+  if (totalBanners > 0) {
+
+    /* শেষ Banner-এর Clone */
+    const lastClone =
+      originalBanners[
+        totalBanners - 1
+      ].cloneNode(true);
+
+    /* প্রথম Banner-এর Clone */
+    const firstClone =
+      originalBanners[0].cloneNode(true);
+
+    bannerSlides.insertBefore(
+      lastClone,
+      bannerSlides.firstChild
+    );
+
+    bannerSlides.appendChild(
+      firstClone
+    );
+
+
+    let currentIndex = 1;
+
+    let startX = 0;
+    let endX = 0;
+
+    let moving = false;
+
+
+    /* =========================
+       BANNER MOVE
+    ========================= */
+
+    function moveBanner(animate) {
+
+      if (animate) {
+
+        bannerSlides.style.transition =
+          "transform 0.5s ease";
+
+      } else {
+
+        bannerSlides.style.transition =
+          "none";
+
+      }
+
+      bannerSlides.style.transform =
+        "translate3d(-" +
+        (currentIndex *
+          window.innerWidth) +
+        "px, 0, 0)";
+    }
+
+
+    /* =========================
+       FIRST BANNER
+    ========================= */
+
+    moveBanner(false);
+
+
+    /* =========================
+       AUTO SLIDE
+    ========================= */
+
+    setInterval(function () {
+
+      if (moving) return;
+
+      moving = true;
+
+      currentIndex++;
+
+      moveBanner(true);
+
+    }, 5000);
+
+
+    /* =========================
+       LOOP RESET
+    ========================= */
+
+    bannerSlides.addEventListener(
+      "transitionend",
+      function () {
+
+        if (
+          currentIndex ===
+          totalBanners + 1
+        ) {
+
+          currentIndex = 1;
+
+          moveBanner(false);
+        }
+
+
+        if (
+          currentIndex === 0
+        ) {
+
+          currentIndex =
+            totalBanners;
+
+          moveBanner(false);
+        }
+
+
+        moving = false;
+
+      }
+    );
+
+
+    /* =========================
+       SWIPE START
+    ========================= */
+
+    bannerSlider.addEventListener(
+      "touchstart",
+      function (event) {
+
+        startX =
+          event.touches[0].clientX;
+
+      },
+      { passive: true }
+    );
+
+
+    /* =========================
+       SWIPE END
+    ========================= */
+
+    bannerSlider.addEventListener(
+      "touchend",
+      function (event) {
+
+        endX =
+          event.changedTouches[0].clientX;
+
+        const distance =
+          startX - endX;
+
+
+        if (
+          Math.abs(distance) < 50
+        ) {
+
+          return;
+        }
+
+
+        if (moving) {
+
+          return;
+        }
+
+
+        moving = true;
+
+
+        /* LEFT SWIPE */
+
+        if (distance > 50) {
+
+          currentIndex++;
+
+          moveBanner(true);
+
+        }
+
+
+        /* RIGHT SWIPE */
+
+        else if (distance < -50) {
+
+          currentIndex--;
+
+          moveBanner(true);
+
+        }
+
+      },
+      { passive: true }
+    );
+
+
+    /* =========================
+       SCREEN RESIZE
+    ========================= */
+
+    window.addEventListener(
+      "resize",
+      function () {
+
+        moveBanner(false);
+
+      }
+    );
+
+  }
+
+    }
