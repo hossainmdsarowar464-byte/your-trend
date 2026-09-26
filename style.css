@@ -93,36 +93,31 @@ body > img:first-child {
    SEARCH
    ========================================================= */
 
-.search-box {
+.search-box{
+  width: calc(100% - 24px);
   max-width: 700px;
-  margin: 0 auto;
+  margin: 10px auto 14px;
+  padding: 0 12px;
+  box-sizing: border-box;
 }
 
-.search-box input {
+.search-box input{
   width: 100%;
-
-  padding: 14px 18px;
-
-  border: none;
-  border-radius: 30px;
-
+  height: 50px;
+  padding: 0 18px 0 46px;
+  border: 1px solid #E5E7EB;
+  border-radius: 999px;
   outline: none;
-
-  font-size: 15px;
-
-  background: #ffffff;
-
-  color: var(--text);
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.18);
+  font-size: 16px;
+  background: #fff url("images/search.png") no-repeat 16px center;
+  background-size: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.10);
 }
 
-.search-box input:focus {
-  box-shadow:
-    0 0 0 3px rgba(37, 99, 235, 0.25),
-    0 4px 15px rgba(0, 0, 0, 0.18);
+.search-box input:focus{
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
 }
-
 
 /* =========================================================
    CATEGORY BUTTONS
