@@ -1552,3 +1552,240 @@ textarea:focus {
   padding:0 18px;
   font-size:16px;
 }
+/* =========================================================
+   YOUR TREND — COMPACT TOP HEADER
+   ========================================================= */
+
+.yourTrendHeader {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 9999;
+  padding: 4px 8px 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* TOP ROW */
+.headerTop {
+  height: 46px;
+  min-height: 46px;
+  padding: 0 2px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+}
+
+/* MENU */
+#yourTrendMenu {
+  width: 42px;
+  flex: 0 0 42px;
+}
+
+#yourTrendMenu summary {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 23px;
+  padding: 0;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  border-radius: 9px;
+
+  box-shadow: 0 2px 7px rgba(0,0,0,.14);
+
+  list-style: none;
+  cursor: pointer;
+}
+
+#yourTrendMenu summary::-webkit-details-marker {
+  display: none;
+}
+
+/* LOGO */
+.yourTrendBrand {
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yourTrendBrand img {
+  width: 36px;
+  height: 36px;
+
+  object-fit: contain;
+}
+
+/* CART */
+.cart {
+  position: static;
+
+  margin: 0;
+
+  padding: 7px 10px;
+
+  background: #ffffff;
+  color: #2563eb;
+
+  border-radius: 20px;
+
+  font-size: 16px;
+
+  box-shadow: 0 2px 7px rgba(0,0,0,.14);
+
+  flex: 0 0 auto;
+}
+
+/* CART NUMBER */
+#count {
+  padding: 1px 6px;
+  font-size: 11px;
+}
+
+/* SEARCH AREA */
+.search-box {
+  width: 100%;
+  max-width: none;
+
+  margin: 5px 0 4px;
+
+  padding: 0 4px;
+}
+
+/* SEARCH INPUT */
+.search-box input {
+  width: 100%;
+
+  height: 40px;
+
+  padding: 0 16px 0 42px;
+
+  border-radius: 22px;
+
+  font-size: 14px;
+
+  background-size: 17px;
+  background-position: 14px center;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+/* CATEGORY ROW */
+.cats {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  overflow-x: auto;
+
+  padding: 3px 2px 1px;
+
+  margin: 0;
+
+  scrollbar-width: none;
+}
+
+.cats::-webkit-scrollbar {
+  display: none;
+}
+
+/* CATEGORY BUTTONS */
+.cats button {
+  padding: 6px 12px;
+
+  min-width: 42px;
+
+  height: 32px;
+
+  border-radius: 18px;
+
+  font-size: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MENU DROPDOWN POSITION */
+#yourTrendMenu .yourTrendMenuBox {
+  top: 45px !important;
+  left: 0 !important;
+}
+
+
+/* =========================================================
+   MOBILE — EXTRA COMPACT
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+  .yourTrendHeader {
+    padding: 3px 7px 4px;
+  }
+
+  .headerTop {
+    height: 44px;
+    min-height: 44px;
+  }
+
+  #yourTrendMenu {
+    width: 40px;
+    flex-basis: 40px;
+  }
+
+  #yourTrendMenu summary {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+
+  .yourTrendBrand img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .cart {
+    padding: 6px 9px;
+    font-size: 15px;
+  }
+
+  .search-box {
+    margin: 4px 0 3px;
+    padding: 0 3px;
+  }
+
+  .search-box input {
+    height: 38px;
+    font-size: 14px;
+    padding-left: 40px;
+  }
+
+  .cats {
+    gap: 5px;
+    padding: 2px 0 0;
+  }
+
+  .cats button {
+    height: 30px;
+    min-width: 40px;
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+}
