@@ -829,3 +829,5 @@ upazilaSelect.innerHTML = '<option value="">উপজেলা নির্ব�
     districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
   });
 };window.orderSelectedProduct = orderSelectedProduct;
+document.getElementById("directOrderBtn")
+  .addEventListener("click", orderSelectedProduct);
