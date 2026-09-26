@@ -2019,9 +2019,7 @@ info.appendChild(deleteBtn);
   }
 
           }async function deleteOrder(orderId, orderNumber) {
-
   const ok = confirm("এই Order ডিলিট করবেন?");
-
   if (!ok) return;
 
   try {
@@ -2034,8 +2032,9 @@ info.appendChild(deleteBtn);
   } catch (e) {
     alert("❌ Delete হয়নি: " + e.message);
   }
-}function shareProduct(productName) {
+}
 
+function shareProduct(productName) {
   const url =
     "https://hossainmdsarowar464-byte.github.io/your-trend/product.html?id=" +
     encodeURIComponent(productName);
@@ -2049,5 +2048,4 @@ info.appendChild(deleteBtn);
     navigator.clipboard.writeText(url);
     alert("✅ Product link copied!");
   }
-
 }
