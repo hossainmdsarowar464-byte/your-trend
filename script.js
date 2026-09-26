@@ -347,13 +347,9 @@ function addCart(productName) {
   if (!product) return;
 
 
-  const stock =
-    Number(product.stock) || 0;
+  const stock = String(product.stock); // Stock check
 
-
-  // Stock check
-
-  if (stock <= 0) {
+  if (stock === "নেই" || stock === "0") {
 
     alert(
       "❌ এই Product বর্তমানে Out of Stock"
