@@ -312,20 +312,6 @@ loadFirebaseProducts();
 
 
 // =========================
-// VIEW IMAGE
-// =========================
-
-function viewImage(image) {
-
-  window.open(
-    image,
-    "_blank"
-  );
-
-}
-
-
-// =========================
 // CATEGORY
 // =========================
 
