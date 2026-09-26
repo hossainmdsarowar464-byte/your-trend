@@ -1990,7 +1990,9 @@ item.querySelector(".product-info").appendChild(deleteBtn);
 
   }
 
-          }async function deleteOrder(orderId, orderNumber) {
+          }
+
+async function deleteOrder(orderId, orderNumber) {
   const ok = confirm("এই Order ডিলিট করবেন?");
   if (!ok) return;
 
