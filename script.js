@@ -294,7 +294,7 @@ async function loadFirebaseProducts() {
       }
     );
 
-
+localStorage.setItem("yourTrendProducts", JSON.stringify(list));
     showProducts(list);
 
 
