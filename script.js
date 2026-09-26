@@ -121,7 +121,6 @@ function showProducts(products) {
       </div>`;
   });
 }
-
 // =========================
 // FIREBASE PRODUCTS
 // =========================
@@ -132,21 +131,17 @@ async function loadFirebaseProducts() {
 
     const {
       initializeApp
-    } =
-      await import(
-        "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
-      );
-
+    } = await import(
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
+    );
 
     const {
       getFirestore,
       collection,
       getDocs
-    } =
-      await import(
-        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
-      );
-
+    } = await import(
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+    );
 
     const firebaseConfig = {
 
@@ -170,71 +165,88 @@ async function loadFirebaseProducts() {
 
       measurementId:
         "G-1T4GM19268"
-
     };
 
+    const app = initializeApp(firebaseConfig);
 
-    const app =
-      initializeApp(
-        firebaseConfig
+    const db = getFirestore(app);
+
+    const snapshot = await getDocs(
+      collection(db, "products")
+    );
+
+    const firebaseList = [];
+
+    snapshot.forEach(function(productDoc) {
+
+      const product = productDoc.data();
+
+      firebaseList.push({
+
+        name: product.name,
+
+        price: Number(product.price) || 0,
+
+        image:
+          product.images?.[0] ||
+          product.image ||
+          "",
+
+        images:
+          product.images ||
+          (product.image ? [product.image] : []),
+
+        category:
+          product.category ||
+          "fashion",
+
+        description:
+          product.description ||
+          "",
+
+        stock:
+          String(product.stock ?? "0").trim(),
+
+        sizes:
+          product.sizes ||
+          []
+      });
+
+    });
+
+    console.log(
+      "Firebase Products:",
+      firebaseList
+    );
+
+    if (firebaseList.length > 0) {
+
+      list = firebaseList;
+
+      localStorage.setItem(
+        "yourTrendProducts",
+        JSON.stringify(list)
       );
 
+    }
 
-    const db =
-      getFirestore(app);
-
-
-    const snapshot =
-      await getDocs(
-        collection(
-          db,
-          "products"
-        )
-      );
-
-const firebaseList = [];
-
-snapshot.forEach(function(productDoc){
-  const product = productDoc.data();
-
-  firebaseList.push({
-    name: product.name,
-    price: Number(product.price) || 0,
-    image: product.images?.[0] || product.image,
-    images: product.images || [product.image],
-    category: product.category || "fashion",
-    description: product.description || "",
-    stock: String(product.stock).trim(),
-    sizes: product.sizes || []
-  });
-});
-
-if (firebaseList.length > 0) {
-  list = firebaseList;
-}
-
-showProducts(list);
-
-localStorage.setItem("yourTrendProducts", JSON.stringify(list));
     showProducts(list);
 
-
-  } console.log("Firebase Products:", list);catch (error) {
-  console.error("Firebase products error:", error);
-  alert(error.message);
-  }
+  } catch (error) {
 
     console.error(
       "Firebase products error:",
       error
     );
 
+    // Firebase কাজ না করলেও fallback products দেখাবে
+    showProducts(list);
+
   }
 
 }
 
 loadFirebaseProducts();
-
 
 // =========================
 // CATEGORY
