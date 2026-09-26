@@ -1515,8 +1515,27 @@ textarea:focus {
   align-items:center;
   gap:6px;
 }.headerTop{
-  display:grid;
-  grid-template-columns:52px 1fr 52px;
+  display:flex;
   align-items:center;
-  min-height:46px;
+  justify-content:space-between;
+  min-height:56px;
+  padding:0 4px;
+}
+
+#yourTrendMenu{
+  width:48px;
+  flex:0 0 48px;
+}
+
+.yourTrendBrand{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.cart{
+  position:static;
+  margin-left:auto;
+  flex:0 0 auto;
 }
