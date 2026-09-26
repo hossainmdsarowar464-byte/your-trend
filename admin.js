@@ -860,6 +860,9 @@ async function loadProducts() {
           >
             🗑️ Delete
           </button>
+          <button class="share-btn" type="button">
+  📤 Share
+</button>
 
         `;
 
@@ -884,6 +887,11 @@ async function loadProducts() {
 
             }
           );
+        item
+  .querySelector(".share-btn")
+  .addEventListener("click", function() {
+    shareProduct(product.name);
+  });
 
 
         item
@@ -2026,4 +2034,20 @@ info.appendChild(deleteBtn);
   } catch (e) {
     alert("❌ Delete হয়নি: " + e.message);
   }
+}function shareProduct(productName) {
+
+  const url =
+    "https://hossainmdsarowar464-byte.github.io/your-trend/product.html?id=" +
+    encodeURIComponent(productName);
+
+  if (navigator.share) {
+    navigator.share({
+      title: productName,
+      url: url
+    });
+  } else {
+    navigator.clipboard.writeText(url);
+    alert("✅ Product link copied!");
+  }
+
 }
