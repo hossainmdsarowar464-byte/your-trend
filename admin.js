@@ -1247,18 +1247,14 @@ async function saveProduct() {
     Number(priceValue);
 
 
-  const stock =
-    Number(stockValue);
+  const stock = stockValue.trim();
 
-
-  if (
+if (
   !name ||
   priceValue === "" ||
   !Number.isFinite(price) ||
   price < 0 ||
-  stockValue === "" ||
-  !Number.isInteger(stock) ||
-  stock < 0 ||
+  stock === "" ||
   uploadedImages.length === 0 ||
   !description
 ) {
