@@ -192,30 +192,28 @@ async function loadFirebaseProducts() {
         )
       );
 
+const firebaseList = [];
 
+snapshot.forEach(function(productDoc){
+  const product = productDoc.data();
 
-
-
-    snapshot.forEach(
-      function(productDoc) {
-
-        const product =
-          productDoc.data();
-
-
-        list.push({
-  name: product.name,
-  price: Number(product.price) || 0,
-  image: product.images?.[0] || product.image,
-  images: product.images || [product.image],
-  category: product.category || "fashion",
-  description: product.description || "",
-  stock: String(product.stock).trim(),
-  sizes: product.sizes || []
+  firebaseList.push({
+    name: product.name,
+    price: Number(product.price) || 0,
+    image: product.images?.[0] || product.image,
+    images: product.images || [product.image],
+    category: product.category || "fashion",
+    description: product.description || "",
+    stock: String(product.stock).trim(),
+    sizes: product.sizes || []
+  });
 });
 
-      }
-    );
+if (firebaseList.length > 0) {
+  list = firebaseList;
+}
+
+showProducts(list);
 
 localStorage.setItem("yourTrendProducts", JSON.stringify(list));
     showProducts(list);
