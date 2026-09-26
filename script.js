@@ -1,4 +1,4 @@
-let list = [
+ list = [
   {
     name: "Premium T-Shirt",
     price: 490,
@@ -96,45 +96,19 @@ function showProducts(products) {
 
   products.forEach(function (p) {
 
-    const stock = String(p.stock);
+  const stock = String(p.stock);
 
 let stockHTML = "";
 let buttonHTML = "";
 
-if (stock !== "নেই" && stock !== "0") {
-
-  stockHTML = `
-    <p style="color:green;font-weight:bold;">
-      📦 Stock: ${stock}
-    </p>
-  `;
-
-  buttonHTML = `
-    <button class="btn"
-      onclick="event.stopPropagation(); addCart('${p.name}')">
-      🛒 Add to Cart
-    </button>
-  `;
-
+if (stock === "নেই" || stock === "0") {
+  stockHTML = `<p style="color:red;font-weight:bold;">❌ Out of Stock</p>`;
+  buttonHTML = `<button class="btn" disabled style="background:#999;">❌ Out of Stock</button>`;
 } else {
-
-  stockHTML = `
-    <p style="color:red;font-weight:bold;">
-      ❌ Out of Stock
-    </p>
-  `;
-
-  buttonHTML = `
-    <button class="btn" disabled
-      style="background:#999;cursor:not-allowed;">
-      ❌ Out of Stock
-    </button>
-  `;
-
+  stockHTML = `<p style="color:green;font-weight:bold;">📦 Stock: ${stock}</p>`;
+  buttonHTML = `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">🛒 Add to Cart</button>`;
 }
-
-
-    box.innerHTML += `
+    box.iox.innerHTML += `
 
       <div
         class="card"
