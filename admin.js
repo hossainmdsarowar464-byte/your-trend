@@ -2014,4 +2014,19 @@ async function deleteOrder(orderId, orderNumber) {
     alert("❌ Delete হয়নি: " + e.message);
   }
 }
+function shareProduct(productId) {
+  const url =
+    "https://hossainmdsarowar464-byte.github.io/your-trend/product.html?id=" +
+    productId;
 
+  if (navigator.share) {
+    navigator.share({
+      title: "YOUR TREND Product",
+      text: "এই প্রোডাক্টটি দেখুন",
+      url: url
+    });
+  } else {
+    navigator.clipboard.writeText(url);
+    alert("✅ Product link copied!");
+  }
+}
