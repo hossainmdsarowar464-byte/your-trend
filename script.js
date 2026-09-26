@@ -1206,73 +1206,172 @@ if (trackOrderBtn) {
     "_blank"
   );
 
-}/* YOUR TREND BANNER SLIDER */
+}/* =========================================================
+   YOUR TREND — INFINITE SWIPE BANNER
+   ========================================================= */
 
 const slider = document.querySelector(".bannerSlider");
 const slides = document.querySelector(".bannerSlides");
 
-let bannerIndex = 0;
-let touchStartX = 0;
-let touchEndX = 0;
+if (slider && slides) {
 
-function moveBanner() {
-  slides.style.transform =
-    "translateX(-" + (bannerIndex * 20) + "%)";
-}
+  const originalSlides = Array.from(
+    slides.querySelectorAll("img")
+  );
 
-/* Auto Slide */
+  const total = originalSlides.length;
 
-setInterval(function () {
+  /* প্রথম ও শেষ Banner copy */
 
-  bannerIndex++;
+  const firstClone =
+    originalSlides[0].cloneNode(true);
 
-  if (bannerIndex >= 5) {
-    bannerIndex = 0;
+  const lastClone =
+    originalSlides[total - 1].cloneNode(true);
+
+  slides.insertBefore(
+    lastClone,
+    slides.firstChild
+  );
+
+  slides.appendChild(firstClone);
+
+
+  let bannerIndex = 1;
+
+  let startX = 0;
+  let endX = 0;
+
+  let isMoving = false;
+
+
+  /* Banner position */
+
+  function moveBanner(animate = true) {
+
+    slides.style.transition =
+      animate
+        ? "transform 0.5s ease"
+        : "none";
+
+    slides.style.transform =
+      "translateX(-" +
+      (bannerIndex * (100 / (total + 2))) +
+      "%)";
   }
 
-  moveBanner();
 
-}, 5000);
+  /* প্রথম Banner দেখাও */
 
-
-/* Swipe */
-
-slider.addEventListener("touchstart", function(e) {
-
-  touchStartX = e.touches[0].clientX;
-
-});
+  moveBanner(false);
 
 
-slider.addEventListener("touchend", function(e) {
+  /* AUTO SLIDE */
 
-  touchEndX = e.changedTouches[0].clientX;
+  setInterval(function () {
 
-  let distance =
-    touchStartX - touchEndX;
+    if (isMoving) return;
 
-  if (distance > 50) {
+    isMoving = true;
 
     bannerIndex++;
 
-    if (bannerIndex >= 5) {
-      bannerIndex = 0;
+    moveBanner(true);
+
+  }, 5000);
+
+
+  /* LOOP RESET */
+
+  slides.addEventListener(
+    "transitionend",
+    function () {
+
+      if (bannerIndex === total + 1) {
+
+        bannerIndex = 1;
+
+        moveBanner(false);
+
+      }
+
+      if (bannerIndex === 0) {
+
+        bannerIndex = total;
+
+        moveBanner(false);
+
+      }
+
+      isMoving = false;
+
     }
+  );
 
-    moveBanner();
 
-  }
+  /* SWIPE START */
 
-  if (distance < -50) {
+  slider.addEventListener(
+    "touchstart",
+    function (e) {
 
-    bannerIndex--;
+      startX =
+        e.touches[0].clientX;
 
-    if (bannerIndex < 0) {
-      bannerIndex = 4;
-    }
+    },
+    { passive: true }
+  );
 
-    moveBanner();
 
-  }
+  /* SWIPE END */
 
-});
+  slider.addEventListener(
+    "touchend",
+    function (e) {
+
+      endX =
+        e.changedTouches[0].clientX;
+
+      const distance =
+        startX - endX;
+
+
+      if (Math.abs(distance) < 50) {
+        return;
+      }
+
+
+      if (isMoving) {
+        return;
+      }
+
+
+      isMoving = true;
+
+
+      /* বাম দিকে swipe */
+
+      if (distance > 50) {
+
+        bannerIndex++;
+
+        moveBanner(true);
+
+      }
+
+
+      /* ডান দিকে swipe */
+
+      else if (distance < -50) {
+
+        bannerIndex--;
+
+        moveBanner(true);
+
+      }
+
+    },
+    { passive: true }
+  );
+
+}
