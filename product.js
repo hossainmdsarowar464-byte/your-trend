@@ -578,8 +578,7 @@ const districts = {
 "গোপালগঞ্জ":["গোপালগঞ্জ সদর","কাশিয়ানী","কোটালীপাড়া","মুকসুদপুর","টুঙ্গিপাড়া"],
 "রাজবাড়ী":["রাজবাড়ী সদর","বালিয়াকান্দি","গোয়ালন্দ","কালুখালী","পাংশা"]
 };
-console.log(Object.keys(districts).length);
-alert(Object.keys(districts).length);
+
 
 const districtSelect = document.getElementById("district");
 const upazilaSelect = document.getElementById("upazila");
