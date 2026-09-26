@@ -193,7 +193,7 @@ async function loadFirebaseProducts() {
       );
 
 
-    list = [];
+
 
 
     snapshot.forEach(
