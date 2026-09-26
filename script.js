@@ -108,7 +108,7 @@ if (stock === "নেই" || stock === "0") {
   stockHTML = `<p style="color:green;font-weight:bold;">📦 Stock: ${stock}</p>`;
   buttonHTML = `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">🛒 Add to Cart</button>`;
 }
-    box.iox.innerHTML += `
+    box.innerHTML += `
 
       <div
         class="card"
@@ -130,7 +130,7 @@ if (stock === "নেই" || stock === "0") {
           src="${p.image}"
           alt="${p.name}"
           onclick="openProduct('${p.name}')"
-style="cursor:pointer;"
+style="cursor:pointer;">
 
 
         <h3>
