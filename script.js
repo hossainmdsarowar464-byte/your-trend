@@ -92,21 +92,9 @@ searchInput.addEventListener(
 function showProducts(products) {
   box.innerHTML = "";
 
-  products.forEach(function (p) {
+  products.forEach((p) => {
     const stock = String(p.stock).trim();
-
-    if (stock === "নেই" || stock === "0") {
-  // Out of Stock
-} else {
-  // Stock: আছে / 5 / 10
-    }
-        ? `<p style="color:red;font-weight:bold;">❌ Out of Stock</p>`
-        : `<p style="color:green;font-weight:bold;">📦 Stock: ${stock}</p>`;
-
-    const buttonHTML =
-      (stock === "নেই" || stock === "0")
-        ? `<button class="btn" disabled style="background:#999;">❌ Out of Stock</button>`
-        : `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">🛒 Add to Cart</button>`;
+    const out = (stock === "নেই" || stock === "0");
 
     box.innerHTML += `
       <div class="card" onclick="openProduct('${p.name}')">
@@ -116,18 +104,23 @@ function showProducts(products) {
           p.category === "bags" ? "🎒 BAGS" : "✨ PRODUCT"
         }</span>
 
-        <img class="img" src="${p.image}" alt="${p.name}" style="cursor:pointer;">
+        <img class="img" src="${p.image}" alt="${p.name}">
 
         <h3>${p.name}</h3>
         <p><b>৳${p.price}</b></p>
 
-        ${stockHTML}
-        ${buttonHTML}
-      </div>
-    `;
+        <p style="color:${out ? "red" : "green"};font-weight:bold;">
+          ${out ? "❌ Out of Stock" : `📦 Stock: ${stock}`}
+        </p>
+
+        ${
+          out
+            ? `<button class="btn" disabled style="background:#999">❌ Out of Stock</button>`
+            : `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">🛒 Add to Cart</button>`
+        }
+      </div>`;
   });
 }
-
 
 // =========================
 // FIREBASE PRODUCTS
