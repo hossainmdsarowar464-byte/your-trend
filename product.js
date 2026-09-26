@@ -828,4 +828,4 @@ upazilaSelect.innerHTML = '<option value="">উপজেলা নির্ব�
   Object.keys(districts).sort().forEach(d => {
     districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
   });
-};
+};window.orderSelectedProduct = orderSelectedProduct;
