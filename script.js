@@ -1206,4 +1206,87 @@ if (trackOrderBtn) {
     "_blank"
   );
 
+}/* =========================================================
+   YOUR TREND — BANNER SLIDER
+   ========================================================= */
+
+const bannerSlides =
+  document.querySelector(".bannerSlides");
+
+const bannerSlider =
+  document.querySelector(".bannerSlider");
+
+let currentBanner = 0;
+
+let startX = 0;
+let endX = 0;
+
+function showBanner(index) {
+
+  if (index >= 5) {
+    currentBanner = 0;
+  }
+
+  if (index < 0) {
+    currentBanner = 4;
+  }
+
+  bannerSlides.style.transform =
+    `translateX(-${currentBanner * 20}%)`;
 }
+
+
+/* AUTO SLIDE */
+
+setInterval(function () {
+
+  currentBanner++;
+
+  showBanner(currentBanner);
+
+}, 5000);
+
+
+/* SWIPE */
+
+bannerSlider.addEventListener(
+  "touchstart",
+  function (e) {
+
+    startX = e.touches[0].clientX;
+
+  },
+  { passive: true }
+);
+
+
+bannerSlider.addEventListener(
+  "touchend",
+  function (e) {
+
+    endX = e.changedTouches[0].clientX;
+
+    const difference =
+      startX - endX;
+
+    if (Math.abs(difference) < 50) {
+      return;
+    }
+
+    if (difference > 0) {
+
+      // Swipe left
+      currentBanner++;
+      showBanner(currentBanner);
+
+    } else {
+
+      // Swipe right
+      currentBanner--;
+      showBanner(currentBanner);
+
+    }
+
+  },
+  { passive: true }
+);
