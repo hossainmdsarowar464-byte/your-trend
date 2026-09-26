@@ -189,13 +189,7 @@ function showProducts(products) {
 
 
         ${buttonHTML}
-<button
-  class="btn"
-  onclick="event.stopPropagation(); shareProduct('${p.name}')"
-  style="background:#1877f2;margin-top:8px;"
->
-  📤 Share
-</button>
+
       </div>
 
     `;
