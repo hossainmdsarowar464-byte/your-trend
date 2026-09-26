@@ -1,7 +1,13 @@
-const product =
-  JSON.parse(
-    localStorage.getItem("selectedProduct")
-  );
+const params = new URLSearchParams(window.location.search);
+const productName = params.get("id");
+
+let product = JSON.parse(localStorage.getItem("selectedProduct"));
+
+if (productName) {
+  const savedList = JSON.parse(localStorage.getItem("yourTrendProducts")) || [];
+  const found = savedList.find(p => p.name === productName);
+  if (found) product = found;
+}
 
 
 if (!product) {
