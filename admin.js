@@ -1763,7 +1763,7 @@ deleteBtn.addEventListener("click", function () {
   deleteOrder(orderDoc.id, order.orderNumber || orderDoc.id);
 });
 
-item.querySelector(".product-info").appendChild(deleteBtn);
+
         /* =========================
            WHATSAPP CUSTOMER
         ========================= */
@@ -1893,6 +1893,7 @@ item.querySelector(".product-info").appendChild(deleteBtn);
 
           }
         );item.querySelector(".product-info").appendChild(whatsappBtn);
+item.querySelector(".product-info").appendChild(deleteBtn);
 
 
         /* =========================
