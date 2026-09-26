@@ -96,57 +96,42 @@ function showProducts(products) {
 
   products.forEach(function (p) {
 
-    const stock =
-      Number(p.stock) || 0;
+    const stock = p.stock;
 
+let stockHTML = "";
+let buttonHTML = "";
 
-    let stockHTML = "";
+if (stock !== "নেই" && stock !== "0") {
 
+  stockHTML = `
+    <p style="color:green;font-weight:bold;">
+      📦 Stock: ${stock}
+    </p>
+  `;
 
-    let buttonHTML = "";
+  buttonHTML = `
+    <button class="btn"
+      onclick="event.stopPropagation(); addCart('${p.name}')">
+      🛒 Add to Cart
+    </button>
+  `;
 
+} else {
 
-    if (stock > 0) {
+  stockHTML = `
+    <p style="color:red;font-weight:bold;">
+      ❌ Out of Stock
+    </p>
+  `;
 
-      stockHTML = `
-        <p style="color:green;font-weight:bold;">
-          📦 Stock: ${stock}
-        </p>
-      `;
+  buttonHTML = `
+    <button class="btn" disabled
+      style="background:#999;cursor:not-allowed;">
+      ❌ Out of Stock
+    </button>
+  `;
 
-
-      buttonHTML = `
-        <button
-          class="btn"
-          onclick="event.stopPropagation(); addCart('${p.name}')"
-        >
-          🛒 Add to Cart
-        </button>
-      `;
-
-    } else {
-
-      stockHTML = `
-        <p style="color:red;font-weight:bold;">
-          ❌ Out of Stock
-        </p>
-      `;
-
-
-      buttonHTML = `
-        <button
-          class="btn"
-          disabled
-          style="
-            background:#999;
-            cursor:not-allowed;
-          "
-        >
-          ❌ Out of Stock
-        </button>
-      `;
-
-    }
+}
 
 
     box.innerHTML += `
