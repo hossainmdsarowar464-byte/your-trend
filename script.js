@@ -221,7 +221,10 @@ localStorage.setItem("yourTrendProducts", JSON.stringify(list));
     showProducts(list);
 
 
-  } catch (error) {
+  } console.log("Firebase Products:", list);catch (error) {
+  console.error("Firebase products error:", error);
+  alert(error.message);
+  }
 
     console.error(
       "Firebase products error:",
