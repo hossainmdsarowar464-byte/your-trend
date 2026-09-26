@@ -210,7 +210,7 @@ async function loadFirebaseProducts() {
   images: product.images || [product.image],
   category: product.category,
   description: product.description,
-  stock: Number(product.stock) || 0,
+  stock: String(product.stock).trim(),
   sizes: product.sizes || []
 });
 
