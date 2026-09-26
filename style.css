@@ -2137,4 +2137,31 @@ textarea:focus {
 .bannerSlides img {
   width: 20% !important;
   flex: 0 0 20% !important;
+}/* =========================================================
+   YOUR TREND — INFINITE BANNER SLIDER
+   ========================================================= */
+
+.bannerSlider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  touch-action: pan-y;
+  background: #f8fafc;
+}
+
+.bannerSlides {
+  display: flex;
+  width: 700%;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.bannerSlides img {
+  width: calc(100% / 7);
+  flex: 0 0 calc(100% / 7);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
