@@ -18,46 +18,80 @@
 
 <body>
 
-<!-- ===== PROFESSIONAL HEADER ===== -->
+<!-- ===== COMPACT YOUR TREND HEADER ===== -->
+
 <div class="yourTrendHeader">
 
+  <!-- TOP ROW -->
   <div class="headerTop">
 
-  <div id="yourTrendMenu">
-    <details>
-      <summary>☰</summary>
-      <div class="yourTrendMenuBox">
-        <a href="index.html">🏠 Home</a>
-        <a href="#products">🛍️ Products</a>
-        <a href="#contact">📞 Contact</a>
-        <a href="#delivery">🚚 Delivery</a>
-        <a href="#return">🔄 Return Policy</a>
-      </div>
-    </details>
+    <!-- MENU -->
+    <div id="yourTrendMenu">
+      <details>
+        <summary>☰</summary>
+
+        <div class="yourTrendMenuBox">
+          <a href="index.html">🏠 Home</a>
+          <a href="#products">🛍️ Products</a>
+          <a href="#contact">📞 Contact</a>
+          <a href="#delivery">🚚 Delivery</a>
+          <a href="#return">🔄 Return Policy</a>
+        </div>
+
+      </details>
+    </div>
+
+    <!-- LOGO -->
+    <div class="yourTrendBrand">
+      <img
+        src="images/your-trend-logo.png"
+        alt="YOUR TREND"
+      >
+    </div>
+
+    <!-- CART -->
+    <div class="cart" onclick="openCart()">
+      🛒 <span id="count">0</span>
+    </div>
+
   </div>
 
-  <div class="yourTrendBrand">
-    <img src="images/your-trend-logo.png" alt="YOUR TREND">
-  </div>
 
-  <div class="cart" onclick="openCart()">
-    🛒 <span id="count">0</span>
-  </div>
-
-  </div>
-
-
+  <!-- SEARCH -->
   <div class="search-box">
-  <input type="text" id="search" placeholder="Search products...">
+
+    <input
+      type="text"
+      id="search"
+      placeholder="Search products..."
+    >
+
   </div>
+
+
+  <!-- CATEGORY -->
   <div class="cats">
-    <button onclick="filterCategory('all')">🔥</button>
-    <button onclick="filterCategory('fashion')">👕</button>
-    <button onclick="filterCategory('gadgets')">⌚</button>
-    <button onclick="filterCategory('bags')">🎒</button>
+
+    <button onclick="filterCategory('all')">
+      🔥
+    </button>
+
+    <button onclick="filterCategory('fashion')">
+      👕
+    </button>
+
+    <button onclick="filterCategory('gadgets')">
+      ⌚
+    </button>
+
+    <button onclick="filterCategory('bags')">
+      🎒
+    </button>
+
   </div>
 
 </div>
+
 
 <!-- YOUR TREND BANNER -->
 <img src="images/banner.png" class="mainBanner" alt="Banner">
