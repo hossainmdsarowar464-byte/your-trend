@@ -1,3 +1,47 @@
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
+
+  authDomain:
+    "your-trend.firebaseapp.com",
+
+  projectId:
+    "your-trend",
+
+  storageBucket:
+    "your-trend.firebasestorage.app",
+
+  messagingSenderId:
+    "775017944976",
+
+  appId:
+    "1:775017944976:web:a19b34b89e6a4285148515",
+
+  measurementId:
+    "G-1T4GM19268"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const db =
+  getFirestore(app);
 const params = new URLSearchParams(window.location.search);
 const productName = params.get("id");
 
