@@ -860,7 +860,9 @@ async function loadProducts() {
           >
             🗑️ Delete
           </button>
-          
+          <button class="share-btn" type="button">
+  📤 Share
+</button>
 
         `;
 
