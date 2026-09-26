@@ -103,8 +103,7 @@ let selectedQuantity = 1;
 
 function increaseProductQuantity() {
 
-  const stock =
-    Number(product.stock) || 999999;
+  const stock = product.stock === "আছে" ? 999999 : Number(product.stock) || 0;
 
   if (selectedQuantity >= stock) {
 
@@ -193,8 +192,7 @@ function addSelectedProduct() {
     ) || [];
 
 
-  const stock =
-    Number(product.stock) || 999999;
+  const stock = product.stock === "আছে" ? 999999 : Number(product.stock) || 0;
 
 
   const existing =
@@ -300,8 +298,7 @@ function goCheckout() {
     ) || [];
 
 
-  const stock =
-    Number(product.stock) || 999999;
+  const stock = product.stock === "আছে" ? 999999 : Number(product.stock) || 0;
 
 
   const existing =
