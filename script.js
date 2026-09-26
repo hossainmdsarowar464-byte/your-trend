@@ -205,11 +205,11 @@ async function loadFirebaseProducts() {
 
         list.push({
   name: product.name,
-  price: product.price,
+  price: Number(product.price) || 0,
   image: product.images?.[0] || product.image,
   images: product.images || [product.image],
-  category: product.category,
-  description: product.description,
+  category: product.category || "fashion",
+  description: product.description || "",
   stock: String(product.stock).trim(),
   sizes: product.sizes || []
 });
