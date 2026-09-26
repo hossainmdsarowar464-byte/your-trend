@@ -1208,7 +1208,7 @@ if (trackOrderBtn) {
 
 }/* =====================================================
    YOUR TREND BANNER
-   AUTO SLIDE + SWIPE
+   INFINITE AUTO SLIDE + SWIPE
    ===================================================== */
 
 const bannerSlider = document.querySelector(".bannerSlider");
@@ -1216,88 +1216,131 @@ const bannerSlides = document.querySelector(".bannerSlides");
 
 if (bannerSlider && bannerSlides) {
 
-  const banners = bannerSlides.querySelectorAll("img");
-  const total = banners.length;
+  const originalBanners = Array.from(
+    bannerSlides.querySelectorAll("img")
+  );
 
-  let index = 0;
-  let startX = 0;
+  const total = originalBanners.length;
 
-  function showBanner() {
+  if (total > 1) {
 
-    bannerSlides.style.transform =
-      "translateX(-" + (index * 100) + "vw)";
+    // প্রথম ও শেষ ব্যানারের clone
+    const firstClone = originalBanners[0].cloneNode(true);
+    const lastClone = originalBanners[total - 1].cloneNode(true);
+
+    bannerSlides.appendChild(firstClone);
+    bannerSlides.insertBefore(lastClone, bannerSlides.firstChild);
+
+    let index = 1;
+    let startX = 0;
+    let autoSlide;
+
+    function moveBanner(animate = true) {
+
+      bannerSlides.style.transition =
+        animate ? "transform 0.5s ease" : "none";
+
+      bannerSlides.style.transform =
+        "translateX(-" + (index * window.innerWidth) + "px)";
+    }
+
+    // শুরুতে প্রথম আসল ব্যানার
+    moveBanner(false);
+
+    // পরের ব্যানার
+    function nextBanner() {
+
+      index++;
+      moveBanner(true);
+    }
+
+    // আগের ব্যানার
+    function previousBanner() {
+
+      index--;
+      moveBanner(true);
+    }
+
+    // Auto slide
+    function startAutoSlide() {
+
+      clearInterval(autoSlide);
+
+      autoSlide = setInterval(function () {
+
+        nextBanner();
+
+      }, 5000);
+    }
+
+    startAutoSlide();
+
+    // শেষ clone-এ গেলে আসল প্রথম ব্যানারে নিঃশব্দে ফিরে যাবে
+    bannerSlides.addEventListener("transitionend", function () {
+
+      if (index === total + 1) {
+
+        index = 1;
+
+        moveBanner(false);
+
+        void bannerSlides.offsetWidth;
+
+      }
+
+      if (index === 0) {
+
+        index = total;
+
+        moveBanner(false);
+
+        void bannerSlides.offsetWidth;
+
+      }
+
+    });
+
+    // Swipe শুরু
+    bannerSlider.addEventListener("touchstart", function (e) {
+
+      startX = e.touches[0].clientX;
+
+      clearInterval(autoSlide);
+
+    }, { passive: true });
+
+    // Swipe শেষ
+    bannerSlider.addEventListener("touchend", function (e) {
+
+      const endX = e.changedTouches[0].clientX;
+      const distance = startX - endX;
+
+      if (Math.abs(distance) >= 50) {
+
+        if (distance > 0) {
+
+          nextBanner();
+
+        } else {
+
+          previousBanner();
+
+        }
+
+      }
+
+      startAutoSlide();
+
+    }, { passive: true });
+
+    // Screen size পরিবর্তন হলে position ঠিক রাখা
+    window.addEventListener("resize", function () {
+
+      moveBanner(false);
+
+    });
 
   }
 
-  /* AUTO SLIDE */
-
-  setInterval(function () {
-
-    index++;
-
-    if (index >= total) {
-      index = 0;
-    }
-
-    showBanner();
-
-  }, 5000);
-
-
-  /* SWIPE START */
-
-  bannerSlider.addEventListener("touchstart", function(e) {
-
-    startX = e.touches[0].clientX;
-
-  });
-
-
-  /* SWIPE END */
-
-  bannerSlider.addEventListener("touchend", function(e) {
-
-    const endX = e.changedTouches[0].clientX;
-
-    const distance = startX - endX;
-
-
-    if (Math.abs(distance) < 50) {
-      return;
-    }
-
-
-    /* LEFT */
-
-    if (distance > 50) {
-
-      index++;
-
-      if (index >= total) {
-        index = 0;
-      }
-
-      showBanner();
-
-    }
-
-
-    /* RIGHT */
-
-    if (distance < -50) {
-
-      index--;
-
-      if (index < 0) {
-        index = total - 1;
-      }
-
-      showBanner();
-
-    }
-
-  });
-
 }
-
        
