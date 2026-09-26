@@ -1260,7 +1260,7 @@ if (
 ) {
 
     message.innerText =
-      "⚠️ সব তথ্য পূরণ করুন। Stock 0 বা তার বেশি হতে হবে।";
+  "⚠️ সব তথ্য পূরণ করুন। Stock: আছে / নেই / 10 লিখুন।";
 
     message.style.color =
       "red";
