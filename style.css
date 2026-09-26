@@ -2101,60 +2101,30 @@ textarea:focus {
   }
 
 }/* =========================================================
-   YOUR TREND — 5 BANNER AUTO SLIDER
+   YOUR TREND — SWIPE + AUTO BANNER SLIDER
    ========================================================= */
 
 .bannerSlider {
   width: 100%;
   overflow: hidden;
   position: relative;
+  touch-action: pan-y;
   background: #f8fafc;
 }
 
 .bannerSlides {
   display: flex;
   width: 500%;
-  animation: yourTrendBanner 25s infinite;
+  transition: transform 0.5s ease;
+  will-change: transform;
 }
 
 .bannerSlides img {
   width: 20%;
-  height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
   flex-shrink: 0;
-}
-
-@keyframes yourTrendBanner {
-
-  0%,
-  16% {
-    transform: translateX(0);
-  }
-
-  20%,
-  36% {
-    transform: translateX(-20%);
-  }
-
-  40%,
-  56% {
-    transform: translateX(-40%);
-  }
-
-  60%,
-  76% {
-    transform: translateX(-60%);
-  }
-
-  80%,
-  96% {
-    transform: translateX(-80%);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-
+  user-select: none;
+  -webkit-user-drag: none;
 }
