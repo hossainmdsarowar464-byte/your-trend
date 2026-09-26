@@ -1892,7 +1892,7 @@ item.querySelector(".product-info").appendChild(deleteBtn);
             );
 
           }
-        );
+        );item.querySelector(".product-info").appendChild(whatsappBtn);
 
 
         /* =========================
