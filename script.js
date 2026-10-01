@@ -888,35 +888,25 @@ item.image +
 // OPEN PRODUCT
 // =========================
 
-function openProduct(
-  productName
-) {
+function openProduct(productId) {
 
-  const product =
-    list.find(
-      function (p) {
+  const product = list.find(function (p) {
+    return p.id === productId;
+  });
 
-        return p.name ===
-          productName;
-
-      }
-    );
-
-
-  if (!product) return;
-
+  if (!product) {
+    alert("⚠️ Product পাওয়া যায়নি");
+    return;
+  }
 
   localStorage.setItem(
     "selectedProduct",
-    JSON.stringify(
-      product
-    )
+    JSON.stringify(product)
   );
 
-
   window.location.href =
-  "product.html?id=" + encodeURIComponent(product.name);
-
+    "product.html?id=" +
+    encodeURIComponent(product.id);
 }
 
 
