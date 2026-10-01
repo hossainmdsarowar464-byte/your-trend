@@ -826,11 +826,32 @@ upazilaSelect.innerHTML = '<option value="">উপজেলা নির্ব�
     districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
   });
 };window.orderSelectedProduct = orderSelectedProduct;
-document.getElementById("directOrderBtn")
-  .addEventListener("click", orderSelectedProduct);
+
 window.increaseProductQuantity = increaseProductQuantity;
 window.decreaseProductQuantity = decreaseProductQuantity;
 window.addSelectedProduct = addSelectedProduct;
 window.goCheckout = goCheckout;
-document.getElementById("directOrderBtn")
-  .addEventListener("click", orderSelectedProduct);
+
+const directOrderBtn = document.getElementById("directOrderBtn");
+
+if (directOrderBtn) {
+  directOrderBtn.addEventListener("click", function () {
+
+    if (directOrderBtn.disabled) {
+      return;
+    }
+
+    directOrderBtn.disabled = true;
+    directOrderBtn.style.opacity = "0.6";
+    directOrderBtn.innerText = "⏳ অর্ডার করা হচ্ছে...";
+
+    orderSelectedProduct().finally(function () {
+
+      directOrderBtn.disabled = false;
+      directOrderBtn.style.opacity = "1";
+      directOrderBtn.innerText = "অর্ডার নাও";
+
+    });
+
+  });
+}
