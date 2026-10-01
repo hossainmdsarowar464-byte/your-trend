@@ -145,23 +145,24 @@ const snapshot = await getDocs(firstQuery);lastProductDoc = snapshot.docs[snapsh
 let lastProductDoc = null;
 let loadingMoreProducts = false;
 let allProductsLoaded = false;
-    snapshot.forEach(function(productDoc) {
+    let moreButton = null;
+    snapshot.docs.slice(0, 24).forEach(function(productDoc) {
 
-      const product = productDoc.data();
+  const product = productDoc.data();
 
-      firebaseList.push({
-  id: productDoc.id,
-  name: product.name,
-  price: Number(product.price) || 0,
-  image: product.images?.[0] || product.image || "",
-  images: product.images || (product.image ? [product.image] : []),
-  category: product.category || "fashion",
-  description: product.description || "",
-  stock: String(product.stock ?? "0").trim(),
-  sizes: product.sizes || []
+  firebaseList.push({
+    id: productDoc.id,
+    name: product.name,
+    price: Number(product.price) || 0,
+    image: product.images?.[0] || product.image || "",
+    images: product.images || (product.image ? [product.image] : []),
+    category: product.category || "fashion",
+    description: product.description || "",
+    stock: String(product.stock ?? "0").trim(),
+    sizes: product.sizes || []
+  });
+
 });
-
-    });
 
     console.log(
       "Firebase Products:",
