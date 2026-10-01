@@ -133,9 +133,12 @@ async function loadFirebaseProducts() {
 
     const db = getFirestore(app);
 
-    const snapshot = await getDocs(
-      collection(db, "products")
-    );
+    const firstQuery = query(
+  collection(db, "products"),
+  limit(24)
+);
+
+const snapshot = await getDocs(firstQuery);
 
     const firebaseList = [];
 
