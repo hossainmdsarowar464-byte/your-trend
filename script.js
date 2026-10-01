@@ -141,7 +141,9 @@ async function loadFirebaseProducts() {
 const snapshot = await getDocs(firstQuery);
 
     const firebaseList = [];
-
+let lastProductDoc = null;
+let loadingMoreProducts = false;
+let allProductsLoaded = false;
     snapshot.forEach(function(productDoc) {
 
       const product = productDoc.data();
