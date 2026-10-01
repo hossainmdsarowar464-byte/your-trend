@@ -142,35 +142,16 @@ async function loadFirebaseProducts() {
       const product = productDoc.data();
 
       firebaseList.push({
-
-        name: product.name,
-
-        price: Number(product.price) || 0,
-
-        image:
-          product.images?.[0] ||
-          product.image ||
-          "",
-
-        images:
-          product.images ||
-          (product.image ? [product.image] : []),
-
-        category:
-          product.category ||
-          "fashion",
-
-        description:
-          product.description ||
-          "",
-
-        stock:
-          String(product.stock ?? "0").trim(),
-
-        sizes:
-          product.sizes ||
-          []
-      });
+  id: productDoc.id,
+  name: product.name,
+  price: Number(product.price) || 0,
+  image: product.images?.[0] || product.image || "",
+  images: product.images || (product.image ? [product.image] : []),
+  category: product.category || "fashion",
+  description: product.description || "",
+  stock: String(product.stock ?? "0").trim(),
+  sizes: product.sizes || []
+});
 
     });
 
