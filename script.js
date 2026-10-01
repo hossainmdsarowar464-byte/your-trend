@@ -57,7 +57,7 @@ function showProducts(products) {
     const out = (stock === "নেই" || stock === "0");
 
     box.innerHTML += `
-      <div class="card" onclick="openProduct('${p.name}')">
+      <div class="card" onclick="openProduct('${p.id}')">
         <span class="product-badge">${
           p.category === "fashion" ? "👕 FASHION" :
           p.category === "gadgets" ? "⌚ GADGETS" :
