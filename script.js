@@ -98,14 +98,10 @@ async function loadFirebaseProducts() {
     const {
       getFirestore,
       collection,
-      getDocs,
-      query,
-      limit,
-      startAfter
+      getDocs
     } = await import(
       "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
     );
-
 
     const firebaseConfig = {
 
@@ -129,93 +125,72 @@ async function loadFirebaseProducts() {
 
       measurementId:
         "G-1T4GM19268"
+
     };
 
+    const app =
+      initializeApp(firebaseConfig);
 
-    const app = initializeApp(firebaseConfig);
+    const db =
+      getFirestore(app);
 
-    const db = getFirestore(app);
+    const snapshot =
+      await getDocs(
+        collection(db, "products")
+      );
 
+    const firebaseList = [];
 
-    let firebaseList = [];
+    snapshot.forEach(
+      function(productDoc) {
 
-    let lastProductDoc = null;
+        const product =
+          productDoc.data();
 
-    let loadingMoreProducts = false;
+        firebaseList.push({
 
-    let allProductsLoaded = false;
+          id:
+            productDoc.id,
 
-    let moreButton = null;
+          name:
+            product.name,
 
+          price:
+            Number(product.price) || 0,
 
-    // =========================
-    // প্রথমবার ২৫টি Product আনা
-    // =========================
+          image:
+            product.images?.[0] ||
+            product.image ||
+            "",
 
-    const firstQuery = query(
-      collection(db, "products"),
-      limit(25)
+          images:
+            product.images ||
+            (
+              product.image
+                ? [product.image]
+                : []
+            ),
+
+          category:
+            product.category ||
+            "fashion",
+
+          description:
+            product.description ||
+            "",
+
+          stock:
+            String(
+              product.stock ?? "0"
+            ).trim(),
+
+          sizes:
+            product.sizes || []
+
+        });
+
+      }
     );
-
-    const snapshot = await getDocs(firstQuery);
-
-
-    // প্রথম ২৪টি Product দেখাবে
-    snapshot.docs.slice(0, 24).forEach(function(productDoc) {
-
-      const product = productDoc.data();
-
-      firebaseList.push({
-
-        id: productDoc.id,
-
-        name: product.name,
-
-        price: Number(product.price) || 0,
-
-        image:
-          product.images?.[0] ||
-          product.image ||
-          "",
-
-        images:
-          product.images ||
-          (product.image
-            ? [product.image]
-            : []),
-
-        category:
-          product.category ||
-          "fashion",
-
-        description:
-          product.description ||
-          "",
-
-        stock:
-          String(product.stock ?? "0").trim(),
-
-        sizes:
-          product.sizes || []
-
-      });
-
-    });
-
-
-    // =========================
-    // প্রথম ২৪টির শেষ Product
-    // =========================
-
-    if (snapshot.docs.length > 24) {
-
-      lastProductDoc = snapshot.docs[23];
-
-    } else {
-
-      allProductsLoaded = true;
-
-    }
 
 
     console.log(
@@ -224,9 +199,12 @@ async function loadFirebaseProducts() {
     );
 
 
-    if (firebaseList.length > 0) {
+    if (
+      firebaseList.length > 0
+    ) {
 
-      list = firebaseList;
+      list =
+        firebaseList;
 
       localStorage.setItem(
         "yourTrendProducts",
@@ -239,206 +217,12 @@ async function loadFirebaseProducts() {
     showProducts(list);
 
 
-    // =========================
-    // More Products Button
-    // =========================
-
-    if (!allProductsLoaded) {
-
-      moreButton =
-        document.createElement("button");
-
-      moreButton.innerText =
-        "আরও প্রোডাক্ট দেখুন";
-
-      moreButton.className = "btn";
-
-      moreButton.style.display = "block";
-
-      moreButton.style.margin = "25px auto";
-
-      moreButton.style.padding =
-        "12px 25px";
-
-
-      box.parentNode.appendChild(
-        moreButton
-      );
-
-
-      // =========================
-      // পরের ২৪টি Product
-      // =========================
-
-      moreButton.onclick =
-        loadMoreProducts;
-
-    }
-
-
-    async function loadMoreProducts() {
-
-      if (
-        loadingMoreProducts ||
-        allProductsLoaded
-      ) {
-        return;
-      }
-
-
-      loadingMoreProducts = true;
-
-      moreButton.innerText =
-        "লোড হচ্ছে...";
-
-
-      try {
-
-        const nextQuery = query(
-
-          collection(db, "products"),
-
-          startAfter(lastProductDoc),
-
-          limit(25)
-
-        );
-
-
-        const nextSnapshot =
-          await getDocs(nextQuery);
-
-
-        // আর কোনো Product নেই
-        if (nextSnapshot.empty) {
-
-          allProductsLoaded = true;
-
-          moreButton.style.display =
-            "none";
-
-          loadingMoreProducts = false;
-
-          return;
-        }
-
-
-        // =========================
-        // পরের সর্বোচ্চ ২৪টি যোগ
-        // =========================
-
-        nextSnapshot.docs
-          .slice(0, 24)
-          .forEach(function(productDoc) {
-
-            const product =
-              productDoc.data();
-
-
-            firebaseList.push({
-
-              id: productDoc.id,
-
-              name: product.name,
-
-              price:
-                Number(product.price) || 0,
-
-              image:
-                product.images?.[0] ||
-                product.image ||
-                "",
-
-              images:
-                product.images ||
-                (product.image
-                  ? [product.image]
-                  : []),
-
-              category:
-                product.category ||
-                "fashion",
-
-              description:
-                product.description ||
-                "",
-
-              stock:
-                String(
-                  product.stock ?? "0"
-                ).trim(),
-
-              sizes:
-                product.sizes || []
-
-            });
-
-          });
-
-
-        // =========================
-        // আরও Product আছে কিনা
-        // =========================
-
-        if (nextSnapshot.docs.length > 24) {
-
-          // ২৪তম Product-কে cursor বানাবে
-          lastProductDoc =
-            nextSnapshot.docs[23];
-
-          moreButton.innerText =
-            "আরও প্রোডাক্ট দেখুন";
-
-        } else {
-
-          // আর Product নেই
-          allProductsLoaded = true;
-
-          moreButton.style.display =
-            "none";
-
-        }
-
-
-        list = firebaseList;
-
-
-        localStorage.setItem(
-          "yourTrendProducts",
-          JSON.stringify(list)
-        );
-
-
-        showProducts(list);
-
-
-      } catch (error) {
-
-        console.error(
-          "More products error:",
-          error
-        );
-
-        moreButton.innerText =
-          "আবার চেষ্টা করুন";
-
-      }
-
-
-      loadingMoreProducts = false;
-
-    }
-
-
   } catch (error) {
 
     console.error(
       "Firebase products error:",
       error
     );
-
-    // Firebase কাজ না করলে
-    // পুরোনো fallback products দেখাবে
 
     showProducts(list);
 
@@ -448,7 +232,6 @@ async function loadFirebaseProducts() {
 
 
 loadFirebaseProducts();
-      
 
 // =========================
 // CATEGORY
