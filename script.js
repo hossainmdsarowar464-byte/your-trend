@@ -217,7 +217,7 @@ box.parentNode.appendChild(moreButton);async function loadMoreProducts() {
     const nextQuery = query(
       collection(db, "products"),
       startAfter(lastProductDoc),
-      limit(24)
+      limit(25)
     );
 
     const nextSnapshot = await getDocs(nextQuery);
