@@ -4,11 +4,12 @@ import {
 
 import {
   getFirestore,
-  collection,
-  addDoc,
-  setDoc,
-  doc,
-  serverTimestamp
+collection,
+addDoc,
+setDoc,
+doc,
+getDoc,
+serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
