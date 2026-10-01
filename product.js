@@ -44,23 +44,65 @@ const app =
 const db =
   getFirestore(app);
 const params = new URLSearchParams(window.location.search);
-const productName = params.get("id");
+const productId = params.get("id");
 
-let product = JSON.parse(localStorage.getItem("selectedProduct"));
+let product = null;
 
-if (productName) {
-  const savedList = JSON.parse(localStorage.getItem("yourTrendProducts")) || [];
-  const found = savedList.find(p => p.name === productName);
-  if (found) product = found;
+// Firebase থেকে Product ID দিয়ে প্রোডাক্ট খোঁজা
+if (productId) {
+
+  try {
+
+    const productRef = doc(db, "products", productId);
+    const productSnap = await getDoc(productRef);
+
+    if (productSnap.exists()) {
+
+      const data = productSnap.data();
+
+      product = {
+        id: productSnap.id,
+        name: data.name || "",
+        price: Number(data.price) || 0,
+        image: data.images?.[0] || data.image || "",
+        images: data.images || (data.image ? [data.image] : []),
+        category: data.category || "fashion",
+        description: data.description || "",
+        stock: String(data.stock ?? "0").trim(),
+        sizes: data.sizes || []
+      };
+
+      // বর্তমান প্রোডাক্টটি সেভ করে রাখবে
+      localStorage.setItem(
+        "selectedProduct",
+        JSON.stringify(product)
+      );
+    }
+
+  } catch (error) {
+
+    console.error("Product load error:", error);
+
+  }
 }
 
 
+// পুরোনো localStorage product fallback
+if (!product) {
+
+  product = JSON.parse(
+    localStorage.getItem("selectedProduct")
+  );
+
+}
+
+
+// Product না পাওয়া গেলে Home Page
 if (!product) {
 
   alert("⚠️ Product পাওয়া যায়নি");
 
-  window.location.href =
-    "index.html";
+  window.location.href = "index.html";
 
   throw new Error("Product পাওয়া যায়নি");
 
