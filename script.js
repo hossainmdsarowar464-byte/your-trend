@@ -190,7 +190,97 @@ let allProductsLoaded = false;
 
     // Firebase কাজ না করলেও fallback products দেখাবে
     showProducts(list);
+const moreButton = document.createElement("button");
 
+moreButton.innerText = "আরও প্রোডাক্ট দেখুন";
+
+moreButton.className = "btn";
+
+moreButton.style.display = "block";
+moreButton.style.margin = "25px auto";
+moreButton.style.padding = "12px 25px";
+
+moreButton.onclick = loadMoreProducts;
+
+box.parentNode.appendChild(moreButton);async function loadMoreProducts() {
+
+  if (loadingMoreProducts || allProductsLoaded) {
+    return;
+  }
+
+  loadingMoreProducts = true;
+
+  moreButton.innerText = "লোড হচ্ছে...";
+
+  try {
+
+    const nextQuery = query(
+      collection(db, "products"),
+      startAfter(lastProductDoc),
+      limit(24)
+    );
+
+    const nextSnapshot = await getDocs(nextQuery);
+
+    if (nextSnapshot.empty) {
+
+      allProductsLoaded = true;
+      moreButton.style.display = "none";
+
+      return;
+    }
+
+    nextSnapshot.forEach(function(productDoc) {
+
+      const product = productDoc.data();
+
+      firebaseList.push({
+        id: productDoc.id,
+        name: product.name,
+        price: Number(product.price) || 0,
+        image: product.images?.[0] || product.image || "",
+        images: product.images || (product.image ? [product.image] : []),
+        category: product.category || "fashion",
+        description: product.description || "",
+        stock: String(product.stock ?? "0").trim(),
+        sizes: product.sizes || []
+      });
+
+    });
+
+    lastProductDoc =
+      nextSnapshot.docs[nextSnapshot.docs.length - 1];
+
+    list = firebaseList;
+
+    localStorage.setItem(
+      "yourTrendProducts",
+      JSON.stringify(list)
+    );
+
+    showProducts(list);
+
+    if (nextSnapshot.docs.length < 24) {
+
+      allProductsLoaded = true;
+      moreButton.style.display = "none";
+
+    } else {
+
+      moreButton.innerText = "আরও প্রোডাক্ট দেখুন";
+
+    }
+
+  } catch (error) {
+
+    console.error("More products error:", error);
+
+    moreButton.innerText = "আবার চেষ্টা করুন";
+
+  }
+
+  loadingMoreProducts = false;
+}
   }
 
 }
