@@ -139,7 +139,7 @@ startAfter
   limit(24)
 );
 
-const snapshot = await getDocs(firstQuery);
+const snapshot = await getDocs(firstQuery);lastProductDoc = snapshot.docs[snapshot.docs.length - 1] || null;
 
     const firebaseList = [];
 let lastProductDoc = null;
