@@ -1,3 +1,6 @@
+let db;
+let lastVisibleDoc = null;
+let hasMoreProducts = false;
 let list = [];
 
 
@@ -144,8 +147,7 @@ async function loadFirebaseProducts() {
 
 const snapshot =
   await getDocs(productsQuery);
-let lastVisibleDoc = null;
-let hasMoreProducts = false;
+
     const firebaseList = [];
 if (snapshot.docs.length > 24) {
   lastVisibleDoc = snapshot.docs[23];
