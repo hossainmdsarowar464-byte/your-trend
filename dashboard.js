@@ -96,26 +96,21 @@ function isToday(date) {
     return false;
   }
 
-  const now =
-    new Date();
+  const bdDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Dhaka",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(date);
 
-  return (
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Dhaka",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
 
-    date.getDate() ===
-      now.getDate()
-
-    &&
-
-    date.getMonth() ===
-      now.getMonth()
-
-    &&
-
-    date.getFullYear() ===
-      now.getFullYear()
-
-  );
-
+  return bdDate === today;
 }
 
 
