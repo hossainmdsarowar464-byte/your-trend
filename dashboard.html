@@ -8,6 +8,109 @@
   <title>YOUR TREND - Dashboard</title>
 
   <link rel="stylesheet" href="style.css">
+<style>
+
+/* ===== YOUR TREND DASHBOARD ===== */
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  font-family: Arial, sans-serif;
+  color: #0f172a;
+}
+
+header {
+  background: #0f172a;
+  color: white;
+  padding: 18px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+header p {
+  margin: 4px 0 0;
+  color: #cbd5e1;
+  font-size: 13px;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 25px 18px;
+}
+
+main > h2 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.card h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: normal;
+}
+
+.card strong {
+  font-size: 28px;
+  display: block;
+}
+
+.card p {
+  margin: 7px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.dashboard-section {
+  margin-top: 25px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.dashboard-section h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.dashboard-section p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 700px) {
+
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  main {
+    padding: 20px 14px;
+  }
+
+}
+
+  </style>
 </head>
 
 <body>
