@@ -749,26 +749,8 @@ async function loadVisitors() {
    START DASHBOARD
 ========================================= */
 
-onAuthStateChanged(auth, function(user) {
-
-  console.log("Dashboard User:", user);
-
-  if (!user) {
-
-    window.location.href = "admin.html";
-
-    return;
-  }
-
-  console.log("Admin logged in:", user.email);
-
-  createExtraCards();
-
-  loadProducts();
-
-  loadOrders();
-
-  loadVisitors();
-
-});
+createExtraCards();
+loadProducts();
+loadOrders();
+loadVisitors();
 
