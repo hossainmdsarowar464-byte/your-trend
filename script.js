@@ -244,7 +244,31 @@ if (productIndex >= 24) return;
   }
 
 }
+const oldButton = document.getElementById("loadMoreBtn");
 
+if (oldButton) {
+  oldButton.remove();
+}
+
+if (hasMoreProducts) {
+
+  const moreButton = document.createElement("button");
+
+  moreButton.id = "loadMoreBtn";
+  moreButton.innerText = "আরও প্রোডাক্ট দেখুন";
+  moreButton.className = "btn";
+
+  moreButton.style.display = "block";
+  moreButton.style.margin = "25px auto";
+  moreButton.style.padding = "12px 25px";
+
+  moreButton.onclick = loadMoreProducts;
+
+  box.insertAdjacentElement(
+    "afterend",
+    moreButton
+  );
+}
 
 loadFirebaseProducts();
 
