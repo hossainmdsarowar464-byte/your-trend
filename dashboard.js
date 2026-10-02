@@ -752,6 +752,11 @@ async function loadVisitors() {
 
 createExtraCards();
 loadProducts();
-loadOrders();
 loadVisitors();
+
+onAuthStateChanged(auth, function(user) {
+  if (user) {
+    loadOrders();
+  }
+});
 
