@@ -622,7 +622,6 @@ function loadRecentOrders(
   );
 
 }
-
 /* =========================================
    LOAD TODAY VISITORS
 ========================================= */
@@ -632,11 +631,9 @@ async function loadVisitors() {
   const counter =
     document.getElementById("totalVisitors");
 
-
   if (!counter) {
     return;
   }
-
 
   try {
 
@@ -645,38 +642,68 @@ async function loadVisitors() {
         collection(db, "visits")
       );
 
-
-    /* Bangladesh date */
-
-    const now =
-      new Date();
-
-
-    const today =
-      now.getFullYear() +
-      "-" +
-      String(
-        now.getMonth() + 1
-      ).padStart(2, "0") +
-      "-" +
-      String(
-        now.getDate()
-      ).padStart(2, "0");
-
-
     let visitors = 0;
 
+    /* Bangladesh-এর আজকের তারিখ */
 
-    snapshot.forEach(
-      function(visitDoc) {
+    const today =
+      new Intl.DateTimeFormat(
+        "en-CA",
+        {
+          timeZone: "Asia/Dhaka",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
+        }
+      ).format(new Date());
 
-        const visit =
-          visitDoc.data();
+
+    snapshot.forEach(function(visitDoc) {
+
+      const visit =
+        visitDoc.data();
+
+
+      /* Visitor-এর saved date */
+
+      if (
+        visit.date &&
+        String(visit.date) ===
+        String(today)
+      ) {
+
+        visitors++;
+
+        return;
+
+      }
+
+
+      /* Date না মিললে lastVisit timestamp দিয়ে পরীক্ষা */
+
+      if (
+        visit.lastVisit &&
+        typeof visit.lastVisit.toDate === "function"
+      ) {
+
+        const visitDate =
+          visit.lastVisit.toDate();
+
+
+        const visitDay =
+          new Intl.DateTimeFormat(
+            "en-CA",
+            {
+              timeZone: "Asia/Dhaka",
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit"
+            }
+          ).format(visitDate);
 
 
         if (
-          String(visit.date) ===
-          String(today)
+          visitDay === today
         ) {
 
           visitors++;
@@ -684,7 +711,8 @@ async function loadVisitors() {
         }
 
       }
-    );
+
+    });
 
 
     counter.innerText =
@@ -692,10 +720,10 @@ async function loadVisitors() {
 
 
     console.log(
+      "YOUR TREND Visitors:",
+      visitors,
       "Today:",
-      today,
-      "Visitors:",
-      visitors
+      today
     );
 
 
@@ -705,7 +733,6 @@ async function loadVisitors() {
       "Visitors Error:",
       error
     );
-
 
     counter.innerText =
       "—";
@@ -726,4 +753,5 @@ loadProducts();
 loadOrders();
 
 loadVisitors();
+
 
