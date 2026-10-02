@@ -143,7 +143,7 @@ alert("Products found: " + snapshot.size);
    LOAD ORDERS
 ========================================= */
 
-async function loadOrders() {
+ async function loadOrders() {
 
   const todayOrdersCounter =
     document.getElementById("totalOrders");
@@ -167,13 +167,23 @@ async function loadOrders() {
 
 
     let todayOrders = 0;
-
     let todaySales = 0;
-
     let totalSales = 0;
 
-
     const orders = [];
+
+
+    /* TODAY - BANGLADESH TIME */
+
+    const now = new Date();
+
+    const todayBangladesh =
+      new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Dhaka",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).format(now);
 
 
     snapshot.forEach(function(orderDoc) {
@@ -189,8 +199,17 @@ async function loadOrders() {
 
       /* ORDER DATE */
 
-      const orderDate =
-        getOrderDate(order);
+      let orderDate = null;
+
+      if (
+        order.createdAt &&
+        typeof order.createdAt.toDate === "function"
+      ) {
+
+        orderDate =
+          order.createdAt.toDate();
+
+      }
 
 
       /* ORDER TOTAL */
@@ -210,11 +229,27 @@ async function loadOrders() {
 
       /* TODAY */
 
-      if (isToday(orderDate)) {
+      if (orderDate) {
 
-        todayOrders++;
+        const orderBangladesh =
+          new Intl.DateTimeFormat("en-CA", {
+            timeZone: "Asia/Dhaka",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+          }).format(orderDate);
 
-        todaySales += orderTotal;
+
+        if (
+          orderBangladesh ===
+          todayBangladesh
+        ) {
+
+          todayOrders++;
+
+          todaySales += orderTotal;
+
+        }
 
       }
 
@@ -224,7 +259,6 @@ async function loadOrders() {
     /* =========================================
        UPDATE COUNTERS
     ========================================= */
-
 
     if (todayOrdersCounter) {
 
@@ -290,34 +324,35 @@ async function loadOrders() {
 
   } catch (error) {
 
-    console.error("Orders Error:", error);
+    console.error(
+      "Orders Error:",
+      error
+    );
+
 
     if (todayOrdersCounter) {
-      todayOrdersCounter.innerText = "ERROR";
+      todayOrdersCounter.innerText =
+        "ERROR";
     }
 
     if (todaySalesCounter) {
-      todaySalesCounter.innerText = "ERROR";
+      todaySalesCounter.innerText =
+        "ERROR";
     }
 
     if (totalOrdersCounter) {
-      totalOrdersCounter.innerText = "ERROR";
+      totalOrdersCounter.innerText =
+        "ERROR";
     }
 
     if (totalSalesCounter) {
-      totalSalesCounter.innerText = "ERROR";
+      totalSalesCounter.innerText =
+        "ERROR";
     }
-
-    alert(
-      "Orders Error:\n\n" +
-      error.code +
-      "\n\n" +
-      error.message
-    );
 
   }
 
-}
+ }
 
 
 /* =========================================
