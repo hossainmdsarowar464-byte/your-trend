@@ -754,4 +754,20 @@ loadOrders();
 
 loadVisitors();
 
+getDocs(collection(db, "visits"))
+  .then(function(snapshot) {
 
+    console.log(
+      "VISITS FOUND:",
+      snapshot.size
+    );
+
+  })
+  .catch(function(error) {
+
+    console.error(
+      "VISITS READ ERROR:",
+      error
+    );
+
+  });
