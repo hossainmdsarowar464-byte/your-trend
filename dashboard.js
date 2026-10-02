@@ -150,3 +150,71 @@ async function loadDashboardOrders() {
 
 
 loadDashboardOrders();
+/* =========================
+   LOAD TODAY SALES
+========================= */
+
+async function loadDashboardSales() {
+
+  const salesCounter =
+    document.getElementById("totalSales");
+
+  if (!salesCounter) {
+    return;
+  }
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(db, "orders")
+      );
+
+    let todaySales = 0;
+
+    const today = new Date();
+
+    snapshot.forEach(function(orderDoc) {
+
+      const order = orderDoc.data();
+
+      if (
+        order.createdAt &&
+        typeof order.createdAt.toDate === "function"
+      ) {
+
+        const orderDate =
+          order.createdAt.toDate();
+
+        if (
+          orderDate.getDate() === today.getDate() &&
+          orderDate.getMonth() === today.getMonth() &&
+          orderDate.getFullYear() === today.getFullYear()
+        ) {
+
+          todaySales += Number(order.total) || 0;
+
+        }
+
+      }
+
+    });
+
+    salesCounter.innerText =
+      "৳" + todaySales;
+
+  } catch (error) {
+
+    console.error(
+      "Dashboard Sales Error:",
+      error
+    );
+
+    salesCounter.innerText = "—";
+
+  }
+
+}
+
+
+loadDashboardSales();
