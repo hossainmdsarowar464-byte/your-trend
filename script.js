@@ -156,7 +156,9 @@ if (snapshot.docs.length > 24) {
 }
     snapshot.forEach(
       function(productDoc) {
+const productIndex = snapshot.docs.indexOf(productDoc);
 
+if (productIndex >= 24) return;
         const product =
           productDoc.data();
 
