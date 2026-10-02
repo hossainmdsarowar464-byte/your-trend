@@ -228,8 +228,14 @@ alert("Products found: " + snapshot.size);
 
 
       /* TODAY */
-
-      if (orderDate) {
+console.log("TODAY:", todayBangladesh);
+console.log("ORDER DATE:", orderDate);
+console.log("ORDER DATE BD:", orderBangladesh);
+console.log("ORDER DATA:", order);
+      if (orderDate) {alert(
+  "Today: " + todayBangladesh +
+  "\nOrder: " + orderDate
+);
 
         const orderBangladesh =
           new Intl.DateTimeFormat("en-CA", {
