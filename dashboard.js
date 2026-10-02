@@ -2,6 +2,7 @@ import {
   getAuth,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 import {
   initializeApp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -43,36 +44,46 @@ const firebaseConfig = {
 };
 
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db =
-  getFirestore(app);
+const db = getFirestore(app);
+
 const auth = getAuth(app);
 
+
 /* =========================================
-   DATE HELPERS
+   DATE HELPER
 ========================================= */
 
-function getTodayDate() {
+function isToday(date) {
 
-  const now = new Date();
+  if (!date) {
+    return false;
+  }
 
-  const year =
-    now.getFullYear();
+  const dateString =
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Dhaka",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).format(date);
 
-  const month =
-    String(now.getMonth() + 1)
-      .padStart(2, "0");
+  const today =
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Dhaka",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).format(new Date());
 
-  const day =
-    String(now.getDate())
-      .padStart(2, "0");
-
-  return year + "-" + month + "-" + day;
-
+  return dateString === today;
 }
 
+
+/* =========================================
+   GET ORDER DATE
+========================================= */
 
 function getOrderDate(order) {
 
@@ -90,57 +101,26 @@ function getOrderDate(order) {
 }
 
 
-function isToday(date) {
-
-  if (!date) {
-    return false;
-  }
-
-  const bdDate = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Dhaka",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).format(date);
-
-  const today = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Dhaka",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).format(new Date());
-
-  return bdDate === today;
-}
-
-
 /* =========================================
-   ADD EXTRA SUMMARY CARDS
+   EXTRA SUMMARY CARDS
 ========================================= */
 
 function createExtraCards() {
 
   const cards =
-    document.querySelector(
-      ".dashboard-cards"
-    );
+    document.querySelector(".dashboard-cards");
 
   if (!cards) {
     return;
   }
 
 
-  /* Total Orders */
+  /* TOTAL ORDERS */
 
-  if (
-    !document.getElementById(
-      "totalAllOrders"
-    )
-  ) {
+  if (!document.getElementById("totalAllOrders")) {
 
     cards.insertAdjacentHTML(
       "beforeend",
-
       `
       <div class="card">
         <span>Total Orders</span>
@@ -148,23 +128,17 @@ function createExtraCards() {
         <small>All time</small>
       </div>
       `
-
     );
 
   }
 
 
-  /* Total Sales */
+  /* TOTAL SALES */
 
-  if (
-    !document.getElementById(
-      "totalAllSales"
-    )
-  ) {
+  if (!document.getElementById("totalAllSales")) {
 
     cards.insertAdjacentHTML(
       "beforeend",
-
       `
       <div class="card">
         <span>Total Sales</span>
@@ -172,7 +146,6 @@ function createExtraCards() {
         <small>All time</small>
       </div>
       `
-
     );
 
   }
@@ -187,29 +160,21 @@ function createExtraCards() {
 async function loadProducts() {
 
   const counter =
-    document.getElementById(
-      "totalProducts"
-    );
+    document.getElementById("totalProducts");
 
   if (!counter) {
     return;
   }
 
-
   try {
 
     const snapshot =
       await getDocs(
-        collection(
-          db,
-          "products"
-        )
+        collection(db, "products")
       );
-
 
     counter.innerText =
       snapshot.size;
-
 
   } catch (error) {
 
@@ -218,215 +183,187 @@ async function loadProducts() {
       error
     );
 
-    counter.innerText =
-      "—";
+    counter.innerText = "—";
 
   }
 
 }
 
+
 /* =========================================
-LOAD ALL ORDERS
+   LOAD ORDERS
 ========================================= */
 
 async function loadOrders() {
 
-const todayOrdersCounter =
-document.getElementById(
-"totalOrders"
-);
+  const todayOrdersCounter =
+    document.getElementById("totalOrders");
 
-const todaySalesCounter =
-document.getElementById(
-"totalSales"
-);
+  const todaySalesCounter =
+    document.getElementById("totalSales");
 
-const totalOrdersCounter =
-document.getElementById(
-"totalAllOrders"
-);
+  const totalOrdersCounter =
+    document.getElementById("totalAllOrders");
 
-const totalSalesCounter =
-document.getElementById(
-"totalAllSales"
-);
+  const totalSalesCounter =
+    document.getElementById("totalAllSales");
 
-try {
 
-const snapshot =    
-  await getDocs(    
-    collection(    
-      db,    
-      "orders"    
-    )    
-  );    
+  try {
 
+    const snapshot =
+      await getDocs(
+        collection(db, "orders")
+      );
 
-let todayOrders = 0;    
 
-let todaySales = 0;    
+    let todayOrders = 0;
 
-let totalSales = 0;    
+    let todaySales = 0;
 
+    let totalSales = 0;
 
-const orders = [];    
 
+    const orders = [];
 
-snapshot.forEach(    
-  function(orderDoc) {    
 
-    const order =    
-      orderDoc.data();    
+    snapshot.forEach(function(orderDoc) {
 
+      const order = orderDoc.data();
 
-    orders.push({    
 
-      id:    
-        orderDoc.id,    
+      orders.push({
+        id: orderDoc.id,
+        ...order
+      });
 
-      ...order    
 
-    });    
+      /* ORDER DATE */
 
+      const orderDate =
+        getOrderDate(order);
 
-    /* =========================    
-       ORDER DATE    
-    ========================= */    
 
-    const orderDate =    
-      getOrderDate(order);    
+      /* ORDER TOTAL */
 
+      const orderTotal =
+        Number(
+          order.grandTotal ??
+          order.total ??
+          0
+        );
 
-    /* =========================    
-       ORDER TOTAL    
-    ========================= */    
 
-    const orderTotal =    
-      Number(    
-        order.grandTotal ??    
-        order.total ??    
-        0    
-      );    
+      /* ALL TIME SALES */
 
+      totalSales += orderTotal;
 
-    /* =========================    
-       TOTAL SALES    
-    ========================= */    
 
-    totalSales +=    
-      orderTotal;    
+      /* TODAY */
 
+      if (isToday(orderDate)) {
 
-    /* =========================    
-       TODAY    
-    ========================= */    
+        todayOrders++;
 
-    if (orderDate) {
+        todaySales += orderTotal;
 
-const orderDay = new Intl.DateTimeFormat("en-CA", {
-timeZone: "Asia/Dhaka",
-year: "numeric",
-month: "2-digit",
-day: "2-digit"
-}).format(orderDate);
+      }
 
-const today = new Intl.DateTimeFormat("en-CA", {
-timeZone: "Asia/Dhaka",
-year: "numeric",
-month: "2-digit",
-day: "2-digit"
-}).format(new Date());
+    });
 
-if (orderDay === today) {
-todayOrders++;
-todaySales += orderTotal;
-}
 
-}    
+    /* =========================================
+       UPDATE COUNTERS
+    ========================================= */
 
 
-/* =========================    
-   SHOW COUNTS    
-========================= */    
+    if (todayOrdersCounter) {
 
-if (todayOrdersCounter) {    
+      todayOrdersCounter.innerText =
+        todayOrders;
 
-  todayOrdersCounter.innerText =    
-    todayOrders;    
+    }
 
-}    
 
+    if (todaySalesCounter) {
 
-if (todaySalesCounter) {    
+      todaySalesCounter.innerText =
+        "৳" +
+        todaySales.toLocaleString("en-US");
 
-  todaySalesCounter.innerText =    
-    "৳" +    
-    todaySales.toLocaleString(    
-      "en-US"    
-    );    
+    }
 
-}    
 
+    if (totalOrdersCounter) {
 
-if (totalOrdersCounter) {    
+      totalOrdersCounter.innerText =
+        snapshot.size;
 
-  totalOrdersCounter.innerText =    
-    snapshot.size;    
+    }
 
-}    
 
+    if (totalSalesCounter) {
 
-if (totalSalesCounter) {    
+      totalSalesCounter.innerText =
+        "৳" +
+        totalSales.toLocaleString("en-US");
 
-  totalSalesCounter.innerText =    
-    "৳" +    
-    totalSales.toLocaleString(    
-      "en-US"    
-    );    
+    }
 
-}    
 
+    /* =========================================
+       RECENT ORDERS
+    ========================================= */
 
-/* =========================    
-   RECENT ORDERS    
-========================= */    
+    loadRecentOrders(orders);
 
-loadRecentOrders(    
-  orders    
-);
 
-} catch (error) {
+    console.log(
+      "Orders:",
+      snapshot.size
+    );
 
-console.error(    
-  "Orders Error:",    
-  error    
-);    
+    console.log(
+      "Today's Orders:",
+      todayOrders
+    );
 
+    console.log(
+      "Today's Sales:",
+      todaySales
+    );
 
-if (todayOrdersCounter) {    
-  todayOrdersCounter.innerText =    
-    "—";    
-}    
+    console.log(
+      "Total Sales:",
+      totalSales
+    );
 
 
-if (todaySalesCounter) {    
-  todaySalesCounter.innerText =    
-    "—";    
-}    
+  } catch (error) {
 
+    console.error(
+      "Orders Error:",
+      error
+    );
 
-if (totalOrdersCounter) {    
-  totalOrdersCounter.innerText =    
-    "—";    
-}    
 
+    if (todayOrdersCounter) {
+      todayOrdersCounter.innerText = "—";
+    }
 
-if (totalSalesCounter) {    
-  totalSalesCounter.innerText =    
-    "—";    
-}
+    if (todaySalesCounter) {
+      todaySalesCounter.innerText = "—";
+    }
 
-}
+    if (totalOrdersCounter) {
+      totalOrdersCounter.innerText = "—";
+    }
+
+    if (totalSalesCounter) {
+      totalSalesCounter.innerText = "—";
+    }
+
+  }
 
 }
 
@@ -435,63 +372,39 @@ if (totalSalesCounter) {
    RECENT ORDERS
 ========================================= */
 
-function loadRecentOrders(
-  orders
-) {
+function loadRecentOrders(orders) {
 
   const box =
-    document.getElementById(
-      "recentOrders"
-    );
-
+    document.getElementById("recentOrders");
 
   if (!box) {
     return;
   }
 
 
-  /* =========================
-     SORT NEWEST FIRST
-  ========================= */
+  orders.sort(function(a, b) {
 
-  orders.sort(
-    function(a, b) {
+    const dateA =
+      getOrderDate(a) || new Date(0);
 
-      const dateA =
-        getOrderDate(a) ||
-        new Date(0);
+    const dateB =
+      getOrderDate(b) || new Date(0);
 
-      const dateB =
-        getOrderDate(b) ||
-        new Date(0);
+    return dateB - dateA;
 
-
-      return (
-        dateB - dateA
-      );
-
-    }
-  );
+  });
 
 
   const recentOrders =
     orders.slice(0, 5);
 
 
-  /* =========================
-     NO ORDERS
-  ========================= */
-
-  if (
-    recentOrders.length === 0
-  ) {
+  if (recentOrders.length === 0) {
 
     box.innerHTML = `
-
       <p class="empty-message">
         No orders yet.
       </p>
-
     `;
 
     return;
@@ -502,131 +415,124 @@ function loadRecentOrders(
   box.innerHTML = "";
 
 
-  /* =========================
-     SHOW ORDERS
-  ========================= */
+  recentOrders.forEach(function(order) {
 
-  recentOrders.forEach(
-    function(order) {
-
-      const orderBox =
-        document.createElement(
-          "div"
-        );
+    const orderBox =
+      document.createElement("div");
 
 
-      orderBox.style.padding =
-        "14px 0";
+    orderBox.style.padding =
+      "14px 0";
 
-      orderBox.style.borderBottom =
-        "1px solid #e2e8f0";
-
-
-      const orderNumber =
-        order.orderId ||
-        order.orderNumber ||
-        order.id;
+    orderBox.style.borderBottom =
+      "1px solid #e2e8f0";
 
 
-      const customerName =
-        order.customerName ||
-        "Customer";
+    const orderNumber =
+      order.orderId ||
+      order.orderNumber ||
+      order.id;
 
 
-      const total =
-        Number(
-          order.grandTotal ??
-          order.total ??
-          0
-        );
+    const customerName =
+      order.customerName ||
+      order.name ||
+      "Customer";
 
 
-      let orderTime =
-        "সময় পাওয়া যায়নি";
-
-
-      const orderDate =
-        getOrderDate(order);
-
-
-      if (orderDate) {
-
-        orderTime =
-          orderDate.toLocaleString(
-            "bn-BD",
-            {
-              dateStyle: "medium",
-              timeStyle: "short"
-            }
-          );
-
-      }
-
-
-      orderBox.innerHTML = `
-
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          gap:10px;
-        ">
-
-          <strong style="
-            font-size:15px;
-            color:#0f172a;
-          ">
-
-            #${orderNumber}
-
-          </strong>
-
-
-          <strong style="
-            font-size:15px;
-            color:#2563eb;
-            white-space:nowrap;
-          ">
-
-            ৳${total.toLocaleString("en-US")}
-
-          </strong>
-
-        </div>
-
-
-        <div style="
-          margin-top:6px;
-          color:#475569;
-          font-size:14px;
-        ">
-
-          ${customerName}
-
-        </div>
-
-
-        <div style="
-          margin-top:4px;
-          color:#94a3b8;
-          font-size:12px;
-        ">
-
-          ${orderTime}
-
-        </div>
-
-      `;
-
-
-      box.appendChild(
-        orderBox
+    const total =
+      Number(
+        order.grandTotal ??
+        order.total ??
+        0
       );
 
+
+    let orderTime =
+      "সময় পাওয়া যায়নি";
+
+
+    const orderDate =
+      getOrderDate(order);
+
+
+    if (orderDate) {
+
+      orderTime =
+        orderDate.toLocaleString(
+          "bn-BD",
+          {
+            dateStyle: "medium",
+            timeStyle: "short"
+          }
+        );
+
     }
-  );
+
+
+    orderBox.innerHTML = `
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:10px;
+      ">
+
+        <strong style="
+          font-size:15px;
+          color:#0f172a;
+        ">
+
+          #${orderNumber}
+
+        </strong>
+
+
+        <strong style="
+          font-size:15px;
+          color:#2563eb;
+          white-space:nowrap;
+        ">
+
+          ৳${total.toLocaleString("en-US")}
+
+        </strong>
+
+      </div>
+
+
+      <div style="
+        margin-top:6px;
+        color:#475569;
+        font-size:14px;
+      ">
+
+        ${customerName}
+
+      </div>
+
+
+      <div style="
+        margin-top:4px;
+        color:#94a3b8;
+        font-size:12px;
+      ">
+
+        ${orderTime}
+
+      </div>
+
+    `;
+
+
+    box.appendChild(orderBox);
+
+  });
 
 }
+
+
 /* =========================================
    LOAD TODAY VISITORS
 ========================================= */
@@ -640,6 +546,7 @@ async function loadVisitors() {
     return;
   }
 
+
   try {
 
     const snapshot =
@@ -647,9 +554,9 @@ async function loadVisitors() {
         collection(db, "visits")
       );
 
+
     let visitors = 0;
 
-    /* Bangladesh-এর আজকের তারিখ */
 
     const today =
       new Intl.DateTimeFormat(
@@ -669,8 +576,6 @@ async function loadVisitors() {
         visitDoc.data();
 
 
-      /* Visitor-এর saved date */
-
       if (
         visit.date &&
         String(visit.date) ===
@@ -684,11 +589,10 @@ async function loadVisitors() {
       }
 
 
-      /* Date না মিললে lastVisit timestamp দিয়ে পরীক্ষা */
-
       if (
         visit.lastVisit &&
-        typeof visit.lastVisit.toDate === "function"
+        typeof visit.lastVisit.toDate ===
+        "function"
       ) {
 
         const visitDate =
@@ -707,9 +611,7 @@ async function loadVisitors() {
           ).format(visitDate);
 
 
-        if (
-          visitDay === today
-        ) {
+        if (visitDay === today) {
 
           visitors++;
 
@@ -726,9 +628,7 @@ async function loadVisitors() {
 
     console.log(
       "YOUR TREND Visitors:",
-      visitors,
-      "Today:",
-      today
+      visitors
     );
 
 
@@ -739,8 +639,7 @@ async function loadVisitors() {
       error
     );
 
-    counter.innerText =
-      "—";
+    counter.innerText = "—";
 
   }
 
@@ -752,11 +651,24 @@ async function loadVisitors() {
 ========================================= */
 
 createExtraCards();
+
 loadProducts();
+
 loadVisitors();
 
-onAuthStateChanged(auth, function(user) {
-  if (user) {
-  }
-});
 loadOrders();
+
+
+onAuthStateChanged(
+  auth,
+  function(user) {
+
+    if (user) {
+      console.log(
+        "Admin logged in:",
+        user.email
+      );
+    }
+
+  }
+);
