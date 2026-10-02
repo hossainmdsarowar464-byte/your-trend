@@ -219,6 +219,62 @@ async function loadDashboardSales() {
 
 loadDashboardSales();
 /* =========================
+   LOAD TODAY VISITORS
+========================= */
+
+async function loadTodayVisitors() {
+
+  const visitorCounter =
+    document.getElementById("totalVisitors");
+
+  if (!visitorCounter) {
+    return;
+  }
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(db, "visits")
+      );
+
+    let todayVisitors = 0;
+
+    const today =
+      new Date()
+        .toISOString()
+        .split("T")[0];
+
+    snapshot.forEach(function(visitDoc) {
+
+      const visit =
+        visitDoc.data();
+
+      if (visit.date === today) {
+        todayVisitors++;
+      }
+
+    });
+
+    visitorCounter.innerText =
+      todayVisitors;
+
+  } catch (error) {
+
+    console.error(
+      "Dashboard Visitor Error:",
+      error
+    );
+
+    visitorCounter.innerText = "—";
+
+  }
+
+}
+
+
+loadTodayVisitors();
+/* =========================
    LOAD RECENT ORDERS
 ========================= */
 
