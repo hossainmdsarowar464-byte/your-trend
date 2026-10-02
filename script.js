@@ -1557,7 +1557,166 @@ if (trackOrderBtn) {
     "_blank"
   );
 
-}/* =====================================================
+}/* =========================
+   YOUR TREND VISITOR TRACKING
+========================= */
+
+async function trackVisitor() {
+
+  try {
+
+    const {
+      initializeApp,
+      getApps
+    } = await import(
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
+    );
+
+    const {
+      getFirestore,
+      doc,
+      setDoc,
+      serverTimestamp
+    } = await import(
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+    );
+
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
+
+      authDomain:
+        "your-trend.firebaseapp.com",
+
+      projectId:
+        "your-trend",
+
+      storageBucket:
+        "your-trend.firebasestorage.app",
+
+      messagingSenderId:
+        "775017944976",
+
+      appId:
+        "1:775017944976:web:a19b34b89e6a4285148515",
+
+      measurementId:
+        "G-1T4GM19268"
+
+    };
+
+
+    const app =
+      getApps().length
+        ? getApps()[0]
+        : initializeApp(firebaseConfig);
+
+
+    const db =
+      getFirestore(app);
+
+
+    /* =========================
+       UNIQUE VISITOR ID
+    ========================= */
+
+    let visitorId =
+      localStorage.getItem(
+        "yourTrendVisitorId"
+      );
+
+
+    if (!visitorId) {
+
+      visitorId =
+        "visitor_" +
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .substring(2, 10);
+
+
+      localStorage.setItem(
+        "yourTrendVisitorId",
+        visitorId
+      );
+
+    }
+
+
+    /* =========================
+       TODAY
+    ========================= */
+
+    const today =
+      new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+    const visitId =
+      visitorId +
+      "_" +
+      today;
+
+
+    /* =========================
+       SAVE VISITOR
+    ========================= */
+
+    await setDoc(
+
+      doc(
+        db,
+        "visits",
+        visitId
+      ),
+
+      {
+
+        visitorId:
+          visitorId,
+
+        date:
+          today,
+
+        lastVisit:
+          serverTimestamp(),
+
+        page:
+          window.location.pathname
+
+      },
+
+      {
+        merge: true
+      }
+
+    );
+
+
+    console.log(
+      "✅ Visitor tracked"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Visitor Tracking Error:",
+      error
+    );
+
+  }
+
+}
+
+
+trackVisitor();
+/* =====================================================
    YOUR TREND BANNER
    INFINITE AUTO SLIDE + SWIPE
    ===================================================== */
