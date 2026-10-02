@@ -96,9 +96,12 @@ async function loadFirebaseProducts() {
     );
 
     const {
-      getFirestore,
-      collection,
-      getDocs
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  limit,
+  startAfter
     } = await import(
       "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
     );
