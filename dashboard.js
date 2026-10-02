@@ -7,10 +7,7 @@ import {
   collection,
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-import {
-  getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 /* =========================================
    FIREBASE
@@ -47,7 +44,7 @@ const app =
 
 const db =
   getFirestore(app);
-const auth = getAuth(app);
+
 
 /* =========================================
    DATE HELPERS
