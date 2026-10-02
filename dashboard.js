@@ -9,10 +9,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+/* =========================================
+   FIREBASE
+========================================= */
+
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+    "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
 
   authDomain:
     "your-trend.firebaseapp.com",
@@ -35,361 +39,673 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const db =
+  getFirestore(app);
 
 
-/* =========================
-   LOAD TOTAL PRODUCTS
-========================= */
+/* =========================================
+   DATE HELPERS
+========================================= */
 
-async function loadDashboardProducts() {
+function getTodayDate() {
 
-  const productCounter =
-    document.getElementById("totalProducts");
+  const now = new Date();
 
-  if (!productCounter) {
+  const year =
+    now.getFullYear();
+
+  const month =
+    String(now.getMonth() + 1)
+      .padStart(2, "0");
+
+  const day =
+    String(now.getDate())
+      .padStart(2, "0");
+
+  return year + "-" + month + "-" + day;
+
+}
+
+
+function getOrderDate(order) {
+
+  if (
+    order.createdAt &&
+    typeof order.createdAt.toDate === "function"
+  ) {
+
+    return order.createdAt.toDate();
+
+  }
+
+  return null;
+
+}
+
+
+function isToday(date) {
+
+  if (!date) {
+    return false;
+  }
+
+  const now =
+    new Date();
+
+  return (
+
+    date.getDate() ===
+      now.getDate()
+
+    &&
+
+    date.getMonth() ===
+      now.getMonth()
+
+    &&
+
+    date.getFullYear() ===
+      now.getFullYear()
+
+  );
+
+}
+
+
+/* =========================================
+   ADD EXTRA SUMMARY CARDS
+========================================= */
+
+function createExtraCards() {
+
+  const cards =
+    document.querySelector(
+      ".dashboard-cards"
+    );
+
+  if (!cards) {
     return;
   }
 
-  try {
 
-    const snapshot =
-      await getDocs(
-        collection(db, "products")
-      );
+  /* Total Orders */
 
-    productCounter.innerText =
-      snapshot.size;
+  if (
+    !document.getElementById(
+      "totalAllOrders"
+    )
+  ) {
 
-  } catch (error) {
+    cards.insertAdjacentHTML(
+      "beforeend",
 
-    console.error(
-      "Dashboard Product Error:",
-      error
+      `
+      <div class="card">
+        <span>Total Orders</span>
+        <strong id="totalAllOrders">0</strong>
+        <small>All time</small>
+      </div>
+      `
+
     );
 
-    productCounter.innerText = "—";
+  }
+
+
+  /* Total Sales */
+
+  if (
+    !document.getElementById(
+      "totalAllSales"
+    )
+  ) {
+
+    cards.insertAdjacentHTML(
+      "beforeend",
+
+      `
+      <div class="card">
+        <span>Total Sales</span>
+        <strong id="totalAllSales">৳0</strong>
+        <small>All time</small>
+      </div>
+      `
+
+    );
 
   }
 
 }
 
 
-/* =========================
-   START DASHBOARD
-========================= */
+/* =========================================
+   LOAD PRODUCTS
+========================================= */
 
-loadDashboardProducts();
-/* =========================
-   LOAD TODAY ORDERS
-========================= */
+async function loadProducts() {
 
-async function loadDashboardOrders() {
+  const counter =
+    document.getElementById(
+      "totalProducts"
+    );
 
-  const orderCounter =
-    document.getElementById("totalOrders");
-
-  if (!orderCounter) {
+  if (!counter) {
     return;
   }
+
 
   try {
 
     const snapshot =
       await getDocs(
-        collection(db, "orders")
+        collection(
+          db,
+          "products"
+        )
       );
+
+
+    counter.innerText =
+      snapshot.size;
+
+
+  } catch (error) {
+
+    console.error(
+      "Products Error:",
+      error
+    );
+
+    counter.innerText =
+      "—";
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD ALL ORDERS
+========================================= */
+
+async function loadOrders() {
+
+  const todayOrdersCounter =
+    document.getElementById(
+      "totalOrders"
+    );
+
+  const todaySalesCounter =
+    document.getElementById(
+      "totalSales"
+    );
+
+  const totalOrdersCounter =
+    document.getElementById(
+      "totalAllOrders"
+    );
+
+  const totalSalesCounter =
+    document.getElementById(
+      "totalAllSales"
+    );
+
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "orders"
+        )
+      );
+
 
     let todayOrders = 0;
 
-    const today = new Date();
+    let todaySales = 0;
 
-    snapshot.forEach(function(orderDoc) {
+    let totalSales = 0;
 
-      const order = orderDoc.data();
 
-      if (
-        order.createdAt &&
-        typeof order.createdAt.toDate === "function"
-      ) {
+    const orders = [];
+
+
+    snapshot.forEach(
+      function(orderDoc) {
+
+        const order =
+          orderDoc.data();
+
+
+        orders.push({
+
+          id:
+            orderDoc.id,
+
+          ...order
+
+        });
+
+
+        /* =========================
+           ORDER DATE
+        ========================= */
 
         const orderDate =
-          order.createdAt.toDate();
+          getOrderDate(order);
+
+
+        /* =========================
+           ORDER TOTAL
+        ========================= */
+
+        const orderTotal =
+          Number(
+            order.grandTotal ??
+            order.total ??
+            0
+          );
+
+
+        /* =========================
+           TOTAL SALES
+        ========================= */
+
+        totalSales +=
+          orderTotal;
+
+
+        /* =========================
+           TODAY
+        ========================= */
 
         if (
-          orderDate.getDate() === today.getDate() &&
-          orderDate.getMonth() === today.getMonth() &&
-          orderDate.getFullYear() === today.getFullYear()
+          isToday(orderDate)
         ) {
 
           todayOrders++;
 
-        }
-
-      }
-
-    });
-
-    orderCounter.innerText =
-      todayOrders;
-
-  } catch (error) {
-
-    console.error(
-      "Dashboard Order Error:",
-      error
-    );
-
-    orderCounter.innerText = "—";
-
-  }
-
-}
-
-
-loadDashboardOrders();
-/* =========================
-   LOAD TODAY SALES
-========================= */
-
-async function loadDashboardSales() {
-
-  const salesCounter =
-    document.getElementById("totalSales");
-
-  if (!salesCounter) {
-    return;
-  }
-
-  try {
-
-    const snapshot =
-      await getDocs(
-        collection(db, "orders")
-      );
-
-    let todaySales = 0;
-
-    const today = new Date();
-
-    snapshot.forEach(function(orderDoc) {
-
-      const order = orderDoc.data();
-
-      if (
-        order.createdAt &&
-        typeof order.createdAt.toDate === "function"
-      ) {
-
-        const orderDate =
-          order.createdAt.toDate();
-
-        if (
-          orderDate.getDate() === today.getDate() &&
-          orderDate.getMonth() === today.getMonth() &&
-          orderDate.getFullYear() === today.getFullYear()
-        ) {
-
-          todaySales += Number(order.total) || 0;
+          todaySales +=
+            orderTotal;
 
         }
 
       }
-
-    });
-
-    salesCounter.innerText =
-      "৳" + todaySales;
-
-  } catch (error) {
-
-    console.error(
-      "Dashboard Sales Error:",
-      error
     );
 
-    salesCounter.innerText = "—";
 
-  }
+    /* =========================
+       SHOW COUNTS
+    ========================= */
 
-}
+    if (todayOrdersCounter) {
 
-
-loadDashboardSales();
-/* =========================
-   LOAD TODAY VISITORS
-========================= */
-
-async function loadTodayVisitors() {
-
-  const visitorCounter =
-    document.getElementById("totalVisitors");
-
-  if (!visitorCounter) {
-    return;
-  }
-
-  try {
-
-    const snapshot =
-      await getDocs(
-        collection(db, "visits")
-      );
-
-    let todayVisitors = 0;
-
-    const today =
-      new Date()
-        .toISOString()
-        .split("T")[0];
-
-    snapshot.forEach(function(visitDoc) {
-
-      const visit =
-        visitDoc.data();
-
-      if (visit.date === today) {
-        todayVisitors++;
-      }
-
-    });
-
-    visitorCounter.innerText =
-      todayVisitors;
-
-  } catch (error) {
-
-    console.error(
-      "Dashboard Visitor Error:",
-      error
-    );
-
-    visitorCounter.innerText = "—";
-
-  }
-
-}
-
-
-loadTodayVisitors();
-/* =========================
-   LOAD RECENT ORDERS
-========================= */
-
-async function loadRecentOrders() {
-
-  const ordersBox =
-    document.getElementById("recentOrders");
-
-  if (!ordersBox) {
-    return;
-  }
-
-  try {
-
-    const snapshot =
-      await getDocs(
-        collection(db, "orders")
-      );
-
-    const orders = [];
-
-    snapshot.forEach(function(orderDoc) {
-
-      const order = orderDoc.data();
-
-      orders.push({
-        id: orderDoc.id,
-        ...order
-      });
-
-    });
-
-    orders.sort(function(a, b) {
-
-      const dateA =
-        a.createdAt?.toDate
-          ? a.createdAt.toDate()
-          : new Date(0);
-
-      const dateB =
-        b.createdAt?.toDate
-          ? b.createdAt.toDate()
-          : new Date(0);
-
-      return dateB - dateA;
-
-    });
-
-
-    const recentOrders =
-      orders.slice(0, 5);
-
-
-    if (recentOrders.length === 0) {
-
-      ordersBox.innerHTML =
-        '<p class="empty-message">No orders yet.</p>';
-
-      return;
+      todayOrdersCounter.innerText =
+        todayOrders;
 
     }
 
 
-    ordersBox.innerHTML = "";
+    if (todaySalesCounter) {
+
+      todaySalesCounter.innerText =
+        "৳" +
+        todaySales.toLocaleString(
+          "en-US"
+        );
+
+    }
 
 
-    recentOrders.forEach(function(order) {
+    if (totalOrdersCounter) {
+
+      totalOrdersCounter.innerText =
+        snapshot.size;
+
+    }
+
+
+    if (totalSalesCounter) {
+
+      totalSalesCounter.innerText =
+        "৳" +
+        totalSales.toLocaleString(
+          "en-US"
+        );
+
+    }
+
+
+    /* =========================
+       RECENT ORDERS
+    ========================= */
+
+    loadRecentOrders(
+      orders
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Orders Error:",
+      error
+    );
+
+
+    if (todayOrdersCounter) {
+      todayOrdersCounter.innerText =
+        "—";
+    }
+
+
+    if (todaySalesCounter) {
+      todaySalesCounter.innerText =
+        "—";
+    }
+
+
+    if (totalOrdersCounter) {
+      totalOrdersCounter.innerText =
+        "—";
+    }
+
+
+    if (totalSalesCounter) {
+      totalSalesCounter.innerText =
+        "—";
+    }
+
+  }
+
+}
+
+
+/* =========================================
+   RECENT ORDERS
+========================================= */
+
+function loadRecentOrders(
+  orders
+) {
+
+  const box =
+    document.getElementById(
+      "recentOrders"
+    );
+
+
+  if (!box) {
+    return;
+  }
+
+
+  /* =========================
+     SORT NEWEST FIRST
+  ========================= */
+
+  orders.sort(
+    function(a, b) {
+
+      const dateA =
+        getOrderDate(a) ||
+        new Date(0);
+
+      const dateB =
+        getOrderDate(b) ||
+        new Date(0);
+
+
+      return (
+        dateB - dateA
+      );
+
+    }
+  );
+
+
+  const recentOrders =
+    orders.slice(0, 5);
+
+
+  /* =========================
+     NO ORDERS
+  ========================= */
+
+  if (
+    recentOrders.length === 0
+  ) {
+
+    box.innerHTML = `
+
+      <p class="empty-message">
+        No orders yet.
+      </p>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML = "";
+
+
+  /* =========================
+     SHOW ORDERS
+  ========================= */
+
+  recentOrders.forEach(
+    function(order) {
+
+      const orderBox =
+        document.createElement(
+          "div"
+        );
+
+
+      orderBox.style.padding =
+        "14px 0";
+
+      orderBox.style.borderBottom =
+        "1px solid #e2e8f0";
+
+
+      const orderNumber =
+        order.orderId ||
+        order.orderNumber ||
+        order.id;
+
+
+      const customerName =
+        order.customerName ||
+        "Customer";
+
+
+      const total =
+        Number(
+          order.grandTotal ??
+          order.total ??
+          0
+        );
+
 
       let orderTime =
         "সময় পাওয়া যায়নি";
 
 
-      if (
-        order.createdAt &&
-        typeof order.createdAt.toDate === "function"
-      ) {
+      const orderDate =
+        getOrderDate(order);
+
+
+      if (orderDate) {
 
         orderTime =
-          order.createdAt
-            .toDate()
-            .toLocaleString("bn-BD");
+          orderDate.toLocaleString(
+            "bn-BD",
+            {
+              dateStyle: "medium",
+              timeStyle: "short"
+            }
+          );
 
       }
 
 
-      const orderItem =
-        document.createElement("div");
-
-
-      orderItem.style.padding =
-        "12px 0";
-
-      orderItem.style.borderBottom =
-        "1px solid #e2e8f0";
-
-
-      orderItem.innerHTML = `
-
-        <strong>
-          #${order.orderNumber || order.id}
-        </strong>
+      orderBox.innerHTML = `
 
         <div style="
-          margin-top:5px;
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:10px;
+        ">
+
+          <strong style="
+            font-size:15px;
+            color:#0f172a;
+          ">
+
+            #${orderNumber}
+
+          </strong>
+
+
+          <strong style="
+            font-size:15px;
+            color:#2563eb;
+            white-space:nowrap;
+          ">
+
+            ৳${total.toLocaleString("en-US")}
+
+          </strong>
+
+        </div>
+
+
+        <div style="
+          margin-top:6px;
           color:#475569;
           font-size:14px;
         ">
 
-          ${order.customerName || "Customer"}
-
-          · ৳${order.total || 0}
+          ${customerName}
 
         </div>
+
 
         <div style="
           margin-top:4px;
           color:#94a3b8;
-          font-size:
+          font-size:12px;
+        ">
+
+          ${orderTime}
+
+        </div>
+
+      `;
+
+
+      box.appendChild(
+        orderBox
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   LOAD TODAY VISITORS
+========================================= */
+
+async function loadVisitors() {
+
+  const counter =
+    document.getElementById(
+      "totalVisitors"
+    );
+
+
+  if (!counter) {
+    return;
+  }
+
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "visits"
+        )
+      );
+
+
+    const today =
+      getTodayDate();
+
+
+    let visitors = 0;
+
+
+    snapshot.forEach(
+      function(visitDoc) {
+
+        const visit =
+          visitDoc.data();
+
+
+        if (
+          visit.date === today
+        ) {
+
+          visitors++;
+
+        }
+
+      }
+    );
+
+
+    counter.innerText =
+      visitors;
+
+
+  } catch (error) {
+
+    console.error(
+      "Visitors Error:",
+      error
+    );
+
+
+    counter.innerText =
+      "—";
+
+  }
+
+}
+
+
+/* =========================================
+   START DASHBOARD
+========================================= */
+
+createExtraCards();
+
+loadProducts();
+
+loadOrders();
+
+loadVisitors();
