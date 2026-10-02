@@ -623,7 +623,6 @@ function loadRecentOrders(
 
 }
 
-
 /* =========================================
    LOAD TODAY VISITORS
 ========================================= */
@@ -631,9 +630,7 @@ function loadRecentOrders(
 async function loadVisitors() {
 
   const counter =
-    document.getElementById(
-      "totalVisitors"
-    );
+    document.getElementById("totalVisitors");
 
 
   if (!counter) {
@@ -645,15 +642,26 @@ async function loadVisitors() {
 
     const snapshot =
       await getDocs(
-        collection(
-          db,
-          "visits"
-        )
+        collection(db, "visits")
       );
 
 
+    /* Bangladesh date */
+
+    const now =
+      new Date();
+
+
     const today =
-      getTodayDate();
+      now.getFullYear() +
+      "-" +
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0") +
+      "-" +
+      String(
+        now.getDate()
+      ).padStart(2, "0");
 
 
     let visitors = 0;
@@ -667,7 +675,8 @@ async function loadVisitors() {
 
 
         if (
-          visit.date === today
+          String(visit.date) ===
+          String(today)
         ) {
 
           visitors++;
@@ -680,6 +689,14 @@ async function loadVisitors() {
 
     counter.innerText =
       visitors;
+
+
+    console.log(
+      "Today:",
+      today,
+      "Visitors:",
+      visitors
+    );
 
 
   } catch (error) {
@@ -709,3 +726,4 @@ loadProducts();
 loadOrders();
 
 loadVisitors();
+
