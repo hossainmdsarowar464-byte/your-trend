@@ -82,3 +82,71 @@ async function loadDashboardProducts() {
 ========================= */
 
 loadDashboardProducts();
+/* =========================
+   LOAD TODAY ORDERS
+========================= */
+
+async function loadDashboardOrders() {
+
+  const orderCounter =
+    document.getElementById("totalOrders");
+
+  if (!orderCounter) {
+    return;
+  }
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(db, "orders")
+      );
+
+    let todayOrders = 0;
+
+    const today = new Date();
+
+    snapshot.forEach(function(orderDoc) {
+
+      const order = orderDoc.data();
+
+      if (
+        order.createdAt &&
+        typeof order.createdAt.toDate === "function"
+      ) {
+
+        const orderDate =
+          order.createdAt.toDate();
+
+        if (
+          orderDate.getDate() === today.getDate() &&
+          orderDate.getMonth() === today.getMonth() &&
+          orderDate.getFullYear() === today.getFullYear()
+        ) {
+
+          todayOrders++;
+
+        }
+
+      }
+
+    });
+
+    orderCounter.innerText =
+      todayOrders;
+
+  } catch (error) {
+
+    console.error(
+      "Dashboard Order Error:",
+      error
+    );
+
+    orderCounter.innerText = "—";
+
+  }
+
+}
+
+
+loadDashboardOrders();
