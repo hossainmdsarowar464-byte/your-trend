@@ -650,23 +650,35 @@ async function loadVisitors() {
    START DASHBOARD
 ========================================= */
 
-createExtraCards();
-
-loadProducts();
-
-loadVisitors();
-
-loadOrders();
-
-
 onAuthStateChanged(auth, function(user) {
 
   console.log("AUTH CHECK:", user);
 
-  if (user) {
-    console.log("ADMIN LOGGED IN:", user.email);
-  } else {
-    console.log("NO USER LOGGED IN");
+  if (!user) {
+
+    console.log("Admin login নেই");
+
+    return;
+
   }
+
+
+  console.log(
+    "✅ Admin logged in:",
+    user.email
+  );
+
+
+  /* =========================
+     LOAD DASHBOARD
+  ========================= */
+
+  createExtraCards();
+
+  loadProducts();
+
+  loadVisitors();
+
+  loadOrders();
 
 });
