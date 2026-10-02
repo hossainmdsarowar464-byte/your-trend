@@ -749,13 +749,19 @@ async function loadVisitors() {
    START DASHBOARD
 ========================================= */
 
-createExtraCards();
+onAuthStateChanged(auth, function(user) {
 
-loadProducts();
+  if (!user) {
+    window.location.href = "admin.html";
+    return;
+  }
 
-loadOrders();
+  createExtraCards();
+  loadProducts();
+  loadOrders();
+  loadVisitors();
 
-loadVisitors();
+});
 
 getDocs(collection(db, "visits"))
   .then(function(snapshot) {
