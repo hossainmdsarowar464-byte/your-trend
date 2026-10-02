@@ -323,19 +323,28 @@ async function loadOrders() {
            TODAY
         ========================= */
 
-        if (
-          isToday(orderDate)
-        ) {
+        if (orderDate) {
 
-          todayOrders++;
+  const orderDay = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Dhaka",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(orderDate);
 
-          todaySales +=
-            orderTotal;
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Dhaka",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+
+  if (orderDay === today) {
+    todayOrders++;
+    todaySales += orderTotal;
+  }
 
         }
-
-      }
-    );
 
 
     /* =========================
