@@ -757,7 +757,6 @@ loadVisitors();
 
 onAuthStateChanged(auth, function(user) {
   if (user) {
-    loadOrders();
   }
 });
-
+loadOrders();
