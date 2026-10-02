@@ -147,7 +147,13 @@ const snapshot =
 let lastVisibleDoc = null;
 let hasMoreProducts = false;
     const firebaseList = [];
-
+if (snapshot.docs.length > 24) {
+  lastVisibleDoc = snapshot.docs[23];
+  hasMoreProducts = true;
+} else {
+  lastVisibleDoc = null;
+  hasMoreProducts = false;
+}
     snapshot.forEach(
       function(productDoc) {
 
