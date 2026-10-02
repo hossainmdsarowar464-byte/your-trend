@@ -605,34 +605,34 @@ async function loadVisitors() {
    START DASHBOARD
 ========================================= */
 
-onAuthStateChanged(auth, function(user) {
+onAuthStateChanged(auth, async function(user) {
 
   console.log("AUTH CHECK:", user);
 
   if (!user) {
-
-    console.log("Admin login নেই");
-
+    console.log("❌ Admin login নেই");
     return;
-
   }
 
+  console.log("✅ Admin logged in:", user.email);
 
-  console.log(
-    "✅ Admin logged in:",
-    user.email
-  );
+  try {
 
+    await loadProducts();
 
-  /* =========================
-     LOAD DASHBOARD
-  ========================= */
+    await loadVisitors();
 
+    await loadOrders();
 
-  loadProducts();
+    console.log("✅ Dashboard data loaded successfully");
 
-  loadVisitors();
+  } catch (error) {
 
-  loadOrders();
+    console.error(
+      "❌ Dashboard loading error:",
+      error
+    );
+
+  }
 
 });
