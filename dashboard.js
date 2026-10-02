@@ -226,222 +226,209 @@ async function loadProducts() {
 }
 
 /* =========================================
-   LOAD ALL ORDERS
+LOAD ALL ORDERS
 ========================================= */
 
 async function loadOrders() {
 
-  const todayOrdersCounter =
-    document.getElementById("totalOrders");
+const todayOrdersCounter =
+document.getElementById(
+"totalOrders"
+);
 
-  const todaySalesCounter =
-    document.getElementById("totalSales");
+const todaySalesCounter =
+document.getElementById(
+"totalSales"
+);
 
-  const totalOrdersCounter =
-    document.getElementById("totalAllOrders");
+const totalOrdersCounter =
+document.getElementById(
+"totalAllOrders"
+);
 
-  const totalSalesCounter =
-    document.getElementById("totalAllSales");
+const totalSalesCounter =
+document.getElementById(
+"totalAllSales"
+);
 
-  try {
+try {
 
-    const snapshot =
-      await getDocs(
-        collection(db, "orders")
-      );
+const snapshot =    
+  await getDocs(    
+    collection(    
+      db,    
+      "orders"    
+    )    
+  );    
 
-    let todayOrders = 0;
-    let todaySales = 0;
-    let totalSales = 0;
 
-    const orders = [];
+let todayOrders = 0;    
 
-    /* =========================
-       TODAY IN BANGLADESH
-    ========================= */
+let todaySales = 0;    
 
-    const now = new Date();
+let totalSales = 0;    
 
-    const bdToday =
-      new Date(
-        now.toLocaleString("en-US", {
-          timeZone: "Asia/Dhaka"
-        })
-      );
 
-    const todayYear =
-      bdToday.getFullYear();
+const orders = [];    
 
-    const todayMonth =
-      bdToday.getMonth();
 
-    const todayDate =
-      bdToday.getDate();
+snapshot.forEach(    
+  function(orderDoc) {    
 
+    const order =    
+      orderDoc.data();    
 
-    /* =========================
-       READ ORDERS
-    ========================= */
 
-    snapshot.forEach(function(orderDoc) {
+    orders.push({    
 
-      const order =
-        orderDoc.data();
+      id:    
+        orderDoc.id,    
 
-      orders.push({
-        id: orderDoc.id,
-        ...order
-      });
+      ...order    
 
+    });    
 
-      /* =========================
-         ORDER TOTAL
-      ========================= */
 
-      const orderTotal =
-        Number(
-          order.grandTotal ??
-          order.total ??
-          0
-        );
+    /* =========================    
+       ORDER DATE    
+    ========================= */    
 
-      totalSales += orderTotal;
+    const orderDate =    
+      getOrderDate(order);    
 
 
-      /* =========================
-         ORDER DATE
-      ========================= */
+    /* =========================    
+       ORDER TOTAL    
+    ========================= */    
 
-      let orderDate = null;
+    const orderTotal =    
+      Number(    
+        order.grandTotal ??    
+        order.total ??    
+        0    
+      );    
 
-      if (
-        order.createdAt &&
-        typeof order.createdAt.toDate === "function"
-      ) {
 
-        orderDate =
-          order.createdAt.toDate();
+    /* =========================    
+       TOTAL SALES    
+    ========================= */    
 
-      }
+    totalSales +=    
+      orderTotal;    
 
 
-      /* =========================
-         TODAY'S ORDERS
-      ========================= */
+    /* =========================    
+       TODAY    
+    ========================= */    
 
-      if (orderDate) {
+    if (orderDate) {
 
-        const bdOrderDate =
-          new Date(
-            orderDate.toLocaleString(
-              "en-US",
-              {
-                timeZone: "Asia/Dhaka"
-              }
-            )
-          );
+const orderDay = new Intl.DateTimeFormat("en-CA", {
+timeZone: "Asia/Dhaka",
+year: "numeric",
+month: "2-digit",
+day: "2-digit"
+}).format(orderDate);
 
-        const orderYear =
-          bdOrderDate.getFullYear();
+const today = new Intl.DateTimeFormat("en-CA", {
+timeZone: "Asia/Dhaka",
+year: "numeric",
+month: "2-digit",
+day: "2-digit"
+}).format(new Date());
 
-        const orderMonth =
-          bdOrderDate.getMonth();
+if (orderDay === today) {
+todayOrders++;
+todaySales += orderTotal;
+}
 
-        const orderDay =
-          bdOrderDate.getDate();
+}    
 
 
-        if (
-          orderYear === todayYear &&
-          orderMonth === todayMonth &&
-          orderDay === todayDate
-        ) {
+/* =========================    
+   SHOW COUNTS    
+========================= */    
 
-          todayOrders++;
+if (todayOrdersCounter) {    
 
-          todaySales +=
-            orderTotal;
+  todayOrdersCounter.innerText =    
+    todayOrders;    
 
-        }
+}    
 
-      }
 
-    });
+if (todaySalesCounter) {    
 
+  todaySalesCounter.innerText =    
+    "৳" +    
+    todaySales.toLocaleString(    
+      "en-US"    
+    );    
 
-    /* =========================
-       SHOW COUNTS
-    ========================= */
+}    
 
-    if (todayOrdersCounter) {
 
-      todayOrdersCounter.innerText =
-        todayOrders;
+if (totalOrdersCounter) {    
 
-    }
+  totalOrdersCounter.innerText =    
+    snapshot.size;    
 
+}    
 
-    if (todaySalesCounter) {
 
-      todaySalesCounter.innerText =
-        "৳" +
-        todaySales.toLocaleString("en-US");
+if (totalSalesCounter) {    
 
-    }
+  totalSalesCounter.innerText =    
+    "৳" +    
+    totalSales.toLocaleString(    
+      "en-US"    
+    );    
 
+}    
 
-    if (totalOrdersCounter) {
 
-      totalOrdersCounter.innerText =
-        snapshot.size;
+/* =========================    
+   RECENT ORDERS    
+========================= */    
 
-    }
+loadRecentOrders(    
+  orders    
+);
 
+} catch (error) {
 
-    if (totalSalesCounter) {
+console.error(    
+  "Orders Error:",    
+  error    
+);    
 
-      totalSalesCounter.innerText =
-        "৳" +
-        totalSales.toLocaleString("en-US");
 
-    }
+if (todayOrdersCounter) {    
+  todayOrdersCounter.innerText =    
+    "—";    
+}    
 
 
-    /* =========================
-       RECENT ORDERS
-    ========================= */
+if (todaySalesCounter) {    
+  todaySalesCounter.innerText =    
+    "—";    
+}    
 
-    loadRecentOrders(orders);
 
-  }
+if (totalOrdersCounter) {    
+  totalOrdersCounter.innerText =    
+    "—";    
+}    
 
-  catch (error) {
 
-    console.error(
-      "Orders Error:",
-      error
-    );
-
-    if (todayOrdersCounter) {
-      todayOrdersCounter.innerText = "—";
-    }
-
-    if (todaySalesCounter) {
-      todaySalesCounter.innerText = "—";
-    }
-
-    if (totalOrdersCounter) {
-      totalOrdersCounter.innerText = "—";
-    }
-
-    if (totalSalesCounter) {
-      totalSalesCounter.innerText = "—";
-    }
-
-  }
+if (totalSalesCounter) {    
+  totalSalesCounter.innerText =    
+    "—";    
+}
 
 }
-  
+
+}
 
 
 /* =========================================
