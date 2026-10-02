@@ -341,27 +341,30 @@ async function loadOrders() {
 
   } catch (error) {
 
-    console.error(
-      "Orders Error:",
-      error
-    );
-
+    console.error("Orders Error:", error);
 
     if (todayOrdersCounter) {
-      todayOrdersCounter.innerText = "—";
+      todayOrdersCounter.innerText = "ERROR";
     }
 
     if (todaySalesCounter) {
-      todaySalesCounter.innerText = "—";
+      todaySalesCounter.innerText = "ERROR";
     }
 
     if (totalOrdersCounter) {
-      totalOrdersCounter.innerText = "—";
+      totalOrdersCounter.innerText = "ERROR";
     }
 
     if (totalSalesCounter) {
-      totalSalesCounter.innerText = "—";
+      totalSalesCounter.innerText = "ERROR";
     }
+
+    alert(
+      "Orders Error:\n\n" +
+      error.code +
+      "\n\n" +
+      error.message
+    );
 
   }
 
@@ -634,12 +637,16 @@ async function loadVisitors() {
 
   } catch (error) {
 
-    console.error(
-      "Visitors Error:",
-      error
-    );
+    console.error("Visitors Error:", error);
 
-    counter.innerText = "—";
+    counter.innerText = "ERROR";
+
+    alert(
+      "Visitors Error:\n\n" +
+      error.code +
+      "\n\n" +
+      error.message
+    );
 
   }
 
