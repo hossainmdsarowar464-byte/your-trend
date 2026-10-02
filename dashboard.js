@@ -120,6 +120,8 @@ async function loadProducts() {
       await getDocs(
         collection(db, "products")
       );
+    console.log("PRODUCT SNAPSHOT SIZE:", snapshot.size);
+alert("Products found: " + snapshot.size);
 
     counter.innerText =
       snapshot.size;
