@@ -137,8 +137,7 @@ async function loadFirebaseProducts() {
     const app =
       initializeApp(firebaseConfig);
 
-    const db =
-      getFirestore(app);
+    db = getFirestore(app);
 
   const productsQuery = query(
   collection(db, "products"),
