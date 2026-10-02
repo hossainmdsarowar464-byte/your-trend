@@ -101,59 +101,7 @@ function getOrderDate(order) {
 }
 
 
-/* =========================================
-   EXTRA SUMMARY CARDS
-========================================= */
-
-function createExtraCards() {
-
-  const cards =
-    document.querySelector(".dashboard-cards");
-
-  if (!cards) {
-    return;
-  }
-
-
-  /* TOTAL ORDERS */
-
-  if (!document.getElementById("totalAllOrders")) {
-
-    cards.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="card">
-        <span>Total Orders</span>
-        <strong id="totalAllOrders">0</strong>
-        <small>All time</small>
-      </div>
-      `
-    );
-
-  }
-
-
-  /* TOTAL SALES */
-
-  if (!document.getElementById("totalAllSales")) {
-
-    cards.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="card">
-        <span>Total Sales</span>
-        <strong id="totalAllSales">৳0</strong>
-        <small>All time</small>
-      </div>
-      `
-    );
-
-  }
-
-}
-
-
-/* =========================================
+  /*========================================
    LOAD PRODUCTS
 ========================================= */
 
@@ -680,7 +628,6 @@ onAuthStateChanged(auth, function(user) {
      LOAD DASHBOARD
   ========================= */
 
-  createExtraCards();
 
   loadProducts();
 
