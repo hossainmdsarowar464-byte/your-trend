@@ -115,48 +115,81 @@ main > h2 {
 
 <body>
 
-  <header>
-    <h1>YOUR TREND</h1>
-    <p>Admin Dashboard</p>
+  <header class="dashboard-header">
+
+    <div>
+      <h1>YOUR TREND</h1>
+      <p>Admin Dashboard</p>
+    </div>
+
+    <a href="admin.html" class="admin-btn">
+      ← Admin Panel
+    </a>
+
   </header>
+
 
   <main>
 
-    <h2>Dashboard</h2>
+    <div class="dashboard-title">
+      <div>
+        <h2>Dashboard</h2>
+        <p>Welcome to your store overview.</p>
+      </div>
+    </div>
+
+
+    <!-- SUMMARY -->
 
     <section class="dashboard-cards">
 
       <div class="card">
-        <h3>Visitors</h3>
-        <strong>0</strong>
-        <p>Today</p>
+        <span>Visitors</span>
+        <strong id="totalVisitors">0</strong>
+        <small>Today</small>
       </div>
 
-      <div class="card">
-        <h3>Orders</h3>
-        <strong>0</strong>
-        <p>Today</p>
-      </div>
 
       <div class="card">
-        <h3>Products</h3>
-        <strong>0</strong>
-        <p>Total</p>
+        <span>Orders</span>
+        <strong id="totalOrders">0</strong>
+        <small>Today</small>
       </div>
 
+
       <div class="card">
-        <h3>Sales</h3>
-        <strong>৳0</strong>
-        <p>Today</p>
+        <span>Products</span>
+        <strong id="totalProducts">0</strong>
+        <small>Total</small>
+      </div>
+
+
+      <div class="card">
+        <span>Sales</span>
+        <strong id="totalSales">৳0</strong>
+        <small>Today</small>
       </div>
 
     </section>
+
+
+    <!-- RECENT ORDERS -->
 
     <section class="dashboard-section">
-      <h2>Recent Orders</h2>
 
-      <p>No orders yet.</p>
+      <div class="section-heading">
+        <h2>Recent Orders</h2>
+        <span>Latest orders</span>
+      </div>
+
+      <div id="recentOrders">
+        <p class="empty-message">
+          No orders yet.
+        </p>
+      </div>
+
     </section>
+
 
   </main>
 
