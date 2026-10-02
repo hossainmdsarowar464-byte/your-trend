@@ -218,3 +218,122 @@ async function loadDashboardSales() {
 
 
 loadDashboardSales();
+/* =========================
+   LOAD RECENT ORDERS
+========================= */
+
+async function loadRecentOrders() {
+
+  const ordersBox =
+    document.getElementById("recentOrders");
+
+  if (!ordersBox) {
+    return;
+  }
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(db, "orders")
+      );
+
+    const orders = [];
+
+    snapshot.forEach(function(orderDoc) {
+
+      const order = orderDoc.data();
+
+      orders.push({
+        id: orderDoc.id,
+        ...order
+      });
+
+    });
+
+    orders.sort(function(a, b) {
+
+      const dateA =
+        a.createdAt?.toDate
+          ? a.createdAt.toDate()
+          : new Date(0);
+
+      const dateB =
+        b.createdAt?.toDate
+          ? b.createdAt.toDate()
+          : new Date(0);
+
+      return dateB - dateA;
+
+    });
+
+
+    const recentOrders =
+      orders.slice(0, 5);
+
+
+    if (recentOrders.length === 0) {
+
+      ordersBox.innerHTML =
+        '<p class="empty-message">No orders yet.</p>';
+
+      return;
+
+    }
+
+
+    ordersBox.innerHTML = "";
+
+
+    recentOrders.forEach(function(order) {
+
+      let orderTime =
+        "সময় পাওয়া যায়নি";
+
+
+      if (
+        order.createdAt &&
+        typeof order.createdAt.toDate === "function"
+      ) {
+
+        orderTime =
+          order.createdAt
+            .toDate()
+            .toLocaleString("bn-BD");
+
+      }
+
+
+      const orderItem =
+        document.createElement("div");
+
+
+      orderItem.style.padding =
+        "12px 0";
+
+      orderItem.style.borderBottom =
+        "1px solid #e2e8f0";
+
+
+      orderItem.innerHTML = `
+
+        <strong>
+          #${order.orderNumber || order.id}
+        </strong>
+
+        <div style="
+          margin-top:5px;
+          color:#475569;
+          font-size:14px;
+        ">
+
+          ${order.customerName || "Customer"}
+
+          · ৳${order.total || 0}
+
+        </div>
+
+        <div style="
+          margin-top:4px;
+          color:#94a3b8;
+          font-size:
