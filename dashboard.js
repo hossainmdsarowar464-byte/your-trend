@@ -227,37 +227,11 @@ alert("Products found: " + snapshot.size);
       totalSales += orderTotal;
 
 
-      /* TODAY */
-console.log("TODAY:", todayBangladesh);
-console.log("ORDER DATE:", orderDate);
-console.log("ORDER DATE BD:", orderBangladesh);
-console.log("ORDER DATA:", order);
-      if (orderDate) {alert(
-  "Today: " + todayBangladesh +
-  "\nOrder: " + orderDate
-);
+    /* TODAY */
 
-        const orderBangladesh =
-          new Intl.DateTimeFormat("en-CA", {
-            timeZone: "Asia/Dhaka",
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit"
-          }).format(orderDate);
+todayOrders++;
 
-
-        if (
-          orderBangladesh ===
-          todayBangladesh
-        ) {
-
-          todayOrders++;
-
-          todaySales += orderTotal;
-
-        }
-
-      }
+todaySales += orderTotal;
 
     });
 
