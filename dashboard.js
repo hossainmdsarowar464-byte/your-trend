@@ -751,32 +751,24 @@ async function loadVisitors() {
 
 onAuthStateChanged(auth, function(user) {
 
+  console.log("Dashboard User:", user);
+
   if (!user) {
+
     window.location.href = "admin.html";
+
     return;
   }
 
+  console.log("Admin logged in:", user.email);
+
   createExtraCards();
+
   loadProducts();
+
   loadOrders();
+
   loadVisitors();
 
 });
 
-getDocs(collection(db, "visits"))
-  .then(function(snapshot) {
-
-    console.log(
-      "VISITS FOUND:",
-      snapshot.size
-    );
-
-  })
-  .catch(function(error) {
-
-    console.error(
-      "VISITS READ ERROR:",
-      error
-    );
-
-  });
