@@ -269,7 +269,165 @@ if (hasMoreProducts) {
     moreButton
   );
 }
+async function loadMoreProducts() {
 
+  if (!lastVisibleDoc) return;
+
+  try {
+
+    const nextQuery = query(
+      collection(db, "products"),
+      startAfter(lastVisibleDoc),
+      limit(25)
+    );
+
+    const snapshot =
+      await getDocs(nextQuery);
+
+    const newProducts = [];
+
+    snapshot.docs.forEach(function(productDoc, index) {
+
+      if (index >= 24) return;
+
+      const product =
+        productDoc.data();
+
+      newProducts.push({
+
+        id:
+          productDoc.id,
+
+        name:
+          product.name,
+
+        price:
+          Number(product.price) || 0,
+
+        image:
+          product.images?.[0] ||
+          product.image ||
+          "",
+
+        images:
+          product.images ||
+          (
+            product.image
+              ? [product.image]
+              : []
+          ),
+
+        category:
+          product.category ||
+          "fashion",
+
+        description:
+          product.description ||
+          "",
+
+        stock:
+          String(
+            product.stock ?? "0"
+          ).trim(),
+
+        sizes:
+          product.sizes || []
+
+      });
+
+    });
+
+    list = list.concat(newProducts);
+
+    localStorage.setItem(
+      "yourTrendProducts",
+      JSON.stringify(list)
+    );
+
+    newProducts.forEach(function(p) {
+
+      const stock = String(p.stock).trim();
+      const out =
+        stock === "নেই" || stock === "0";
+
+      box.innerHTML += `
+        <div class="card" onclick="openProduct('${p.id}')">
+
+          <span class="product-badge">${
+            p.category === "fashion"
+              ? "👕 FASHION"
+              : p.category === "gadgets"
+              ? "⌚ GADGETS"
+              : p.category === "bags"
+              ? "🎒 BAGS"
+              : "✨ PRODUCT"
+          }</span>
+
+          <img
+            class="img"
+            src="${p.image}"
+            alt="${p.name}"
+          >
+
+          <h3>${p.name}</h3>
+
+          <p><b>৳${p.price}</b></p>
+
+          <p style="color:${out ? "red" : "green"};font-weight:bold;">
+            ${
+              out
+                ? "❌ Out of Stock"
+                : `📦 Stock: ${stock}`
+            }
+          </p>
+
+          ${
+            out
+              ? `<button class="btn" disabled style="background:#999">
+                   ❌ Out of Stock
+                 </button>`
+              : `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">
+                   🛒 Add to Cart
+                 </button>`
+          }
+
+        </div>
+      `;
+
+    });
+
+    if (snapshot.docs.length > 24) {
+
+      lastVisibleDoc =
+        snapshot.docs[23];
+
+    } else {
+
+      lastVisibleDoc = null;
+
+      const button =
+        document.getElementById("loadMoreBtn");
+
+      if (button) {
+        button.remove();
+      }
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Load more products error:",
+      error
+    );
+
+    alert(
+      "আরও প্রোডাক্ট লোড করা যায়নি।"
+    );
+
+  }
+
+}
 loadFirebaseProducts();
 
 // =========================
