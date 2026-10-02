@@ -21,7 +21,8 @@ import {
 const firebaseConfig = {
 
   apiKey:
-  "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+    "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
+
   authDomain:
     "your-trend.firebaseapp.com",
 
@@ -51,32 +52,21 @@ const auth = getAuth(app);
 
 
 /* =========================================
-   DATE HELPER
+   GET TODAY - BANGLADESH
 ========================================= */
 
-function isToday(date) {
+function getTodayBangladesh() {
 
-  if (!date) {
-    return false;
-  }
-
-  const dateString =
-    new Intl.DateTimeFormat("en-CA", {
+  return new Intl.DateTimeFormat(
+    "en-CA",
+    {
       timeZone: "Asia/Dhaka",
       year: "numeric",
       month: "2-digit",
       day: "2-digit"
-    }).format(date);
+    }
+  ).format(new Date());
 
-  const today =
-    new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Asia/Dhaka",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit"
-    }).format(new Date());
-
-  return dateString === today;
 }
 
 
@@ -86,32 +76,118 @@ function isToday(date) {
 
 function getOrderDate(order) {
 
-  if (
-    order.createdAt &&
-    typeof order.createdAt.toDate === "function"
-  ) {
+  try {
 
-    return order.createdAt.toDate();
+    if (
+      order &&
+      order.createdAt &&
+      typeof order.createdAt.toDate === "function"
+    ) {
+
+      return order.createdAt.toDate();
+
+    }
+
+
+    if (
+      order &&
+      order.createdAt instanceof Date
+    ) {
+
+      return order.createdAt;
+
+    }
+
+
+    if (
+      order &&
+      typeof order.createdAt === "string"
+    ) {
+
+      const date =
+        new Date(order.createdAt);
+
+      if (!isNaN(date.getTime())) {
+
+        return date;
+
+      }
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Get order date error:",
+      error
+    );
 
   }
+
 
   return null;
 
 }
 
 
-  /*========================================
+/* =========================================
+   CHECK TODAY
+========================================= */
+
+function isToday(date) {
+
+  if (!date) {
+    return false;
+  }
+
+  try {
+
+    const dateString =
+      new Intl.DateTimeFormat(
+        "en-CA",
+        {
+          timeZone: "Asia/Dhaka",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
+        }
+      ).format(date);
+
+
+    return (
+      dateString ===
+      getTodayBangladesh()
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Today check error:",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================================
    LOAD PRODUCTS
 ========================================= */
 
 async function loadProducts() {
 
   const counter =
-    document.getElementById("totalProducts");
+    document.getElementById(
+      "totalProducts"
+    );
 
   if (!counter) {
     return;
   }
+
 
   try {
 
@@ -119,11 +195,16 @@ async function loadProducts() {
       await getDocs(
         collection(db, "products")
       );
-    console.log("PRODUCT SNAPSHOT SIZE:", snapshot.size);
-alert("Products found: " + snapshot.size);
+
 
     counter.innerText =
       snapshot.size;
+
+
+    console.log(
+      "Products:",
+      snapshot.size
+    );
 
   } catch (error) {
 
@@ -132,7 +213,8 @@ alert("Products found: " + snapshot.size);
       error
     );
 
-    counter.innerText = "—";
+    counter.innerText =
+      "ERROR";
 
   }
 
@@ -143,19 +225,27 @@ alert("Products found: " + snapshot.size);
    LOAD ORDERS
 ========================================= */
 
- async function loadOrders() {
+async function loadOrders() {
 
   const todayOrdersCounter =
-    document.getElementById("totalOrders");
+    document.getElementById(
+      "totalOrders"
+    );
 
   const todaySalesCounter =
-    document.getElementById("totalSales");
+    document.getElementById(
+      "totalSales"
+    );
 
   const totalOrdersCounter =
-    document.getElementById("totalAllOrders");
+    document.getElementById(
+      "totalAllOrders"
+    );
 
   const totalSalesCounter =
-    document.getElementById("totalAllSales");
+    document.getElementById(
+      "totalAllSales"
+    );
 
 
   try {
@@ -167,49 +257,34 @@ alert("Products found: " + snapshot.size);
 
 
     let todayOrders = 0;
+
     let todaySales = 0;
+
     let totalSales = 0;
 
     const orders = [];
 
 
-    /* TODAY - BANGLADESH TIME */
-
-    const now = new Date();
-
-    const todayBangladesh =
-      new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Asia/Dhaka",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-      }).format(now);
-
+    /* =====================================
+       READ ALL ORDERS
+    ===================================== */
 
     snapshot.forEach(function(orderDoc) {
 
-      const order = orderDoc.data();
+      const order =
+        orderDoc.data();
 
 
-      orders.push({
+      const fullOrder = {
+
         id: orderDoc.id,
+
         ...order
-      });
+
+      };
 
 
-      /* ORDER DATE */
-
-      let orderDate = null;
-
-      if (
-        order.createdAt &&
-        typeof order.createdAt.toDate === "function"
-      ) {
-
-        orderDate =
-          order.createdAt.toDate();
-
-      }
+      orders.push(fullOrder);
 
 
       /* ORDER TOTAL */
@@ -224,21 +299,34 @@ alert("Products found: " + snapshot.size);
 
       /* ALL TIME SALES */
 
-      totalSales += orderTotal;
+      totalSales +=
+        orderTotal;
 
 
-    /* TODAY */
+      /* TODAY */
 
-todayOrders++;
+      const orderDate =
+        getOrderDate(order);
 
-todaySales += orderTotal;
+
+      if (
+        orderDate &&
+        isToday(orderDate)
+      ) {
+
+        todayOrders++;
+
+        todaySales +=
+          orderTotal;
+
+      }
 
     });
 
 
-    /* =========================================
-       UPDATE COUNTERS
-    ========================================= */
+    /* =====================================
+       UPDATE TODAY ORDERS
+    ===================================== */
 
     if (todayOrdersCounter) {
 
@@ -248,14 +336,24 @@ todaySales += orderTotal;
     }
 
 
+    /* =====================================
+       UPDATE TODAY SALES
+    ===================================== */
+
     if (todaySalesCounter) {
 
       todaySalesCounter.innerText =
         "৳" +
-        todaySales.toLocaleString("en-US");
+        todaySales.toLocaleString(
+          "en-US"
+        );
 
     }
 
+
+    /* =====================================
+       UPDATE TOTAL ORDERS
+    ===================================== */
 
     if (totalOrdersCounter) {
 
@@ -265,24 +363,32 @@ todaySales += orderTotal;
     }
 
 
+    /* =====================================
+       UPDATE TOTAL SALES
+    ===================================== */
+
     if (totalSalesCounter) {
 
       totalSalesCounter.innerText =
         "৳" +
-        totalSales.toLocaleString("en-US");
+        totalSales.toLocaleString(
+          "en-US"
+        );
 
     }
 
 
-    /* =========================================
+    /* =====================================
        RECENT ORDERS
-    ========================================= */
+    ===================================== */
 
-    loadRecentOrders(orders);
+    loadRecentOrders(
+      orders
+    );
 
 
     console.log(
-      "Orders:",
+      "Total Orders:",
       snapshot.size
     );
 
@@ -310,29 +416,42 @@ todaySales += orderTotal;
     );
 
 
+    /*
+      শুধু যেটা সত্যিই error হয়েছে
+      সেটাই ERROR দেখাবে
+    */
+
     if (todayOrdersCounter) {
+
       todayOrdersCounter.innerText =
         "ERROR";
+
     }
 
     if (todaySalesCounter) {
+
       todaySalesCounter.innerText =
         "ERROR";
+
     }
 
     if (totalOrdersCounter) {
+
       totalOrdersCounter.innerText =
         "ERROR";
+
     }
 
     if (totalSalesCounter) {
+
       totalSalesCounter.innerText =
         "ERROR";
+
     }
 
   }
 
- }
+}
 
 
 /* =========================================
@@ -342,160 +461,202 @@ todaySales += orderTotal;
 function loadRecentOrders(orders) {
 
   const box =
-    document.getElementById("recentOrders");
+    document.getElementById(
+      "recentOrders"
+    );
+
 
   if (!box) {
     return;
   }
 
 
-  orders.sort(function(a, b) {
+  try {
 
-    const dateA =
-      getOrderDate(a) || new Date(0);
+    orders.sort(
+      function(a, b) {
 
-    const dateB =
-      getOrderDate(b) || new Date(0);
+        const dateA =
+          getOrderDate(a) ||
+          new Date(0);
 
-    return dateB - dateA;
-
-  });
-
-
-  const recentOrders =
-    orders.slice(0, 5);
+        const dateB =
+          getOrderDate(b) ||
+          new Date(0);
 
 
-  if (recentOrders.length === 0) {
+        return dateB - dateA;
 
-    box.innerHTML = `
-      <p class="empty-message">
-        No orders yet.
-      </p>
-    `;
-
-    return;
-
-  }
+      }
+    );
 
 
-  box.innerHTML = "";
+    const recentOrders =
+      orders.slice(0, 5);
 
 
-  recentOrders.forEach(function(order) {
+    if (
+      recentOrders.length === 0
+    ) {
 
-    const orderBox =
-      document.createElement("div");
+      box.innerHTML = `
+        <p class="empty-message">
+          No orders yet.
+        </p>
+      `;
 
-
-    orderBox.style.padding =
-      "14px 0";
-
-    orderBox.style.borderBottom =
-      "1px solid #e2e8f0";
-
-
-    const orderNumber =
-      order.orderId ||
-      order.orderNumber ||
-      order.id;
-
-
-    const customerName =
-      order.customerName ||
-      order.name ||
-      "Customer";
-
-
-    const total =
-      Number(
-        order.grandTotal ??
-        order.total ??
-        0
-      );
-
-
-    let orderTime =
-      "সময় পাওয়া যায়নি";
-
-
-    const orderDate =
-      getOrderDate(order);
-
-
-    if (orderDate) {
-
-      orderTime =
-        orderDate.toLocaleString(
-          "bn-BD",
-          {
-            dateStyle: "medium",
-            timeStyle: "short"
-          }
-        );
+      return;
 
     }
 
 
-    orderBox.innerHTML = `
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:10px;
-      ">
-
-        <strong style="
-          font-size:15px;
-          color:#0f172a;
-        ">
-
-          #${orderNumber}
-
-        </strong>
+    box.innerHTML = "";
 
 
-        <strong style="
-          font-size:15px;
-          color:#2563eb;
-          white-space:nowrap;
-        ">
+    recentOrders.forEach(
+      function(order) {
 
-          ৳${total.toLocaleString("en-US")}
-
-        </strong>
-
-      </div>
+        const orderBox =
+          document.createElement(
+            "div"
+          );
 
 
-      <div style="
-        margin-top:6px;
-        color:#475569;
-        font-size:14px;
-      ">
+        orderBox.style.padding =
+          "14px 0";
 
-        ${customerName}
-
-      </div>
+        orderBox.style.borderBottom =
+          "1px solid #e2e8f0";
 
 
-      <div style="
-        margin-top:4px;
-        color:#94a3b8;
-        font-size:12px;
-      ">
-
-        ${orderTime}
-
-      </div>
-
-    `;
+        const orderNumber =
+          order.orderId ||
+          order.orderNumber ||
+          order.id ||
+          "N/A";
 
 
-    box.appendChild(orderBox);
+        const customerName =
+          order.customerName ||
+          order.name ||
+          "Customer";
 
-  });
+
+        const total =
+          Number(
+            order.grandTotal ??
+            order.total ??
+            0
+          );
+
+
+        let orderTime =
+          "সময় পাওয়া যায়নি";
+
+
+        const orderDate =
+          getOrderDate(order);
+
+
+        if (orderDate) {
+
+          try {
+
+            orderTime =
+              orderDate.toLocaleString(
+                "bn-BD",
+                {
+                  dateStyle:
+                    "medium",
+
+                  timeStyle:
+                    "short"
+                }
+              );
+
+          } catch (error) {
+
+            console.error(
+              "Order time error:",
+              error
+            );
+
+          }
+
+        }
+
+
+        orderBox.innerHTML = `
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+          ">
+
+            <strong style="
+              font-size:15px;
+              color:#0f172a;
+            ">
+
+              #${orderNumber}
+
+            </strong>
+
+
+            <strong style="
+              font-size:15px;
+              color:#2563eb;
+              white-space:nowrap;
+            ">
+
+              ৳${total.toLocaleString("en-US")}
+
+            </strong>
+
+          </div>
+
+
+          <div style="
+            margin-top:6px;
+            color:#475569;
+            font-size:14px;
+          ">
+
+            ${customerName}
+
+          </div>
+
+
+          <div style="
+            margin-top:4px;
+            color:#94a3b8;
+            font-size:12px;
+          ">
+
+            ${orderTime}
+
+          </div>
+
+        `;
+
+
+        box.appendChild(
+          orderBox
+        );
+
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Recent Orders Error:",
+      error
+    );
+
+  }
 
 }
 
@@ -507,7 +668,10 @@ function loadRecentOrders(orders) {
 async function loadVisitors() {
 
   const counter =
-    document.getElementById("totalVisitors");
+    document.getElementById(
+      "totalVisitors"
+    );
+
 
   if (!counter) {
     return;
@@ -526,67 +690,77 @@ async function loadVisitors() {
 
 
     const today =
-      new Intl.DateTimeFormat(
-        "en-CA",
-        {
-          timeZone: "Asia/Dhaka",
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit"
-        }
-      ).format(new Date());
+      getTodayBangladesh();
 
 
-    snapshot.forEach(function(visitDoc) {
+    snapshot.forEach(
+      function(visitDoc) {
 
-      const visit =
-        visitDoc.data();
-
-
-      if (
-        visit.date &&
-        String(visit.date) ===
-        String(today)
-      ) {
-
-        visitors++;
-
-        return;
-
-      }
+        const visit =
+          visitDoc.data();
 
 
-      if (
-        visit.lastVisit &&
-        typeof visit.lastVisit.toDate ===
-        "function"
-      ) {
+        /* DATE FIELD */
 
-        const visitDate =
-          visit.lastVisit.toDate();
-
-
-        const visitDay =
-          new Intl.DateTimeFormat(
-            "en-CA",
-            {
-              timeZone: "Asia/Dhaka",
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit"
-            }
-          ).format(visitDate);
-
-
-        if (visitDay === today) {
+        if (
+          visit.date &&
+          String(visit.date) ===
+          String(today)
+        ) {
 
           visitors++;
 
+          return;
+
+        }
+
+
+        /* LAST VISIT */
+
+        if (
+          visit.lastVisit &&
+          typeof visit.lastVisit.toDate ===
+          "function"
+        ) {
+
+          const visitDate =
+            visit.lastVisit.toDate();
+
+
+          const visitDay =
+            new Intl.DateTimeFormat(
+              "en-CA",
+              {
+                timeZone:
+                  "Asia/Dhaka",
+
+                year:
+                  "numeric",
+
+                month:
+                  "2-digit",
+
+                day:
+                  "2-digit"
+              }
+            ).format(
+              visitDate
+            );
+
+
+          if (
+            visitDay ===
+            today
+          ) {
+
+            visitors++;
+
+          }
+
         }
 
       }
-
-    });
+    );
 
 
     counter.innerText =
@@ -601,16 +775,14 @@ async function loadVisitors() {
 
   } catch (error) {
 
-    console.error("Visitors Error:", error);
-
-    counter.innerText = "ERROR";
-
-    alert(
-      "Visitors Error:\n\n" +
-      error.code +
-      "\n\n" +
-      error.message
+    console.error(
+      "Visitors Error:",
+      error
     );
+
+
+    counter.innerText =
+      "ERROR";
 
   }
 
@@ -621,34 +793,54 @@ async function loadVisitors() {
    START DASHBOARD
 ========================================= */
 
-onAuthStateChanged(auth, async function(user) {
+onAuthStateChanged(
+  auth,
+  async function(user) {
 
-  console.log("AUTH CHECK:", user);
-
-  if (!user) {
-    console.log("❌ Admin login নেই");
-    return;
-  }
-
-  console.log("✅ Admin logged in:", user.email);
-
-  try {
-
-    await loadProducts();
-
-    await loadVisitors();
-
-    await loadOrders();
-
-    console.log("✅ Dashboard data loaded successfully");
-
-  } catch (error) {
-
-    console.error(
-      "❌ Dashboard loading error:",
-      error
+    console.log(
+      "AUTH CHECK:",
+      user
     );
 
-  }
 
-});
+    if (!user) {
+
+      console.log(
+        "❌ Admin login নেই"
+      );
+
+      return;
+
+    }
+
+
+    console.log(
+      "✅ Admin logged in:",
+      user.email
+    );
+
+
+    try {
+
+      await loadProducts();
+
+      await loadVisitors();
+
+      await loadOrders();
+
+
+      console.log(
+        "✅ Dashboard data loaded successfully"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "❌ Dashboard loading error:",
+        error
+      );
+
+    }
+
+  }
+);
