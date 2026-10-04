@@ -1,434 +1,2057 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<head>
+«»
 
-  <meta charset="UTF-8">
+<title>YOUR TREND - Pro Admin</title><!-- CLOUDINARY --><script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script><style>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
+/* =====================================================
+   YOUR TREND PRO ADMIN
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: #f1f5f9;
+
+  color: #0f172a;
+}
+
+
+/* =====================================================
+   LAYOUT
+===================================================== */
+
+.admin-layout {
+
+  display: flex;
+
+  min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+
+  width: 245px;
+
+  min-height: 100vh;
+
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      #020617,
+      #0f172a,
+      #111827
+    );
+
+  color: white;
+
+  padding: 22px 15px;
+
+  z-index: 1000;
+
+  box-shadow:
+    8px 0 30px
+    rgba(2,6,23,0.15);
+}
+
+
+/* BRAND */
+
+.brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding:
+    5px 8px
+    25px;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,0.08);
+}
+
+.brand-logo {
+
+  width: 43px;
+  height: 43px;
+
+  border-radius: 13px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #06b6d4
+    );
+
+  font-weight: 900;
+
+  font-size: 15px;
+
+  box-shadow:
+    0 8px 22px
+    rgba(37,99,235,0.35);
+}
+
+.brand-text strong {
+
+  display: block;
+
+  font-size: 16px;
+
+  letter-spacing: 0.5px;
+}
+
+.brand-text span {
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 10px;
+
+  color: #94a3b8;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* NAV TITLE */
+
+.nav-title {
+
+  margin:
+    25px 10px 9px;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  font-weight: bold;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+
+/* NAV */
+
+.sidebar-nav a {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 12px 13px;
+
+  margin-bottom: 5px;
+
+  border-radius: 10px;
+
+  color: #cbd5e1;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  transition: 0.22s;
+}
+
+.sidebar-nav a:hover {
+
+  color: white;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  transform:
+    translateX(3px);
+}
+
+.sidebar-nav a.active {
+
+  color: white;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(37,99,235,0.85),
+      rgba(37,99,235,0.25)
+    );
+
+  box-shadow:
+    inset 3px 0 0 #60a5fa;
+}
+
+
+/* BOTTOM */
+
+.sidebar-bottom {
+
+  position: absolute;
+
+  left: 15px;
+  right: 15px;
+
+  bottom: 20px;
+}
+
+
+/* LOGOUT */
+
+#logoutBtn {
+
+  width: 100%;
+
+  padding: 11px;
+
+  border: 1px solid
+    rgba(248,113,113,0.25);
+
+  border-radius: 10px;
+
+  background:
+    rgba(239,68,68,0.10);
+
+  color: #fca5a5;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+#logoutBtn:hover {
+
+  background:
+    rgba(239,68,68,0.20);
+
+  color: white;
+
+  transform:
+    translateY(-2px);
+}
+
+
+/* =====================================================
+   MAIN AREA
+===================================================== */
+
+.main-area {
+
+  margin-left: 245px;
+
+  width:
+    calc(100% - 245px);
+
+  min-height: 100vh;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.topbar {
+
+  height: 76px;
+
+  padding:
+    0 30px;
+
+  background:
+    rgba(255,255,255,0.92);
+
+  border-bottom:
+    1px solid #e2e8f0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 500;
+
+  backdrop-filter: blur(12px);
+}
+
+.topbar-left h1 {
+
+  margin: 0;
+
+  font-size: 20px;
+
+  letter-spacing: -0.3px;
+}
+
+.topbar-left p {
+
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* DASHBOARD BUTTON */
+
+.dashboard-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 10px 15px;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  box-shadow:
+    0 7px 18px
+    rgba(37,99,235,0.22);
+
+  transition: 0.22s;
+}
+
+.dashboard-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 11px 24px
+    rgba(37,99,235,0.30);
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+
+  max-width: 1350px;
+
+  margin: auto;
+
+  padding:
+    28px 30px 50px;
+}
+
+
+/* =====================================================
+   WELCOME
+===================================================== */
+
+.admin-welcome {
+
+  padding: 25px 27px;
+
+  border-radius: 18px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1e3a8a,
+      #2563eb
+    );
+
+  box-shadow:
+    0 15px 35px
+    rgba(15,23,42,0.16);
+
+  margin-bottom: 25px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.admin-welcome::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  right: -70px;
+  top: -120px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(96,165,250,0.18);
+}
+
+.admin-welcome h2 {
+
+  margin: 0;
+
+  font-size: 22px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.admin-welcome p {
+
+  margin: 7px 0 0;
+
+  color: #bfdbfe;
+
+  font-size: 13px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.admin-section {
+
+  margin-top: 25px;
+
+  scroll-margin-top: 95px;
+}
+
+.section-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 13px;
+}
+
+.section-header h2 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  letter-spacing: -0.2px;
+}
+
+.section-header span {
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   PANEL
+===================================================== */
+
+.panel {
+
+  background: white;
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  border-radius: 17px;
+
+  padding: 21px;
+
+  box-shadow:
+    0 8px 25px
+    rgba(15,23,42,0.055);
+}
+
+
+/* =====================================================
+   PRODUCT LIST
+===================================================== */
+
+.product-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 11px;
+}
+
+
+/* PRODUCT ITEM */
+
+.product-item {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 13px;
+
+  background:
+    #f8fafc;
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  border-radius: 13px;
+
+  transition: 0.22s;
+}
+
+.product-item:hover {
+
+  background: white;
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 10px 25px
+    rgba(15,23,42,0.08);
+}
+
+
+/* PRODUCT IMAGE */
+
+.product-item img {
+
+  width: 75px;
+
+  height: 75px;
+
+  object-fit: contain;
+
+  background: white;
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  border-radius: 11px;
+
+  flex-shrink: 0;
+}
+
+
+/* PRODUCT INFO */
+
+.product-info {
+
+  flex: 1;
+
+  min-width: 0;
+}
+
+.product-info b {
+
+  display: block;
+
+  font-size: 14px;
+
+  color: #0f172a;
+
+  margin-bottom: 7px;
+}
+
+.product-info span {
+
+  display: block;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  margin-top: 4px;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+button {
+
+  font-family: inherit;
+}
+
+
+/* COMMON ACTION BUTTONS */
+
+.edit-btn,
+.delete-btn,
+.share-btn {
+
+  width: auto;
+
+  margin: 0;
+
+  padding: 9px 12px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  color: white;
+
+  font-size: 11px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  white-space: nowrap;
+}
+
+.edit-btn {
+
+  background:
+    #2563eb;
+}
+
+.delete-btn {
+
+  background:
+    #dc2626;
+}
+
+.share-btn {
+
+  background:
+    #0f766e;
+}
+
+.edit-btn:hover,
+.delete-btn:hover,
+.share-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.08);
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 18px;
+}
+
+.form-full {
+
+  grid-column:
+    1 / -1;
+}
+
+label {
+
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #334155;
+
+  font-size: 12px;
+
+  font-weight: bold;
+}
+
+input,
+select,
+textarea {
+
+  width: 100%;
+
+  padding: 12px 13px;
+
+  border:
+    1px solid
+    #cbd5e1;
+
+  border-radius: 10px;
+
+  box-sizing: border-box;
+
+  background: white;
+
+  color: #0f172a;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+
+  border-color:
+    #2563eb;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(37,99,235,0.10);
+}
+
+textarea {
+
+  min-height: 120px;
+
+  resize: vertical;
+}
+
+
+/* =====================================================
+   PRIMARY BUTTON
+===================================================== */
+
+#saveProductBtn,
+#cancelEditBtn,
+#selectImageBtn,
+#selectBannerBtn,
+#updateBannerBtn {
+
+  width: 100%;
+
+  padding: 12px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.22s;
+}
+
+#saveProductBtn {
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  box-shadow:
+    0 8px 18px
+    rgba(37,99,235,0.20);
+}
+
+#saveProductBtn:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 12px 25px
+    rgba(37,99,235,0.27);
+}
+
+#cancelEditBtn {
+
+  background:
+    #64748b;
+}
+
+#selectImageBtn,
+#selectBannerBtn {
+
+  background:
+    #0f766e;
+}
+
+#updateBannerBtn {
+
+  background:
+    #16a34a;
+}
+
+#cancelEditBtn:hover,
+#selectImageBtn:hover,
+#selectBannerBtn:hover,
+#updateBannerBtn:hover {
+
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.06);
+}
+
+
+/* =====================================================
+   EDIT MODE
+===================================================== */
+
+#editMode {
+
+  display: none;
+
+  padding: 11px;
+
+  margin-bottom: 17px;
+
+  border-radius: 10px;
+
+  color: #92400e;
+
+  background:
+    #fef3c7;
+
+  border:
+    1px solid
+    #fde68a;
+
+  text-align: center;
+
+  font-size: 12px;
+
+  font-weight: bold;
+}
+
+
+/* =====================================================
+   IMAGE PREVIEW
+===================================================== */
+
+#imagePreview,
+#currentBannerPreview,
+#bannerPreview {
+
+  width: 100%;
+
+  object-fit: contain;
+
+  border-radius: 12px;
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  background:
+    #f8fafc;
+
+  margin-top: 10px;
+}
+
+#imagePreview {
+
+  max-height: 300px;
+}
+
+#currentBannerPreview,
+#bannerPreview {
+
+  max-height: 260px;
+
+  object-fit: cover;
+}
+
+
+/* =====================================================
+   STATUS TEXT
+===================================================== */
+
+#imageStatus,
+#bannerStatus,
+#bannerImageStatus {
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  text-align: center;
+
+  line-height: 1.5;
+}
+
+#message {
+
+  text-align: center;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   BANNER
+===================================================== */
+
+.banner-management {
+
+  display: grid;
+
+  gap: 12px;
+}
+
+.banner-description {
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  margin: 0;
+}
+
+
+/* =====================================================
+   ORDERS
+===================================================== */
+
+#ordersList .product-item {
+
+  align-items: flex-start;
+}
+
+#ordersList .product-info {
+
+  width: 100%;
+}
+
+
+/* ORDER STATUS */
+
+.order-status {
+
+  max-width: 220px;
+
+  margin-top: 5px;
+}
+
+
+/* =====================================================
+   BACK WEBSITE
+===================================================== */
+
+.back {
+
+  display: inline-flex;
+
+  margin-top: 25px;
+
+  color: #475569;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  padding: 10px 14px;
+
+  border-radius: 9px;
+
+  background: white;
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  transition: 0.2s;
+}
+
+.back:hover {
+
+  color: #2563eb;
+
+  transform:
+    translateY(-2px);
+}
+
+
+/* =====================================================
+   WELCOME POPUP
+===================================================== */
+
+.admin-welcome-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(2,6,23,0.58);
+
+  backdrop-filter:
+    blur(8px);
+
+  animation:
+    overlayShow 0.35s ease;
+}
+
+.admin-welcome-box {
+
+  width:
+    min(400px, 100%);
+
+  padding:
+    32px 24px 26px;
+
+  text-align: center;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f1f5f9
+    );
+
+  box-shadow:
+    0 35px 90px
+    rgba(0,0,0,0.30);
+
+  animation:
+    popupShow 0.55s
+    cubic-bezier(.2,.8,.2,1);
+
+  position: relative;
+}
+
+
+/* 3D ICON */
+
+.admin-welcome-icon {
+
+  width: 80px;
+  height: 80px;
+
+  margin:
+    0 auto 17px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 23px;
+
+  font-size: 43px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #2563eb,
+      #0f172a
+    );
+
+  box-shadow:
+    0 15px 30px
+    rgba(37,99,235,0.30),
+
+    inset 0 2px 4px
+    rgba(255,255,255,0.35);
+
+  animation:
+    adminIconFloat 2.5s
+    ease-in-out infinite;
+}
+
+.admin-welcome-box h2 {
+
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 22px;
+}
+
+.admin-welcome-box p {
+
+  margin:
+    9px auto 0;
+
+  max-width: 300px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+.admin-welcome-close {
+
+  position: absolute;
+
+  top: 12px;
+  right: 13px;
+
+  width: 31px;
+  height: 31px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background:
+    #e2e8f0;
+
+  color: #475569;
+
+  font-size: 19px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.admin-welcome-close:hover {
+
+  transform:
+    rotate(90deg);
+
+  background:
+    #cbd5e1;
+}
+
+.welcome-line {
+
+  width: 55px;
+
+  height: 4px;
+
+  margin:
+    17px auto 0;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #06b6d4
+    );
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+@keyframes popupShow {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(35px)
+      scale(0.88);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes overlayShow {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes adminIconFloat {
+
+  0%,100% {
+
+    transform:
+      translateY(0)
+      rotateX(3deg)
+      rotateY(-3deg);
+  }
+
+  50% {
+
+    transform:
+      translateY(-7px)
+      rotateX(-2deg)
+      rotateY(4deg);
+  }
+}
+
+
+/* =====================================================
+   MOBILE TOP
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .sidebar {
+
+    width: 72px;
+
+    padding:
+      18px 10px;
+  }
+
+  .brand {
+
+    justify-content: center;
+
+    padding:
+      4px 0 20px;
+  }
+
+  .brand-text,
+  .nav-title,
+  .sidebar-nav a span {
+
+    display: none;
+  }
+
+  .sidebar-nav a {
+
+    justify-content: center;
+
+    padding: 12px;
+  }
+
+  .sidebar-bottom {
+
+    left: 10px;
+    right: 10px;
+  }
+
+  #logoutBtn {
+
+    font-size: 0;
+
+    padding: 12px;
+  }
+
+  #logoutBtn::after {
+
+    content: "↪";
+
+    font-size: 17px;
+  }
+
+  .main-area {
+
+    margin-left: 72px;
+
+    width:
+      calc(100% - 72px);
+  }
+
+  .form-grid {
+
+    grid-template-columns:
+      1fr;
+  }
+
+  .form-full {
+
+    grid-column:
+      auto;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .topbar {
+
+    height: auto;
+
+    padding:
+      15px;
+
+    gap: 12px;
+  }
+
+  .topbar-left h1 {
+
+    font-size: 17px;
+  }
+
+  .dashboard-btn {
+
+    padding:
+      9px 11px;
+
+    font-size: 10px;
+  }
+
+  .content {
+
+    padding:
+      18px 12px 40px;
+  }
+
+  .admin-welcome {
+
+    padding:
+      21px;
+
+    border-radius: 15px;
+  }
+
+  .admin-welcome h2 {
+
+    font-size: 19px;
+  }
+
+  .panel {
+
+    padding:
+      14px;
+
+    border-radius: 14px;
+  }
+
+  .product-item {
+
+    flex-wrap: wrap;
+
+    align-items: flex-start;
+
+    padding: 11px;
+  }
+
+  .product-item img {
+
+    width: 65px;
+    height: 65px;
+  }
+
+  .product-info {
+
+    width:
+      calc(100% - 80px);
+  }
+
+  .edit-btn,
+  .delete-btn,
+  .share-btn {
+
+    flex: 1;
+
+    padding:
+      9px 6px;
+  }
+
+  #ordersList .product-item {
+
+    display: block;
+  }
+
+  .section-header h2 {
+
+    font-size: 16px;
+  }
+
+}
+
+
+/* =====================================================
+   EXTRA SMALL
+===================================================== */
+
+@media (max-width: 390px) {
+
+  .sidebar {
+
+    width: 60px;
+  }
+
+  .main-area {
+
+    margin-left: 60px;
+
+    width:
+      calc(100% - 60px);
+  }
+
+  .sidebar-nav a {
+
+    padding:
+      10px;
+  }
+
+  .brand-logo {
+
+    width: 37px;
+    height: 37px;
+  }
+
+  .content {
+
+    padding:
+      15px 9px 35px;
+  }
+
+}
+
+
+/* =====================================================
+   DISABLED BUTTON
+===================================================== */
+
+button:disabled {
+
+  opacity: 0.55;
+
+  cursor:
+    not-allowed;
+
+  transform:
+    none !important;
+}
+
+</style></head><body><!-- =====================================================
+     PREMIUM WELCOME
+===================================================== --><div
+  class="admin-welcome-overlay"
+  id="adminWelcome"
+>  <div class="admin-welcome-box"><button
+  class="admin-welcome-close"
+  onclick="closeAdminWelcome()"
+>
+  ×
+</button>
+
+<div class="admin-welcome-icon">
+  👋
+</div>
+
+<h2>
+  Welcome, Admin
+</h2>
+
+<p>
+  Welcome to your YOUR TREND control center.
+  Manage products, orders and your store with ease.
+</p>
+
+<div class="welcome-line"></div>
+
+  </div></div><!-- =====================================================
+     ADMIN LAYOUT
+===================================================== --><div class="admin-layout">  <!-- ===================================================
+       SIDEBAR
+  ==================================================== -->  <aside class="sidebar"><div class="brand">
+
+  <div class="brand-logo">
+    YT
+  </div>
+
+  <div class="brand-text">
+
+    <strong>
+      YOUR TREND
+    </strong>
+
+    <span>
+      PRO ADMIN
+    </span>
+
+  </div>
+
+</div>
+
+
+<div class="nav-title">
+  MANAGEMENT
+</div>
+
+
+<nav class="sidebar-nav">
+
+
+  <a
+    href="dashboard.html"
+    class="active"
   >
+    <span>📊</span>
+    <span>Dashboard</span>
+  </a>
 
-  <title>YOUR TREND - Admin</title>
 
-  <style>
+  <a href="#products">
+    <span>📦</span>
+    <span>Products</span>
+  </a>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f6f8;
-      margin: 0;
-      padding: 20px;
-    }
 
-    .admin-box {
-      max-width: 650px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-    }
+  <a href="#add-product">
+    <span>➕</span>
+    <span>Add Product</span>
+  </a>
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
 
-    h2 {
-      margin-top: 30px;
-    }
+  <a href="#banner">
+    <span>🖼️</span>
+    <span>Website Banner</span>
+  </a>
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-sizing: border-box;
-      font-size: 15px;
-    }
+  <a href="#orders">
+    <span>🛍️</span>
+    <span>Customer Orders</span>
+  </a>
 
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
 
-    button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 8px;
-      background: #ff6b00;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+</nav>
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
 
-    #logoutBtn {
-      background: #d32f2f;
-    }
+<div class="nav-title">
+  STORE
+</div>
 
-    #selectImageBtn {
-      background: #1976d2;
-    }
 
-    #cancelEditBtn {
-      background: #777;
-    }
+<nav class="sidebar-nav">
 
-    #imagePreview {
-      display: none;
-      width: 100%;
-      max-height: 300px;
-      object-fit: contain;
-      margin-top: 12px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-    }
+  <a href="index.html">
+    <span>🌐</span>
+    <span>View Website</span>
+  </a>
 
-    #imageStatus {
-      margin-top: 10px;
-      text-align: center;
-      font-weight: bold;
-    }
+</nav>
 
-    #message {
-      margin-top: 15px;
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.5;
-    }
 
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #333;
-      text-decoration: none;
-    }
+<div class="sidebar-bottom">
 
-    /* PRODUCT LIST */
-
-    .product-list {
-      margin-top: 15px;
-    }
-
-    .product-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      margin-bottom: 10px;
-      background: #f8f8f8;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-    }
-
-    .product-item img {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-      background: white;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
-
-    .product-info {
-      flex: 1;
-    }
-
-    .product-info b {
-      display: block;
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .product-info span {
-      display: block;
-      font-size: 14px;
-      color: #555;
-      margin-top: 3px;
-    }
-
-    .edit-btn {
-      width: auto;
-      margin: 0;
-      padding: 9px 14px;
-      background: #1976d2;
-      font-size: 14px;
-    }
-
-    .section-title {
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
-    }
-
-    #editMode {
-      display: none;
-      background: #fff8e1;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-
-  </style>
-
-</head>
-
-<body>
-
-<div class="admin-box">
-
-  <h1>🛍️ YOUR TREND Admin</h1>
-<a href="dashboard.html" class="dashboard-btn">
-  📊 Dashboard
-</a>
   <button id="logoutBtn">
     🚪 Logout
   </button>
 
+</div>
 
-  <!-- PRODUCT LIST -->
+  </aside>  <!-- ===================================================
+       MAIN
+  ==================================================== -->  <div class="main-area"><!-- TOPBAR -->
 
-  <h2>📦 Your Products</h2>
+<header class="topbar">
 
-  <div id="productList" class="product-list">
-    ⏳ Products loading...
+  <div class="topbar-left">
+
+    <h1>
+      Admin Control Center
+    </h1>
+
+    <p>
+      Manage your YOUR TREND store
+    </p>
+
   </div>
 
 
-  <!-- ADD / EDIT FORM -->
+  <a
+    href="dashboard.html"
+    class="dashboard-btn"
+  >
+    📊 Dashboard
+  </a>
 
-  <h2 class="section-title">
-    ➕ Add / ✏️ Edit Product
-  </h2>
-
-  <div id="editMode">
-    ✏️ আপনি এখন Product Edit করছেন
-  </div>
+</header>
 
 
-  <label>Product Name</label>
 
-  <input
-    type="text"
-    id="productName"
-    placeholder="যেমন: Premium T-Shirt"
+<!-- CONTENT -->
+
+<main class="content">
+
+
+  <!-- WELCOME -->
+
+  <section class="admin-welcome">
+
+    <h2>
+      YOUR TREND Store Management
+    </h2>
+
+    <p>
+      Products, orders and website settings — all in one place.
+    </p>
+
+  </section>
+
+
+
+  <!-- =================================================
+       PRODUCTS
+  ================================================== -->
+
+  <section
+    class="admin-section"
+    id="products"
   >
 
+    <div class="section-header">
 
-  <label>Price</label>
+      <h2>
+        📦 Your Products
+      </h2>
 
-  <input
-    type="number"
-    id="productPrice"
-    placeholder="যেমন: 490"
+      <span>
+        Product Management
+      </span>
+
+    </div>
+
+
+    <div class="panel">
+
+      <div
+        id="productList"
+        class="product-list"
+      >
+        ⏳ Products loading...
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =================================================
+       ADD / EDIT PRODUCT
+  ================================================== -->
+
+  <section
+    class="admin-section"
+    id="add-product"
   >
 
+    <div class="section-header">
 
-  <label>Stock</label>
+      <h2>
+        ➕ Add / Edit Product
+      </h2>
 
-<input
-  id="productStock"
-  type="text"
-  inputmode="text"
-  placeholder="আছে / নেই / 10"
-/>
+      <span>
+        Product Information
+      </span>
 
-
-  <label>Product Images (10–12)</label>
-
-<button type="button" id="selectImageBtn">
-  📷 Select Product Images
-</button>
-
-<p id="imageStatus">কোনো ছবি নির্বাচন করা হয়নি</p>
-
-<img id="imagePreview"
-  style="display:none;width:100%;max-height:300px;object-fit:contain;border-radius:10px;">
-
-<p id="imageStatus">
-  ১০–১২টি ছবি নির্বাচন করুন
-</p>
+    </div>
 
 
-  <label>Category</label>
-
-  <select id="productCategory">
-
-    <option value="fashion">
-      Fashion
-    </option>
-
-    <option value="gadgets">
-      Gadgets
-    </option>
-
-    <option value="bags">
-      Bags
-    </option>
-
-  </select>
+    <div class="panel">
 
 
-  <label>Description</label>
-
-  <textarea
-    id="productDescription"
-    placeholder="Product details লিখুন..."
-  ></textarea>
+      <div id="editMode">
+        ✏️ আপনি এখন Product Edit করছেন
+      </div>
 
 
-  <button id="saveProductBtn">
-    ➕ Add Product
-  </button>
+      <div class="form-grid">
 
 
-  <button
-    id="cancelEditBtn"
-    style="display:none;"
+        <!-- NAME -->
+
+        <div>
+
+          <label>
+            Product Name
+          </label>
+
+          <input
+            type="text"
+            id="productName"
+            placeholder="যেমন: Premium T-Shirt"
+          >
+
+        </div>
+
+
+        <!-- PRICE -->
+
+        <div>
+
+          <label>
+            Price
+          </label>
+
+          <input
+            type="number"
+            id="productPrice"
+            placeholder="যেমন: 490"
+          >
+
+        </div>
+
+
+        <!-- STOCK -->
+
+        <div>
+
+          <label>
+            Stock
+          </label>
+
+          <input
+            id="productStock"
+            type="text"
+            inputmode="text"
+            placeholder="আছে / নেই / 10"
+          >
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div>
+
+          <label>
+            Category
+          </label>
+
+          <select id="productCategory">
+
+            <option value="fashion">
+              Fashion
+            </option>
+
+            <option value="gadgets">
+              Gadgets
+            </option>
+
+            <option value="bags">
+              Bags
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- IMAGES -->
+
+        <div class="form-full">
+
+          <label>
+            Product Images (10–12)
+          </label>
+
+
+          <button
+            type="button"
+            id="selectImageBtn"
+          >
+            📷 Select Product Images
+          </button>
+
+
+          <p id="imageStatus">
+            কোনো ছবি নির্বাচন করা হয়নি
+          </p>
+
+
+          <img
+            id="imagePreview"
+            style="
+              display:none;
+              width:100%;
+              max-height:300px;
+              object-fit:contain;
+              border-radius:12px;
+            "
+          >
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-full">
+
+          <label>
+            Description
+          </label>
+
+          <textarea
+            id="productDescription"
+            placeholder="Product details লিখুন..."
+          ></textarea>
+
+        </div>
+
+
+        <!-- SAVE -->
+
+        <div>
+
+          <button id="saveProductBtn">
+            ➕ Add Product
+          </button>
+
+        </div>
+
+
+        <!-- CANCEL -->
+
+        <div>
+
+          <button
+            id="cancelEditBtn"
+            style="display:none;"
+          >
+            ❌ Cancel Edit
+          </button>
+
+        </div>
+
+
+      </div>
+
+
+      <p id="message"></p>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =================================================
+       BANNER
+  ================================================== -->
+
+  <section
+    class="admin-section"
+    id="banner"
   >
-    ❌ Cancel Edit
-  </button>
+
+    <div class="section-header">
+
+      <h2>
+        🖼️ Website Banner
+      </h2>
+
+      <span>
+        Homepage Management
+      </span>
+
+    </div>
 
 
-  <p id="message"></p>
-  <!-- =========================
-     BANNER MANAGEMENT
-========================= -->
+    <div class="panel banner-management">
 
-<h2 class="section-title">
-  🖼️ Website Banner Management
-</h2>
 
-<div class="banner-management">
+      <p class="banner-description">
+        এখান থেকে Website-এর Home Page Banner পরিবর্তন করতে পারবেন।
+      </p>
 
-  <p style="color:#64748b; margin-top:0;">
-    এখান থেকে Website-এর Home Page Banner পরিবর্তন করতে পারবেন।
-  </p>
 
-  <!-- Current Banner -->
+      <label>
+        Current Website Banner
+      </label>
 
-  <label>
-    Current Website Banner
-  </label>
 
-  <img
-    id="currentBannerPreview"
-    src=""
-    alt="Current Website Banner"
-    style="
-      display:none;
-      width:100%;
-      max-height:250px;
-      object-fit:cover;
-      border-radius:12px;
-      border:1px solid #e2e8f0;
-      margin-top:10px;
-      background:#f8fafc;
-    "
+      <img
+        id="currentBannerPreview"
+        src=""
+        alt="Current Website Banner"
+        style="display:none;"
+      >
+
+
+      <p id="bannerStatus">
+        ⏳ Banner loading...
+      </p>
+
+
+      <button
+        type="button"
+        id="selectBannerBtn"
+      >
+        📷 Select New Banner
+      </button>
+
+
+      <img
+        id="bannerPreview"
+        alt="New Banner Preview"
+        style="display:none;"
+      >
+
+
+      <p id="bannerImageStatus">
+        নতুন Banner নির্বাচন করা হয়নি
+      </p>
+
+
+      <button
+        type="button"
+        id="updateBannerBtn"
+        style="display:none;"
+      >
+        ✅ Update Website Banner
+      </button>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =================================================
+       ORDERS
+  ================================================== -->
+
+  <section
+    class="admin-section"
+    id="orders"
   >
 
-  <p
-    id="bannerStatus"
-    style="
-      text-align:center;
-      font-weight:bold;
-      color:#64748b;
-      margin:12px 0;
-    "
-  >
-    ⏳ Banner loading...
-  </p>
+    <div class="section-header">
+
+      <h2>
+        🛍️ Customer Orders
+      </h2>
+
+      <span>
+        Order Management
+      </span>
+
+    </div>
 
 
-  <!-- Select New Banner -->
+    <div class="panel">
 
-  <button
-    type="button"
-    id="selectBannerBtn"
-    style="background:#2563eb;"
-  >
-    📷 Select New Banner
-  </button>
+      <div
+        id="ordersList"
+        class="product-list"
+      >
+        ⏳ Orders loading...
+      </div>
 
+    </div>
 
-  <!-- New Banner Preview -->
-
-  <img
-    id="bannerPreview"
-    alt="New Banner Preview"
-    style="
-      display:none;
-      width:100%;
-      max-height:250px;
-      object-fit:cover;
-      border-radius:12px;
-      border:1px solid #bfdbfe;
-      margin-top:12px;
-      background:#eff6ff;
-    "
-  >
+  </section>
 
 
-  <p
-    id="bannerImageStatus"
-    style="
-      text-align:center;
-      font-weight:bold;
-      color:#64748b;
-    "
-  >
-    নতুন Banner নির্বাচন করা হয়নি
-  </p>
 
+  <!-- WEBSITE -->
 
-  <!-- Update Button -->
-
-  <button
-    type="button"
-    id="updateBannerBtn"
-    style="
-      background:#16a34a;
-      display:none;
-    "
-  >
-    ✅ Update Website Banner
-  </button>
-
-</div>
-<!-- =========================
-     ORDERS
-========================= -->
-
-<h2 class="section-title">
-  🛍️ Customer Orders
-</h2>
-
-<div
-  id="ordersList"
-  class="product-list"
->
-  ⏳ Orders loading...
-</div>
   <a
     href="index.html"
     class="back"
@@ -436,13 +2059,58 @@
     ← Back to Website
   </a>
 
-</div>
+
+</main>
+
+  </div></div><!-- =====================================================
+     WELCOME SCRIPT
+===================================================== --><script>
+
+function closeAdminWelcome() {
+
+  const popup =
+    document.getElementById(
+      "adminWelcome"
+    );
+
+  if (!popup) return;
+
+  popup.style.opacity =
+    "0";
+
+  popup.style.transition =
+    "opacity 0.3s ease";
+
+  setTimeout(function() {
+
+    popup.style.display =
+      "none";
+
+  }, 300);
+
+}
 
 
-<script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script>
+/* Automatically close */
 
-<script type="module" src="admin.js?v=15"></script>
+setTimeout(function() {
 
-</body>
+  const popup =
+    document.getElementById(
+      "adminWelcome"
+    );
 
-</html>
+  if (popup) {
+
+    closeAdminWelcome();
+
+  }
+
+}, 4500);
+
+</script><!-- =====================================================
+     YOUR EXISTING ADMIN JS
+===================================================== --><script
+  type="module"
+  src="admin.js?v=15"
+></script></body></html>
