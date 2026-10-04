@@ -14,61 +14,418 @@
 
   <link rel="stylesheet" href="style.css">
 
-
   <style>
 
-    .product-option-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: #fff;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-    }
+/* =========================================
+   YOUR TREND — PREMIUM PRODUCT DETAILS
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #0f172a;
+  font-family: Arial, sans-serif;
+}
 
 
-    .option-title {
-      font-weight: bold;
-      margin-top: 12px;
-      margin-bottom: 7px;
-    }
+/* ===== TOP HEADER ===== */
+
+.product-header {
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  padding: 20px 15px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.12);
+}
+
+.product-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.product-header p {
+  margin: 6px 0 0;
+  color: #cbd5e1;
+  font-size: 13px;
+}
 
 
-    .quantity-control {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 7px;
-    }
+/* ===== MAIN PRODUCT ===== */
+
+.product-details {
+  width: min(100% - 24px, 720px);
+  margin: 18px auto 40px;
+}
 
 
-    .quantity-control button {
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 8px;
-      background: #ff6b00;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-    }
+/* ===== PRODUCT CARD ===== */
+
+.product-main-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+}
 
 
-    .quantity-number {
-      min-width: 35px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-    }
+/* ===== IMAGE ===== */
+
+.product-image-area {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+#productImage {
+  width: 100% !important;
+  height: 380px !important;
+  object-fit: contain !important;
+  display: block;
+  margin: 0 auto !important;
+  border-radius: 12px;
+}
 
 
-    .size-select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 15px;
-      box-sizing: border-box;
-    }
+/* ===== GALLERY ===== */
+
+#imageGallery {
+  display: flex !important;
+  gap: 8px !important;
+  overflow-x: auto;
+  margin: 12px 0 0 !important;
+  padding-bottom: 4px;
+}
+
+#imageGallery img {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 9px;
+  border: 1px solid #dbe2ea;
+  background: white;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+
+/* ===== PRODUCT INFO ===== */
+
+.product-title {
+  margin: 20px 0 7px;
+  font-size: 24px;
+  line-height: 1.35;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.product-price {
+  margin: 0;
+  font-size: 23px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.product-description {
+  margin: 14px 0 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* ===== OPTIONS ===== */
+
+.product-option-box {
+  margin-top: 20px;
+  padding: 17px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.option-title {
+  margin-top: 13px;
+  margin-bottom: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.option-title:first-child {
+  margin-top: 0;
+}
+
+
+/* ===== QUANTITY ===== */
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-control button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #dbeafe;
+  border-radius: 9px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 21px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quantity-control button:active {
+  transform: scale(.96);
+}
+
+.quantity-number {
+  min-width: 35px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+
+/* ===== SIZE ===== */
+
+.size-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  background: white;
+  color: #0f172a;
+  font-size: 14px;
+  outline: none;
+}
+
+.size-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .08);
+}
+
+
+/* ===== MAIN BUTTONS ===== */
+
+.product-action-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 11px;
+  border: none;
+  border-radius: 11px;
+  background: #0f172a;
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.product-action-btn:hover {
+  background: #1e293b;
+}
+
+.product-action-btn:active {
+  transform: translateY(1px);
+}
+
+.product-checkout-btn {
+  background: #2563eb;
+  box-shadow: 0 6px 17px rgba(37, 99, 235, .16);
+}
+
+.product-checkout-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* ===== DIVIDER ===== */
+
+.product-divider {
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  margin: 25px 0;
+}
+
+
+/* ===== ORDER FORM ===== */
+
+.order-form {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 17px;
+  padding: 18px;
+}
+
+.order-form h2 {
+  margin: 0 0 20px;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+
+/* ===== FORM GROUP ===== */
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ===== INPUT ===== */
+
+.input-box,
+.textarea-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  background: white;
+  transition: .2s ease;
+}
+
+.input-box:focus-within,
+.textarea-box:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .08);
+}
+
+.input-box span,
+.textarea-box span {
+  font-size: 15px;
+}
+
+.input-box input,
+.input-box select,
+.textarea-box textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 13px 0;
+  font-family: inherit;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.textarea-box {
+  align-items: flex-start;
+}
+
+.textarea-box textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+
+/* ===== PAYMENT ===== */
+
+.payment-box {
+  padding: 13px;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* ===== WHATSAPP ORDER ===== */
+
+.whatsapp-order-btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 11px;
+  background: #16a34a;
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 17px rgba(22, 163, 74, .15);
+  transition: .2s ease;
+}
+
+.whatsapp-order-btn:hover {
+  background: #15803d;
+}
+
+.whatsapp-order-btn:active {
+  transform: translateY(1px);
+}
+
+
+/* ===== MESSAGE ===== */
+
+#msg {
+  text-align: center;
+  margin-top: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 600px) {
+
+  .product-header {
+    padding: 18px 14px;
+  }
+
+  .product-header h1 {
+    font-size: 22px;
+  }
+
+  .product-details {
+    width: calc(100% - 16px);
+    margin-top: 10px;
+  }
+
+  .product-main-card {
+    padding: 13px;
+    border-radius: 16px;
+  }
+
+  #productImage {
+    height: 300px !important;
+  }
+
+  .product-title {
+    font-size: 21px;
+  }
+
+  .product-price {
+    font-size: 21px;
+  }
+
+  .product-option-box,
+  .order-form {
+    padding: 14px;
+  }
+
+}
 
   </style>
 
@@ -78,306 +435,340 @@
 <body>
 
 
-<header class="hero">
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="product-header">
 
   <h1>YOUR TREND</h1>
 
-  <p>🛍️ Product Details</p>
+  <p>Product Details</p>
 
 </header>
 
 
+<!-- =========================================
+     PRODUCT DETAILS
+========================================= -->
+
 <section class="product-details">
 
 
-  <img
-  id="productImage"
-  class="product-details-image"
-  src=""
-  alt="Product"
-  style="width:350px;height:350px;object-fit:contain;display:block;margin:0 auto 20px;"
->
-<div id="imageGallery"
-style="display:flex;gap:8px;overflow-x:auto;margin:10px 0;">
-</div>
-
-  <h2 id="productName"></h2>
+  <div class="product-main-card">
 
 
-  <h3>
-    ৳<span id="productPrice"></span>
-  </h3>
+    <!-- PRODUCT IMAGE -->
 
+    <div class="product-image-area">
 
-  <p id="productDescription"></p>
+      <img
+        id="productImage"
+        src=""
+        alt="Product"
+      >
 
-
-  <!-- Product Quantity + Size -->
-
-  <div class="product-option-box">
-
-
-    <div class="option-title">
-
-      🔢 কত পিস নেবেন?
+      <div id="imageGallery"></div>
 
     </div>
 
 
-    <div class="quantity-control">
+    <!-- PRODUCT INFO -->
+
+    <h2
+      id="productName"
+      class="product-title"
+    ></h2>
 
 
-      <button
-        type="button"
-        onclick="decreaseProductQuantity()"
-      >
-        −
-      </button>
+    <h3 class="product-price">
+
+      ৳<span id="productPrice"></span>
+
+    </h3>
 
 
-      <span
-        id="productQuantity"
-        class="quantity-number"
-      >
-        1
-      </span>
+    <p
+      id="productDescription"
+      class="product-description"
+    ></p>
 
 
-      <button
-        type="button"
-        onclick="increaseProductQuantity()"
-      >
-        +
-      </button>
+    <!-- PRODUCT OPTIONS -->
+
+    <div class="product-option-box">
 
 
-    </div>
+      <div class="option-title">
+        কত পিস নেবেন?
+      </div>
 
 
-    <div class="option-title">
+      <div class="quantity-control">
 
-      📏 Size নির্বাচন করুন
+        <button
+          type="button"
+          onclick="decreaseProductQuantity()"
+        >
+          −
+        </button>
 
-    </div>
+        <span
+          id="productQuantity"
+          class="quantity-number"
+        >
+          1
+        </span>
+
+        <button
+          type="button"
+          onclick="increaseProductQuantity()"
+        >
+          +
+        </button>
+
+      </div>
 
 
-    <select
-      id="productSize"
-      class="size-select"
-    >
-
-      <option value="">
+      <div class="option-title">
         Size নির্বাচন করুন
-      </option>
-
-      <option value="S">
-        S
-      </option>
-
-      <option value="M">
-        M
-      </option>
-
-      <option value="L">
-        L
-      </option>
-
-      <option value="XL">
-        XL
-      </option>
-
-      <option value="XXL">
-        XXL
-      </option>
-
-      <option value="প্রযোজ্য নয়">
-        প্রযোজ্য নয়
-      </option>
-
-    </select>
-
-
-  </div>
-
-
-  <button
-    class="btn"
-    onclick="addSelectedProduct()"
-  >
-    🛒 Add to Cart
-  </button>
-
-
-  <button
-    class="btn"
-    onclick="goCheckout()"
-  >
-    📦 Checkout
-  </button>
-
-
-  <hr>
-
-
-  <div class="order-form">
-
-
-    <h2>📦 অর্ডার ফর্ম</h2>
-
-
-    <!-- Name -->
-
-    <div class="form-group">
-
-      <label for="name">
-        👤 নাম
-      </label>
-
-
-      <div class="input-box">
-
-        <span>👤</span>
-
-        <input
-          id="name"
-          type="text"
-          placeholder="আপনার নাম লিখুন"
-        >
-
       </div>
+
+
+      <select
+        id="productSize"
+        class="size-select"
+      >
+
+        <option value="">
+          Size নির্বাচন করুন
+        </option>
+
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+        <option value="প্রযোজ্য নয়">
+          প্রযোজ্য নয়
+        </option>
+
+      </select>
 
     </div>
 
 
-    <!-- Phone -->
+    <!-- ACTION BUTTONS -->
 
-    <div class="form-group">
-
-      <label for="phone">
-        📱 মোবাইল নম্বর
-      </label>
-
-
-      <div class="input-box">
-
-        <span>📞</span>
-
-        <input
-          id="phone"
-          type="tel"
-          placeholder="01XXXXXXXXX"
-        >
-
-      </div>
-
-    </div>
-
-
-    <!-- Delivery Area -->
-
-    <div class="form-group">
-
-      <label for="deliveryArea">
-        🚚 Delivery Area
-      </label>
-
-
-      <div class="input-box">
-
-        <span>🚚</span>
-
-
-        <select id="deliveryArea">
-
-          <option value="70">
-            ঢাকার ভিতরে — ৳70
-          </option>
-
-          <option value="100">
-            সাব ঢাকা — ৳100
-          </option>
-
-          <option value="120">
-            ঢাকার বাইরে — ৳120
-          </option>
-
-        </select>
-
-      </div>
-
-    </div>
-
-
-    <!-- Payment -->
-
-    <div class="form-group">
-
-      <label>
-        💵 Payment Method
-      </label>
-
-
-      <div class="payment-box">
-
-        💵 Cash on Delivery
-
-      </div>
-
-    </div>
-
-<!-- District -->
-<div class="form-group">
-  <label>🏙️ জেলা</label>
-  <div class="input-box">
-    <span>🏙️</span>
-  <select id="district">
-      <option value="">জেলা নির্বাচন করুন</option>
-    </select>
-  </div>
-</div>
-
-<!-- Upazila -->
-<div class="form-group">
-  <label>📍 উপজেলা</label>
-  <div class="input-box">
-    <span>📍</span>
-    <select id="upazila">
-      <option value="">উপজেলা নির্বাচন করুন</option>
-    </select>
-  </div>
-</div>
-    <!-- Address -->
-
-    <div class="form-group">
-
-      <label for="address">
-        📍 ঠিকানা
-      </label>
-
-
-      <div class="textarea-box">
-
-        <span>📍</span>
-
-
-        <textarea
-          id="address"
-          placeholder="সম্পূর্ণ ঠিকানা লিখুন"
-        ></textarea>
-
-      </div>
-
-    </div>
-
-
-    <!-- WhatsApp -->
-
-    <button id="directOrderBtn" class="btn whatsapp-order-btn">
-      📲 WhatsApp-এ অর্ডার করুন
+    <button
+      class="product-action-btn"
+      onclick="addSelectedProduct()"
+    >
+      Add to Cart
     </button>
 
 
-    <p id="msg"></p>
+    <button
+      class="product-action-btn product-checkout-btn"
+      onclick="goCheckout()"
+    >
+      Checkout
+    </button>
+
+
+    <hr class="product-divider">
+
+
+    <!-- DIRECT ORDER FORM -->
+
+    <div class="order-form">
+
+
+      <h2>
+        অর্ডার করুন
+      </h2>
+
+
+      <!-- NAME -->
+
+      <div class="form-group">
+
+        <label for="name">
+          নাম
+        </label>
+
+        <div class="input-box">
+
+          <span>👤</span>
+
+          <input
+            id="name"
+            type="text"
+            placeholder="আপনার পূর্ণ নাম"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- PHONE -->
+
+      <div class="form-group">
+
+        <label for="phone">
+          মোবাইল নম্বর
+        </label>
+
+        <div class="input-box">
+
+          <span>📞</span>
+
+          <input
+            id="phone"
+            type="tel"
+            placeholder="01XXXXXXXXX"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- DELIVERY AREA -->
+
+      <div class="form-group">
+
+        <label for="deliveryArea">
+          Delivery Area
+        </label>
+
+        <div class="input-box">
+
+          <span>🚚</span>
+
+          <select id="deliveryArea">
+
+            <option value="70">
+              ঢাকার ভিতরে — ৳70
+            </option>
+
+            <option value="100">
+              সাব ঢাকা — ৳100
+            </option>
+
+            <option value="120">
+              ঢাকার বাইরে — ৳120
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- PAYMENT -->
+
+      <div class="form-group">
+
+        <label>
+          Payment Method
+        </label>
+
+        <div class="payment-box">
+          Cash on Delivery
+        </div>
+
+      </div>
+
+
+      <!-- DISTRICT -->
+
+      <div class="form-group">
+
+        <label>
+          জেলা
+        </label>
+
+        <div class="input-box">
+
+          <span>🏙️</span>
+
+          <select id="district">
+
+            <option value="">
+              জেলা নির্বাচন করুন
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- UPAZILA -->
+
+      <div class="form-group">
+
+        <label>
+          উপজেলা
+        </label>
+
+        <div class="input-box">
+
+          <span>📍</span>
+
+          <select id="upazila">
+
+            <option value="">
+              উপজেলা নির্বাচন করুন
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- ADDRESS -->
+
+      <div class="form-group">
+
+        <label for="address">
+          সম্পূর্ণ ঠিকানা
+        </label>
+
+        <div class="textarea-box">
+
+          <span>📍</span>
+
+          <textarea
+            id="address"
+            placeholder="বাড়ি / রোড / গ্রাম / এলাকা সহ সম্পূর্ণ ঠিকানা"
+          ></textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- WHATSAPP -->
+
+      <button
+        id="directOrderBtn"
+        class="whatsapp-order-btn"
+      >
+        WhatsApp-এ অর্ডার করুন
+      </button>
+
+
+      <p id="msg"></p>
+
+
+    </div>
 
 
   </div>
@@ -386,9 +777,12 @@ style="display:flex;gap:8px;overflow-x:auto;margin:10px 0;">
 </section>
 
 
-<script type="module" src="./product.js?v=7"></script>
+<script
+  type="module"
+  src="./product.js?v=7"
+></script>
 
 
 </body>
 
-</html>
+  </html>
