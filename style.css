@@ -1981,3 +1981,164 @@ textarea:focus {
       4px 8px;
   }
 }
+/* =========================================
+   YOUR TREND — PREMIUM MENU
+========================================= */
+
+#yourTrendMenu {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Menu button */
+
+#yourTrendMenu summary {
+  list-style: none;
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 12px;
+
+  background: rgba(255,255,255,.10);
+  color: #ffffff;
+
+  font-size: 21px;
+  cursor: pointer;
+
+  transition: .2s ease;
+}
+
+#yourTrendMenu summary::-webkit-details-marker {
+  display: none;
+}
+
+#yourTrendMenu summary:hover {
+  background: rgba(255,255,255,.16);
+}
+
+#yourTrendMenu summary:active {
+  transform: scale(.96);
+}
+
+
+/* Premium menu box */
+
+.yourTrendMenuBox {
+  position: absolute;
+
+  top: 54px;
+  left: 0;
+
+  width: 245px;
+
+  padding: 9px;
+
+  background: rgba(255,255,255,.98);
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 18px 45px rgba(15,23,42,.16);
+
+  backdrop-filter: blur(12px);
+
+  animation: yourTrendMenuOpen .18s ease;
+}
+
+
+/* Menu links */
+
+.yourTrendMenuBox a {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  padding: 13px 14px;
+
+  margin: 2px 0;
+
+  border-radius: 11px;
+
+  box-sizing: border-box;
+
+  color: #0f172a;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 650;
+
+  transition:
+    background .18s ease,
+    color .18s ease,
+    transform .18s ease;
+}
+
+
+/* Hover */
+
+.yourTrendMenuBox a:hover {
+  background: #eff6ff;
+  color: #2563eb;
+
+  transform: translateX(2px);
+}
+
+
+/* Active press */
+
+.yourTrendMenuBox a:active {
+  transform: scale(.98);
+}
+
+
+/* Small separator */
+
+.yourTrendMenuBox a + a {
+  border-top: 1px solid #f1f5f9;
+}
+
+
+/* Menu animation */
+
+@keyframes yourTrendMenuOpen {
+
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .yourTrendMenuBox {
+    width: 225px;
+    top: 51px;
+  }
+
+  .yourTrendMenuBox a {
+    padding: 12px 13px;
+    font-size: 13.5px;
+  }
+
+}
