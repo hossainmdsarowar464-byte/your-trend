@@ -110,8 +110,8 @@ async function loadFirebaseProducts() {
 
     const firebaseConfig = {
 
-      apiKey:
-        "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
+    apiKey:
+  "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
 
       authDomain:
         "your-trend.firebaseapp.com",
@@ -1585,7 +1585,7 @@ async function trackVisitor() {
     const firebaseConfig = {
 
       apiKey:
-        "AIzaSyAfYg-SdoKLFGuEtzFzdqwpqHRRdEuiuQI",
+  "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
 
       authDomain:
         "your-trend.firebaseapp.com",
