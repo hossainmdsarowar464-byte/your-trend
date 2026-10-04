@@ -1,207 +1,1116 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>YOUR TREND - Dashboard</title>  <link rel="stylesheet" href="style.css"><style>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+/* =====================================================
+   YOUR TREND — PREMIUM DASHBOARD
+===================================================== */
 
-  <title>YOUR TREND - Dashboard</title>
-
-  <link rel="stylesheet" href="style.css">
-<style>
-
-/* ===== YOUR TREND DASHBOARD ===== */
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  background: #f8fafc;
+  background: #f1f5f9;
   font-family: Arial, sans-serif;
   color: #0f172a;
 }
 
-header {
-  background: #0f172a;
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.dashboard-header {
+  background: linear-gradient(135deg, #020617, #0f172a, #172554);
   color: white;
-  padding: 18px 20px;
+
+  padding: 20px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.18);
 }
 
-header h1 {
+.dashboard-header h1 {
   margin: 0;
   font-size: 22px;
+  letter-spacing: 0.4px;
 }
 
-header p {
-  margin: 4px 0 0;
+.dashboard-header p {
+  margin: 5px 0 0;
   color: #cbd5e1;
   font-size: 13px;
 }
 
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 25px 18px;
+.admin-btn {
+  text-decoration: none;
+  color: white;
+
+  background: rgba(255,255,255,0.09);
+
+  border: 1px solid rgba(255,255,255,0.18);
+
+  padding: 9px 14px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  transition: 0.25s;
 }
 
-main > h2 {
-  margin: 0 0 20px;
-  font-size: 24px;
+.admin-btn:hover {
+  background: rgba(255,255,255,0.17);
+  transform: translateY(-2px);
 }
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+  max-width: 1150px;
+  margin: auto;
+
+  padding: 28px 18px;
+}
+
+.dashboard-title {
+  margin-bottom: 22px;
+}
+
+.dashboard-title h2 {
+  margin: 0;
+
+  font-size: 26px;
+  letter-spacing: -0.3px;
+}
+
+.dashboard-title p {
+  margin: 6px 0 0;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   DASHBOARD CARDS
+===================================================== */
 
 .dashboard-cards {
+
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 18px;
 }
+
+
+/* BASE CARD */
 
 .card {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 18px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  min-height: 145px;
+
+  padding: 21px;
+
+  border-radius: 17px;
+
+  color: white;
+
+  cursor: pointer;
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 10px 25px rgba(15,23,42,0.13);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+
+  user-select: none;
 }
 
-.card h3 {
-  margin: 0 0 12px;
-  font-size: 14px;
-  color: #64748b;
-  font-weight: normal;
+
+/* LIGHT EFFECT */
+
+.card::before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 170px;
+  height: 170px;
+
+  right: -70px;
+  top: -80px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.30),
+      transparent 68%
+    );
+
+  pointer-events: none;
 }
+
+
+/* SHINE */
+
+.card::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: -100%;
+
+  left: -40%;
+
+  width: 45%;
+
+  height: 300%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.14),
+      transparent
+    );
+
+  transform: rotate(25deg);
+
+  transition: 0.7s;
+
+  pointer-events: none;
+}
+
+.card:hover::after {
+  left: 120%;
+}
+
+.card:hover {
+
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 18px 35px rgba(15,23,42,0.20);
+}
+
+
+/* CLICK / PRESS EFFECT */
+
+.card:active {
+
+  transform:
+    translateY(-1px)
+    scale(0.96);
+
+  box-shadow:
+    0 7px 15px rgba(15,23,42,0.18);
+}
+
+
+/* =====================================================
+   CARD TOP
+===================================================== */
+
+.card-top {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.card-top span:first-child {
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* ICON */
+
+.card-icon {
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.15);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.20);
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  backdrop-filter: blur(5px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.20);
+}
+
+
+/* NUMBER */
 
 .card strong {
-  font-size: 28px;
+
   display: block;
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: 18px;
+
+  font-size: 31px;
+
+  line-height: 1;
+
+  letter-spacing: -0.5px;
 }
 
-.card p {
-  margin: 7px 0 0;
+
+/* SMALL LABEL */
+
+.card small {
+
+  display: block;
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: 9px;
+
   font-size: 12px;
-  color: #94a3b8;
+
+  color: rgba(255,255,255,0.75);
 }
+
+
+/* =====================================================
+   BRANDED CARD COLORS
+===================================================== */
+
+
+/* VISITORS — BLUE */
+
+.visitors-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #0284c7,
+      #2563eb
+    );
+
+  box-shadow:
+    0 10px 28px rgba(37,99,235,0.25);
+}
+
+
+/* ORDERS — PURPLE */
+
+.orders-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #6d28d9,
+      #4f46e5
+    );
+
+  box-shadow:
+    0 10px 28px rgba(79,70,229,0.25);
+}
+
+
+/* PRODUCTS — GREEN */
+
+.products-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #059669,
+      #0f766e
+    );
+
+  box-shadow:
+    0 10px 28px rgba(15,118,110,0.25);
+}
+
+
+/* SALES — ORANGE */
+
+.sales-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #ea580c,
+      #f59e0b
+    );
+
+  box-shadow:
+    0 10px 28px rgba(234,88,12,0.25);
+}
+
+
+/* TOTAL ORDERS — NAVY */
+
+.all-orders-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1e3a8a
+    );
+
+  box-shadow:
+    0 10px 28px rgba(15,23,42,0.25);
+}
+
+
+/* TOTAL SALES — PREMIUM BLUE */
+
+.all-sales-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #0f172a
+    );
+
+  box-shadow:
+    0 10px 28px rgba(29,78,216,0.25);
+}
+
+
+/* =====================================================
+   RECENT ORDERS
+===================================================== */
 
 .dashboard-section {
-  margin-top: 25px;
+
+  margin-top: 26px;
+
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 20px;
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  border-radius: 17px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 8px 25px rgba(15,23,42,0.06);
 }
 
-.dashboard-section h2 {
-  margin-top: 0;
+.section-heading {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+}
+
+.section-heading h2 {
+
+  margin: 0;
+
   font-size: 18px;
 }
 
+.section-heading span {
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
 .dashboard-section p {
+
   color: #64748b;
+
   font-size: 14px;
 }
 
-/* ===== MOBILE ===== */
+
+/* =====================================================
+   PREMIUM WELCOME POPUP
+===================================================== */
+
+.welcome-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(2, 6, 23, 0.55);
+
+  backdrop-filter: blur(8px);
+
+  animation:
+    overlayIn 0.35s ease;
+}
+
+
+/* POPUP */
+
+.welcome-box {
+
+  position: relative;
+
+  width: min(420px, 100%);
+
+  padding: 32px 25px 27px;
+
+  text-align: center;
+
+  border-radius: 25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.98),
+      rgba(241,245,249,0.98)
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,0.9);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.28);
+
+  animation:
+    welcomeIn 0.55s cubic-bezier(.2,.8,.2,1);
+}
+
+
+/* 3D ICON */
+
+.welcome-icon {
+
+  width: 82px;
+  height: 82px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 24px;
+
+  font-size: 45px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #2563eb,
+      #0f172a
+    );
+
+  box-shadow:
+    0 15px 30px rgba(37,99,235,0.30),
+    inset 0 2px 3px rgba(255,255,255,0.35);
+
+  transform:
+    perspective(500px)
+    rotateX(5deg)
+    rotateY(-5deg);
+
+  animation:
+    iconFloat 2.5s ease-in-out infinite;
+}
+
+
+/* TITLE */
+
+.welcome-box h2 {
+
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 23px;
+
+  letter-spacing: -0.4px;
+}
+
+
+/* TEXT */
+
+.welcome-box p {
+
+  margin: 10px auto 0;
+
+  max-width: 320px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* CLOSE */
+
+.welcome-close {
+
+  position: absolute;
+
+  top: 13px;
+  right: 14px;
+
+  width: 32px;
+  height: 32px;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #e2e8f0;
+
+  color: #475569;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.welcome-close:hover {
+
+  background: #cbd5e1;
+
+  transform: rotate(90deg);
+}
+
+
+/* BOTTOM LINE */
+
+.welcome-line {
+
+  width: 55px;
+  height: 4px;
+
+  margin: 18px auto 0;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #0f172a
+    );
+}
+
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+@keyframes welcomeIn {
+
+  from {
+    opacity: 0;
+    transform:
+      translateY(35px)
+      scale(0.88)
+      rotateX(8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1)
+      rotateX(0);
+  }
+}
+
+@keyframes overlayIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes iconFloat {
+
+  0%, 100% {
+    transform:
+      perspective(500px)
+      translateY(0)
+      rotateX(5deg)
+      rotateY(-5deg);
+  }
+
+  50% {
+    transform:
+      perspective(500px)
+      translateY(-7px)
+      rotateX(-2deg)
+      rotateY(5deg);
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 700px) {
 
-  .dashboard-cards {
-    grid-template-columns: repeat(2, 1fr);
+  .dashboard-header {
+
+    padding: 17px 15px;
+  }
+
+  .dashboard-header h1 {
+
+    font-size: 19px;
+  }
+
+  .admin-btn {
+
+    padding: 8px 10px;
+
+    font-size: 12px;
   }
 
   main {
-    padding: 20px 14px;
+
+    padding: 22px 13px;
+  }
+
+  .dashboard-title h2 {
+
+    font-size: 23px;
+  }
+
+  .dashboard-cards {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 12px;
+  }
+
+  .card {
+
+    min-height: 140px;
+
+    padding: 16px;
+
+    border-radius: 15px;
+  }
+
+  .card strong {
+
+    font-size: 26px;
+
+    margin-top: 16px;
+  }
+
+  .card-icon {
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+  }
+
+  .dashboard-section {
+
+    padding: 17px;
+
+    border-radius: 15px;
+  }
+
+  .welcome-box {
+
+    padding: 30px 20px 24px;
+
+    border-radius: 22px;
   }
 
 }
 
-  </style>
-</head>
 
-<body>
+/* VERY SMALL MOBILE */
 
-  <header class="dashboard-header">
+@media (max-width: 390px) {
 
-    <div>
-      <h1>YOUR TREND</h1>
-      <p>Admin Dashboard</p>
-    </div>
+  .dashboard-cards {
 
-    <a href="admin.html" class="admin-btn">
-      ← Admin Panel
-    </a>
+    gap: 9px;
+  }
 
-  </header>
+  .card {
 
+    padding: 14px;
 
-  <main>
+    min-height: 132px;
+  }
 
-    <div class="dashboard-title">
-      <div>
-        <h2>Dashboard</h2>
-        <p>Welcome to your store overview.</p>
-      </div>
-    </div>
+  .card strong {
 
+    font-size: 23px;
+  }
 
-    <!-- SUMMARY -->
+  .card-top span:first-child {
 
-    <section class="dashboard-cards">
+    font-size: 12px;
+  }
 
-  <div class="card">
-    <span>Visitors</span>
-    <strong id="totalVisitors">0</strong>
-    <small>Today</small>
+}
+
+</style></head><body><!-- =====================================================
+     PREMIUM WELCOME
+===================================================== --><div class="welcome-overlay" id="welcomeOverlay">  <div class="welcome-box"><button
+  class="welcome-close"
+  onclick="closeWelcome()"
+  aria-label="Close">
+  ×
+</button>
+
+<div class="welcome-icon">
+  👋
+</div>
+
+<h2>Welcome to YOUR TREND</h2>
+
+<p>
+  Welcome back, Admin.<br>
+  Thank you for managing your store with YOUR TREND.
+</p>
+
+<div class="welcome-line"></div>
+
+  </div></div><!-- =====================================================
+     HEADER
+===================================================== --><header class="dashboard-header">  <div><h1>YOUR TREND</h1>
+
+<p>
+  Admin Dashboard
+</p>
+
+  </div><a
+href="admin.html"
+class="admin-btn">
+
+← Admin Panel
+
+  </a></header><!-- =====================================================
+     MAIN
+===================================================== --><main>  <div class="dashboard-title"><div>
+
+  <h2>
+    Dashboard
+  </h2>
+
+  <p>
+    Welcome to your store overview.
+  </p>
+
+</div>
+
+  </div>  <!-- =================================================
+       SUMMARY CARDS
+  ================================================== -->  <section class="dashboard-cards"><!-- VISITORS -->
+
+<div class="card visitors-card">
+
+  <div class="card-top">
+
+    <span>
+      Visitors
+    </span>
+
+    <span class="card-icon">
+      V
+    </span>
+
   </div>
 
-  <div class="card">
-    <span>Orders</span>
-    <strong id="totalOrders">0</strong>
-    <small>Today</small>
+  <strong id="totalVisitors">
+    0
+  </strong>
+
+  <small>
+    Today
+  </small>
+
+</div>
+
+
+<!-- ORDERS -->
+
+<div class="card orders-card">
+
+  <div class="card-top">
+
+    <span>
+      Orders
+    </span>
+
+    <span class="card-icon">
+      O
+    </span>
+
   </div>
 
-  <div class="card">
-    <span>Products</span>
-    <strong id="totalProducts">0</strong>
-    <small>Total</small>
+  <strong id="totalOrders">
+    0
+  </strong>
+
+  <small>
+    Today
+  </small>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div class="card products-card">
+
+  <div class="card-top">
+
+    <span>
+      Products
+    </span>
+
+    <span class="card-icon">
+      P
+    </span>
+
   </div>
 
-  <div class="card">
-    <span>Sales</span>
-    <strong id="totalSales">৳0</strong>
-    <small>Today</small>
+  <strong id="totalProducts">
+    0
+  </strong>
+
+  <small>
+    Total
+  </small>
+
+</div>
+
+
+<!-- SALES -->
+
+<div class="card sales-card">
+
+  <div class="card-top">
+
+    <span>
+      Sales
+    </span>
+
+    <span class="card-icon">
+      S
+    </span>
+
   </div>
 
-  <div class="card">
-    <span>Total Orders</span>
-    <strong id="totalAllOrders">0</strong>
-    <small>All time</small>
+  <strong id="totalSales">
+    ৳0
+  </strong>
+
+  <small>
+    Today
+  </small>
+
+</div>
+
+
+<!-- TOTAL ORDERS -->
+
+<div class="card all-orders-card">
+
+  <div class="card-top">
+
+    <span>
+      Total Orders
+    </span>
+
+    <span class="card-icon">
+      A
+    </span>
+
   </div>
 
-  <div class="card">
-    <span>Total Sales</span>
-    <strong id="totalAllSales">৳0</strong>
-    <small>All time</small>
+  <strong id="totalAllOrders">
+    0
+  </strong>
+
+  <small>
+    All time
+  </small>
+
+</div>
+
+
+<!-- TOTAL SALES -->
+
+<div class="card all-sales-card">
+
+  <div class="card-top">
+
+    <span>
+      Total Sales
+    </span>
+
+    <span class="card-icon">
+      ৳
+    </span>
+
   </div>
 
-    </section>
+  <strong id="totalAllSales">
+    ৳0
+  </strong>
+
+  <small>
+    All time
+  </small>
+
+</div>
+
+  </section>  <!-- =================================================
+       RECENT ORDERS
+  ================================================== -->  <section class="dashboard-section"><div class="section-heading">
+
+  <h2>
+    Recent Orders
+  </h2>
+
+  <span>
+    Latest orders
+  </span>
+
+</div>
 
 
-    <!-- RECENT ORDERS -->
+<div id="recentOrders">
 
-    <section class="dashboard-section">
+  <p class="empty-message">
+    No orders yet.
+  </p>
 
-      <div class="section-heading">
-        <h2>Recent Orders</h2>
-        <span>Latest orders</span>
-      </div>
+</div>
 
-      <div id="recentOrders">
-        <p class="empty-message">
-          No orders yet.
-        </p>
-      </div>
+  </section></main><!-- =====================================================
+     WELCOME SCRIPT
+===================================================== --><script>
 
-    </section>
+function closeWelcome() {
+
+  const overlay =
+    document.getElementById("welcomeOverlay");
+
+  overlay.style.opacity = "0";
+
+  overlay.style.transition =
+    "opacity 0.3s ease";
+
+  setTimeout(function () {
+
+    overlay.style.display = "none";
+
+  }, 300);
+
+}
 
 
-  </main>
-<script type="module" src="dashboard.js?v=4"></script>
-</body>
+/* Automatically close after 4.5 seconds */
 
-</html>
+setTimeout(function () {
+
+  const overlay =
+    document.getElementById("welcomeOverlay");
+
+  if (overlay) {
+
+    closeWelcome();
+
+  }
+
+}, 4500);
+
+</script><!-- =====================================================
+     DASHBOARD JS
+===================================================== --><script
+  type="module"
+  src="dashboard.js?v=4">
+</script></body></html>
