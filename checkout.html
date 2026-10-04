@@ -14,78 +14,393 @@
 
 <link rel="stylesheet" href="style.css">
 
-
 <style>
 
+/* =========================================
+   YOUR TREND — PREMIUM CHECKOUT
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #0f172a;
+  font-family: Arial, sans-serif;
+}
+
+/* ===== TOP HEADER ===== */
+
+.checkout-header {
+  background: #0f172a;
+  color: white;
+  padding: 24px 18px;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.12);
+}
+
+.checkout-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.checkout-header p {
+  margin: 7px 0 0;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+/* ===== MAIN CONTAINER ===== */
+
+.checkout {
+  width: min(100% - 28px, 720px);
+  margin: 25px auto 40px;
+}
+
+/* ===== SECTIONS ===== */
+
+.checkout-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+}
+
+.checkout-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.checkout-section-title span {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 17px;
+}
+
+/* ===== PRODUCT ITEM ===== */
+
 .checkout-item-box {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 15px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
   margin-bottom: 12px;
+  transition: .2s ease;
+}
+
+.checkout-item-box:hover {
+  border-color: #bfdbfe;
 }
 
 .checkout-product-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .checkout-product-name {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 16px;
+  color: #0f172a;
+  line-height: 1.4;
 }
 
 .checkout-subtotal {
-  font-weight: bold;
+  font-weight: 800;
+  color: #2563eb;
   white-space: nowrap;
 }
 
+/* ===== QUANTITY ===== */
+
 .quantity-title {
-  margin-top: 12px;
-  font-weight: bold;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
 }
 
 .quantity-control {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-top: 7px;
 }
 
 .quantity-control button {
-  width: 42px;
-  height: 42px;
-  border: none;
-  border-radius: 8px;
-  background: #ff6b00;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #dbeafe;
+  border-radius: 9px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 20px;
+  font-weight: 700;
   cursor: pointer;
+  transition: .2s ease;
+}
+
+.quantity-control button:hover {
+  background: #dbeafe;
+}
+
+.quantity-control button:active {
+  transform: scale(.96);
 }
 
 .quantity-number {
   min-width: 35px;
   text-align: center;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 800;
 }
 
+/* ===== SIZE ===== */
+
 .size-title {
-  margin-top: 12px;
-  font-weight: bold;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
 }
 
 .size-select {
   width: 100%;
+  padding: 12px 13px;
+  margin-top: 7px;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  background: #fff;
+  color: #0f172a;
+  font-size: 14px;
+  outline: none;
+}
+
+.size-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .08);
+}
+
+/* ===== CLEAR CART ===== */
+
+.clear-cart-btn {
+  width: 100%;
   padding: 11px;
-  margin-top: 6px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  margin-top: 8px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fff;
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.clear-cart-btn:hover {
+  background: #fef2f2;
+}
+
+/* ===== TOTAL ===== */
+
+.checkout-total-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 17px;
+  background: #0f172a;
+  border-radius: 13px;
+  color: white;
+}
+
+.checkout-total-label {
   font-size: 15px;
-  box-sizing: border-box;
+  color: #cbd5e1;
+}
+
+.checkout-total-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+}
+
+/* ===== INPUT AREA ===== */
+
+.checkout-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.checkout-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-field.full {
+  grid-column: 1 / -1;
+}
+
+.checkout-field label {
+  margin-bottom: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.checkout-field input,
+.checkout-field select,
+.checkout-field textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  background: #fff;
+  color: #0f172a;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  transition: .2s ease;
+}
+
+.checkout-field input:focus,
+.checkout-field select:focus,
+.checkout-field textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .08);
+}
+
+.checkout-field textarea {
+  min-height: 105px;
+  resize: vertical;
+}
+
+/* ===== DELIVERY INFO ===== */
+
+.delivery-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ===== ORDER BUTTON ===== */
+
+.place-order-btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(37, 99, 235, .18);
+  transition: .2s ease;
+}
+
+.place-order-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.place-order-btn:active {
+  transform: translateY(1px);
+}
+
+/* ===== MESSAGE ===== */
+
+#msg {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* ===== TRUST NOTE ===== */
+
+.checkout-trust {
+  text-align: center;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 18px;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 600px) {
+
+  .checkout-header {
+    padding: 20px 15px;
+  }
+
+  .checkout-header h1 {
+    font-size: 23px;
+  }
+
+  .checkout {
+    width: calc(100% - 20px);
+    margin-top: 15px;
+  }
+
+  .checkout-section {
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .checkout-section-title {
+    font-size: 17px;
+  }
+
+  .checkout-fields {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .checkout-field.full {
+    grid-column: auto;
+  }
+
+  .checkout-product-row {
+    align-items: flex-start;
+  }
+
+  .checkout-product-name {
+    font-size: 15px;
+  }
+
+  .checkout-total-price {
+    font-size: 20px;
+  }
+
 }
 
 </style>
@@ -96,104 +411,221 @@
 <body>
 
 
-<header class="hero">
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="checkout-header">
 
   <h1>YOUR TREND</h1>
 
-  <p>🛍️ Checkout / Order</p>
+  <p>Secure & Easy Checkout</p>
 
 </header>
 
 
+<!-- =========================================
+     CHECKOUT
+========================================= -->
+
 <section class="checkout">
 
-  <h2>🛒 আপনার Order</h2>
 
+  <!-- ===== ORDER SUMMARY ===== -->
 
-  <div
-    id="checkoutItems"
-    class="order-summary">
+  <div class="checkout-section">
+
+    <h2 class="checkout-section-title">
+      <span>🛒</span>
+      আপনার Order
+    </h2>
+
+    <div
+      id="checkoutItems"
+      class="order-summary">
+    </div>
+
+    <button
+      type="button"
+      class="clear-cart-btn"
+      onclick="clearCart()"
+    >
+      Cart খালি করুন
+    </button>
+
+    <div class="checkout-total-box">
+
+      <div class="checkout-total-label">
+        Order Total
+      </div>
+
+      <div class="checkout-total-price">
+        ৳<span id="checkoutTotal">0</span>
+      </div>
+
+    </div>
+
   </div>
 
 
-  <button
-    class="btn"
-    onclick="clearCart()"
-    style="margin-top:10px;"
-  >
-    🗑️ Cart খালি করুন
-  </button>
+  <!-- ===== DELIVERY INFORMATION ===== -->
+
+  <div class="checkout-section">
+
+    <h2 class="checkout-section-title">
+      <span>📦</span>
+      Delivery Information
+    </h2>
 
 
-  <p class="checkout-total">
-
-    মোট:
-    ৳<span id="checkoutTotal">0</span>
-
-  </p>
+    <div class="checkout-fields">
 
 
-  <h2>📦 Delivery Information</h2>
+      <div class="checkout-field">
 
-<input
-  id="name"
-  placeholder="আপনার নাম"
->
+        <label for="name">
+          আপনার নাম
+        </label>
 
-<input
-  id="phone"
-  placeholder="ফোন নম্বর"
->
+        <input
+          id="name"
+          type="text"
+          placeholder="আপনার পূর্ণ নাম"
+        >
 
-<input
-  id="district"
-  placeholder="জেলা"
->
+      </div>
 
-<input
-  id="upazila"
-  placeholder="উপজেলা"
->
 
-<select id="deliveryArea">
+      <div class="checkout-field">
 
-  <option value="70">
-    🏙️ ঢাকার ভিতরে — ৳70
-  </option>
+        <label for="phone">
+          ফোন নম্বর
+        </label>
 
-  <option value="100">
-    🏘️ সাব ঢাকা — ৳100
-  </option>
+        <input
+          id="phone"
+          type="tel"
+          placeholder="01XXXXXXXXX"
+        >
 
-  <option value="120">
-    🌍 ঢাকার বাইরে — ৳120
-  </option>
+      </div>
 
-</select>
 
-<select id="paymentMethod">
+      <div class="checkout-field">
 
-  <option value="Cash on Delivery">
-    💵 Cash on Delivery
-  </option>
+        <label for="district">
+          জেলা
+        </label>
 
-</select>
+        <input
+          id="district"
+          type="text"
+          placeholder="আপনার জেলা"
+        >
 
-<textarea
-  id="address"
-  placeholder="সম্পূর্ণ ঠিকানা"
-></textarea>
+      </div>
 
-<button
-  class="btn"
-  onclick="placeOrder()"
->
-  📲 WhatsApp-এ অর্ডার করুন
-</button>
 
-<p id="msg"></p>
+      <div class="checkout-field">
+
+        <label for="upazila">
+          উপজেলা
+        </label>
+
+        <input
+          id="upazila"
+          type="text"
+          placeholder="আপনার উপজেলা"
+        >
+
+      </div>
+
+
+      <div class="checkout-field full">
+
+        <label for="deliveryArea">
+          Delivery Area
+        </label>
+
+        <select id="deliveryArea">
+
+          <option value="70">
+            ঢাকা শহরের ভিতরে — ৳70
+          </option>
+
+          <option value="100">
+            সাব ঢাকা — ৳100
+          </option>
+
+          <option value="120">
+            ঢাকার বাইরে — ৳120
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="checkout-field full">
+
+        <label for="paymentMethod">
+          Payment Method
+        </label>
+
+        <select id="paymentMethod">
+
+          <option value="Cash on Delivery">
+            Cash on Delivery
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="checkout-field full">
+
+        <label for="address">
+          সম্পূর্ণ ঠিকানা
+        </label>
+
+        <textarea
+          id="address"
+          placeholder="বাড়ি/রোড/গ্রাম/এলাকা সহ সম্পূর্ণ ঠিকানা লিখুন"
+        ></textarea>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="delivery-note">
+      🚚 Cash on Delivery — পণ্য হাতে পাওয়ার সময় মূল্য পরিশোধ করুন।
+    </div>
+
+
+    <button
+      type="button"
+      class="place-order-btn"
+      onclick="placeOrder()"
+    >
+      WhatsApp-এ Order Confirm করুন
+    </button>
+
+
+    <p id="msg"></p>
+
+
+    <div class="checkout-trust">
+      আপনার তথ্য শুধুমাত্র অর্ডার ডেলিভারির প্রয়োজনেই ব্যবহার করা হবে।
+    </div>
+
+  </div>
+
 
 </section>
+
 
 <script type="module" src="checkout.js"></script>
 
