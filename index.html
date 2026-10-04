@@ -28,7 +28,7 @@
     <!-- MENU -->
     <div id="yourTrendMenu">
 
-  <details>
+  <details id="yourTrendMenuDetails">
 
     <summary aria-label="Open Menu">
       <span></span>
@@ -36,17 +36,19 @@
       <span></span>
     </summary>
 
+    <!-- বাইরে টাচ করলে মেনু বন্ধ -->
+    <div
+      class="premium-menu-overlay"
+      onclick="closeYourTrendMenu()"
+    ></div>
 
-    <div class="premium-menu-overlay"></div>
-
-
+    <!-- MENU BOX -->
     <aside class="premium-menu-panel">
 
-
+      <!-- HEADER -->
       <div class="premium-menu-header">
 
         <div>
-
           <div class="premium-menu-brand">
             YOUR TREND
           </div>
@@ -54,26 +56,28 @@
           <div class="premium-menu-subtitle">
             Trusted Fashion & Gadget Store
           </div>
-
         </div>
 
-        <div class="premium-menu-status">
-          ●
-        </div>
+        <!-- CLOSE BUTTON -->
+        <button
+          type="button"
+          class="premium-menu-close"
+          onclick="closeYourTrendMenu()"
+          aria-label="Close Menu"
+        >
+          ×
+        </button>
 
       </div>
 
-
       <div class="premium-menu-divider"></div>
-
 
       <div class="premium-menu-label">
         MENU
       </div>
 
-
+      <!-- MENU LINKS -->
       <nav class="premium-menu-links">
-
 
         <a href="index.html">
           <span class="menu-icon">⌂</span>
@@ -134,10 +138,10 @@
           <span class="menu-arrow">›</span>
         </a>
 
-
       </nav>
 
 
+      <!-- SUPPORT -->
       <div class="premium-menu-bottom">
 
         <div class="menu-support-title">
@@ -157,19 +161,17 @@
 
         </div>
 
-
         <div class="menu-footer-line">
           YOUR TREND • Bangladesh
         </div>
 
       </div>
 
-
     </aside>
 
   </details>
 
-    </div>
+                              </div>
     <!-- LOGO -->
     <div class="yourTrendBrand">
       <img
