@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>About YOUR TREND</title>
+
+<style>
+
+/* =========================================
+   YOUR TREND — ABOUT PAGE
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+  line-height: 1.7;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.top-header {
+  background: #0f172a;
+  color: white;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.12);
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-area img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.logo-text {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================
+   LANGUAGE SWITCH
+========================================= */
+
+.language-switch {
+  display: flex;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 30px;
+  padding: 4px;
+  gap: 3px;
+}
+
+.language-switch button {
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  padding: 7px 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.language-switch button.active {
+  background: #2563eb;
+}
+
+.language-switch button:hover {
+  background: #2563eb;
+}
+
+/* =========================================
+   MAIN
+========================================= */
+
+.about-container {
+  max-width: 900px;
+  margin: 45px auto;
+  padding: 0 20px;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.about-hero {
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e3a8a
+  );
+
+  color: white;
+  border-radius: 20px;
+  padding: 45px 30px;
+  text-align: center;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(15,23,42,0.15);
+}
+
+.about-hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.about-hero p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* =========================================
+   CONTENT CARD
+========================================= */
+
+.about-card {
+  background: white;
+  border-radius: 18px;
+  padding: 35px;
+  box-shadow: 0 5px 25px rgba(15,23,42,0.07);
+  border: 1px solid #e5e7eb;
+}
+
+.about-card h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+.about-card p {
+  font-size: 16px;
+  color: #475569;
+  margin-bottom: 18px;
+}
+
+/* =========================================
+   TRUST BOX
+========================================= */
+
+.trust-box {
+  margin-top: 28px;
+  padding: 22px;
+  border-radius: 14px;
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+}
+
+.trust-box h3 {
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.trust-box p {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   HOME BUTTON
+========================================= */
+
+.home-button-area {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.home-button {
+  display: inline-block;
+  text-decoration: none;
+  background: #2563eb;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.home-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .top-header {
+    padding: 13px 15px;
+  }
+
+  .logo-area img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .language-switch button {
+    padding: 6px 9px;
+    font-size: 12px;
+  }
+
+  .about-container {
+    margin: 25px auto;
+    padding: 0 14px;
+  }
+
+  .about-hero {
+    padding: 35px 20px;
+    border-radius: 16px;
+  }
+
+  .about-hero h1 {
+    font-size: 28px;
+  }
+
+  .about-hero p {
+    font-size: 14px;
+  }
+
+  .about-card {
+    padding: 23px 20px;
+    border-radius: 15px;
+  }
+
+  .about-card h2 {
+    font-size: 21px;
+  }
+
+  .about-card p {
+    font-size: 15px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="top-header">
+
+  <div class="logo-area">
+
+    <img
+      src="images/your-trend-logo.png"
+      alt="YOUR TREND Logo"
+    >
+
+    <div class="logo-text">
+      YOUR TREND
+    </div>
+
+  </div>
+
+
+  <div class="language-switch">
+
+    <button
+      id="englishBtn"
+      class="active"
+      onclick="setLanguage('en')"
+    >
+      English
+    </button>
+
+    <button
+      id="banglaBtn"
+      onclick="setLanguage('bn')"
+    >
+      বাংলা
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main class="about-container">
+
+
+  <!-- HERO -->
+
+  <section class="about-hero">
+
+    <h1 id="pageTitle">
+      About YOUR TREND
+    </h1>
+
+    <p id="pageSubtitle">
+      Trusted Fashion & Gadget Store
+    </p>
+
+  </section>
+
+
+
+  <!-- ABOUT CONTENT -->
+
+  <section class="about-card">
+
+    <h2 id="aboutHeading">
+      Who We Are
+    </h2>
+
+
+    <div id="englishContent">
+
+      <p>
+        Welcome to YOUR TREND — a modern online shopping
+        platform created to make everyday shopping simple,
+        convenient, and reliable.
+      </p>
+
+      <p>
+        At YOUR TREND, we believe online shopping should be
+        more than just choosing a product and placing an order.
+        Customers should have a clear understanding of what
+        they are buying, receive helpful support when they need
+        it, and enjoy a smooth shopping experience from
+        browsing to delivery.
+      </p>
+
+      <p>
+        We bring together a growing collection of fashion,
+        gadgets, bags, accessories, and other trending products
+        in one convenient place. Our goal is to make it easier
+        for customers to discover useful and stylish products
+        without making the shopping process complicated.
+      </p>
+
+      <p>
+        Customer trust is one of the most important parts of
+        YOUR TREND. We aim to provide clear product information,
+        straightforward ordering, transparent delivery
+        information, and responsive customer support.
+      </p>
+
+      <p>
+        We continuously work to improve our products, services,
+        and overall customer experience based on what our
+        customers need.
+      </p>
+
+      <p>
+        YOUR TREND is growing step by step, with a long-term
+        vision of becoming a trusted e-commerce platform where
+        customers can shop with confidence.
+      </p>
+
+      <p>
+        Whether you are looking for something useful for
+        everyday life, a new fashion item, or a trending gadget,
+        YOUR TREND is here to make your online shopping
+        experience easier and better.
+      </p>
+
+    </div>
+
+
+
+    <!-- BANGLA CONTENT -->
+
+    <div
+      id="banglaContent"
+      style="display:none;"
+    >
+
+      <p>
+        YOUR TREND-এ স্বাগতম — একটি আধুনিক অনলাইন শপিং
+        প্ল্যাটফর্ম, যার লক্ষ্য হলো দৈনন্দিন কেনাকাটাকে
+        সহজ, সুবিধাজনক এবং নির্ভরযোগ্য করে তোলা।
+      </p>
+
+      <p>
+        আমরা বিশ্বাস করি, অনলাইন শপিং শুধু একটি পণ্য পছন্দ
+        করে অর্ডার করার বিষয় নয়। একজন customer কী কিনছেন
+        সে সম্পর্কে পরিষ্কার ধারণা পাওয়া, প্রয়োজনের সময়
+        সহযোগিতা পাওয়া এবং পণ্য খোঁজা থেকে শুরু করে
+        ডেলিভারি পর্যন্ত একটি সহজ ও সুন্দর অভিজ্ঞতা পাওয়া
+        অত্যন্ত গুরুত্বপূর্ণ।
+      </p>
+
+      <p>
+        YOUR TREND-এ আমরা fashion, gadgets, bags, accessories
+        এবং বিভিন্ন trending products এক জায়গায় নিয়ে আসার
+        চেষ্টা করি। আমাদের লক্ষ্য হলো customer-এর জন্য
+        প্রয়োজনীয় ও আকর্ষণীয় পণ্য খুঁজে পাওয়া এবং অর্ডার
+        করার প্রক্রিয়াকে সহজ করে তোলা।
+      </p>
+
+      <p>
+        Customer-এর বিশ্বাস YOUR TREND-এর অন্যতম গুরুত্বপূর্ণ
+        বিষয়। আমরা পরিষ্কার product information, সহজ
+        ordering process, স্বচ্ছ delivery information এবং
+        প্রয়োজনের সময় customer support দেওয়ার দিকে গুরুত্ব
+        দিই।
+      </p>
+
+      <p>
+        Customer-এর প্রয়োজন ও অভিজ্ঞতার ভিত্তিতে আমরা
+        আমাদের products, services এবং overall shopping
+        experience নিয়মিত উন্নত করার চেষ্টা করি।
+      </p>
+
+      <p>
+        YOUR TREND ধাপে ধাপে এগিয়ে যাচ্ছে। আমাদের দীর্ঘমেয়াদি
+        লক্ষ্য হলো এমন একটি trusted e-commerce platform
+        তৈরি করা, যেখানে customer আত্মবিশ্বাসের সঙ্গে
+        অনলাইনে কেনাকাটা করতে পারবেন।
+      </p>
+
+      <p>
+        দৈনন্দিন প্রয়োজনের কোনো পণ্য, নতুন fashion item
+        অথবা trending gadget—যাই খুঁজে থাকুন না কেন,
+        YOUR TREND আপনার online shopping experience-কে
+        আরও সহজ ও ভালো করার জন্য কাজ করে যাচ্ছে।
+      </p>
+
+    </div>
+
+
+
+    <!-- TRUST BOX -->
+
+    <div class="trust-box">
+
+      <h3 id="trustTitle">
+        Our Commitment
+      </h3>
+
+      <p id="trustText">
+        We are committed to building a shopping experience
+        based on trust, clarity, convenience, and continuous
+        improvement.
+      </p>
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- HOME BUTTON -->
+
+  <div class="home-button-area">
+
+    <a
+      href="index.html"
+      class="home-button"
+      id="homeButton"
+    >
+      Back to Home
+    </a>
+
+  </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+  <p id="footerText">
+    © 2026 YOUR TREND. All Rights Reserved.
+  </p>
+
+</footer>
+
+
+
+<!-- =========================================
+     LANGUAGE SCRIPT
+========================================= -->
+
+<script>
+
+function setLanguage(language) {
+
+  const englishContent =
+    document.getElementById("englishContent");
+
+  const banglaContent =
+    document.getElementById("banglaContent");
+
+  const englishBtn =
+    document.getElementById("englishBtn");
+
+  const banglaBtn =
+    document.getElementById("banglaBtn");
+
+  const pageTitle =
+    document.getElementById("pageTitle");
+
+  const pageSubtitle =
+    document.getElementById("pageSubtitle");
+
+  const aboutHeading =
+    document.getElementById("aboutHeading");
+
+  const trustTitle =
+    document.getElementById("trustTitle");
+
+  const trustText =
+    document.getElementById("trustText");
+
+  const homeButton =
+    document.getElementById("homeButton");
+
+  const footerText =
+    document.getElementById("footerText");
+
+
+  if (language === "bn") {
+
+    englishContent.style.display = "none";
+    banglaContent.style.display = "block";
+
+    englishBtn.classList.remove("active");
+    banglaBtn.classList.add("active");
+
+    pageTitle.innerText =
+      "YOUR TREND সম্পর্কে";
+
+    pageSubtitle.innerText =
+      "বিশ্বস্ত Fashion & Gadget Store";
+
+    aboutHeading.innerText =
+      "আমাদের সম্পর্কে";
+
+    trustTitle.innerText =
+      "আমাদের অঙ্গীকার";
+
+    trustText.innerText =
+      "বিশ্বাস, স্বচ্ছতা, সুবিধা এবং ক্রমাগত উন্নতির মাধ্যমে একটি নির্ভরযোগ্য shopping experience তৈরি করাই আমাদের লক্ষ্য।";
+
+    homeButton.innerText =
+      "হোম পেজে ফিরে যান";
+
+    footerText.innerText =
+      "© 2026 YOUR TREND. সর্বস্বত্ব সংরক্ষিত।";
+
+    document.documentElement.lang = "bn";
+
+  }
+
+
+  else {
+
+    englishContent.style.display = "block";
+    banglaContent.style.display = "none";
+
+    englishBtn.classList.add("active");
+    banglaBtn.classList.remove("active");
+
+    pageTitle.innerText =
+      "About YOUR TREND";
+
+    pageSubtitle.innerText =
+      "Trusted Fashion & Gadget Store";
+
+    aboutHeading.innerText =
+      "Who We Are";
+
+    trustTitle.innerText =
+      "Our Commitment";
+
+    trustText.innerText =
+      "We are committed to building a shopping experience based on trust, clarity, convenience, and continuous improvement.";
+
+    homeButton.innerText =
+      "Back to Home";
+
+    footerText.innerText =
+      "© 2026 YOUR TREND. All Rights Reserved.";
+
+    document.documentElement.lang = "en";
+
+  }
+
+}
+
+</script>
+
+
+</body>
+
+  </html>
