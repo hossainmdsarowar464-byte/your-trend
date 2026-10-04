@@ -66,9 +66,6 @@ function showProducts(products) {
           p.category === "gadgets" ? "⌚ GADGETS" :
           p.category === "bags" ? "🎒 BAGS" : "✨ PRODUCT"
         }</span>
-<span class="verified-badge">
-  ✓ YOUR TREND Verified
-</span>
         <img class="img" src="${p.image}" alt="${p.name}">
 
         <h3>${p.name}</h3>
