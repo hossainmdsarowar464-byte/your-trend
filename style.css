@@ -2512,10 +2512,13 @@ textarea:focus {
 
   list-style: none !important;
 
-  background: rgba(255,255,255,.10) !important;
-  border: 1px solid rgba(255,255,255,.22) !important;
+  background: rgba(15, 23, 42, 0.95) !important;
+
+  border: 1px solid rgba(255,255,255,.18) !important;
 
   border-radius: 12px !important;
+
+  box-shadow: 0 5px 18px rgba(0,0,0,.25) !important;
 
   cursor: pointer !important;
 }
@@ -2534,7 +2537,6 @@ textarea:focus {
 
   border-radius: 10px !important;
 }
-
 
 /* ===============================
    DARK BACKGROUND
