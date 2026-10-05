@@ -63,18 +63,18 @@ function showProducts(products) {
       <div class="card" onclick="openProduct('${p.id}')">
         <span class="product-badge">${
   String(p.category || "").trim().toLowerCase() === "fashion"
-    ? "👕 FASHION"
+    ? "FASHION"
   : String(p.category || "").trim().toLowerCase() === "gadgets"
-    ? "⌚ GADGETS"
+    ? "GADGETS"
   : String(p.category || "").trim().toLowerCase() === "bags"
-    ? "🎒 BAGS"
+    ? "BAGS"
   : String(p.category || "").trim().toLowerCase() === "kids"
-    ? "🧒 KIDS FASHION"
+    ? "KIDS"
   : String(p.category || "").trim().toLowerCase() === "men"
-    ? "👨 MEN'S FASHION"
+    ? " MEN'S"
   : String(p.category || "").trim().toLowerCase() === "women"
-    ? "👩 WOMEN'S FASHION"
-  : "✨ PRODUCT"
+    ? " WOMEN'S"
+  : " PRODUCT"
 }</span>
         <img class="img" src="${p.image}" alt="${p.name}">
 
@@ -430,18 +430,18 @@ async function loadFirebaseProducts() {
 
   ${
     String(p.category || "").trim().toLowerCase() === "fashion"
-      ? "👕 FASHION"
+      ? "FASHION"
       : String(p.category || "").trim().toLowerCase() === "gadgets"
-      ? "⌚ GADGETS"
+      ? "GADGETS"
       : String(p.category || "").trim().toLowerCase() === "bags"
-      ? "🎒 BAGS"
+      ? "BAGS"
       : String(p.category || "").trim().toLowerCase() === "kids"
-      ? "🧒 KIDS FASHION"
+      ? "KIDS"
       : String(p.category || "").trim().toLowerCase() === "men"
-      ? "👨 MEN'S FASHION"
+      ? "MEN'S"
       : String(p.category || "").trim().toLowerCase() === "women"
-      ? "👩 WOMEN'S FASHION"
-      : "✨ PRODUCT"
+      ? "WOMEN'S"
+      : "PRODUCT"
   }
 
 </span>
