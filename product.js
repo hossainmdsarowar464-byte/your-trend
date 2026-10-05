@@ -193,18 +193,11 @@ function getSelectedSize() {
   const sizeElement =
     document.getElementById("productSize");
 
-  // Product-এ Size না থাকলে
-  if (
-    !product.sizes ||
-    product.sizes.length === 0
-  ) {
-
+  if (!sizeElement) {
     return "প্রযোজ্য নয়";
-
   }
 
-  return sizeElement.value;
-
+  return sizeElement.value || "প্রযোজ্য নয়";
 }
 
 
