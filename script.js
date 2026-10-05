@@ -361,7 +361,10 @@ async function loadFirebaseProducts() {
 
               price:
                 Number(product.price) || 0,
-
+originalPrice:
+  Number(product.originalPrice) ||
+  Number(product.price) ||
+  0,
               image:
                 product.images?.[0] ||
                 product.image ||
@@ -467,10 +470,14 @@ async function loadFirebaseProducts() {
 
 
                 <p>
-                  <b>
-                    ৳${p.price}
-                  </b>
-                </p>
+  <del style="color:#888;font-size:14px;">
+    ৳${p.originalPrice}
+  </del>
+
+  <b style="color:#e11d48;margin-left:6px;">
+    ৳${p.price}
+  </b>
+</p>
 
 
                 <p
