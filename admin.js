@@ -1588,41 +1588,69 @@ async function loadOrders() {
 
 
         if (
-          Array.isArray(
-            order.items
-          )
-        ) {
+  Array.isArray(
+    order.items
+  )
+) {
 
-          order.items.forEach(
-            function(product) {
+  order.items.forEach(
+    function(product) {
 
-              orderItems += `
+      orderItems += `
 
-                <div style="
-                  margin-top:6px;
-                  padding:6px;
-                  background:white;
-                  border-radius:6px;
-                ">
+        <div style="
+          margin-top:6px;
+          padding:8px;
+          background:white;
+          border-radius:6px;
+        ">
 
-                  ${product.name || "Product"}
+          <div>
 
-                  × ${product.quantity || 1}
+            <b>
+              ${product.name || "Product"}
+            </b>
 
-                ${
-  product.size
-    ? " | 📏 Size: " + product.size
-    : order.size
-    ? " | 📏 Size: " + order.size
-    : ""
-                }
+            × ${product.quantity || 1}
 
-                </div>
-
-              `;
-
+            ${
+              product.size
+                ? " | 📏 Size: " + product.size
+                : order.size
+                ? " | 📏 Size: " + order.size
+                : ""
             }
-          );
+
+          </div>
+
+          ${
+            product.id
+              ? `
+                <button
+                  type="button"
+                  class="view-product-btn"
+                  style="
+                    margin-top:6px;
+                    padding:5px 10px;
+                    border:none;
+                    border-radius:5px;
+                    background:#2563eb;
+                    color:white;
+                    cursor:pointer;
+                  "
+                >
+                  👁️ View Product
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+
+      `;
+
+    }
+  );
 
         }
 
