@@ -1197,7 +1197,12 @@ async function saveProduct() {
       .value
       .trim();
 
-
+const originalPriceValue =
+  document
+    .getElementById(
+      "productOriginalPrice"
+    )
+    .value;
   const priceValue =
     document
       .getElementById(
