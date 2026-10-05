@@ -1609,11 +1609,13 @@ async function loadOrders() {
 
                   × ${product.quantity || 1}
 
-                  ${
+                ${
   product.size
     ? " | 📏 Size: " + product.size
+    : order.size
+    ? " | 📏 Size: " + order.size
     : ""
-                  }
+                }
 
                 </div>
 
