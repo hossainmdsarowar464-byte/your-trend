@@ -437,8 +437,13 @@ async function orderSelectedProduct() {
       document.getElementById("deliveryArea").value
     );
 
-  const size =
-    getSelectedSize();
+  const sizeElement =
+  document.getElementById("productSize");
+
+const size =
+  sizeElement
+    ? sizeElement.value
+    : "";
 
   const msg =
     document.getElementById("msg");
