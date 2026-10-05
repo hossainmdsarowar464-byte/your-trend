@@ -126,7 +126,12 @@ document
   .getElementById("productName")
   .innerText = product.name;
 
-
+document
+  .getElementById("productOriginalPrice")
+  .innerText =
+    product.originalPrice
+      ? "৳" + product.originalPrice
+      : "";
 document
   .getElementById("productPrice")
   .innerText = product.price;
