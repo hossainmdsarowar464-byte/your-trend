@@ -1315,7 +1315,7 @@ if (
 
           name:
             name,
-
+originalPrice: originalPrice,
           price:
             price,
 
