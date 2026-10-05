@@ -195,13 +195,16 @@ async function loadFirebaseProducts() {
           name:
             product.name,
 
-          price:
-            Number(product.price) || 0,
+         price:
+  Number(product.price) || 0,
 
-          image:
-            product.images?.[0] ||
-            product.image ||
-            "",
+originalPrice:
+  Number(product.originalPrice) ||
+  Number(product.price) ||
+  0,
+
+image:
+  product.images?.[0] ||
 
           images:
             product.images ||
