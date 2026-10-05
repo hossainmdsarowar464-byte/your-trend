@@ -536,7 +536,8 @@ const size =
 
   const orderItems = [
 
-    {
+    {id:
+  product.id,
 
       name:
         product.name,
