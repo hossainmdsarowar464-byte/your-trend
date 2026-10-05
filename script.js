@@ -103,7 +103,7 @@ function showProducts(products) {
 // =========================
 // FIREBASE PRODUCTS
 // =========================
-async function loadFirebaseProducts() {
+async function loadFirebaseProducts() {console.log("🔥 loadFirebaseProducts started");
 
   try {
 
@@ -169,7 +169,10 @@ async function loadFirebaseProducts() {
     );
 
     const snapshot =
-      await getDocs(firstQuery);
+      await getDocs(firstQuery);console.log(
+  "🔥 Firebase products:",
+  snapshot.docs.length
+);
 
 
     const firebaseList = [];
