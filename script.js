@@ -79,7 +79,14 @@ function showProducts(products) {
         <img class="img" src="${p.image}" alt="${p.name}">
 
         <h3>${p.name}</h3>
-        <p><b>৳${p.price}</b></p>
+        <p>
+  <del style="color:#888;font-size:14px;">
+    ৳${p.originalPrice || p.price}
+  </del>
+  <b style="color:#e11d48;margin-left:6px;">
+    ৳${p.price}
+  </b>
+</p>
 
         <p style="color:${out ? "red" : "green"};font-weight:bold;">
           ${out ? "❌ Out of Stock" : `📦 Stock: ${stock}`}
