@@ -1784,11 +1784,26 @@ async function loadOrders() {
 
       item
   .querySelectorAll(".view-product-btn")
-  .forEach(function(button) {
+  .forEach(function(button, index) {
 
     button.addEventListener("click", function() {
 
-      alert("✅ View Product button কাজ করছে!");
+      const product =
+        order.items[index];
+
+      if (!product || !product.id) {
+
+        alert(
+          "❌ এই Order-এর মধ্যে Product ID নেই।"
+        );
+
+        return;
+
+      }
+
+      window.location.href =
+        "product.html?id=" +
+        encodeURIComponent(product.id);
 
     });
 
