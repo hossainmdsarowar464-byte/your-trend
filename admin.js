@@ -827,9 +827,13 @@ async function loadProducts() {
             </b>
 
             <span>
-              💰 Price:
-              ৳${product.price || 0}
-            </span>
+  💰 Original: 
+  <del>৳${product.originalPrice || product.price || 0}</del>
+</span>
+
+<span>
+  🔥 Sale: ৳${product.price || 0}
+</span>
 
             <span>
               📦 Stock:
