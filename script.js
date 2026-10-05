@@ -202,12 +202,13 @@ originalPrice:
   Number(product.originalPrice) ||
   Number(product.price) ||
   0,
-
-image:
+          image:
   product.images?.[0] ||
+  product.image ||
+  "",
 
-          images:
-            product.images ||
+images:
+       product.images ||
             (
               product.image
                 ? [product.image]
