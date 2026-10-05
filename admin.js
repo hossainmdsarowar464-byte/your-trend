@@ -1610,11 +1610,9 @@ async function loadOrders() {
                   × ${product.quantity || 1}
 
                   ${
-                    product.size &&
-                    product.size !== "প্রযোজ্য নয়"
-                      ? " | Size: " +
-                        product.size
-                      : ""
+  product.size
+    ? " | 📏 Size: " + product.size
+    : ""
                   }
 
                 </div>
