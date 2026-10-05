@@ -608,7 +608,7 @@ async function orderSelectedProduct() {
 
         items:
           orderItems,
-
+size: size,
         productTotal:
           productTotal,
 
@@ -726,15 +726,14 @@ async function orderSelectedProduct() {
       "green";
 
 
-    setTimeout(
-      function() {
+    setTimeout(function () {
 
-        window.location.href =
-          whatsappURL;
+  window.open(
+    whatsappURL,
+    "_blank"
+  );
 
-      },
-      500
-    );
+}, 500);
 
 
   } catch (error) {
