@@ -473,15 +473,10 @@ originalPrice:
 
 
                 <p>
-  <del style="color:#888;font-size:14px;">
-    ৳${p.originalPrice}
-  </del>
-
-  <b style="color:#e11d48;margin-left:6px;">
-    ৳${p.price}
-  </b>
+  Original: ৳${p.originalPrice || "N/A"}
+  <br>
+  Sale: ৳${p.price || "N/A"}
 </p>
-
 
                 <p
                   style="
