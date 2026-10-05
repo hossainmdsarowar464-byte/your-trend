@@ -429,17 +429,23 @@ async function loadFirebaseProducts() {
 
                 <span class="product-badge">
 
-                  ${
-                    p.category === "fashion"
-                      ? "👕 FASHION"
-                      : p.category === "gadgets"
-                      ? "⌚ GADGETS"
-                      : p.category === "bags"
-                      ? "🎒 BAGS"
-                      : "✨ PRODUCT"
-                  }
+  ${
+    String(p.category || "").trim().toLowerCase() === "fashion"
+      ? "👕 FASHION"
+      : String(p.category || "").trim().toLowerCase() === "gadgets"
+      ? "⌚ GADGETS"
+      : String(p.category || "").trim().toLowerCase() === "bags"
+      ? "🎒 BAGS"
+      : String(p.category || "").trim().toLowerCase() === "kids"
+      ? "🧒 KIDS FASHION"
+      : String(p.category || "").trim().toLowerCase() === "men"
+      ? "👨 MEN'S FASHION"
+      : String(p.category || "").trim().toLowerCase() === "women"
+      ? "👩 WOMEN'S FASHION"
+      : "✨ PRODUCT"
+  }
 
-                </span>
+</span>
 
 
                 <img
