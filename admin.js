@@ -1258,6 +1258,9 @@ const originalPrice =
 if (
   !name ||
   priceValue === "" ||
+  originalPriceValue === "" ||
+  !Number.isFinite(originalPrice) ||
+  originalPrice < 0 ||
   !Number.isFinite(price) ||
   price < 0 ||
   stock === "" ||
