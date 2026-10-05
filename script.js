@@ -62,10 +62,14 @@ function showProducts(products) {
     box.innerHTML += `
       <div class="card" onclick="openProduct('${p.id}')">
         <span class="product-badge">${
-          p.category === "fashion" ? "👕 FASHION" :
-          p.category === "gadgets" ? "⌚ GADGETS" :
-          p.category === "bags" ? "🎒 BAGS" : "✨ PRODUCT"
-        }</span>
+  p.category === "fashion" ? " FASHION" :
+  p.category === "gadgets" ? " GADGETS" :
+  p.category === "bags" ? " BAGS" :
+  p.category === "kids" ? " KIDS FASHION" :
+  p.category === "men" ? " MEN'S FASHION" :
+  p.category === "women" ? " WOMEN'S FASHION" :
+  " PRODUCT"
+}</span>
         <img class="img" src="${p.image}" alt="${p.name}">
 
         <h3>${p.name}</h3>
