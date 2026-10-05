@@ -369,8 +369,7 @@ async function loadFirebaseProducts() {
                 ),
 
               category:
-                product.category ||
-                "fashion",
+  String(product.category || "").trim().toLowerCase(),
 
               description:
                 product.description ||
