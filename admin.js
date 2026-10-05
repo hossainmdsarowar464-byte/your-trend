@@ -1352,11 +1352,14 @@ images: uploadedImages,
         ),
         {
 
-          name:
-            name,
+        name:
+  name,
 
-          price:
-            price,
+originalPrice:
+  originalPrice,
+
+price:
+  price,
 
           stock:
             stock,
