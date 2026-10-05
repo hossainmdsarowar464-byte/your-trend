@@ -322,260 +322,275 @@ image:
 
     async function loadMoreProducts() {
 
-      if (!lastVisibleDoc) {
-        return;
-      }
-
-
-      try {
-
-        const nextQuery =
-          query(
-            collection(db, "products"),
-            startAfter(lastVisibleDoc),
-            limit(25)
-          );
-
-
-        const nextSnapshot =
-          await getDocs(nextQuery);
-
-
-        const newProducts = [];
-
-
-        nextSnapshot.docs.forEach(
-          function(productDoc, index) {
-
-            if (index >= 24) return;
-
-
-            const product =
-              productDoc.data();
-
-
-            newProducts.push({
-
-              id:
-                productDoc.id,
-
-              name:
-                product.name,
-
-              price:
-                Number(product.price) || 0,
-originalPrice:
-  Number(product.originalPrice) ||
-  Number(product.price) ||
-  0,
-              image:
-                product.images?.[0] ||
-                product.image ||
-                "",
-
-              images:
-                product.images ||
-                (
-                  product.image
-                    ? [product.image]
-                    : []
-                ),
-
-              category:
-  String(product.category || "").trim().toLowerCase(),
-
-              description:
-                product.description ||
-                "",
-
-              stock:
-                String(
-                  product.stock ?? "0"
-                ).trim(),
-
-              sizes:
-                product.sizes || []
-
-            });
-
-          }
-        );
-
-
-        // নতুন প্রোডাক্ট list-এ যোগ
-
-        list =
-          list.concat(
-            newProducts
-          );
-
-
-        localStorage.setItem(
-          "yourTrendProducts",
-          JSON.stringify(list)
-        );
-
-
-        // =========================
-        // নতুন ২৪টি কার্ড দেখানো
-        // =========================
-
-        newProducts.forEach(
-          function(p) {
-
-            const stock =
-              String(p.stock).trim();
-
-
-            const out =
-              stock === "নেই" ||
-              stock === "0";
-
-
-            box.innerHTML += `
-
-              <div
-                class="card"
-                onclick="openProduct('${p.id}')"
-              >
-
-                <span class="product-badge">
-
-  ${
-    String(p.category || "").trim().toLowerCase() === "fashion"
-      ? "FASHION"
-      : String(p.category || "").trim().toLowerCase() === "gadgets"
-      ? "GADGETS"
-      : String(p.category || "").trim().toLowerCase() === "bags"
-      ? "BAGS"
-      : String(p.category || "").trim().toLowerCase() === "kids"
-      ? "KIDS"
-      : String(p.category || "").trim().toLowerCase() === "men"
-      ? "MEN'S"
-      : String(p.category || "").trim().toLowerCase() === "women"
-      ? "WOMEN'S"
-      : "PRODUCT"
+  if (!lastVisibleDoc) {
+    return;
   }
 
-</span>
+  try {
+
+    const nextQuery =
+      query(
+        collection(db, "products"),
+        startAfter(lastVisibleDoc),
+        limit(25)
+      );
+
+    const nextSnapshot =
+      await getDocs(nextQuery);
+
+    const newProducts = [];
+
+    nextSnapshot.docs.forEach(
+      function(productDoc, index) {
+
+        if (index >= 24) return;
+
+        const product =
+          productDoc.data();
+
+        newProducts.push({
+
+          id:
+            productDoc.id,
+
+          name:
+            product.name || "",
+
+          price:
+            Number(product.price) || 0,
+
+          originalPrice:
+            Number(product.originalPrice) ||
+            Number(product.price) ||
+            0,
+
+          image:
+            product.images?.[0] ||
+            product.image ||
+            "",
+
+          images:
+            product.images ||
+            (
+              product.image
+                ? [product.image]
+                : []
+            ),
+
+          category:
+            String(
+              product.category || ""
+            )
+              .trim()
+              .toLowerCase(),
+
+          description:
+            product.description ||
+            "",
+
+          stock:
+            String(
+              product.stock ?? "0"
+            ).trim(),
+
+          sizes:
+            product.sizes || []
+
+        });
+
+      }
+    );
 
 
-                <img
-                  class="img"
-                  src="${p.image}"
-                  alt="${p.name}"
-                >
+    // নতুন প্রোডাক্ট list-এ যোগ
+
+    list =
+      list.concat(
+        newProducts
+      );
 
 
-                <h3>
-                  ${p.name}
-                </h3>
+    localStorage.setItem(
+      "yourTrendProducts",
+      JSON.stringify(list)
+    );
 
 
-                <p>
-  Original: ৳${p.originalPrice || "N/A"}
-  <br>
-  Sale: ৳${p.price || "N/A"}
-</p>
+    // =========================
+    // নতুন Product Card দেখানো
+    // =========================
 
-                <p
-                  style="
-                    color:${out ? "red" : "green"};
-                    font-weight:bold;
-                  "
-                >
+    newProducts.forEach(
+      function(p) {
 
-                  ${
-                    out
-                      ? "❌ Out of Stock"
-                      : `📦 Stock: ${stock}`
-                  }
+        const stock =
+          String(p.stock).trim();
 
-                </p>
+        const out =
+          stock === "নেই" ||
+          stock === "0";
 
 
-                ${
-                  out
+        box.innerHTML += `
 
-                    ? `
-                      <button
-                        class="btn"
-                        disabled
-                        style="background:#999"
-                      >
-                        ❌ Out of Stock
-                      </button>
-                    `
+          <div
+            class="card"
+            onclick="openProduct('${p.id}')"
+          >
 
-                    : `
-                      <button
-                        class="btn"
-                        onclick="
-                          event.stopPropagation();
-                          addCart('${p.name}')
-                        "
-                      >
-                        🛒 Add to Cart
-                      </button>
-                    `
-                }
+            <span class="product-badge">
 
-              </div>
+              ${
+                String(p.category || "").trim().toLowerCase() === "fashion"
+                  ? "FASHION"
+                  : String(p.category || "").trim().toLowerCase() === "gadgets"
+                  ? "GADGETS"
+                  : String(p.category || "").trim().toLowerCase() === "bags"
+                  ? "BAGS"
+                  : String(p.category || "").trim().toLowerCase() === "kids"
+                  ? "KIDS"
+                  : String(p.category || "").trim().toLowerCase() === "men"
+                  ? "MEN'S"
+                  : String(p.category || "").trim().toLowerCase() === "women"
+                  ? "WOMEN'S"
+                  : "PRODUCT"
+              }
 
-            `;
+            </span>
 
-          }
+
+            <img
+              class="img"
+              src="${p.image}"
+              alt="${p.name}"
+            >
+
+
+            <h3>
+              ${p.name}
+            </h3>
+
+
+            <p>
+
+              <del
+                style="
+                  color:#888;
+                  font-size:14px;
+                "
+              >
+                ৳${p.originalPrice}
+              </del>
+
+              <b
+                style="
+                  color:#e11d48;
+                  margin-left:6px;
+                "
+              >
+                ৳${p.price}
+              </b>
+
+            </p>
+
+
+            <p
+              style="
+                color:${out ? "red" : "green"};
+                font-weight:bold;
+              "
+            >
+
+              ${
+                out
+                  ? "❌ Out of Stock"
+                  : `📦 Stock: ${stock}`
+              }
+
+            </p>
+
+
+            ${
+              out
+
+                ? `
+                  <button
+                    class="btn"
+                    disabled
+                    style="background:#999"
+                  >
+                    ❌ Out of Stock
+                  </button>
+                `
+
+                : `
+                  <button
+                    class="btn"
+                    onclick="
+                      event.stopPropagation();
+                      addCart('${p.name}')
+                    "
+                  >
+                    🛒 Add to Cart
+                  </button>
+                `
+            }
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    // =========================
+    // পরের পেজ আছে কি না
+    // =========================
+
+    if (
+      nextSnapshot.docs.length > 24
+    ) {
+
+      lastVisibleDoc =
+        nextSnapshot.docs[23];
+
+    } else {
+
+      lastVisibleDoc =
+        null;
+
+      const button =
+        document.getElementById(
+          "loadMoreBtn"
         );
 
-
-        // =========================
-        // পরের পেজ আছে কি না
-        // =========================
-
-        if (
-          nextSnapshot.docs.length > 24
-        ) {
-
-          lastVisibleDoc =
-            nextSnapshot.docs[23];
-
-        } else {
-
-          lastVisibleDoc =
-            null;
-
-
-          const button =
-            document.getElementById(
-              "loadMoreBtn"
-            );
-
-
-          if (button) {
-            button.remove();
-          }
-
-        }
-
-
-      } catch (error) {
-
-        console.error(
-          "Load more products error:",
-          error
-        );
-
-
-        alert(
-          "আরও প্রোডাক্ট লোড করা যায়নি।"
-        );
-
+      if (button) {
+        button.remove();
       }
 
     }
 
 
   } catch (error) {
+
+    console.error(
+      "Load more products error:",
+      error
+    );
+
+    alert(
+      "আরও প্রোডাক্ট লোড করা যায়নি।"
+    );
+
+  }
+
+    }
+
+
+
+
+  }catch (error) {
 
     console.error(
       "Firebase products error:",
