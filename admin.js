@@ -1042,7 +1042,8 @@ function editProduct(
     .value =
       product.name || "";
 
-
+document.getElementById("productOriginalPrice").value =
+  product.originalPrice ?? product.price ?? "";
   document
     .getElementById(
       "productPrice"
