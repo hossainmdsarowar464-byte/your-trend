@@ -1780,44 +1780,19 @@ async function loadOrders() {
 
         ordersList.appendChild(
           item
-        );item
-  .querySelectorAll(
-    ".view-product-btn"
-  )
-  .forEach(
-    function(button, index) {
+        );
 
-      button.addEventListener(
-        "click",
-        function() {
+      item
+  .querySelectorAll(".view-product-btn")
+  .forEach(function(button) {
 
-          const product =
-            order.items[index];
+    button.addEventListener("click", function() {
 
-          if (
-            !product ||
-            !product.id
-          ) {
+      alert("✅ View Product button কাজ করছে!");
 
-            alert(
-              "❌ এই Product-এর ID পাওয়া যায়নি।"
-            );
+    });
 
-            return;
-
-          }
-
-          window.location.href =
-            "product.html?id=" +
-            encodeURIComponent(
-              product.id
-            );
-
-        }
-      );
-
-    }
-  );
+  });
 
 
         const statusSelect =
