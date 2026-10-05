@@ -1681,9 +1681,19 @@ async function loadOrders() {
             </span>
 
             <span>
-              💰 Total:
-              ৳${order.total || 0}
-            </span>
+  🛍️ Product Total:
+  ৳${order.productTotal || 0}
+</span>
+
+<span>
+  🚚 Delivery Charge:
+  ৳${order.deliveryCharge || 0}
+</span>
+
+<span>
+  💰 Grand Total:
+  ৳${order.grandTotal || 0}
+</span>
 
             <span>
               🕐 ${orderTime}
