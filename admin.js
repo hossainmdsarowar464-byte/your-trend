@@ -1247,7 +1247,8 @@ const originalPriceValue =
       "saveProductBtn"
     );
 
-
+const originalPrice =
+  Number(originalPriceValue);
   const price =
     Number(priceValue);
 
