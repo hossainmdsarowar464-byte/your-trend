@@ -53,53 +53,139 @@ searchInput.addEventListener(
 // =========================
 
 function showProducts(products) {
+
   box.innerHTML = "";
 
   products.forEach((p) => {
-    const stock = String(p.stock).trim();
-    const out = (stock === "নেই" || stock === "0");
+
+    const stock = String(p.stock ?? "").trim();
+
+    const out =
+      stock === "নেই" ||
+      stock === "0" ||
+      stock.toLowerCase() === "out";
+
+    const category =
+      String(p.category || "")
+        .trim()
+        .toLowerCase();
+
+    let badge = "PRODUCT";
+
+    if (category === "fashion") badge = "FASHION";
+    else if (category === "gadgets") badge = "GADGETS";
+    else if (category === "bags") badge = "BAGS";
+    else if (category === "kids") badge = "KIDS";
+    else if (category === "men") badge = "MEN'S";
+    else if (category === "women") badge = "WOMEN'S";
+
+
+    const originalPrice =
+      p.originalPrice &&
+      Number(p.originalPrice) > Number(p.price)
+        ? p.originalPrice
+        : null;
+
 
     box.innerHTML += `
-      <div class="card" onclick="openProduct('${p.id}')">
-        <span class="product-badge">${
-  String(p.category || "").trim().toLowerCase() === "fashion"
-    ? "FASHION"
-  : String(p.category || "").trim().toLowerCase() === "gadgets"
-    ? "GADGETS"
-  : String(p.category || "").trim().toLowerCase() === "bags"
-    ? "BAGS"
-  : String(p.category || "").trim().toLowerCase() === "kids"
-    ? "KIDS"
-  : String(p.category || "").trim().toLowerCase() === "men"
-    ? " MEN'S"
-  : String(p.category || "").trim().toLowerCase() === "women"
-    ? " WOMEN'S"
-  : " PRODUCT"
-}</span>
-        <img class="img" src="${p.image}" alt="${p.name}">
 
-        <h3>${p.name}</h3>
-        <p>
-  <del style="color:#888;font-size:14px;">
-    ৳${p.originalPrice || p.price}
-  </del>
-  <b style="color:#e11d48;margin-left:6px;">
-    ৳${p.price}
-  </b>
-</p>
+      <div
+        class="card"
+        onclick="openProduct('${p.id}')"
+      >
 
-        <p style="color:${out ? "red" : "green"};font-weight:bold;">
-          ${out ? "❌ Out of Stock" : `📦 Stock: ${stock}`}
-        </p>
+        <!-- CATEGORY BADGE -->
+        <span class="product-badge">
+          ${badge}
+        </span>
 
-        ${
-          out
-            ? `<button class="btn" disabled style="background:#999">❌ Out of Stock</button>`
-            : `<button class="btn" onclick="event.stopPropagation(); addCart('${p.name}')">🛒 Add to Cart</button>`
-        }
-      </div>`;
+
+        <!-- PRODUCT IMAGE -->
+        <div class="product-image-box">
+
+          <img
+            class="img"
+            src="${p.image}"
+            alt="${p.name}"
+            loading="lazy"
+            onerror="this.src='images/placeholder.png'"
+          >
+
+        </div>
+
+
+        <!-- PRODUCT INFO -->
+        <div class="product-card-content">
+
+          <h3>
+            ${p.name}
+          </h3>
+
+
+          <!-- PRICE -->
+          <div class="product-price-row">
+
+            ${
+              originalPrice
+                ? `
+                  <del class="old-price">
+                    ৳${originalPrice}
+                  </del>
+                `
+                : ""
+            }
+
+            <strong class="current-price">
+              ৳${p.price}
+            </strong>
+
+          </div>
+
+
+          <!-- STOCK -->
+          <div
+            class="stock-status ${out ? "stock-out" : "stock-in"}"
+          >
+
+            ${
+              out
+                ? "❌ Out of Stock"
+                : `📦 ${stock ? `Stock: ${stock}` : "In Stock"}`
+            }
+
+          </div>
+
+
+          <!-- BUTTON -->
+          ${
+            out
+              ? `
+                <button
+                  class="btn product-cart-btn out-btn"
+                  disabled
+                >
+                  ❌ Out of Stock
+                </button>
+              `
+              : `
+                <button
+                  class="btn product-cart-btn"
+                  onclick="event.stopPropagation(); addCart('${p.name}')"
+                >
+                  🛒 Add to Cart
+                </button>
+              `
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
   });
-}
+
+      }
 // =========================
 // FIREBASE PRODUCTS
 // =========================
