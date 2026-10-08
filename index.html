@@ -16,7 +16,65 @@
 
 </head>
 
-<body>
+<body><!-- =========================================
+     YOUR TREND — FULL SCREEN WELCOME
+========================================= -->
+
+<div id="yourTrendWelcome">
+
+  <div class="welcome-bg-glow glow-one"></div>
+  <div class="welcome-bg-glow glow-two"></div>
+
+  <div class="welcome-content">
+
+    <!-- 3D STYLE ICONS -->
+    <div class="welcome-visual">
+
+      <div class="welcome-orbit orbit-one"></div>
+      <div class="welcome-orbit orbit-two"></div>
+
+      <div class="welcome-icon-main">
+        🛍️
+      </div>
+
+      <div class="welcome-icon-small icon-star">
+        ✨
+      </div>
+
+      <div class="welcome-icon-small icon-heart">
+        💙
+      </div>
+
+    </div>
+
+
+    <!-- BRAND -->
+    <div class="welcome-brand">
+      YOUR TREND
+    </div>
+
+
+    <h1>
+      Welcome to YOUR TREND
+    </h1>
+
+
+    <p>
+      Discover fashion, gadgets & lifestyle
+      made for your everyday trend.
+    </p>
+
+
+    <div class="welcome-divider"></div>
+
+
+    <span class="welcome-tagline">
+      Trusted Fashion & Gadget Store
+    </span>
+
+  </div>
+
+</div>
 <!-- ===== COMPACT YOUR TREND HEADER ===== -->
 
 <div class="yourTrendHeader">
@@ -613,7 +671,32 @@ function closeYourTrendMenu() {
 }
 </script>
   
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+  const welcome =
+    document.getElementById("yourTrendWelcome");
+
+  if (!welcome) return;
+
+  /* 2 seconds পরে welcome screen চলে যাবে */
+
+  setTimeout(function () {
+
+    welcome.classList.add("welcome-exit");
+
+    /* Animation শেষ হলে পুরোপুরি সরিয়ে দেবে */
+
+    setTimeout(function () {
+
+      welcome.remove();
+
+    }, 750);
+
+  }, 2000);
+
+});
+</script>
 </body>
 
 </html>
