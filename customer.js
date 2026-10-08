@@ -378,9 +378,12 @@ if (signupForm) {
 
         } else {
 
-          alert(
-            "Account creation failed. Please try again."
-          );
+  alert(
+    "Signup Error:\n\n" +
+    error.code +
+    "\n\n" +
+    error.message
+  );
 
         }
 
