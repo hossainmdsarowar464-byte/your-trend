@@ -1,11 +1,9 @@
-/* =====================================================
+/* =========================================
    YOUR TREND — CUSTOMER ACCOUNT SYSTEM
-   Firebase Authentication + Firestore
-===================================================== */
+========================================= */
 
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
   getAuth,
@@ -14,7 +12,8 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
   signOut
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+} from
+  "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
   getFirestore,
@@ -22,37 +21,43 @@ import {
   setDoc,
   getDoc,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+} from
+  "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =====================================================
+/* =========================================
    FIREBASE CONFIG
-===================================================== */
-
-/*
-   এখানে তোমার existing Firebase config বসাতে হবে।
-*/
+========================================= */
 
 const firebaseConfig = {
 
-  apiKey: "YOUR_API_KEY",
+  apiKey:
+    "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
 
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  authDomain:
+    "your-trend.firebaseapp.com",
 
-  projectId: "YOUR_PROJECT_ID",
+  projectId:
+    "your-trend",
 
-  storageBucket: "YOUR_PROJECT.firebasestorage.app",
+  storageBucket:
+    "your-trend.firebasestorage.app",
 
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  messagingSenderId:
+    "775017944976",
 
-  appId: "YOUR_APP_ID"
+  appId:
+    "1:775017944976:web:a19b34b89e6a4285148515",
+
+  measurementId:
+    "G-1T4GM19268"
 
 };
 
 
-/* =====================================================
+/* =========================================
    INITIALIZE FIREBASE
-===================================================== */
+========================================= */
 
 const app =
   initializeApp(firebaseConfig);
@@ -64,223 +69,66 @@ const db =
   getFirestore(app);
 
 
-/* =====================================================
-   CREATE CUSTOMER ACCOUNT
-===================================================== */
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loginForm =
+  document.getElementById("loginForm");
 
 const signupForm =
   document.getElementById("signupForm");
 
+const forgotForm =
+  document.getElementById("forgotForm");
 
-if (signupForm) {
 
-  signupForm.addEventListener(
+/* =========================================
+   LOGIN
+========================================= */
+
+if (loginForm) {
+
+  loginForm.addEventListener(
     "submit",
-    async function (event) {
+    async function (e) {
 
-      event.preventDefault();
-
-
-      const name =
-        document
-          .getElementById("signupName")
-          .value
-          .trim();
-
+      e.preventDefault();
 
       const email =
-        document
-          .getElementById("signupEmail")
-          .value
-          .trim();
-
-
-      const phone =
-        document
-          .getElementById("signupPhone")
-          .value
-          .trim();
-
+        document.getElementById(
+          "loginEmail"
+        ).value.trim();
 
       const password =
-        document
-          .getElementById("signupPassword")
-          .value;
+        document.getElementById(
+          "loginPassword"
+        ).value;
 
 
-      const confirmPassword =
-        document
-          .getElementById("signupConfirmPassword")
-          .value;
-
-
-      /* Password check */
-
-      if (password !== confirmPassword) {
-
-        alert("Passwords do not match.");
-
-        return;
-
-      }
-
-
-      if (password.length < 6) {
+      if (!email || !password) {
 
         alert(
-          "Password must be at least 6 characters."
+          "Please enter your email and password."
         );
 
         return;
-
       }
 
 
       try {
 
         const userCredential =
-          await createUserWithEmailAndPassword(
+          await signInWithEmailAndPassword(
             auth,
             email,
             password
           );
 
 
-        const user =
-          userCredential.user;
-
-
-        /* Save customer profile */
-
-        await setDoc(
-          doc(db, "customers", user.uid),
-          {
-
-            uid: user.uid,
-
-            name: name,
-
-            email: email,
-
-            phone: phone,
-
-            createdAt: serverTimestamp(),
-
-            updatedAt: serverTimestamp()
-
-          }
-        );
-
-
-        alert(
-          "Your YOUR TREND account has been created successfully!"
-        );
-
-
-        /*
-           Account created.
-           Firebase automatically signs
-           the customer in.
-        */
-
-        window.location.href =
-          "customer.html";
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "Signup Error:",
-          error
-        );
-
-
-        if (
-          error.code ===
-          "auth/email-already-in-use"
-        ) {
-
-          alert(
-            "This email is already registered. Please sign in."
-          );
-
-        }
-
-        else if (
-          error.code ===
-          "auth/invalid-email"
-        ) {
-
-          alert(
-            "Please enter a valid email address."
-          );
-
-        }
-
-        else if (
-          error.code ===
-          "auth/weak-password"
-        ) {
-
-          alert(
-            "Please choose a stronger password."
-          );
-
-        }
-
-        else {
-
-          alert(
-            "Account creation failed. Please try again."
-          );
-
-        }
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   CUSTOMER LOGIN
-===================================================== */
-
-const loginForm =
-  document.getElementById("loginForm");
-
-
-if (loginForm) {
-
-  loginForm.addEventListener(
-    "submit",
-    async function (event) {
-
-      event.preventDefault();
-
-
-      const email =
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
-
-
-      const password =
-        document
-          .getElementById("loginPassword")
-          .value;
-
-
-      try {
-
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
+        console.log(
+          "Customer logged in:",
+          userCredential.user.uid
         );
 
 
@@ -292,12 +140,11 @@ if (loginForm) {
         window.location.href =
           "customer.html";
 
-      }
 
-      catch (error) {
+      } catch (error) {
 
         console.error(
-          "Login Error:",
+          "Login error:",
           error
         );
 
@@ -311,20 +158,25 @@ if (loginForm) {
             "Email or password is incorrect."
           );
 
-        }
-
-        else if (
+        } else if (
           error.code ===
-          "auth/invalid-email"
+          "auth/user-not-found"
         ) {
 
           alert(
-            "Please enter a valid email address."
+            "No account found with this email."
           );
 
-        }
+        } else if (
+          error.code ===
+          "auth/wrong-password"
+        ) {
 
-        else {
+          alert(
+            "Incorrect password."
+          );
+
+        } else {
 
           alert(
             "Login failed. Please try again."
@@ -340,28 +192,233 @@ if (loginForm) {
 }
 
 
-/* =====================================================
+/* =========================================
+   SIGN UP
+========================================= */
+
+if (signupForm) {
+
+  signupForm.addEventListener(
+    "submit",
+    async function (e) {
+
+      e.preventDefault();
+
+
+      const name =
+        document.getElementById(
+          "signupName"
+        ).value.trim();
+
+      const email =
+        document.getElementById(
+          "signupEmail"
+        ).value.trim();
+
+      const phone =
+        document.getElementById(
+          "signupPhone"
+        ).value.trim();
+
+      const password =
+        document.getElementById(
+          "signupPassword"
+        ).value;
+
+      const confirmPassword =
+        document.getElementById(
+          "signupConfirmPassword"
+        ).value;
+
+
+      /* -------------------------
+         VALIDATION
+      ------------------------- */
+
+      if (
+        !name ||
+        !email ||
+        !phone ||
+        !password ||
+        !confirmPassword
+      ) {
+
+        alert(
+          "Please fill in all fields."
+        );
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        alert(
+          "Password must be at least 6 characters."
+        );
+
+        return;
+      }
+
+
+      if (
+        password !==
+        confirmPassword
+      ) {
+
+        alert(
+          "Passwords do not match."
+        );
+
+        return;
+      }
+
+
+      try {
+
+        /* -------------------------
+           CREATE FIREBASE USER
+        ------------------------- */
+
+        const userCredential =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+
+        const user =
+          userCredential.user;
+
+
+        /* -------------------------
+           SAVE CUSTOMER PROFILE
+        ------------------------- */
+
+        await setDoc(
+          doc(
+            db,
+            "customers",
+            user.uid
+          ),
+          {
+
+            uid:
+              user.uid,
+
+            name:
+              name,
+
+            email:
+              email,
+
+            phone:
+              phone,
+
+            createdAt:
+              serverTimestamp(),
+
+            updatedAt:
+              serverTimestamp()
+
+          }
+        );
+
+
+        console.log(
+          "Customer profile created:",
+          user.uid
+        );
+
+
+        alert(
+          "YOUR TREND account created successfully!"
+        );
+
+
+        window.location.href =
+          "customer.html";
+
+
+      } catch (error) {
+
+        console.error(
+          "Signup error:",
+          error
+        );
+
+
+        if (
+          error.code ===
+          "auth/email-already-in-use"
+        ) {
+
+          alert(
+            "This email already has an account."
+          );
+
+        } else if (
+          error.code ===
+          "auth/invalid-email"
+        ) {
+
+          alert(
+            "Please enter a valid email address."
+          );
+
+        } else if (
+          error.code ===
+          "auth/weak-password"
+        ) {
+
+          alert(
+            "Password is too weak."
+          );
+
+        } else {
+
+          alert(
+            "Account creation failed. Please try again."
+          );
+
+        }
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================
    FORGOT PASSWORD
-===================================================== */
-
-const forgotForm =
-  document.getElementById("forgotForm");
-
+========================================= */
 
 if (forgotForm) {
 
   forgotForm.addEventListener(
     "submit",
-    async function (event) {
+    async function (e) {
 
-      event.preventDefault();
+      e.preventDefault();
 
 
       const email =
-        document
-          .getElementById("forgotEmail")
-          .value
-          .trim();
+        document.getElementById(
+          "forgotEmail"
+        ).value.trim();
+
+
+      if (!email) {
+
+        alert(
+          "Please enter your email address."
+        );
+
+        return;
+      }
 
 
       try {
@@ -373,25 +430,38 @@ if (forgotForm) {
 
 
         alert(
-          "Password reset instructions have been sent to your email."
+          "Password reset email has been sent."
         );
 
 
-        showLogin();
+        window.location.href =
+          "customer.html";
 
-      }
 
-      catch (error) {
+      } catch (error) {
 
         console.error(
-          "Password Reset Error:",
+          "Password reset error:",
           error
         );
 
 
-        alert(
-          "Unable to send reset email. Please check the email address."
-        );
+        if (
+          error.code ===
+          "auth/user-not-found"
+        ) {
+
+          alert(
+            "No account found with this email."
+          );
+
+        } else {
+
+          alert(
+            "Could not send password reset email."
+          );
+
+        }
 
       }
 
@@ -401,9 +471,9 @@ if (forgotForm) {
 }
 
 
-/* =====================================================
-   AUTH STATE
-===================================================== */
+/* =========================================
+   CHECK LOGIN STATE
+========================================= */
 
 onAuthStateChanged(
   auth,
@@ -412,26 +482,17 @@ onAuthStateChanged(
     if (!user) {
 
       console.log(
-        "No customer is currently signed in."
+        "No customer is logged in."
       );
 
       return;
-
     }
 
 
     console.log(
-      "Customer signed in:",
+      "Logged-in customer:",
       user.uid
     );
-
-
-    /*
-       Customer profile exists in:
-
-       customers
-          └── user.uid
-    */
 
 
     try {
@@ -443,28 +504,27 @@ onAuthStateChanged(
           user.uid
         );
 
-
-      const customerSnapshot =
-        await getDoc(customerRef);
+      const customerSnap =
+        await getDoc(
+          customerRef
+        );
 
 
       if (
-        customerSnapshot.exists()
+        customerSnap.exists()
       ) {
 
         console.log(
           "Customer profile:",
-          customerSnapshot.data()
+          customerSnap.data()
         );
 
       }
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       console.error(
-        "Profile Error:",
+        "Could not load customer profile:",
         error
       );
 
@@ -474,9 +534,9 @@ onAuthStateChanged(
 );
 
 
-/* =====================================================
-   LOGOUT FUNCTION
-===================================================== */
+/* =========================================
+   LOGOUT
+========================================= */
 
 window.logoutCustomer =
   async function () {
@@ -494,13 +554,16 @@ window.logoutCustomer =
       window.location.href =
         "index.html";
 
-    }
 
-    catch (error) {
+    } catch (error) {
 
       console.error(
-        "Logout Error:",
+        "Logout error:",
         error
+      );
+
+      alert(
+        "Logout failed."
       );
 
     }
