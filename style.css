@@ -4480,3 +4480,38 @@ textarea:focus {
   }
 
      }
+/* =========================================
+   YOUR TREND — ACCOUNT BUTTON
+========================================= */
+
+.account-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 10px 16px;
+
+  background: #0f172a;
+  color: #fff;
+
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 5px 15px rgba(15,23,42,.16);
+
+  transition: .25s ease;
+}
+
+.account-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 20px rgba(37,99,235,.25);
+}
