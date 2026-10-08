@@ -16,51 +16,31 @@
 
 </head>
 
-<body><!-- =========================================
-     YOUR TREND — PREMIUM WELCOME CARD
-========================================= -->
+<body><!-- ===== YOUR TREND WELCOME NOTIFICATION ===== -->
+<div id="yourTrendWelcomeToast" class="yt-welcome-toast">
 
-<div id="yourTrendWelcome">
-
-  <div class="welcome-backdrop"></div>
-
-  <div class="welcome-card">
-
-    <!-- CLOSE -->
-    <button
-      class="welcome-close"
-      onclick="closeWelcome()"
-      aria-label="Close"
-    >
-      ×
-    </button>
-
-    <!-- 3D STYLE CAT ICON -->
-    <div class="welcome-cat">
-      <span>🐱</span>
-    </div>
-
-    <!-- BRAND -->
-    <div class="welcome-brand">
-      YOUR TREND
-    </div>
-
-    <h2>
-      Welcome to YOUR TREND
-    </h2>
-
-    <p>
-      Discover trending fashion, gadgets
-      and lifestyle products with ease.
-    </p>
-
-    <div class="welcome-line"></div>
-
-    <small>
-      Trusted Fashion & Gadget Store
-    </small>
-
+  <div class="yt-welcome-icon">
+    <span>🐱</span>
   </div>
+
+  <div class="yt-welcome-text">
+    <div class="yt-welcome-brand">YOUR TREND</div>
+
+    <div class="yt-welcome-title">
+      Welcome to YOUR TREND
+    </div>
+
+    <div class="yt-welcome-message">
+      Discover fashion, gadgets & more.
+    </div>
+  </div>
+
+  <button
+    class="yt-welcome-close"
+    onclick="closeYtWelcome()"
+    aria-label="Close">
+    ×
+  </button>
 
 </div>
 <!-- ===== COMPACT YOUR TREND HEADER ===== -->
@@ -660,42 +640,49 @@ function closeYourTrendMenu() {
 </script>
   
 <script>
+/* =====================================================
+   YOUR TREND — WELCOME NOTIFICATION
+===================================================== */
 
-function closeWelcome() {
+(function () {
 
-  const welcome =
-    document.getElementById("yourTrendWelcome");
+  const toast =
+    document.getElementById("yourTrendWelcomeToast");
 
-  if (!welcome) return;
+  if (!toast) return;
 
-  welcome.classList.add("welcome-hide");
 
+  /* Smooth entrance */
   setTimeout(function () {
 
-    welcome.remove();
+    toast.classList.add("show");
 
-  }, 600);
+  }, 100);
+
+
+  /* Automatically disappear */
+  setTimeout(function () {
+
+    closeYtWelcome();
+
+  }, 2300);
+
+
+})();
+
+
+function closeYtWelcome() {
+
+  const toast =
+    document.getElementById("yourTrendWelcomeToast");
+
+  if (!toast) return;
+
+  toast.classList.remove("show");
+
+  toast.classList.add("hide");
 
 }
-
-
-/* Automatically disappear after 2 seconds */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const welcome =
-    document.getElementById("yourTrendWelcome");
-
-  if (!welcome) return;
-
-  setTimeout(function () {
-
-    closeWelcome();
-
-  }, 2000);
-
-});
-
 </script>
 </body>
 
