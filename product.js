@@ -571,7 +571,7 @@ function goCheckout() {
 
 
 // ======================================
-// DIRECT PRODUCT ORDER
+// DIRECT PRODUCT ORDER — FIXED
 // ======================================
 
 async function orderSelectedProduct() {
@@ -582,13 +582,11 @@ async function orderSelectedProduct() {
       .value
       .trim();
 
-
   const phone =
     document
       .getElementById("phone")
       .value
       .trim();
-
 
   const district =
     document
@@ -596,20 +594,17 @@ async function orderSelectedProduct() {
       .value
       .trim();
 
-
   const upazila =
     document
       .getElementById("upazila")
       .value
       .trim();
 
-
   const address =
     document
       .getElementById("address")
       .value
       .trim();
-
 
   const deliveryCharge =
     Number(
@@ -618,23 +613,16 @@ async function orderSelectedProduct() {
         .value
     );
 
-
   const sizeElement =
-    document.getElementById(
-      "productSize"
-    );
-
+    document.getElementById("productSize");
 
   const size =
     sizeElement
       ? sizeElement.value
       : "";
 
-
   const msg =
-    document.getElementById(
-      "msg"
-    );
+    document.getElementById("msg");
 
 
   // ==================================
@@ -652,11 +640,9 @@ async function orderSelectedProduct() {
     msg.innerText =
       "⚠️ সব তথ্য পূরণ করুন";
 
-    msg.style.color =
-      "red";
+    msg.style.color = "red";
 
     return;
-
   }
 
 
@@ -665,11 +651,9 @@ async function orderSelectedProduct() {
     msg.innerText =
       "⚠️ Product-এর Size নির্বাচন করুন";
 
-    msg.style.color =
-      "red";
+    msg.style.color = "red";
 
     return;
-
   }
 
 
@@ -684,9 +668,7 @@ async function orderSelectedProduct() {
       )
     ) || 0;
 
-
   orderNumber++;
-
 
   localStorage.setItem(
     "yourTrendOrderNumber",
@@ -696,9 +678,7 @@ async function orderSelectedProduct() {
 
   const orderId =
     "YOURTREND-" +
-    String(
-      orderNumber
-    ).padStart(
+    String(orderNumber).padStart(
       4,
       "0"
     );
@@ -720,7 +700,6 @@ async function orderSelectedProduct() {
     Number(product.price) *
     Number(selectedQuantity);
 
-
   const grandTotal =
     productTotal +
     deliveryCharge;
@@ -733,7 +712,6 @@ async function orderSelectedProduct() {
   const orderItems = [
 
     {
-
       id:
         product.id,
 
@@ -756,7 +734,6 @@ async function orderSelectedProduct() {
         product.images?.[0] ||
         product.image ||
         ""
-
     }
 
   ];
@@ -815,6 +792,10 @@ async function orderSelectedProduct() {
     address;
 
 
+  // ==================================
+  // YOUR TREND WHATSAPP NUMBER
+  // ==================================
+
   const whatsappNumber =
     "8801775628710";
 
@@ -829,55 +810,24 @@ async function orderSelectedProduct() {
 
 
   // ==================================
-  // PREPARE WHATSAPP WINDOW
-  // ==================================
-  // Button click-এর সময়ই window খোলা
-  // হচ্ছে, তাই popup blocker-এর
-  // সম্ভাবনা কমে যায়।
-
-  let whatsappWindow = null;
-
-
-  try {
-
-    whatsappWindow =
-      window.open(
-        "",
-        "_blank"
-      );
-
-  } catch (popupError) {
-
-    console.warn(
-      "WhatsApp window prepare error:",
-      popupError
-    );
-
-  }
-
-
-  // ==================================
-  // SAVE TO FIREBASE
+  // SAVE ORDER TO FIREBASE
   // ==================================
 
   try {
 
     msg.innerText =
-      "⏳ Order Save হচ্ছে...";
+      "⏳ আপনার অর্ডারটি প্রসেস হচ্ছে...";
 
     msg.style.color =
       "#ff6b00";
 
 
     // ==================================
-    // MAIN ORDER SAVE
+    // MAIN ORDER
     // ==================================
 
     await addDoc(
-      collection(
-        db,
-        "orders"
-      ),
+      collection(db, "orders"),
       {
 
         orderId:
@@ -932,8 +882,6 @@ async function orderSelectedProduct() {
     // ==================================
     // ORDER TRACKING
     // ==================================
-    // Tracking save ব্যর্থ হলেও মূল
-    // Order সফল থাকবে।
 
     try {
 
@@ -954,32 +902,22 @@ async function orderSelectedProduct() {
         }
       );
 
-
-      console.log(
-        "Order tracking saved successfully"
-      );
-
-
     } catch (trackingError) {
 
       console.error(
-        "Order tracking save error:",
+        "Order tracking error:",
         trackingError
       );
-
-      // এখানে আর throw করা হচ্ছে না।
-      // তাই customer-এর order failed
-      // দেখাবে না।
 
     }
 
 
     // ==================================
-    // ORDER SUCCESS
+    // SUCCESS
     // ==================================
 
     msg.innerText =
-      "✅ Order Save হয়েছে। WhatsApp খোলা হচ্ছে...";
+      "✅ অর্ডার সফল হয়েছে। WhatsApp খোলা হচ্ছে...";
 
     msg.style.color =
       "green";
@@ -988,26 +926,26 @@ async function orderSelectedProduct() {
     // ==================================
     // OPEN WHATSAPP
     // ==================================
+    // Popup window ব্যবহার করা হচ্ছে না।
+    // তাই popup blocker-এর সমস্যা হবে না।
+    //
+    // WhatsApp App ইনস্টল থাকলে:
+    // → WhatsApp App খোলার চেষ্টা করবে
+    //
+    // App না থাকলে:
+    // → Browser-এর WhatsApp page খুলবে
+    //
+    // WhatsApp আগে খোলা থাকার প্রয়োজন নেই।
 
-    if (
-      whatsappWindow &&
-      !whatsappWindow.closed
-    ) {
+    setTimeout(
+      function() {
 
-      whatsappWindow.location.href =
-        whatsappURL;
+        window.location.href =
+          whatsappURL;
 
-
-    } else {
-
-      // যদি browser popup block করে,
-      // তাহলে current page থেকেই WhatsApp
-      // open করার চেষ্টা করবে।
-
-      window.location.href =
-        whatsappURL;
-
-    }
+      },
+      300
+    );
 
 
   } catch (error) {
@@ -1016,30 +954,6 @@ async function orderSelectedProduct() {
       "Direct Order save error:",
       error
     );
-
-
-    // Firebase order save ব্যর্থ হলে
-    // blank WhatsApp window বন্ধ করে দিচ্ছি।
-
-    if (
-      whatsappWindow &&
-      !whatsappWindow.closed
-    ) {
-
-      try {
-
-        whatsappWindow.close();
-
-      } catch (closeError) {
-
-        console.warn(
-          "WhatsApp window close error:",
-          closeError
-        );
-
-      }
-
-    }
 
 
     msg.innerText =
