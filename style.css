@@ -4286,13 +4286,8 @@ textarea:focus {
 }
 
 
-/* =====================================================
-   YOUR TREND — PREMIUM 3D SHOPPING BAG ICON
-===================================================== */
-
 .yt-welcome-icon {
   flex: 0 0 54px;
-
   width: 54px;
   height: 54px;
 
@@ -4300,189 +4295,25 @@ textarea:focus {
   align-items: center;
   justify-content: center;
 
-  position: relative;
-
   border-radius: 17px;
 
-  background:
-    linear-gradient(
-      145deg,
-      #eff6ff,
-      #dbeafe
-    );
+  overflow: hidden;
+
+  background: #eff6ff;
 
   box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.95),
-    0 6px 15px rgba(37,99,235,0.14);
+    inset 0 1px 2px rgba(255,255,255,.9),
+    0 6px 15px rgba(37,99,235,.14);
 }
 
+.yt-welcome-icon img {
+  width: 100%;
+  height: 100%;
 
-/* =========================
-   3D BAG
-========================= */
+  display: block;
 
-.yt-bag-3d {
-  position: relative;
-
-  width: 34px;
-  height: 36px;
-
-  transform:
-    perspective(120px)
-    rotateX(2deg)
-    rotateY(-5deg);
-
-  filter:
-    drop-shadow(
-      0 5px 4px rgba(15,23,42,0.22)
-    );
+  object-fit: cover;
 }
-
-
-/* =========================
-   BAG HANDLE
-========================= */
-
-.yt-bag-handle {
-  position: absolute;
-
-  width: 19px;
-  height: 13px;
-
-  left: 7px;
-  top: 0;
-
-  border: 4px solid #2563eb;
-
-  border-bottom: 0;
-
-  border-radius: 12px 12px 0 0;
-
-  z-index: 1;
-
-  box-shadow:
-    inset 2px 0 2px rgba(255,255,255,0.35);
-}
-
-
-/* =========================
-   BAG BODY
-========================= */
-
-.yt-bag-body {
-  position: absolute;
-
-  left: 2px;
-  top: 8px;
-
-  width: 30px;
-  height: 27px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius:
-    5px 5px 8px 8px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #60a5fa 0%,
-      #2563eb 45%,
-      #1d4ed8 100%
-    );
-
-  box-shadow:
-
-    inset 4px 2px 5px
-    rgba(255,255,255,0.32),
-
-    inset -4px -5px 7px
-    rgba(15,23,42,0.20),
-
-    0 5px 8px
-    rgba(37,99,235,0.28);
-}
-
-
-/* =========================
-   SMALL HIGHLIGHT
-========================= */
-
-.yt-bag-body::before {
-  content: "";
-
-  position: absolute;
-
-  left: 5px;
-  top: 4px;
-
-  width: 10px;
-  height: 15px;
-
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,0.35),
-      transparent
-    );
-
-  transform: rotate(12deg);
-
-  opacity: 0.8;
-}
-
-
-/* =========================
-   YOUR TREND LETTER
-========================= */
-
-.yt-bag-body span {
-  position: relative;
-
-  z-index: 2;
-
-  font-size: 10px;
-
-  font-weight: 900;
-
-  letter-spacing: -0.5px;
-
-  color: white;
-
-  text-shadow:
-    0 2px 2px rgba(15,23,42,0.25);
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 480px) {
-
-  .yt-welcome-icon {
-    flex: 0 0 48px;
-
-    width: 48px;
-    height: 48px;
-
-    border-radius: 14px;
-  }
-
-  .yt-bag-3d {
-    transform:
-      scale(0.88)
-      perspective(120px)
-      rotateX(2deg)
-      rotateY(-5deg);
-  }
-
-            }
-
 /* =========================
    TEXT
 ========================= */
