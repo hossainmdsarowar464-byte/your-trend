@@ -17,60 +17,48 @@
 </head>
 
 <body><!-- =========================================
-     YOUR TREND — FULL SCREEN WELCOME
+     YOUR TREND — PREMIUM WELCOME CARD
 ========================================= -->
 
 <div id="yourTrendWelcome">
 
-  <div class="welcome-bg-glow glow-one"></div>
-  <div class="welcome-bg-glow glow-two"></div>
+  <div class="welcome-backdrop"></div>
 
-  <div class="welcome-content">
+  <div class="welcome-card">
 
-    <!-- 3D STYLE ICONS -->
-    <div class="welcome-visual">
+    <!-- CLOSE -->
+    <button
+      class="welcome-close"
+      onclick="closeWelcome()"
+      aria-label="Close"
+    >
+      ×
+    </button>
 
-      <div class="welcome-orbit orbit-one"></div>
-      <div class="welcome-orbit orbit-two"></div>
-
-      <div class="welcome-icon-main">
-        🛍️
-      </div>
-
-      <div class="welcome-icon-small icon-star">
-        ✨
-      </div>
-
-      <div class="welcome-icon-small icon-heart">
-        💙
-      </div>
-
+    <!-- 3D STYLE CAT ICON -->
+    <div class="welcome-cat">
+      <span>🐱</span>
     </div>
-
 
     <!-- BRAND -->
     <div class="welcome-brand">
       YOUR TREND
     </div>
 
-
-    <h1>
+    <h2>
       Welcome to YOUR TREND
-    </h1>
-
+    </h2>
 
     <p>
-      Discover fashion, gadgets & lifestyle
-      made for your everyday trend.
+      Discover trending fashion, gadgets
+      and lifestyle products with ease.
     </p>
 
+    <div class="welcome-line"></div>
 
-    <div class="welcome-divider"></div>
-
-
-    <span class="welcome-tagline">
+    <small>
       Trusted Fashion & Gadget Store
-    </span>
+    </small>
 
   </div>
 
@@ -672,6 +660,27 @@ function closeYourTrendMenu() {
 </script>
   
 <script>
+
+function closeWelcome() {
+
+  const welcome =
+    document.getElementById("yourTrendWelcome");
+
+  if (!welcome) return;
+
+  welcome.classList.add("welcome-hide");
+
+  setTimeout(function () {
+
+    welcome.remove();
+
+  }, 600);
+
+}
+
+
+/* Automatically disappear after 2 seconds */
+
 document.addEventListener("DOMContentLoaded", function () {
 
   const welcome =
@@ -679,23 +688,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!welcome) return;
 
-  /* 2 seconds পরে welcome screen চলে যাবে */
-
   setTimeout(function () {
 
-    welcome.classList.add("welcome-exit");
-
-    /* Animation শেষ হলে পুরোপুরি সরিয়ে দেবে */
-
-    setTimeout(function () {
-
-      welcome.remove();
-
-    }, 750);
+    closeWelcome();
 
   }, 2000);
 
 });
+
 </script>
 </body>
 
