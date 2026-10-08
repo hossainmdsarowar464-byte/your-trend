@@ -133,7 +133,7 @@ if (loginForm) {
 
 
         alert("Welcome back to YOUR TREND!");
-
+window.location.href = "account.html";
 
       } catch (error) {
 
