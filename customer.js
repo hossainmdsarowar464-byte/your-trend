@@ -132,13 +132,7 @@ if (loginForm) {
         );
 
 
-        alert(
-          "Welcome back to YOUR TREND!"
-        );
-
-
-        window.location.href =
-          "customer.html";
+        alert("Welcome back to YOUR TREND!");
 
 
       } catch (error) {
