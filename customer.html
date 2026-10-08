@@ -1,1 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>YOUR TREND — Account</title>
+
+  <meta
+    name="theme-color"
+    content="#0f172a">
+
+  <link
+    rel="stylesheet"
+    href="style.css?v=6">
+
+  <style>
+
+    /* =====================================================
+       YOUR TREND — CUSTOMER ACCOUNT
+       PREMIUM AUTHENTICATION PAGE
+    ===================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(37, 99, 235, 0.10),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 85%,
+          rgba(37, 99, 235, 0.08),
+          transparent 28%
+        ),
+        #f8fafc;
+
+      color: #0f172a;
+    }
+
+
+    /* =====================================================
+       PAGE
+    ===================================================== */
+
+    .yt-account-page {
+
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px 16px;
+    }
+
+
+    /* =====================================================
+       MAIN CONTAINER
+    ===================================================== */
+
+    .yt-account-shell {
+
+      width: 100%;
+      max-width: 1040px;
+
+      min-height: 650px;
+
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+
+      overflow: hidden;
+
+      background: rgba(255,255,255,0.96);
+
+      border: 1px solid #e2e8f0;
+
+      border-radius: 28px;
+
+      box-shadow:
+        0 30px 70px rgba(15,23,42,0.12),
+        0 8px 25px rgba(37,99,235,0.06);
+    }
+
+
+    /* =====================================================
+       BRAND SIDE
+    ===================================================== */
+
+    .yt-account-brand {
+
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 50px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      background:
+        radial-gradient(
+          circle at 20% 10%,
+          rgba(96,165,250,0.30),
+          transparent 30%
+        ),
+        linear-gradient(
+          145deg,
+          #0f172a 0%,
+          #172554 55%,
+          #1d4ed8 100%
+        );
+
+      color: white;
+    }
+
+
+    .yt-account-brand::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 260px;
+      height: 260px;
+
+      border-radius: 50%;
+
+      background: rgba(96,165,250,0.12);
+
+      right: -100px;
+      top: -100px;
+    }
+
+
+    .yt-account-brand::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 190px;
+      height: 190px;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,0.05);
+
+      left: -80px;
+      bottom: -70px;
+    }
+
+
+    .yt-brand-content {
+      position: relative;
+      z-index: 2;
+    }
+
+
+    /* =====================================================
+       LOGO
+    ===================================================== */
+
+    .yt-account-logo {
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      margin-bottom: 60px;
+    }
+
+
+    .yt-account-logo-mark {
+
+      width: 48px;
+      height: 48px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #60a5fa,
+          #2563eb
+        );
+
+      font-size: 18px;
+
+      font-weight: 900;
+
+      box-shadow:
+        0 10px 25px rgba(37,99,235,0.35),
+        inset 0 1px 1px rgba(255,255,255,0.35);
+    }
+
+
+    .yt-account-logo-text {
+
+      font-size: 19px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.4px;
+    }
+
+
+    .yt-account-logo-sub {
+
+      margin-top: 2px;
+
+      font-size: 10px;
+
+      color: #bfdbfe;
+
+      letter-spacing: 1px;
+    }
+
+
+    /* =====================================================
+       BRAND HEADING
+    ===================================================== */
+
+    .yt-account-brand h1 {
+
+      max-width: 420px;
+
+      margin: 0 0 18px;
+
+      font-size: clamp(30px, 4vw, 48px);
+
+      line-height: 1.08;
+
+      letter-spacing: -1.5px;
+    }
+
+
+    .yt-account-brand p {
+
+      max-width: 410px;
+
+      margin: 0;
+
+      color: #cbd5e1;
+
+      font-size: 14px;
+
+      line-height: 1.75;
+    }
+
+
+    /* =====================================================
+       TRUST ITEMS
+    ===================================================== */
+
+    .yt-account-benefits {
+
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+
+      gap: 12px;
+    }
+
+
+    .yt-benefit {
+
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      color: #e2e8f0;
+
+      font-size: 12px;
+    }
+
+
+    .yt-benefit-icon {
+
+      width: 32px;
+      height: 32px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 10px;
+
+      background: rgba(255,255,255,0.10);
+
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+
+    /* =====================================================
+       AUTH SIDE
+    ===================================================== */
+
+    .yt-auth-side {
+
+      padding: 48px 52px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .yt-auth-content {
+
+      width: 100%;
+      max-width: 410px;
+    }
+
+
+    .yt-auth-header {
+
+      margin-bottom: 28px;
+    }
+
+
+    .yt-auth-label {
+
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      margin-bottom: 12px;
+
+      color: #2563eb;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.4px;
+
+      text-transform: uppercase;
+    }
+
+
+    .yt-auth-label::before {
+
+      content: "";
+
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: #2563eb;
+
+      box-shadow:
+        0 0 0 4px rgba(37,99,235,0.10);
+    }
+
+
+    .yt-auth-header h2 {
+
+      margin: 0 0 8px;
+
+      font-size: 30px;
+
+      letter-spacing: -0.8px;
+
+      color: #0f172a;
+    }
+
+
+    .yt-auth-header p {
+
+      margin: 0;
+
+      color: #64748b;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       AUTH FORMS
+    ===================================================== */
+
+    .yt-auth-form {
+
+      display: none;
+    }
+
+
+    .yt-auth-form.active {
+
+      display: block;
+
+      animation:
+        ytAuthFade 0.3s ease;
+    }
+
+
+    @keyframes ytAuthFade {
+
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+    }
+
+
+    /* =====================================================
+       INPUT
+    ===================================================== */
+
+    .yt-field {
+
+      margin-bottom: 17px;
+    }
+
+
+    .yt-field label {
+
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #334155;
+
+      font-size: 12px;
+
+      font-weight: 700;
+    }
+
+
+    .yt-input-wrap {
+
+      position: relative;
+    }
+
+
+    .yt-input-icon {
+
+      position: absolute;
+
+      left: 14px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      font-size: 15px;
+
+      opacity: 0.65;
+
+      pointer-events: none;
+    }
+
+
+    .yt-field input {
+
+      width: 100%;
+
+      height: 48px;
+
+      padding:
+        0 14px 0 42px;
+
+      border: 1px solid #e2e8f0;
+
+      border-radius: 13px;
+
+      outline: none;
+
+      background: #f8fafc;
+
+      color: #0f172a;
+
+      font-size: 13px;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+
+    .yt-field input:focus {
+
+      background: white;
+
+      border-color: #2563eb;
+
+      box-shadow:
+        0 0 0 4px rgba(37,99,235,0.09);
+    }
+
+
+    .yt-field input::placeholder {
+
+      color: #94a3b8;
+    }
+
+
+    /* =====================================================
+       PASSWORD TOGGLE
+    ===================================================== */
+
+    .yt-password-toggle {
+
+      position: absolute;
+
+      right: 12px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      border: none;
+
+      background: transparent;
+
+      color: #64748b;
+
+      cursor: pointer;
+
+      font-size: 13px;
+
+      padding: 5px;
+    }
+
+
+    /* =====================================================
+       FORM OPTIONS
+    ===================================================== */
+
+    .yt-form-options {
+
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 3px 0 20px;
+    }
+
+
+    .yt-remember {
+
+      display: flex;
+      align-items: center;
+
+      gap: 7px;
+
+      font-size: 11px;
+
+      color: #64748b;
+    }
+
+
+    .yt-remember input {
+
+      accent-color: #2563eb;
+    }
+
+
+    .yt-forgot {
+
+      border: none;
+
+      background: transparent;
+
+      color: #2563eb;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    /* =====================================================
+       PRIMARY BUTTON
+    ===================================================== */
+
+    .yt-primary-btn {
+
+      width: 100%;
+
+      height: 49px;
+
+      border: none;
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #1d4ed8
+        );
+
+      color: white;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      letter-spacing: .2px;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 10px 22px rgba(37,99,235,0.20);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+    }
+
+
+    .yt-primary-btn:hover {
+
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 13px 27px rgba(37,99,235,0.27);
+    }
+
+
+    .yt-primary-btn:active {
+
+      transform: translateY(0);
+    }
+
+
+    /* =====================================================
+       DIVIDER
+    ===================================================== */
+
+    .yt-divider {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      margin: 22px 0;
+    }
+
+
+    .yt-divider::before,
+    .yt-divider::after {
+
+      content: "";
+
+      flex: 1;
+
+      height: 1px;
+
+      background: #e2e8f0;
+    }
+
+
+    .yt-divider span {
+
+      color: #94a3b8;
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      letter-spacing: 1px;
+    }
+
+
+    /* =====================================================
+       SECONDARY BUTTON
+    ===================================================== */
+
+    .yt-secondary-btn {
+
+      width: 100%;
+
+      height: 47px;
+
+      border: 1px solid #dbe3ef;
+
+      border-radius: 13px;
+
+      background: white;
+
+      color: #0f172a;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        background .2s ease,
+        border-color .2s ease;
+    }
+
+
+    .yt-secondary-btn:hover {
+
+      background: #f8fafc;
+
+      border-color: #bfdbfe;
+    }
+
+
+    /* =====================================================
+       SWITCH TEXT
+    ===================================================== */
+
+    .yt-switch {
+
+      margin-top: 22px;
+
+      text-align: center;
+
+      color: #64748b;
+
+      font-size: 11px;
+    }
+
+
+    .yt-switch button {
+
+      border: none;
+
+      background: transparent;
+
+      color: #2563eb;
+
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+
+    /* =====================================================
+       SECURITY NOTE
+    ===================================================== */
+
+    .yt-security-note {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 6px;
+
+      margin-top: 22px;
+
+      color: #94a3b8;
+
+      font-size: 10px;
+    }
+
+
+    /* =====================================================
+       BACK TO STORE
+    ===================================================== */
+
+    .yt-back-store {
+
+      position: fixed;
+
+      top: 18px;
+      left: 18px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      padding: 9px 13px;
+
+      border-radius: 10px;
+
+      background: rgba(255,255,255,0.92);
+
+      border: 1px solid #e2e8f0;
+
+      color: #334155;
+
+      text-decoration: none;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      box-shadow:
+        0 5px 15px rgba(15,23,42,0.07);
+
+      z-index: 20;
+
+      backdrop-filter: blur(10px);
+    }
+
+
+    .yt-back-store:hover {
+
+      color: #2563eb;
+
+      border-color: #bfdbfe;
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 800px) {
+
+      .yt-account-page {
+
+        padding: 70px 12px 20px;
+      }
+
+
+      .yt-account-shell {
+
+        grid-template-columns: 1fr;
+
+        min-height: auto;
+
+        border-radius: 22px;
+      }
+
+
+      .yt-account-brand {
+
+        min-height: 300px;
+
+        padding: 30px;
+      }
+
+
+      .yt-account-logo {
+
+        margin-bottom: 35px;
+      }
+
+
+      .yt-account-brand h1 {
+
+        font-size: 31px;
+      }
+
+
+      .yt-account-brand p {
+
+        font-size: 12px;
+      }
+
+
+      .yt-account-benefits {
+
+        display: none;
+      }
+
+
+      .yt-auth-side {
+
+        padding: 34px 24px 38px;
+      }
+    }
+
+
+    @media (max-width: 420px) {
+
+      .yt-account-page {
+
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+
+      .yt-account-brand {
+
+        padding: 25px 22px;
+      }
+
+
+      .yt-auth-side {
+
+        padding:
+          30px 18px 32px;
+      }
+
+
+      .yt-auth-header h2 {
+
+        font-size: 26px;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       BACK TO STORE
+  ===================================================== -->
+
+  <a
+    href="index.html"
+    class="yt-back-store">
+
+    ← Back to Store
+
+  </a>
+
+
+  <!-- =====================================================
+       ACCOUNT PAGE
+  ===================================================== -->
+
+  <main class="yt-account-page">
+
+    <section class="yt-account-shell">
+
+
+      <!-- =================================================
+           LEFT BRAND PANEL
+      ================================================= -->
+
+      <div class="yt-account-brand">
+
+        <div class="yt-brand-content">
+
+
+          <!-- LOGO -->
+
+          <div class="yt-account-logo">
+
+            <div class="yt-account-logo-mark">
+              YT
+            </div>
+
+            <div>
+
+              <div class="yt-account-logo-text">
+                YOUR TREND
+              </div>
+
+              <div class="yt-account-logo-sub">
+                TRUSTED FASHION & GADGET STORE
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- HEADING -->
+
+          <h1>
+            Your style.<br>
+            Your account.
+          </h1>
+
+
+          <p>
+            Create your YOUR TREND account to keep
+            your orders, wishlist, addresses and
+            shopping experience together in one place.
+          </p>
+
+        </div>
+
+
+        <!-- BENEFITS -->
+
+        <div class="yt-account-benefits">
+
+          <div class="yt-benefit">
+
+            <div class="yt-benefit-icon">
+              ✓
+            </div>
+
+            <span>
+              Track your orders easily
+            </span>
+
+          </div>
+
+
+          <div class="yt-benefit">
+
+            <div class="yt-benefit-icon">
+              ♡
+            </div>
+
+            <span>
+              Save products you love
+            </span>
+
+          </div>
+
+
+          <div class="yt-benefit">
+
+            <div class="yt-benefit-icon">
+              ◈
+            </div>
+
+            <span>
+              Keep your shopping details secure
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           RIGHT AUTH PANEL
+      ================================================= -->
+
+      <div class="yt-auth-side">
+
+        <div class="yt-auth-content">
+
+
+          <!-- =================================================
+               LOGIN FORM
+          ================================================= -->
+
+          <div
+            id="ytLoginForm"
+            class="yt-auth-form active">
+
+            <div class="yt-auth-header">
+
+              <div class="yt-auth-label">
+                Customer Account
+              </div>
+
+              <h2>
+                Welcome back
+              </h2>
+
+              <p>
+                Sign in to continue your YOUR TREND
+                shopping experience.
+              </p>
+
+            </div>
+
+
+            <form id="loginForm">
+
+
+              <!-- EMAIL -->
+
+              <div class="yt-field">
+
+                <label>
+                  Email address
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    ✉
+                  </span>
+
+                  <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required>
+
+                </div>
+
+              </div>
+
+
+              <!-- PASSWORD -->
+
+              <div class="yt-field">
+
+                <label>
+                  Password
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    •
+                  </span>
+
+                  <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required>
+
+                  <button
+                    type="button"
+                    class="yt-password-toggle"
+                    onclick="togglePassword('loginPassword', this)">
+
+                    Show
+
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="yt-form-options">
+
+                <label class="yt-remember">
+
+                  <input
+                    type="checkbox"
+                    id="rememberMe">
+
+                  Remember me
+
+                </label>
+
+
+                <button
+                  type="button"
+                  class="yt-forgot"
+                  onclick="showForgotPassword()">
+
+                  Forgot password?
+
+                </button>
+
+              </div>
+
+
+              <button
+                type="submit"
+                class="yt-primary-btn">
+
+                Sign In
+
+              </button>
+
+
+            </form>
+
+
+            <div class="yt-divider">
+
+              <span>
+                NEW TO YOUR TREND?
+              </span>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="yt-secondary-btn"
+              onclick="showSignup()">
+
+              Create a New Account
+
+            </button>
+
+
+            <div class="yt-security-note">
+
+              🔒 Secure customer authentication
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               SIGN UP FORM
+          ================================================= -->
+
+          <div
+            id="ytSignupForm"
+            class="yt-auth-form">
+
+            <div class="yt-auth-header">
+
+              <div class="yt-auth-label">
+                Join YOUR TREND
+              </div>
+
+              <h2>
+                Create account
+              </h2>
+
+              <p>
+                Set up your account and make your
+                shopping experience easier.
+              </p>
+
+            </div>
+
+
+            <form id="signupForm">
+
+
+              <!-- NAME -->
+
+              <div class="yt-field">
+
+                <label>
+                  Full name
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    ♙
+                  </span>
+
+                  <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Your full name"
+                    autocomplete="name"
+                    required>
+
+                </div>
+
+              </div>
+
+
+              <!-- EMAIL -->
+
+              <div class="yt-field">
+
+                <label>
+                  Email address
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    ✉
+                  </span>
+
+                  <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required>
+
+                </div>
+
+              </div>
+
+
+              <!-- PHONE -->
+
+              <div class="yt-field">
+
+                <label>
+                  Phone number
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    ☎
+                  </span>
+
+                  <input
+                    type="tel"
+                    id="signupPhone"
+                    placeholder="01XXXXXXXXX"
+                    autocomplete="tel"
+                    required>
+
+                </div>
+
+              </div>
+
+
+              <!-- PASSWORD -->
+
+              <div class="yt-field">
+
+                <label>
+                  Password
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    •
+                  </span>
+
+                  <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    required>
+
+                  <button
+                    type="button"
+                    class="yt-password-toggle"
+                    onclick="togglePassword('signupPassword', this)">
+
+                    Show
+
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <!-- CONFIRM PASSWORD -->
+
+              <div class="yt-field">
+
+                <label>
+                  Confirm password
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    •
+                  </span>
+
+                  <input
+                    type="password"
+                    id="signupConfirmPassword"
+                    placeholder="Confirm your password"
+                    autocomplete="new-password"
+                    required>
+
+                </div>
+
+              </div>
+
+
+              <button
+                type="submit"
+                class="yt-primary-btn">
+
+                Create Account
+
+              </button>
+
+
+            </form>
+
+
+            <div class="yt-switch">
+
+              Already have an account?
+
+              <button
+                type="button"
+                onclick="showLogin()">
+
+                Sign in
+
+              </button>
+
+            </div>
+
+
+            <div class="yt-security-note">
+
+              🔒 Your account information is protected
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               FORGOT PASSWORD
+          ================================================= -->
+
+          <div
+            id="ytForgotForm"
+            class="yt-auth-form">
+
+            <div class="yt-auth-header">
+
+              <div class="yt-auth-label">
+                Account Recovery
+              </div>
+
+              <h2>
+                Reset password
+              </h2>
+
+              <p>
+                Enter your email and we'll send you
+                instructions to reset your password.
+              </p>
+
+            </div>
+
+
+            <form id="forgotForm">
+
+
+              <div class="yt-field">
+
+                <label>
+                  Email address
+                </label>
+
+                <div class="yt-input-wrap">
+
+                  <span class="yt-input-icon">
+                    ✉
+                  </span>
+
+                  <input
+                    type="email"
+                    id="forgotEmail"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required>
+
+                </div>
+
+              </div>
+
+
+              <button
+                type="submit"
+                class="yt-primary-btn">
+
+                Send Reset Link
+
+              </button>
+
+
+            </form>
+
+
+            <div class="yt-switch">
+
+              Remember your password?
+
+              <button
+                type="button"
+                onclick="showLogin()">
+
+                Back to Sign In
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       CUSTOMER JAVASCRIPT
+  ===================================================== -->
+
+  <script src="customer.js?v=1"></script>
+
+
+  <!-- =====================================================
+       UI FUNCTIONS
+  ===================================================== -->
+
+  <script>
+
+    function showLogin() {
+
+      document
+        .getElementById("ytLoginForm")
+        .classList.add("active");
+
+      document
+        .getElementById("ytSignupForm")
+        .classList.remove("active");
+
+      document
+        .getElementById("ytForgotForm")
+        .classList.remove("active");
+
+    }
+
+
+    function showSignup() {
+
+      document
+        .getElementById("ytLoginForm")
+        .classList.remove("active");
+
+      document
+        .getElementById("ytSignupForm")
+        .classList.add("active");
+
+      document
+        .getElementById("ytForgotForm")
+        .classList.remove("active");
+
+    }
+
+
+    function showForgotPassword() {
+
+      document
+        .getElementById("ytLoginForm")
+        .classList.remove("active");
+
+      document
+        .getElementById("ytSignupForm")
+        .classList.remove("active");
+
+      document
+        .getElementById("ytForgotForm")
+        .classList.add("active");
+
+    }
+
+
+    function togglePassword(id, button) {
+
+      const input =
+        document.getElementById(id);
+
+      if (!input) return;
+
+
+      if (input.type === "password") {
+
+        input.type = "text";
+
+        button.textContent = "Hide";
+
+      } else {
+
+        input.type = "password";
+
+        button.textContent = "Show";
+
+      }
+
+    }
+
+  </script>
+
+
+</body>
+
+  </html>
