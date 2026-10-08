@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <title>My Account | YOUR TREND</title>
+
+  <link rel="stylesheet" href="style.css?v=6">
+
+  <style>
+    :root {
+      --navy: #0f172a;
+      --blue: #2563eb;
+      --light: #f8fafc;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--light);
+      color: var(--navy);
+      font-family: Arial, sans-serif;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .account-header {
+      background: var(--navy);
+      color: white;
+      padding: 19px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+
+    .brand span { color: #60a5fa; }
+
+    .header-link {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .account-container {
+      width: min(1100px, 92%);
+      margin: 30px auto;
+    }
+
+    .welcome {
+      background: linear-gradient(125deg, #0f172a, #1e40af);
+      color: white;
+      padding: 28px;
+      border-radius: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .12);
+    }
+
+    .welcome-label {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #bfdbfe;
+      font-weight: 700;
+    }
+
+    .welcome h1 {
+      margin: 10px 0;
+      font-size: clamp(25px, 5vw, 34px);
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #dbeafe;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.5fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 5px 18px rgba(15, 23, 42, .035);
+      min-width: 0;
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin: 0 0 20px;
+    }
+
+    .profile-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      background: #dbeafe;
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 29px;
+      margin-bottom: 15px;
+    }
+
+    .profile-name {
+      font-size: 20px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-email {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .info-row {
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .info-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .dashboard-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .action-link {
+      padding: 12px 10px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .action-link:hover { border-color: var(--blue); }
+
+    .primary-button {
+      border: none;
+      background: var(--blue);
+      color: white;
+      font-weight: 700;
+      border-radius: 11px;
+      padding: 13px 16px;
+      cursor: pointer;
+    }
+
+    .logout-button {
+      width: 100%;
+      margin-top: 14px;
+      background: #fff1f2;
+      color: #be123c;
+      border: 1px solid #ffe4e6;
+      padding: 13px;
+      border-radius: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .orders-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .orders-heading h2 { margin-bottom: 0; }
+
+    .order-count {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .notice {
+      padding: 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 18px;
+    }
+
+    .order-card {
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .order-id {
+      font-size: 14px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      background: #fef3c7;
+      color: #92400e;
+      border-radius: 20px;
+      padding: 6px 9px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .order-details {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      margin-top: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .order-total {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-top: 8px;
+    }
+
+    .loading {
+      color: var(--muted);
+      text-align: center;
+      padding: 25px 8px;
+      font-size: 14px;
+    }
+
+    .account-footer {
+      text-align: center;
+      padding: 28px 15px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .account-container {
+        width: 92%;
+        margin: 20px auto;
+      }
+
+      .dashboard-grid { grid-template-columns: 1fr; }
+
+      .welcome {
+        padding: 23px;
+        border-radius: 18px;
+      }
+
+      .panel {
+        padding: 18px;
+        border-radius: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="account-header">
+    <div class="brand">YOUR <span>TREND</span></div>
+    <a class="header-link" href="index.html">← Back to Store</a>
+  </header>
+
+  <main class="account-container">
+    <section class="welcome">
+      <div class="welcome-label">YOUR PERSONAL SPACE</div>
+      <h1>Welcome, <span id="welcomeName">Customer</span>!</h1>
+      <p>Manage your profile and keep track of your YOUR TREND orders in one place.</p>
+    </section>
+
+    <div class="dashboard-grid">
+      <section class="panel">
+        <h2>My Profile</h2>
+
+        <div class="profile-avatar">👤</div>
+        <div class="profile-name" id="profileName">Loading...</div>
+        <div class="profile-email" id="profileEmail">Loading account...</div>
+
+        <div class="info-row">
+          <div class="info-label">Full Name</div>
+          <div class="info-value" id="profileFullName">—</div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-label">Phone Number</div>
+          <div class="info-value" id="profilePhone">Not added</div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-label">Account Status</div>
+          <div class="info-value">✓ Signed in</div>
+        </div>
+
+        <div class="dashboard-actions">
+          <a class="action-link" href="index.html">🛍 Shop Now</a>
+          <a class="action-link" href="index.html#products">Explore Products</a>
+        </div>
+
+        <button class="logout-button" id="logoutButton">
+          ↪ Sign Out
+        </button>
+      </section>
+
+      <section class="panel">
+        <div class="orders-heading">
+          <h2>My Orders</h2>
+          <span class="order-count" id="orderCount">0 Orders</span>
+        </div>
+
+        <div id="ordersList" aria-live="polite">
+          <div class="loading">Loading your orders...</div>
+        </div>
+
+        <div class="notice">
+          <strong>Order history</strong><br>
+          এখানে তোমার অ্যাকাউন্টের সঙ্গে যুক্ত অর্ডারগুলো দেখা যাবে। পুরোনো অর্ডারগুলো না এলে অর্ডার তৈরির কোডে Customer UID সংরক্ষণ করতে হবে।
+        </div>
+
+        <div class="info-row" style="margin-top:18px">
+          <div class="info-label">Saved Addresses</div>
+          <div class="info-value">Address management coming next</div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-label">Wishlist</div>
+          <div class="info-value">Your saved products will be added here</div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="account-footer">
+    © 2026 YOUR TREND · Trusted Fashion & Gadget Store
+  </footer>
+
+  <script type="module">
+    import { initializeApp, getApps, getApp } from
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      collection,
+      query,
+      where,
+      getDocs
+    } from
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAfYg-SdoKLFGuEtzFZdqwpqHRRdEuiuQI",
+      authDomain: "your-trend.firebaseapp.com",
+      projectId: "your-trend",
+      storageBucket: "your-trend.firebasestorage.app",
+      messagingSenderId: "775017944976",
+      appId: "1:775017944976:web:a19b34b89e6a4285148515",
+      measurementId: "G-1T4GM19268"
+    };
+
+    const app = getApps().length
+      ? getApp()
+      : initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const byId = id => document.getElementById(id);
+
+    function showText(id, value) {
+      byId(id).textContent = value || "Not added";
+    }
+
+    function safeDate(value) {
+      if (!value) return "Date not available";
+
+      try {
+        const date = typeof value.toDate === "function"
+          ? value.toDate()
+          : new Date(value);
+
+        return Number.isNaN(date.getTime())
+          ? "Date not available"
+          : date.toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric"
+            });
+      } catch {
+        return "Date not available";
+      }
+    }
+
+    function renderOrders(orders) {
+      const list = byId("ordersList");
+      list.replaceChildren();
+      showText("orderCount", `${orders.length} Order${orders.length === 1 ? "" : "s"}`);
+
+      if (!orders.length) {
+        const message = document.createElement("div");
+        message.className = "notice";
+        message.textContent =
+          "No linked orders found yet. If you have already ordered, your current order code may need to save your customer UID.";
+        list.appendChild(message);
+        return;
+      }
+
+      orders.sort((a, b) => {
+        const at = a.createdAt?.toMillis?.() || 0;
+        const bt = b.createdAt?.toMillis?.() || 0;
+        return bt - at;
+      });
+
+      for (const order of orders) {
+        const card = document.createElement("article");
+        card.className = "order-card";
+
+        const top = document.createElement("div");
+        top.className = "order-top";
+
+        const orderId = document.createElement("div");
+        orderId.className = "order-id";
+        orderId.textContent = order.orderId || order.id || "YOUR TREND Order";
+
+        const status = document.createElement("span");
+        status.className = "status";
+        status.textContent = order.status || "Pending";
+
+        top.append(orderId, status);
+
+        const details = document.createElement("div");
+        details.className = "order-details";
+        details.textContent =
+          `Placed: ${safeDate(order.createdAt)} · Payment: ${order.paymentMethod || order.payment || "Cash on Delivery"}`;
+
+        const total = document.createElement("div");
+        total.className = "order-total";
+
+        const amount = Number(order.total ?? order.totalAmount ?? order.grandTotal ?? order.price);
+        total.textContent = Number.isFinite(amount) && amount > 0
+          ? `৳${amount.toLocaleString("en-BD")}`
+          : "Total not available";
+
+        card.append(top, details, total);
+        list.appendChild(card);
+      }
+    }
+
+    async function loadCustomer(user) {
+      try {
+        const snap = await getDoc(doc(db, "customers", user.uid));
+        const profile = snap.exists() ? snap.data() : {};
+
+        const name = profile.name || user.displayName || "YOUR TREND Customer";
+        showText("welcomeName", name.split(" ")[0]);
+        showText("profileName", name);
+        showText("profileFullName", name);
+        showText("profileEmail", user.email);
+        showText("profilePhone", profile.phone);
+
+        // Only query orders explicitly linked to this customer's UID.
+        const ordersQuery = query(
+          collection(db, "orders"),
+          where("customerUid", "==", user.uid)
+        );
+
+        const orderSnapshot = await getDocs(ordersQuery);
+        const orders = orderSnapshot.docs.map(d => ({
+          id: d.id,
+          ...d.data()
+        }));
+
+        renderOrders(orders);
+      } catch (error) {
+        console.error("Account dashboard error:", error);
+
+        byId("ordersList").textContent =
+          error.code === "permission-denied"
+            ? "Firebase rules are preventing access. Check the customer and order permissions."
+            : "Could not load your account information. Please refresh and try again.";
+      }
+    }
+
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        window.location.replace("customer.html");
+        return;
+      }
+
+      loadCustomer(user);
+    });
+
+    byId("logoutButton").addEventListener("click", async () => {
+      const confirmed = confirm("Are you sure you want to sign out?");
+      if (!confirmed) return;
+
+      try {
+        await signOut(auth);
+        window.location.replace("customer.html");
+      } catch (error) {
+        console.error("Logout error:", error);
+        alert("Could not sign out. Please try again.");
+      }
+    });
+  </script>
+</body>
+          </html>
