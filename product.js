@@ -826,57 +826,36 @@ async function orderSelectedProduct() {
     // MAIN ORDER
     // ==================================
 
-    await addDoc(
-      collection(db, "orders"),
-      {
+    const currentUser = auth.currentUser;
 
-        orderId:
-          orderId,
+await addDoc(
+  collection(db, "orders"),
+  {
+    orderId: orderId,
+    trackingToken: trackingToken,
 
-        trackingToken:
-          trackingToken,
+    // Customer account-এর সঙ্গে order যুক্ত করবে
+    customerUid: currentUser ? currentUser.uid : null,
+    customerEmail: currentUser ? currentUser.email : null,
 
-        customerName:
-          name,
+    customerName: name,
+    phone: phone,
+    district: district,
+    upazila: upazila,
+    address: address,
 
-        phone:
-          phone,
+    items: orderItems,
+    size: size,
 
-        district:
-          district,
+    productTotal: productTotal,
+    deliveryCharge: deliveryCharge,
+    grandTotal: grandTotal,
 
-        upazila:
-          upazila,
-
-        address:
-          address,
-
-        items:
-          orderItems,
-
-        size:
-          size,
-
-        productTotal:
-          productTotal,
-
-        deliveryCharge:
-          deliveryCharge,
-
-        grandTotal:
-          grandTotal,
-
-        paymentMethod:
-          "Cash on Delivery",
-
-        status:
-          "Pending",
-
-        createdAt:
-          serverTimestamp()
-
-      }
-    );
+    paymentMethod: "Cash on Delivery",
+    status: "Pending",
+    createdAt: serverTimestamp()
+  }
+);
 
 
     // ==================================
