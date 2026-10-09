@@ -81,7 +81,21 @@ const signupForm =
 
 const forgotForm =
   document.getElementById("forgotForm");
+function goToStoreAfterLogin() {
+  const nextPage = sessionStorage.getItem("yourTrendNextPage");
+  sessionStorage.removeItem("yourTrendNextPage");
 
+  // Only allow navigation inside this website.
+  if (
+    nextPage &&
+    nextPage.startsWith("/") &&
+    !nextPage.startsWith("//")
+  ) {
+    window.location.replace(nextPage);
+  } else {
+    window.location.replace("index.html");
+  }
+}
 
 /* =========================================
    LOGIN
@@ -331,7 +345,7 @@ if (signupForm) {
         );
 
 
-        window.location.href = "index.html";
+        goToStoreAfterLogin();
 
 
       } catch (error) {
