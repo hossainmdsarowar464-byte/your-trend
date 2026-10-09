@@ -19,7 +19,7 @@
         <span>Home</span>
       </a>
 
-      <a href="customer.html" class="yt-nav-item" data-page="account">
+      <a href="account.html" class="yt-nav-item" data-page="account">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="8" r="4"></circle>
           <path d="M4 21a8 8 0 0 1 16 0"></path>
@@ -37,7 +37,7 @@
         <span>Products</span>
       </a>
 
-      <a href="customer.html#orders" class="yt-nav-item" data-page="orders">
+      <a href="account.html#orders" class="yt-nav-item" data-page="orders">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M6 3h9l4 4v14H6z"></path>
           <path d="M14 3v5h5"></path>
