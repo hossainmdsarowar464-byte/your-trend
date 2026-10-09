@@ -133,7 +133,7 @@ if (loginForm) {
 
 
         alert("Welcome back to YOUR TREND!");
-window.location.href = "account.html";
+window.location.href = "index.html";
 
       } catch (error) {
 
@@ -331,8 +331,7 @@ if (signupForm) {
         );
 
 
-        window.location.href =
-          "customer.html";
+        window.location.href = "index.html";
 
 
       } catch (error) {
