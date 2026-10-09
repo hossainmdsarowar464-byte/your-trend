@@ -697,6 +697,82 @@ function closeYtWelcome() {
   toast.classList.add("hide");
 
 }
+</script><!-- YOUR TREND MOBILE BOTTOM NAVIGATION -->
+<nav class="yt-bottom-nav" id="ytBottomNav" aria-label="Main navigation">
+
+  <a href="index.html" class="yt-nav-item" data-page="home">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m3 10 9-7 9 7"></path>
+      <path d="M5 9v11h14V9"></path>
+      <path d="M9 21v-7h6v7"></path>
+    </svg>
+    <span>Home</span>
+  </a>
+
+  <a href="customer.html" class="yt-nav-item" data-page="account">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M4 21a8 8 0 0 1 16 0"></path>
+    </svg>
+    <span>Account</span>
+  </a>
+
+  <a href="#products" class="yt-nav-item" data-page="products">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+      <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+      <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+      <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+    </svg>
+    <span>Products</span>
+  </a>
+
+  <a href="customer.html#orders" class="yt-nav-item" data-page="orders">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 3h9l4 4v14H6z"></path>
+      <path d="M14 3v5h5"></path>
+      <path d="M9 13h7M9 17h7"></path>
+    </svg>
+    <span>My Orders</span>
+  </a>
+
+</nav>
+
+<script>
+(function () {
+  const nav = document.getElementById("ytBottomNav");
+  if (!nav) return;
+
+  const links = nav.querySelectorAll(".yt-nav-item");
+
+  function updateActiveNav() {
+    const hash = window.location.hash;
+    let page = "home";
+
+    if (hash === "#products") {
+      page = "products";
+    } else if (
+      location.pathname.endsWith("customer.html")
+    ) {
+      page = hash === "#orders" ? "orders" : "account";
+    }
+
+    links.forEach(function (link) {
+      const active = link.dataset.page === page;
+
+      link.classList.toggle("active", active);
+
+      if (active) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  updateActiveNav();
+  window.addEventListener("hashchange", updateActiveNav);
+})();
 </script>
 </body>
 
