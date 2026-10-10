@@ -544,7 +544,9 @@
           window.location.hash;
 
         sessionStorage.setItem("yourTrendNextPage", nextPage);
-        window.location.replace("customer.html");
+        const loginUrl = new URL("customer.html", window.location.href);
+        loginUrl.searchParams.set("returnTo", nextPage);
+        window.location.replace(loginUrl.href);
         return;
       }
 
