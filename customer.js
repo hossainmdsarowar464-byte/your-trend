@@ -146,7 +146,7 @@ if (loginForm) {
         );
 
 
-        alert("Welcome back to YOUR TREND!");
+      
 window.location.href = "index.html";
 
       } catch (error) {
