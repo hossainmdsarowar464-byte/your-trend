@@ -52,12 +52,13 @@
     function updateActive() {
       const path = window.location.pathname;
       const hash = window.location.hash;
+      const isAccount = path.endsWith("/account.html");
       const isCustomer = path.endsWith("/customer.html");
       const isProduct = path.endsWith("/product.html");
 
       let active = "home";
 
-      if (isCustomer) {
+      if (isAccount || isCustomer) {
         active = hash === "#orders" ? "orders" : "account";
       } else if (isProduct || hash === "#products") {
         active = "products";
