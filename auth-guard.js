@@ -1,14 +1,12 @@
-/* YOUR TREND — CUSTOMER LOGIN GUARD */
-
+/* YOUR TREND — OPTIONAL AUTH GUARD
+   Include this module only on pages that must require a signed-in customer.
+   Product browsing remains public; actions are gated by auth-ui.js.
+*/
 import {
-  initializeApp,
-  getApps,
-  getApp
+  initializeApp, getApps, getApp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
 import {
-  getAuth,
-  onAuthStateChanged
+  getAuth, onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -21,18 +19,17 @@ const firebaseConfig = {
   measurementId: "G-1T4GM19268"
 };
 
-const app = getApps().length
-  ? getApp()
-  : initializeApp(firebaseConfig);
-
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-onAuthStateChanged(auth, function (user) {
-  if (!user) {
-    const nextPage =
-      location.pathname + location.search + location.hash;
+function redirectToLogin() {
+  const returnTo = window.location.pathname + window.location.search + window.location.hash;
+  sessionStorage.setItem("yourTrendNextPage", returnTo);
+  const loginUrl = new URL("customer.html", window.location.href);
+  loginUrl.searchParams.set("returnTo", returnTo);
+  window.location.replace(loginUrl.href);
+}
 
-    sessionStorage.setItem("yourTrendNextPage", nextPage);
-    location.replace("customer.html");
-  }
+onAuthStateChanged(auth, user => {
+  if (!user) redirectToLogin();
 });
