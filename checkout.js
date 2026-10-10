@@ -3,6 +3,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
   getFirestore,
   collection,
   addDoc,
@@ -47,6 +52,17 @@ const app =
 
 const db =
   getFirestore(app);
+
+const auth = getAuth(app);
+
+function waitForSignedInUser() {
+  return new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      unsubscribe();
+      resolve(user || null);
+    });
+  });
+}
 
 
 /* ======================================
@@ -665,12 +681,27 @@ const upazila =
       "#ff6b00";
 
 
+    const signedInUser = await waitForSignedInUser();
+
+    if (!signedInUser) {
+      msg.innerText = "অর্ডার করতে আগে YOUR TREND অ্যাকাউন্টে লগইন করুন।";
+      msg.style.color = "red";
+      sessionStorage.setItem(
+        "yourTrendNextPage",
+        window.location.pathname + window.location.search + window.location.hash
+      );
+      window.location.replace("customer.html");
+      return;
+    }
+
     await addDoc(
       collection(
         db,
         "orders"
       ),
       {
+
+        customerUid: signedInUser.uid,
 
         orderId:
           orderId,
@@ -893,4 +924,3 @@ window.placeOrder = placeOrder;
 window.clearCart = clearCart;
 
 showCheckout();
-
