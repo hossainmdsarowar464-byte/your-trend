@@ -147,7 +147,7 @@ if (loginForm) {
 
 
       
-window.location.href = "index.html";
+goToStoreAfterLogin();
 
       } catch (error) {
 
