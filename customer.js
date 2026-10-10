@@ -62,7 +62,7 @@ const firebaseConfig = {
 ========================================= */
 
 const app =
-  initializeApp(firebaseConfig);
+  getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 const auth =
   getAuth(app);
@@ -83,20 +83,41 @@ const signupForm =
 
 const forgotForm =
   document.getElementById("forgotForm");
+
+// A direct visit to the login page should not reuse an old page destination.
+if (!new URLSearchParams(window.location.search).get("returnTo")) {
+  sessionStorage.removeItem("yourTrendNextPage");
+}
+
 function goToStoreAfterLogin() {
-  const nextPage = sessionStorage.getItem("yourTrendNextPage");
+  const params = new URLSearchParams(window.location.search);
+  const fromUrl = params.get("returnTo");
+  const fromStorage = sessionStorage.getItem("yourTrendNextPage");
+  const candidate = fromUrl || fromStorage;
   sessionStorage.removeItem("yourTrendNextPage");
 
-  // Only allow navigation inside this website.
-  if (
-    nextPage &&
-    nextPage.startsWith("/") &&
-    !nextPage.startsWith("//")
-  ) {
-    window.location.replace(nextPage);
-  } else {
-    window.location.replace("index.html");
+  // Only return to a safe page on this same website.
+  if (candidate) {
+    try {
+      const target = new URL(candidate, window.location.origin);
+      const customerPath = new URL("customer.html", window.location.href).pathname;
+
+      if (
+        target.origin === window.location.origin &&
+        target.pathname !== customerPath &&
+        !target.pathname.endsWith("/customer.html")
+      ) {
+        window.location.replace(
+          target.pathname + target.search + target.hash
+        );
+        return;
+      }
+    } catch (error) {
+      console.warn("Invalid return destination; opening home page.", error);
+    }
   }
+
+  window.location.replace("index.html");
 }
 
 /* =========================================
