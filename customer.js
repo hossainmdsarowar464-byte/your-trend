@@ -7,6 +7,8 @@ import { initializeApp } from
 
 import {
   getAuth,
+   setPersistence,
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -131,7 +133,7 @@ if (loginForm) {
 
 
       try {
-
+await setPersistence(auth, browserLocalPersistence);
         const userCredential =
           await signInWithEmailAndPassword(
             auth,
