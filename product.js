@@ -831,13 +831,18 @@ async function orderSelectedProduct() {
     // ==================================
 
     const currentUser = auth.currentUser;
-
+if (!currentUser) {
+  msg.innerText = "আগে লগইন করো।";
+  msg.style.color = "red";
+  return;
+}
 await addDoc(
   collection(db, "orders"),
   {
     orderId: orderId,
     trackingToken: trackingToken,
-
+customerUid: currentUser.uid,
+customerEmail: currentUser.email || "",
     // Customer account-এর সঙ্গে order যুক্ত করবে
     customerUid: currentUser ? currentUser.uid : null,
     customerEmail: currentUser ? currentUser.email : null,
