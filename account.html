@@ -537,6 +537,13 @@
 
     onAuthStateChanged(auth, user => {
       if (!user) {
+        // Return to this exact page after login (including #orders).
+        const nextPage =
+          window.location.pathname +
+          window.location.search +
+          window.location.hash;
+
+        sessionStorage.setItem("yourTrendNextPage", nextPage);
         window.location.replace("customer.html");
         return;
       }
@@ -559,4 +566,4 @@
   </script><script src="bottom-nav.js?v=1"></script>
   
 </body>
-          </html>
+</html>
