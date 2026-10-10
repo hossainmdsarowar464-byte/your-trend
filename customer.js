@@ -286,6 +286,9 @@ if (signupForm) {
 
       try {
 
+        // Keep the customer signed in across browser restarts.
+        await setPersistence(auth, browserLocalPersistence);
+
         /* -------------------------
            CREATE FIREBASE USER
         ------------------------- */
