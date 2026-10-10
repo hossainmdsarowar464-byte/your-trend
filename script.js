@@ -194,7 +194,9 @@ async function loadFirebaseProducts() {console.log("🔥 loadFirebaseProducts st
   try {
 
     const {
-      initializeApp
+      initializeApp,
+      getApps,
+      getApp
     } = await import(
       "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
     );
@@ -236,7 +238,7 @@ async function loadFirebaseProducts() {console.log("🔥 loadFirebaseProducts st
     };
 
     const app =
-      initializeApp(firebaseConfig);
+      getApps().length ? getApp() : initializeApp(firebaseConfig);
 
     const db =
       getFirestore(app);
@@ -1989,5 +1991,4 @@ if (bannerSlider && bannerSlides) {
 
   }
 
-}
-       
+              }
