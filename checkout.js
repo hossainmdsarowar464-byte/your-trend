@@ -1,5 +1,5 @@
 import {
-  initializeApp
+  initializeApp, getApps, getApp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
@@ -47,7 +47,7 @@ const firebaseConfig = {
 
 
 const app =
-  initializeApp(firebaseConfig);
+  getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 
 const db =
@@ -57,12 +57,24 @@ const auth = getAuth(app);
 
 function waitForSignedInUser() {
   return new Promise((resolve) => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    let unsubscribe = () => {};
+    unsubscribe = onAuthStateChanged(auth, (user) => {
       unsubscribe();
       resolve(user || null);
     });
   });
 }
+
+// Checkout is an account action. Guests are sent to login and returned here.
+const checkoutAuthReady = waitForSignedInUser();
+checkoutAuthReady.then((user) => {
+  if (user) return;
+  const returnTo = window.location.pathname + window.location.search + window.location.hash;
+  sessionStorage.setItem("yourTrendNextPage", returnTo);
+  const loginUrl = new URL("customer.html", window.location.href);
+  loginUrl.searchParams.set("returnTo", returnTo);
+  window.location.replace(loginUrl.href);
+});
 
 
 /* ======================================
@@ -681,7 +693,7 @@ const upazila =
       "#ff6b00";
 
 
-    const signedInUser = await waitForSignedInUser();
+    const signedInUser = await checkoutAuthReady;
 
     if (!signedInUser) {
       msg.innerText = "অর্ডার করতে আগে YOUR TREND অ্যাকাউন্টে লগইন করুন।";
