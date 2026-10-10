@@ -1,5 +1,5 @@
 import {
-  initializeApp
+  initializeApp, getApps, getApp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
@@ -43,7 +43,7 @@ const firebaseConfig = {
 
 
 const app =
-  initializeApp(firebaseConfig);
+  getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db =
   getFirestore(app);
@@ -1930,4 +1930,4 @@ if (directOrderBtn) {
     }
   );
 
-}
+      }
